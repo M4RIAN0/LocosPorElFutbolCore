@@ -8,4 +8,8 @@
     <Folder Include="MetaData\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\DominioBase\DominioBase.csproj" />
+  </ItemGroup>
+
 </Project>
