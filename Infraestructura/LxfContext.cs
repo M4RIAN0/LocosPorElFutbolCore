@@ -1,4 +1,4 @@
-﻿using Dominio.Entidades;
+﻿ using Dominio.Entidades;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

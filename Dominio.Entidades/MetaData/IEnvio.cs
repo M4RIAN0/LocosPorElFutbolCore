@@ -9,7 +9,7 @@ namespace Dominio.Entidades.MetaData
 {
     public interface IEnvio
     {
-        [Required]
+        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
          string Tipo { get; set; }
 
          decimal Monto { get; set; }

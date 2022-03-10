@@ -9,9 +9,10 @@ namespace Dominio.Entidades.MetaData
 {
     public interface IMarca
     {
-         int Codigo { get; set; }
+        int Codigo { get; set; }
 
-        [Required]
-         string Descripcion { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessage = "El campo {0} es obligatorio.")]
+        [StringLength(240, ErrorMessage = "El campo {0} no debe superar los {1} caracteres.")]
+        string Descripcion { get; set; }
     }
 }

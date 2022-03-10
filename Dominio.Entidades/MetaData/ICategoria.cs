@@ -9,7 +9,8 @@ namespace Dominio.Entidades.MetaData
 {
     public interface ICategoria
     {
-        [Required]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "El campo {0} es obligatorio.")]
+        [StringLength(200, ErrorMessage = "El campo {0} no debe superar los {1} caracteres.")]
         string Descripcion { get; set; }
     }
 }

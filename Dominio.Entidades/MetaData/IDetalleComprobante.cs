@@ -9,21 +9,21 @@ namespace Dominio.Entidades.MetaData
 {
     public interface IDetalleComprobante
     {
-
-         int Cantidad { get; set; }
-
-         decimal SubTotal { get; set; }
-
-         int Codigo { get; set; }
-
-         int CodigoBarra { get; set; }
-
-        [Required]
-        [StringLength(250)]
-         string Descripcion { get; set; }
-
-         decimal Precio { get; set; }
-
+        
+        [Range(1, 999)]
+        int Cantidad { get; set; }
+        
+        decimal SubTotal { get; set; }
+        
+        int Codigo { get; set; }
+        
+        int CodigoBarra { get; set; }
+        
+        
+        string Descripcion { get; set; }
+        
+        decimal Precio { get; set; }
+        
 
     }
 }

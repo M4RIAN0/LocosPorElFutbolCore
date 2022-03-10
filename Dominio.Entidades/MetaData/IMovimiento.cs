@@ -9,13 +9,15 @@ namespace Dominio.Entidades.MetaData
 {
     public interface IMovimiento
     {
-         DateTime Fecha { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+        DateTime Fecha { get; set; }
 
-        [Required]
-         string Tipo { get; set; }
+        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
+        string Tipo { get; set; }
 
-         decimal Monto { get; set; }
+        decimal Monto { get; set; }
 
-         int Codigo { get; set; }
+        int Codigo { get; set; }
     }
 }

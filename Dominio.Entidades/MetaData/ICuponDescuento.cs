@@ -9,14 +9,20 @@ namespace Dominio.Entidades.MetaData
 {
     public interface ICuponDescuento
     {
-        [Required]
-         string Descripcion { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessage = "El campo {0} es obligatorio.")]
+        [StringLength(150, ErrorMessage = "El campo {0} no debe superar los {1} caracteres.")]
+        string Descripcion { get; set; }
+
 
          decimal Porcentaje { get; set; }
 
-         DateTime FechaEmision { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+        DateTime FechaEmision { get; set; }
 
-         DateTime FechaCaducidad { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+        DateTime? FechaCaducidad { get; set; }
 
     }
 }
