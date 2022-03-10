@@ -9,10 +9,12 @@ namespace Dominio.Entidades.MetaData
 {
     public interface IFactura
     {
-         DateTime Fecha { get; set; }
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+        DateTime Fecha { get; set; }
 
-        [Required]
-         string Estado { get; set; }
+        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
+        string Estado { get; set; }
 
          decimal Total { get; set; }
 

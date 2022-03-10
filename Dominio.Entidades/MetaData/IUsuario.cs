@@ -9,7 +9,9 @@ namespace Dominio.Entidades.MetaData
 {
     public interface IUsuario
     {
-         string NombreUsuario { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessage = "El campo {0} es obligatorio.")]
+        [StringLength(250, ErrorMessage = "El campo {0} no debe superar los {1} caracteres.")]
+        string NombreUsuario { get; set; }
 
         [Required]
          string Password { get; set; }

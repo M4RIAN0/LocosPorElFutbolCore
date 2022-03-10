@@ -13,8 +13,9 @@ namespace Dominio.Entidades.MetaData
 
          int CodigoBarra { get; set; }
 
-        [Required]
-         string Descripcion { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessage = "El campo {0} es obligatorio.")]
+        [StringLength(250, ErrorMessage = "El campo {0} no debe superar los {1} caracteres.")] 
+        string Descripcion { get; set; }
 
          int Stock { get; set; }
 

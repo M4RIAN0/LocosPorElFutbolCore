@@ -15,6 +15,6 @@ namespace Dominio.Entidades
         public string Nombre { get; set; }
 
         //propiedad de navegacion
-        public virtual ICollection<Tarjeta> Tarjetas1 { get; set; }
+        public virtual ICollection<Tarjeta> Tarjetas { get; set; }
     }
 }
