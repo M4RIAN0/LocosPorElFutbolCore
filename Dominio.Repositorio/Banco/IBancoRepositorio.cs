@@ -1,8 +1,11 @@
 ﻿
 
+using Infraestructura.RepositorioBase;
+
 namespace Dominio.Repositorio.Banco
 {
-     interface IBancoRepositorio
+    public interface IBanco_EventoRepositorio : IRepositorio<Entidades.Banco>
     {
+
     }
 }
