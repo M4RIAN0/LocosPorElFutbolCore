@@ -29,6 +29,6 @@ namespace Dominio.Entidades
         public virtual ICollection<Envio> Envios { get; set; }
 
         
-        public virtual ICollection<Factura> Facturas { get; set; }
+        public virtual ICollection<CuponDescuento> Facturas { get; set; }
     }
 }

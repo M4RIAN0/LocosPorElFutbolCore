@@ -1,8 +1,8 @@
-﻿
+﻿using Infraestructura.RepositorioBase;
 
 namespace Dominio.Repositorio.Categoria
 {
-     interface ICategoriaRepositorio
+    public interface ICategoriaRepositorio : IRepositorio<Entidades.Categoria>
     {
 
     }
