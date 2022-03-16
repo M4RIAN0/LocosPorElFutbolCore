@@ -16,7 +16,7 @@ namespace Dominio.Entidades
 
         //propiedades de navegacion
        
-        public virtual ICollection<Factura> Facturas { get; set; }
+        public virtual ICollection<CuponDescuento> Facturas { get; set; }
 
         public virtual Persona Persona { get; set; }
 

@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Infraestructura.RepositorioBase;
 
 namespace Dominio.Repositorio.Talle
 {
-    internal class ITalleRepositorio
+    public interface ITalleRepositorio : IRepositorio<Entidades.Talle>
     {
+
     }
 }

@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Infraestructura.RepositorioBase;
 
 namespace Dominio.Repositorio.Usuario
 {
-    internal class IUsuarioRepositorio
+    public interface IUsuarioRepositorio : IRepositorio<Entidades.Usuario>
     {
+
     }
 }

@@ -19,7 +19,7 @@ namespace Infraestructura
         public DbSet<CuponDescuento> CuponDescuento { get; set; }
         public DbSet<DetalleComprobante> DetalleComprobantes { get; set; }
         public DbSet<Envio> Envio { get; set; }
-        public DbSet<Factura> Factura { get; set; }
+        public DbSet<CuponDescuento> Factura { get; set; }
         public DbSet<ListaPrecio> ListaPrecio { get; set; }
         public DbSet<ListaPrecioProducto> ListaPrecioProducto { get; set; }
         public DbSet<Localidad> Localidad { get; set; }

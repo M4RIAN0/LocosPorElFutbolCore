@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Infraestructura.RepositorioBase;
 
 namespace Dominio.Repositorio.PersonaCliente
 {
-    internal class IPersonaClienteRepositorio
+    public interface IPersonaClienteRepositorio : IRepositorio<Entidades.Personas_Cliente>
     {
+
     }
 }

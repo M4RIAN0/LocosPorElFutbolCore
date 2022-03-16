@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Infraestructura.RepositorioBase;
 
 namespace Dominio.Repositorio.Factura
 {
-    internal class IFacturaRepositorio
+    public interface IFacturaRepositorio : IRepositorio<Entidades.CuponDescuento>
     {
+
     }
 }

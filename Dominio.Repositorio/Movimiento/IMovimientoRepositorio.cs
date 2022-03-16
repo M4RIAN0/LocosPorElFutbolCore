@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Infraestructura.RepositorioBase;
 
 namespace Dominio.Repositorio.Movimiento
 {
-    internal class IMovimientoRepositorio
+    public interface IMovimientoRepositorio : IRepositorio<Entidades.Movimiento>
     {
+
     }
 }

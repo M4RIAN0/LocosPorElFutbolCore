@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Infraestructura.RepositorioBase;
 
 namespace Dominio.Repositorio.ListaPrecioProducto
 {
-    internal class IListaPrecioProductoRepositorio
+    public interface IListaPrecioProductoRepositorio : IRepositorio<Entidades.ListaPrecioProducto>
     {
+
     }
 }

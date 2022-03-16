@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Infraestructura.RepositorioBase;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Dominio.Repositorio.Rubro
 {
-    internal class IRubroRepositorio
+    public interface IRubroRepositorio : IRepositorio<Entidades.Rubro>
     {
+
     }
 }

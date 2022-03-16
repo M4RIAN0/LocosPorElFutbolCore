@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Infraestructura.RepositorioBase;
 
 namespace Dominio.Repositorio.Tarjeta
 {
-    internal class ITarjetaRepositorio
+    public interface ITarjetaRepositorio : IRepositorio<Entidades.Tarjeta>
     {
+
     }
 }

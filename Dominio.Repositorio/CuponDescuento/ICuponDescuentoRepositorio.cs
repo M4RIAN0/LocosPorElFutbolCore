@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Infraestructura.RepositorioBase;
 
 namespace Dominio.Repositorio.CuponDescuento
 {
-    internal class ICuponDescuentoRepositorio
+    public interface ICuponDescuentoRepositorio : IRepositorio<Entidades.CuponDescuento>
     {
+
     }
 }

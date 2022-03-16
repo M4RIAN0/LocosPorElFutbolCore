@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Infraestructura.RepositorioBase;
 
 namespace Dominio.Repositorio.DetalleComprobante
 {
-    internal class IDetalleComprobanteRepositorio
+    public interface IDetalleComprobanteRepositorio : IRepositorio<Entidades.DetalleComprobante>
     {
+
     }
 }

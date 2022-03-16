@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Infraestructura.RepositorioBase;
 
 namespace Dominio.Repositorio.Rol
 {
-    internal class IRolRepositorio
+    public interface IRolRepositorio : IRepositorio<Entidades.Rol>
     {
+
     }
 }

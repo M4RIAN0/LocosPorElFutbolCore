@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Infraestructura.RepositorioBase;
 
 namespace Dominio.Repositorio.Marca
 {
-    internal class IMarcaRepositorio
+    public interface IMarcaRepositorio : IRepositorio<Entidades.Marca>
     {
+
     }
 }

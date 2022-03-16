@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Infraestructura.RepositorioBase;
 
 namespace Dominio.Repositorio.Subrubro
 {
-    internal class ISubRubroRepositorio
+    public interface ISubRubroRepositorio : IRepositorio<Entidades.SubRubro>
     {
+
     }
 }
