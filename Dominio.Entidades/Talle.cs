@@ -10,7 +10,7 @@ namespace Dominio.Entidades
     [MetadataType(typeof(ITalle))]
     public partial class Talle: EntidadBase
     {
-
+        public int Codigo { get; set; }
 
         public string Descripcion { get; set; }
 

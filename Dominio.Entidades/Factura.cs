@@ -8,7 +8,7 @@ namespace Dominio.Entidades
 
     [Table("Facturas")]
     [MetadataType(typeof(IFactura))]
-    public partial class CuponDescuento: EntidadBase
+    public partial class Factura : EntidadBase
     {
         public DateTime Fecha { get; set; }
 

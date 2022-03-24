@@ -21,6 +21,6 @@ namespace Dominio.Entidades
 
         public virtual Comprobante Comprobante { get; set; }
 
-        public virtual Localidade Localidad { get; set; }
+        //public virtual Localidade Localidad { get; set; }
     }
 }

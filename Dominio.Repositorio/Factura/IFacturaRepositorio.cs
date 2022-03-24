@@ -2,7 +2,7 @@
 
 namespace Dominio.Repositorio.Factura
 {
-    public interface IFacturaRepositorio : IRepositorio<Entidades.CuponDescuento>
+    public interface IFacturaRepositorio : IRepositorio<Entidades.Factura>
     {
 
     }
