@@ -11,6 +11,7 @@ namespace Dominio.Entidades
     {
         public int Cantidad { get; set; }
 
+        [Column(TypeName = "decimal(18,4)")]
         public decimal SubTotal { get; set; }
 
         public int Codigo { get; set; }
@@ -19,14 +20,15 @@ namespace Dominio.Entidades
 
         public string Descripcion { get; set; }
 
+        [Column(TypeName = "decimal(18,4)")]
         public decimal Precio { get; set; }
 
 
 
         //propiedades de navegacion
-        public long ProductoId { get; set; }
+        public long Producto_Id { get; set; }
 
-        public long ComprobanteId { get; set; }
+        public long Comprobante_Id { get; set; }
 
         public virtual Comprobante Comprobante { get; set; }
 

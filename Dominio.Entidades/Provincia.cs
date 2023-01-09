@@ -17,6 +17,6 @@ namespace Dominio.Entidades
 
 
         //propiedades de navegacion
-        public virtual ICollection<Localidad> Localidades { get; set; }
+        public virtual IEnumerable<Localidad> Localidades { get; set; }
     }
 }

@@ -11,16 +11,17 @@ namespace Dominio.Entidades
     {
         public string Tipo { get; set; }
 
+        [Column(TypeName = "decimal(18,4)")]
         public decimal Monto { get; set; }
 
 
         //propiedades de navegacion
-        public long LocalidadId { get; set; }
+        public long Localidad_Id { get; set; }
 
         public long Comprobante_Id { get; set; }
 
         public virtual Comprobante Comprobante { get; set; }
 
-        //public virtual Localidade Localidad { get; set; }
+        public virtual Localidad Localidad { get; set; }
     }
 }

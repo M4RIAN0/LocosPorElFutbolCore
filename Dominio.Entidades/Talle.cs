@@ -21,6 +21,6 @@ namespace Dominio.Entidades
 
         //propiedades de navegacion
       
-        public virtual ICollection<Producto> Productoes { get; set; }
+        public virtual IEnumerable<Producto> Productos { get; set; }
     }
 }

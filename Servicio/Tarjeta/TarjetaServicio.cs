@@ -26,8 +26,8 @@ namespace Servicio.Tarjeta
                 CodigoSeguridad = Dto.CodigoSeguridad,
                 FechaExpiracion = Dto.FechaExpiracion,
                 Cuotas = Dto.Cuotas,
-                BancoId = Dto.BancoId,
-                TipoTarjetaId = Dto.TipoTarjetaId,
+                Banco_Id = Dto.BancoId,
+                TipoTarjeta_Id = Dto.TipoTarjetaId,
 
             };
 
@@ -42,23 +42,23 @@ namespace Servicio.Tarjeta
 
         }
 
-        public IEnumerable<TarjetaDto> GetAll()
-        {
-            return _tarjetaRepositorio.ObtenerTodo()
-                 .Select(x => new TarjetaDto
-                 {
-                     Id = x.Id,
-                     NombreTitular = x.NombreTitular,
-                     Numero = x.Numero,
-                     DniTitular = x.DniTitular,
-                     CodigoSeguridad = x.CodigoSeguridad,
-                     FechaExpiracion = x.FechaExpiracion,
-                     Cuotas = x.Cuotas,
-                     BancoId = x.BancoId,
-                     TipoTarjetaId = x.TipoTarjetaId
+        //public IEnumerable<TarjetaDto> GetAll()
+        //{
+        //    return _tarjetaRepositorio.ObtenerTodo()
+        //         .Select(x => new TarjetaDto
+        //         {
+        //             Id = x.Id,
+        //             NombreTitular = x.NombreTitular,
+        //             Numero = x.Numero,
+        //             DniTitular = x.DniTitular,
+        //             CodigoSeguridad = x.CodigoSeguridad,
+        //             FechaExpiracion = x.FechaExpiracion,
+        //             Cuotas = x.Cuotas,
+        //             BancoId = x.Banco_Id,
+        //             TipoTarjetaId = x.TipoTarjeta_Id
 
-                 }).ToList();
-        }
+        //         }).ToList();
+        //}
 
         public IEnumerable<TarjetaDto> GetByFilter(string cadenaBuscar)
         {
@@ -76,8 +76,8 @@ namespace Servicio.Tarjeta
                     CodigoSeguridad = x.CodigoSeguridad,
                     FechaExpiracion = x.FechaExpiracion,
                     Cuotas = x.Cuotas,
-                    BancoId = x.BancoId,
-                    TipoTarjetaId = x.TipoTarjetaId
+                    BancoId = x.Banco_Id,
+                    TipoTarjetaId = x.TipoTarjeta_Id
 
                 }).ToList();
         }
@@ -95,8 +95,8 @@ namespace Servicio.Tarjeta
                 CodigoSeguridad = tarjeta.CodigoSeguridad,
                 FechaExpiracion = tarjeta.FechaExpiracion,
                 Cuotas = tarjeta.Cuotas,
-                BancoId = tarjeta.BancoId,
-                TipoTarjetaId = tarjeta.TipoTarjetaId
+                BancoId = tarjeta.Banco_Id,
+                TipoTarjetaId = tarjeta.TipoTarjeta_Id
             };
         }
 
@@ -109,8 +109,8 @@ namespace Servicio.Tarjeta
             tarjeta.DniTitular = tarjeta.DniTitular;
             tarjeta.CodigoSeguridad = tarjeta.CodigoSeguridad;
             tarjeta.FechaExpiracion = tarjeta.FechaExpiracion;
-            tarjeta.BancoId = tarjeta.BancoId;
-            tarjeta.TipoTarjetaId = tarjeta.TipoTarjetaId;
+            tarjeta.Banco_Id = tarjeta.Banco_Id;
+            tarjeta.TipoTarjeta_Id = tarjeta.TipoTarjeta_Id;
 
             _tarjetaRepositorio.Modificar(tarjeta);
             _tarjetaRepositorio.Save();

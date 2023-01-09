@@ -5,6 +5,7 @@ using Servicio.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Servicio.PersonaCliente
 {
@@ -20,7 +21,7 @@ namespace Servicio.PersonaCliente
 
         public void Add(PersonaClienteDto Dto)
         {
-            var Persona = new Dominio.Entidades.Personas_Cliente
+            var Persona = new Dominio.Entidades.Persona_Cliente
             {
                 Codigo = Dto.Codigo,
                 Apellido = Dto.Apellido,
@@ -45,27 +46,29 @@ namespace Servicio.PersonaCliente
             _personaClienteRepositorio.Save();
         }
 
-        public IEnumerable<PersonaClienteDto> GetAll()
+        public async Task <IEnumerable<PersonaClienteDto>> GetAll()
         {
-            return _personaClienteRepositorio.ObtenerTodo()
-                .Select(x => new PersonaClienteDto
-                {
-                    Codigo = x.Codigo,
-                    Apellido = x.Apellido,
-                    Nombre = x.Nombre,
-                    Dni = x.Dni,
-                    Direccion = x.Direccion,
-                    Sexo = x.Sexo,
-                    FechaNacimiento = x.FechaNacimiento,
-                    Celular = x.Celular,
-                    Email = x.Email,
-                    RowVersion = x.RowVersion
+            var list = await _personaClienteRepositorio.ObtenerTodo();
 
-                }).ToList();
+            return list.Select(x => new PersonaClienteDto
+            {
+                Codigo = x.Codigo,
+                Apellido = x.Apellido,
+                Nombre = x.Nombre,
+                Dni = x.Dni,
+                Direccion = x.Direccion,
+                Sexo = x.Sexo,
+                FechaNacimiento = x.FechaNacimiento,
+                Celular = x.Celular,
+                Email = x.Email,
+                RowVersion = x.RowVersion
+
+            }).ToList();
+
         }
 
 
-   
+
         public IEnumerable<PersonaClienteDto> GetByFilter(string cadenaBuscar)
         {
             var codigo = -1;

@@ -14,6 +14,7 @@ namespace Dominio.Entidades
 
         public string Estado { get; set; }
 
+        [Column(TypeName = "decimal(18,4)")]
         public decimal Total { get; set; }
 
         public int Codigo { get; set; }
@@ -29,7 +30,7 @@ namespace Dominio.Entidades
 
         public virtual Comprobante Comprobante { get; set; }
 
-        public virtual Personas_Cliente Personas_Cliente { get; set; }
+        public virtual Persona_Cliente Personas_Cliente { get; set; }
 
         public virtual Movimiento Movimiento { get; set; }
     }

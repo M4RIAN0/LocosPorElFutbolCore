@@ -22,7 +22,7 @@ namespace Servicio.Envio
             {
                 Tipo = Dto.Tipo,
                 Monto = Dto.Monto,
-                LocalidadId = Dto.LocalidadId,
+                Localidad_Id = Dto.LocalidadId,
                 RowVersion = Dto.RowVersion
             };
 
@@ -37,7 +37,7 @@ namespace Servicio.Envio
 
             envio.Tipo = Dto.Tipo;
             envio.Monto = Dto.Monto;
-            envio.LocalidadId = Dto.LocalidadId;
+            envio.Localidad_Id = Dto.LocalidadId;
 
             _envioRepositorio.Modificar(envio);
             _envioRepositorio.Save();
@@ -57,7 +57,7 @@ namespace Servicio.Envio
                 Id = x.Id,
                 Tipo = x.Tipo,
                 Monto = x.Monto,
-                LocalidadId = x.LocalidadId,
+                LocalidadId = x.Localidad_Id,
                 //LocalidadeStr = x.Localidades.Nombre, //ver entidad Localidad
             }).ToList();
         }
@@ -76,7 +76,7 @@ namespace Servicio.Envio
                 Id = envio.Id,
                 Tipo = envio.Tipo,
                 Monto = envio.Monto,
-                LocalidadId = envio.LocalidadId,
+                LocalidadId = envio.Localidad_Id,
                 //LocalidadeStr = envio.Localidade.Nombre,
             };
         }

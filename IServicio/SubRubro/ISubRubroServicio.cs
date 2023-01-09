@@ -15,7 +15,7 @@ namespace IServicio.SubRubro
 
         IEnumerable<SubRubroDto> GetByFilter(string cadenaBuscar); // obtener por filtro
 
-        IEnumerable<SubRubroDto> GetAll();
+        //IEnumerable<SubRubroDto> GetAll();
 
         SubRubroDto GetById(long? Id);
     }

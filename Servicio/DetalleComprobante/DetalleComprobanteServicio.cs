@@ -49,9 +49,9 @@ namespace Servicio.DetalleComprobante
                 Cantidad = x.Cantidad,
                 Codigo = x.Codigo,
                 CodigoBarra = x.CodigoBarra,
-                ComprobanteId = x.ComprobanteId,
+                ComprobanteId = x.Comprobante_Id,
                 Precio = x.Precio,
-                ProductoId = x.ProductoId,
+                ProductoId = x.Producto_Id,
                 SubTotal = x.SubTotal,
 
             });

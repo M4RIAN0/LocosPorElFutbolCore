@@ -11,7 +11,7 @@ namespace IServicio.Persona
 
         IEnumerable<PersonaDto> GetByFilter(string cadenaBuscar); // obtener por filtro
 
-        IEnumerable<PersonaDto> GetAll();
+       // IEnumerable<PersonaDto> GetAll();
 
         PersonaDto GetById(long? Id);
     }

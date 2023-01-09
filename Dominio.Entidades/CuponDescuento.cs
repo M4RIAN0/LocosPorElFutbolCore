@@ -13,6 +13,8 @@ namespace Dominio.Entidades
 
         public string Descripcion { get; set; }
 
+
+        [Column(TypeName = "decimal(18,4)")]
         public decimal Porcentaje { get; set; }
 
         public DateTime FechaEmision { get; set; }
@@ -22,7 +24,7 @@ namespace Dominio.Entidades
 
 
         //propiedad de navegacion
-        public long? ComprobanteId { get; set; }
+        public long Comprobante_Id { get; set; }
 
         public virtual Comprobante Comprobante { get; set; }
     }

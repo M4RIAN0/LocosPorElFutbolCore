@@ -11,17 +11,19 @@ namespace Dominio.Entidades
     public partial class ListaPrecioProducto: EntidadBase
     {
 
+        [Column(TypeName = "decimal(18,4)")]
         public decimal PrecioCosto { get; set; }
 
+        [Column(TypeName = "decimal(18,4)")]
         public decimal PrecioPublico { get; set; }
 
         public DateTime FechaActualizacion { get; set; }
 
 
         //propiedades de navegacion
-        public long ListaPrecioId { get; set; }
+        public long ListaPrecio_Id { get; set; }
 
-        public long ProductoId { get; set; }
+        public long Producto_Id { get; set; }
 
         public virtual ListaPrecio ListaPrecio { get; set; }
 

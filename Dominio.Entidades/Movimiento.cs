@@ -16,12 +16,13 @@ namespace Dominio.Entidades
 
         public string Tipo { get; set; }
 
+        [Column(TypeName = "decimal(18,4)")]
         public decimal Monto { get; set; }
 
         public int Codigo { get; set; }
 
 
         //propiedades de navegacion
-        public virtual ICollection<CuponDescuento> Facturas { get; set; }
+        public virtual IEnumerable<CuponDescuento> Facturas { get; set; }
     }
 }

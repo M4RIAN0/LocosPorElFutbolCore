@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace AppConexion
+﻿namespace AppConexion
 {
     public static class StringConexion
     {

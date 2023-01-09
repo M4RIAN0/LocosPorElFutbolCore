@@ -15,9 +15,9 @@ namespace Dominio.Entidades
 
 
         //propiedades de navegacion
-        public long ProvinciaId { get; set; }
+        public long Provincia_Id { get; set; }
 
-        public virtual ICollection<Envio> Envios { get; set; }
+        public virtual IEnumerable<Envio> Envios { get; set; }
 
         public virtual Provincia Provincia { get; set; }
     }

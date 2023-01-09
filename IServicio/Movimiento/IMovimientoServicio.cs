@@ -11,7 +11,7 @@ namespace IServicio.Movimiento
 
         IEnumerable<MovimientoDto> GetByFilter(string cadenaBuscar); // obtener por filtro
 
-        IEnumerable<MovimientoDto> GetAll();
+        //IEnumerable<MovimientoDto> GetAll();
 
         MovimientoDto GetById(long? Id);
     }

@@ -34,18 +34,18 @@ namespace Servicio.Rubro
             _rubroRepositorio.Save();
         }
 
-        public IEnumerable<RubroDto> GetAll()
-        {
-            return _rubroRepositorio.ObtenerTodo()
-                   .Select(x => new RubroDto
-                   {
-                       Id = x.Id,
-                       Codigo = x.Codigo,
-                       Descripcion = x.Descripcion,
-                       RowVersion = x.RowVersion
+        //public IEnumerable<RubroDto> GetAll()
+        //{
+        //    return _rubroRepositorio.ObtenerTodo()
+        //           .Select(x => new RubroDto
+        //           {
+        //               Id = x.Id,
+        //               Codigo = x.Codigo,
+        //               Descripcion = x.Descripcion,
+        //               RowVersion = x.RowVersion
 
-                   }).ToList();
-        }
+        //           }).ToList();
+        //}
 
         public IEnumerable<RubroDto> GetByFilter(string cadenaBuscar)
         {

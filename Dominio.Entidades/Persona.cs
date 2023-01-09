@@ -29,6 +29,6 @@ namespace Dominio.Entidades
 
 
         //propiedades de navegacion
-        public virtual Personas_Cliente Personas_Cliente { get; set; }
+        //public virtual Persona_Cliente Personas_Cliente { get; set; }
     }
 }

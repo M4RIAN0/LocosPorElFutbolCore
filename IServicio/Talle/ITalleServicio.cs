@@ -15,7 +15,7 @@ namespace IServicio.Talle
 
         IEnumerable<TalleDto> GetByFilter(string cadenaBuscar); // obtener por filtro
 
-        IEnumerable<TalleDto> GetAll();
+       // IEnumerable<TalleDto> GetAll();
 
         TalleDto GetById(long? Id);
     }

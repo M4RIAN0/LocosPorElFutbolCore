@@ -47,9 +47,9 @@ namespace Servicio.ListaPrecioProducto
                      PrecioCosto = x.PrecioCosto,
                      PrecioPublico = x.PrecioPublico,
                      FechaActualizacion = x.FechaActualizacion,
-                     ListaPrecioId = x.ListaPrecioId,
+                     ListaPrecioId = x.ListaPrecio_Id,
                      ListaPrecioStr = x.ListaPrecio.Descripcion,
-                     ProductoId = x.ProductoId,
+                     ProductoId = x.Producto_Id,
                      ProductoStr = x.Producto.Descripcion,
 
                  }).ToList();
@@ -70,7 +70,7 @@ namespace Servicio.ListaPrecioProducto
                 PrecioCosto = lista.PrecioCosto,
                 PrecioPublico = lista.PrecioPublico,
                 FechaActualizacion = lista.FechaActualizacion,
-                ProductoId = lista.ProductoId,
+                ProductoId = lista.Producto_Id,
                 ProductoStr = lista.Producto.Descripcion,
 
             };

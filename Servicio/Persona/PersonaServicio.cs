@@ -40,19 +40,19 @@ namespace Servicio.Persona
             _personaRepositorio.Save();
         }
 
-        public IEnumerable<PersonaDto> GetAll()
-        {
-            return _personaRepositorio.ObtenerTodo()
-                .Select(x => new PersonaDto
-                {
-                    Id = x.Id,
-                    Apellido = x.Apellido,
-                    Nombre = x.Nombre,
-                    Celular = x.Celular,
-                    FechaNacimiento = x.FechaNacimiento,
-                    RowVersion = x.RowVersion
-                }).ToList();
-        }
+        //public IEnumerable<PersonaDto> GetAll()
+        //{
+        //    return _personaRepositorio.ObtenerTodo()
+        //        .Select(x => new PersonaDto
+        //        {
+        //            Id = x.Id,
+        //            Apellido = x.Apellido,
+        //            Nombre = x.Nombre,
+        //            Celular = x.Celular,
+        //            FechaNacimiento = x.FechaNacimiento,
+        //            RowVersion = x.RowVersion
+        //        }).ToList();
+        //}
 
         public IEnumerable<PersonaDto> GetByFilter(string cadenaBuscar)
         {

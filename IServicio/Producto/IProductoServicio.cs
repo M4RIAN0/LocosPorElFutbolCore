@@ -15,7 +15,7 @@ namespace IServicio.Producto
 
         IEnumerable<ProductoDto> GetByFilter(string cadenaBuscar); // obtener por filtro
 
-        IEnumerable<ProductoDto> GetAll();
+        //IEnumerable<ProductoDto> GetAll();
 
         ProductoDto GetById(long? Id);
     }

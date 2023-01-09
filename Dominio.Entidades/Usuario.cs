@@ -11,7 +11,6 @@ namespace Dominio.Entidades
     public partial class Usuario: EntidadBase
     {
 
-
         public string NombreUsuario { get; set; }
 
         public string Password { get; set; }
@@ -23,8 +22,10 @@ namespace Dominio.Entidades
         //propiedades de navegacion
         public long Cliente_Id { get; set; }
 
-        public virtual Personas_Cliente Personas_Cliente { get; set; }
+        public virtual Persona_Cliente Persona_Cliente { get; set; }
 
-        public virtual ICollection<Rol> Rols { get; set; }
+        public long Rol_Id { get; set; }
+
+        public virtual Rol Rol { get; set; }
     }
 }
