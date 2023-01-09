@@ -11,16 +11,13 @@ namespace Dominio.Entidades
     public partial class TipoTarjeta: EntidadBase
     {
 
-
-        [Required]
         public string Nombre { get; set; }
 
-        [Required]
         public string Tipo { get; set; }
 
 
         //propiedades de navegacion
       
-        public virtual ICollection<Tarjeta> Tarjetas1 { get; set; }
+        public virtual IEnumerable<Tarjeta> Tarjetas { get; set; }
     }
 }

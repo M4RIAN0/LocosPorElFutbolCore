@@ -18,9 +18,9 @@ namespace Dominio.Entidades
 
 
         //propiedades de navegacion
-        public long RubroId { get; set; }
+        public long Rubro_Id { get; set; }
 
-        public virtual ICollection<Producto> Productoes { get; set; }
+        public virtual IEnumerable<Producto> Productoes { get; set; }
 
         public virtual Rubro Rubro { get; set; }
     }

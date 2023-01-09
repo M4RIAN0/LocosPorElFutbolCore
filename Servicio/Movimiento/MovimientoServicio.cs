@@ -36,19 +36,19 @@ namespace Servicio.Movimiento
             _movimientoRepositorio.Save();
         }
 
-        public IEnumerable<MovimientoDto> GetAll()
-        {
-            return _movimientoRepositorio.ObtenerTodo()
-                .Select(x => new MovimientoDto()
-                {
-                    Id = x.Id,
-                    Codigo = x.Codigo,
-                    Fecha = x.Fecha,
-                    Tipo = x.Tipo,
-                    Monto = x.Monto
+        //public IEnumerable<MovimientoDto> GetAll()
+        //{
+        //    return _movimientoRepositorio.ObtenerTodo()
+        //        .Select(x => new MovimientoDto()
+        //        {
+        //            Id = x.Id,
+        //            Codigo = x.Codigo,
+        //            Fecha = x.Fecha,
+        //            Tipo = x.Tipo,
+        //            Monto = x.Monto
 
-                }).ToList();
-        }
+        //        }).ToList();
+        //}
 
         public IEnumerable<MovimientoDto> GetByFilter(string cadenaBuscar)
         {

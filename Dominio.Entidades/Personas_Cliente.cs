@@ -8,7 +8,7 @@ namespace Dominio.Entidades
 
     [Table("PersonasClientes")]
     [MetadataType(typeof(IPersonaCliente))]
-    public partial class Personas_Cliente: Persona
+    public partial class Persona_Cliente: Persona
     {
         
         public int Codigo { get; set; }
@@ -16,10 +16,10 @@ namespace Dominio.Entidades
 
         //propiedades de navegacion
        
-        public virtual ICollection<Factura> Facturas { get; set; }
+        public virtual IEnumerable<Factura> Facturas { get; set; }
 
-        public virtual Persona Persona { get; set; }
+        //public virtual Persona Persona { get; set; }
 
-        public virtual ICollection<Usuario> Usuarios { get; set; }
+        public virtual IEnumerable<Usuario> Usuarios { get; set; }
     }
 }

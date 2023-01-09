@@ -10,11 +10,10 @@ namespace Dominio.Entidades
     [MetadataType(typeof(IRol))]
     public partial class Rol: EntidadBase
     {
-
         public string Descripcion { get; set; }
 
         
         //propiedades de navegacion
-        public virtual ICollection<Usuario> Usuarios { get; set; }
+        public virtual IEnumerable<Usuario> Usuarios { get; set; }
     }
 }

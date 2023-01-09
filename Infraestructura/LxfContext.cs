@@ -1,13 +1,11 @@
-﻿ using Dominio.Entidades;
+﻿using Dominio.Entidades;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Infraestructura
 {
     public class LxfContext : DbContext
     {
+        
         public LxfContext(DbContextOptions<LxfContext> options) : base(options)
         {
 
@@ -26,7 +24,7 @@ namespace Infraestructura
         public DbSet<Marca> Marca { get; set; }
         public DbSet<Movimiento> Movimiento { get; set; }
         public DbSet<Persona> Persona { get; set; }
-        public DbSet<Personas_Cliente> Persona_Cliente { get; set; }
+        public DbSet<Persona_Cliente> Persona_Cliente { get; set; }
         public DbSet<Producto> Producto { get; set; }
         public DbSet<Provincia> Provincia { get; set; }
         public DbSet<Rol> Rol { get; set; }

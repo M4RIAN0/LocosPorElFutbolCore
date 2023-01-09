@@ -2,7 +2,7 @@
 
 namespace Dominio.Repositorio.PersonaCliente
 {
-    public interface IPersonaClienteRepositorio : IRepositorio<Entidades.Personas_Cliente>
+    public interface IPersonaClienteRepositorio : IRepositorio<Entidades.Persona_Cliente>
     {
 
     }

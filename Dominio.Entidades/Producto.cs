@@ -10,8 +10,6 @@ namespace Dominio.Entidades
     [MetadataType(typeof(IProducto))]
     public partial class Producto: EntidadBase
     {
-       
-
         public int Codigo { get; set; }
 
         public int CodigoBarra { get; set; }
@@ -22,21 +20,21 @@ namespace Dominio.Entidades
 
 
         //PROPIEDADES DE NAVEGACION
-        public long RubroId { get; set; }
+        public long Rubro_Id { get; set; }
 
-        public long MarcaId { get; set; }
+        public long Marca_Id { get; set; }
 
-        public long TalleId { get; set; }
+        public long Talle_Id { get; set; }
 
-        public long CategoriaId { get; set; }
+        public long Categoria_Id { get; set; }
 
-        public long SubRubroId { get; set; }
+        public long SubRubro_Id { get; set; }
 
         public virtual Categoria Categoria { get; set; }
 
-        public virtual ICollection<DetalleComprobante> DetalleComprobantes { get; set; }
+        public virtual IEnumerable<DetalleComprobante> DetalleComprobantes { get; set; }
 
-        public virtual ICollection<ListaPrecioProducto> ListaPrecioProductos { get; set; }
+        public virtual IEnumerable<ListaPrecioProducto> ListaPrecioProductos { get; set; }
 
         public virtual Marca Marca { get; set; }
 

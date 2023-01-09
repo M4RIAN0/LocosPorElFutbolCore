@@ -14,21 +14,22 @@ namespace Dominio.Entidades
         
         public DateTime Fecha { get; set; }
 
+        [Column(TypeName = "decimal(18,4)")]
         public decimal Total { get; set; }
 
 
 
         //propiedades de navegacion
 
-        public virtual ICollection<CuponDescuento> CuponDescuentos { get; set; }
+        public virtual IEnumerable<CuponDescuento> CuponDescuentos { get; set; }
 
        
-        public virtual ICollection<DetalleComprobante> DetalleComprobantes { get; set; }
+        public virtual IEnumerable<DetalleComprobante> DetalleComprobantes { get; set; }
 
         
-        public virtual ICollection<Envio> Envios { get; set; }
+        public virtual IEnumerable<Envio> Envios { get; set; }
 
         
-        public virtual ICollection<CuponDescuento> Facturas { get; set; }
+        public virtual IEnumerable<Factura> Facturas { get; set; }
     }
 }

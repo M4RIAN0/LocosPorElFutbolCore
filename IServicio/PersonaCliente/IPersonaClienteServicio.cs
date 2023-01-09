@@ -1,8 +1,5 @@
 ﻿using IServicio.PersonaCliente.Dto;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace IServicio.PersonaCliente
@@ -15,7 +12,7 @@ namespace IServicio.PersonaCliente
 
         IEnumerable<PersonaClienteDto> GetByFilter(string cadenaBuscar); // obtener por filtro
 
-        IEnumerable<PersonaClienteDto> GetAll();
+        Task <IEnumerable<PersonaClienteDto>> GetAll();
 
         PersonaClienteDto GetById(long? Id);
     }

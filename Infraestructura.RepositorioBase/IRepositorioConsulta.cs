@@ -2,13 +2,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Text;
+using System.Threading.Tasks;
 
 namespace Infraestructura.RepositorioBase
 {
     public interface IRepositorioConsulta<T> where T : EntidadBase
     {
-        IEnumerable<T> ObtenerTodo();
+        // reveer esto luego
+        Task <IEnumerable<T>> ObtenerTodo();
         IEnumerable<T> ObtenerTodo(params Expression<Func<T, Object>>[] includeProperties);
         IEnumerable<T> ObtenerTodo(string includeProperties);
 

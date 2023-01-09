@@ -15,7 +15,7 @@ namespace IServicio.Tarjeta
 
         IEnumerable<TarjetaDto> GetByFilter(string cadenaBuscar); // obtener por filtro
 
-        IEnumerable<TarjetaDto> GetAll();
+        //IEnumerable<TarjetaDto> GetAll();
 
         TarjetaDto GetById(long? Id);
     }

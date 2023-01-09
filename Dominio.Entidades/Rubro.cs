@@ -10,8 +10,6 @@ namespace Dominio.Entidades
     [MetadataType(typeof(IRubro))]
     public partial class Rubro: EntidadBase
     {
-
-
         public int Codigo { get; set; }
 
         public string Descripcion { get; set; }
@@ -19,6 +17,6 @@ namespace Dominio.Entidades
 
         //propiedades de navegacion
      
-        public virtual ICollection<SubRubro> SubRubros { get; set; }
+        public virtual IEnumerable<SubRubro> SubRubros { get; set; }
     }
 }

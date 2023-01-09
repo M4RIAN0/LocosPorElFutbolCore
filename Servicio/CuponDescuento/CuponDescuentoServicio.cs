@@ -45,7 +45,7 @@ namespace Servicio.CuponDescuento
                 Porcentaje = x.Porcentaje,
                 FechaEmision = x.FechaEmision,
                 FechaCaducidad = x.FechaEmision,
-                ComprobanteId = x.ComprobanteId,
+                ComprobanteId = x.Comprobante_Id,
                 //ComprobanteStr = x.Comprobante,
 
             });

@@ -10,10 +10,9 @@ namespace Dominio.Entidades
     [MetadataType(typeof(ICategoria))]
     public partial class Categoria: EntidadBase
     {
-       
         public string Descripcion { get; set; }
 
         //propiedad de navegacion
-        public virtual ICollection<Producto> Productos { get; set; }
+        public virtual IEnumerable<Producto> Productos { get; set; }
     }
 }

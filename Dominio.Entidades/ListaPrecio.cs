@@ -18,6 +18,6 @@ namespace Dominio.Entidades
         public bool EstaEliminado { get; set; }
 
         //propiedades de navegacion
-        public virtual ICollection<ListaPrecioProducto> ListaPrecioProductos { get; set; }
+        public virtual IEnumerable<ListaPrecioProducto> ListaPrecioProductos { get; set; }
     }
 }

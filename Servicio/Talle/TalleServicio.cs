@@ -36,19 +36,19 @@ namespace Servicio.Talle
             _talleRepositorio.Save();
         }
 
-        public IEnumerable<TalleDto> GetAll()
-        {
-            return _talleRepositorio.ObtenerTodo()
-                 .Select(x => new TalleDto
-                 {
-                     Id = x.Id,
-                     Codigo = x.Codigo,
-                     Descripcion = x.Descripcion,
-                     Numero = x.Numero,
-                     Letra = x.Letra
+        //public IEnumerable<TalleDto> GetAll()
+        //{
+        //    return _talleRepositorio.ObtenerTodo()
+        //         .Select(x => new TalleDto
+        //         {
+        //             Id = x.Id,
+        //             Codigo = x.Codigo,
+        //             Descripcion = x.Descripcion,
+        //             Numero = x.Numero,
+        //             Letra = x.Letra
 
-                 }).ToList();
-        }
+        //         }).ToList();
+        //}
 
         public IEnumerable<TalleDto> GetByFilter(string cadenaBuscar)
         {

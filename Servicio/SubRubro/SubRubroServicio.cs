@@ -22,7 +22,7 @@ namespace Servicio.SubRubro
             {
                 Codigo = Dto.Codigo,
                 Descripcion = Dto.Descripcion,
-                RubroId = Dto.RubroId,
+                Rubro_Id = Dto.RubroId,
                 RowVersion = Dto.RowVersion
             };
 
@@ -38,19 +38,19 @@ namespace Servicio.SubRubro
             _subRubroRepositorio.Save();
         }
 
-        public IEnumerable<SubRubroDto> GetAll()
-        {
-            return _subRubroRepositorio.ObtenerTodo()
-                .Select(x => new SubRubroDto
-                {
-                    Id = x.Id,
-                    Codigo = x.Codigo,
-                    Descripcion = x.Descripcion,
-                    RubroId = x.RubroId
-                }).ToList();
+        //public IEnumerable<SubRubroDto> GetAll()
+        //{
+        //    return _subRubroRepositorio.ObtenerTodo()
+        //        .Select(x => new SubRubroDto
+        //        {
+        //            Id = x.Id,
+        //            Codigo = x.Codigo,
+        //            Descripcion = x.Descripcion,
+        //            RubroId = x.Rubro_Id
+        //        }).ToList();
 
 
-        }
+        //}
 
         public IEnumerable<SubRubroDto> GetByFilter(string cadenaBuscar)
         {
@@ -63,7 +63,7 @@ namespace Servicio.SubRubro
                     Id = x.Id,
                     Codigo = x.Codigo,
                     Descripcion = x.Descripcion,
-                    RubroId = x.RubroId
+                    RubroId = x.Rubro_Id
 
                 }).ToList();
         }
@@ -77,7 +77,7 @@ namespace Servicio.SubRubro
                 Id = subRubro.Id,
                 Codigo = subRubro.Codigo,
                 Descripcion = subRubro.Descripcion,
-                RubroId = subRubro.RubroId
+                RubroId = subRubro.Rubro_Id
 
             };
         }

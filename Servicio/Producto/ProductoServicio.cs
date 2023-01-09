@@ -25,11 +25,11 @@ namespace Servicio.Producto
                 CodigoBarra = Dto.CodigoBarra,
                 Descripcion = Dto.Descripcion,
                 Stock = Dto.Stock,
-                RubroId = Dto.RubroId,
-                MarcaId = Dto.MarcaId,
-                TalleId = Dto.TalleId,
-                CategoriaId = Dto.CategoriaId,
-                SubRubroId = Dto.SubRubroId,
+                Rubro_Id = Dto.RubroId,
+                Marca_Id = Dto.MarcaId,
+                Talle_Id = Dto.TalleId,
+                Categoria_Id = Dto.CategoriaId,
+                SubRubro_Id = Dto.SubRubroId,
                 RowVersion = Dto.RowVersion
 
             };
@@ -44,25 +44,25 @@ namespace Servicio.Producto
             _productoRepositorio.Save();
         }
 
-        public IEnumerable<ProductoDto> GetAll()
-        {
-            return _productoRepositorio.ObtenerTodo()
-                 .Select(x => new ProductoDto
-                 {
-                     Id = x.Id,
-                     Codigo = x.Codigo,
-                     CodigoBarra = x.CodigoBarra,
-                     Descripcion = x.Descripcion,
-                     Stock = x.Stock,
-                     RubroId = x.RubroId,
-                     MarcaId = x.MarcaId,
-                     TalleId = x.TalleId,
-                     CategoriaId = x.CategoriaId,
-                     SubRubroId = x.SubRubroId,
-                     RowVersion = x.RowVersion
+        //public IEnumerable<ProductoDto> GetAll()
+        //{
+        //    return _productoRepositorio.ObtenerTodo()
+        //         .Select(x => new ProductoDto
+        //         {
+        //             Id = x.Id,
+        //             Codigo = x.Codigo,
+        //             CodigoBarra = x.CodigoBarra,
+        //             Descripcion = x.Descripcion,
+        //             Stock = x.Stock,
+        //             RubroId = x.Rubro_Id,
+        //             MarcaId = x.Marca_Id,
+        //             TalleId = x.Talle_Id,
+        //             CategoriaId = x.Categoria_Id,
+        //             SubRubroId = x.SubRubro_Id,
+        //             RowVersion = x.RowVersion
 
-                 }).ToList();
-        }
+        //         }).ToList();
+        //}
 
         public IEnumerable<ProductoDto> GetByFilter(string cadenaBuscar)
         {
@@ -77,11 +77,11 @@ namespace Servicio.Producto
                    CodigoBarra = x.CodigoBarra,
                    Descripcion = x.Descripcion,
                    Stock = x.Stock,
-                   RubroId = x.RubroId,
-                   MarcaId = x.MarcaId,
-                   TalleId = x.TalleId,
-                   CategoriaId = x.CategoriaId,
-                   SubRubroId = x.SubRubroId,
+                   RubroId = x.Rubro_Id,
+                   MarcaId = x.Marca_Id,
+                   TalleId = x.Talle_Id,
+                   CategoriaId = x.Categoria_Id,
+                   SubRubroId = x.SubRubro_Id,
                    RowVersion = x.RowVersion
 
                }).ToList();
@@ -98,11 +98,11 @@ namespace Servicio.Producto
                 CodigoBarra = producto.CodigoBarra,
                 Descripcion = producto.Descripcion,
                 Stock = producto.Stock,
-                RubroId = producto.RubroId,
-                MarcaId = producto.MarcaId,
-                TalleId = producto.TalleId,
-                CategoriaId = producto.CategoriaId,
-                SubRubroId = producto.SubRubroId,
+                RubroId = producto.Rubro_Id,
+                MarcaId = producto.Marca_Id,
+                TalleId = producto.Talle_Id,
+                CategoriaId = producto.Categoria_Id,
+                SubRubroId = producto.SubRubro_Id,
                 RowVersion = producto.RowVersion
 
             };
@@ -113,7 +113,7 @@ namespace Servicio.Producto
             var producto = _productoRepositorio.ObtenerPorId(Dto.Id);
 
             producto.Descripcion = Dto.Descripcion;
-            producto.CategoriaId = Dto.CategoriaId;
+            producto.Categoria_Id = Dto.CategoriaId;
         }
     }
 }

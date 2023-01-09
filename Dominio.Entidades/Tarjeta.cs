@@ -26,9 +26,9 @@ namespace Dominio.Entidades
 
 
         //propiedades de navegacion
-        public long BancoId { get; set; }
+        public long Banco_Id { get; set; }
 
-        public long TipoTarjetaId { get; set; }
+        public long TipoTarjeta_Id { get; set; }
 
         public virtual Banco Banco { get; set; }
 
