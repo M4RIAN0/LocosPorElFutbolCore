@@ -778,6 +778,21 @@ namespace Infraestructura.Migrations
                     b.ToTable("PersonasClientes");
 
                     b.HasDiscriminator().HasValue("Persona_Cliente");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            Apellido = "Martinez",
+                            Celular = "123",
+                            Direccion = "Jujuy 362",
+                            Dni = "Direccion",
+                            Email = "marcosmartinezmelek@gmail.com",
+                            FechaNacimiento = new DateTime(2024, 7, 24, 0, 0, 0, 0, DateTimeKind.Local),
+                            Nombre = "Marcos",
+                            Sexo = "Masculino",
+                            Codigo = 123
+                        });
                 });
 
             modelBuilder.Entity("Dominio.Entidades.CuponDescuento", b =>

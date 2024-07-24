@@ -31,7 +31,7 @@ namespace LxF.API
 
             services.AddSwaggerGen(config => config.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo()
             {
-                Title = "Locos x el Futbol Swagger"
+                Title = "Locos x el Futbol"
             }));
 
             // Servicios

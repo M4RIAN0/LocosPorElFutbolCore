@@ -52,6 +52,7 @@ namespace Servicio.PersonaCliente
 
             return list.Select(x => new PersonaClienteDto
             {
+                Id = 1,
                 Codigo = x.Codigo,
                 Apellido = x.Apellido,
                 Nombre = x.Nombre,

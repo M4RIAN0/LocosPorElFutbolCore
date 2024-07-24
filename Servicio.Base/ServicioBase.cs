@@ -11,7 +11,7 @@ namespace Servicio.Base
 
         public ServicioBase()
         {
-            //Context = new LxfContext();// corregir error
+            Context = new LxfContext();// corregir error
         }
     }
 }
