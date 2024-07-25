@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Infraestructura.Migrations
 {
-    public partial class Initial : Migration
+    public partial class _2024 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -529,6 +529,11 @@ namespace Infraestructura.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
+
+            migrationBuilder.InsertData(
+                table: "Personas",
+                columns: new[] { "Id", "Apellido", "Celular", "Direccion", "Discriminator", "Dni", "Email", "FechaNacimiento", "Nombre", "Sexo", "Codigo" },
+                values: new object[] { 1L, "Martinez", "123", "Jujuy 362", "Persona_Cliente", "Direccion", "marcosmartinezmelek@gmail.com", new DateTime(2024, 7, 24, 0, 0, 0, 0, DateTimeKind.Local), "Marcos", "Masculino", 123 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_CuponDescuentos_ComprobanteId",

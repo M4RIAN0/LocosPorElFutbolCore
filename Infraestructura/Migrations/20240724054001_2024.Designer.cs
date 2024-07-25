@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infraestructura.Migrations
 {
     [DbContext(typeof(LxfContext))]
-    [Migration("20220521071413_Initial")]
-    partial class Initial
+    [Migration("20240724054001_2024")]
+    partial class _2024
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -780,6 +780,21 @@ namespace Infraestructura.Migrations
                     b.ToTable("PersonasClientes");
 
                     b.HasDiscriminator().HasValue("Persona_Cliente");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            Apellido = "Martinez",
+                            Celular = "123",
+                            Direccion = "Jujuy 362",
+                            Dni = "Direccion",
+                            Email = "marcosmartinezmelek@gmail.com",
+                            FechaNacimiento = new DateTime(2024, 7, 24, 0, 0, 0, 0, DateTimeKind.Local),
+                            Nombre = "Marcos",
+                            Sexo = "Masculino",
+                            Codigo = 123
+                        });
                 });
 
             modelBuilder.Entity("Dominio.Entidades.CuponDescuento", b =>

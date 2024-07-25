@@ -1,15 +1,17 @@
 ﻿using Dominio.Entidades;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace Infraestructura
 {
     public class LxfContext : DbContext
     {
-        
-        public LxfContext(DbContextOptions<LxfContext> options) : base(options)
+        public LxfContext()
         {
-
         }
+
+        public LxfContext(DbContextOptions<LxfContext> options) : base(options)
+        { }
 
         public DbSet<Banco> Banco { get; set; }
         public DbSet<Categoria> Categoria { get; set; }
@@ -33,14 +35,27 @@ namespace Infraestructura
         public DbSet<Talle> Talle { get; set; }
         public DbSet<Tarjeta> Tarjeta { get; set; }
         public DbSet<TipoTarjeta> TipoTarjeta { get; set; }
-        public DbSet<Usuario> Usuario { get; set;}
+        public DbSet<Usuario> Usuario { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Persona_Cliente>().HasData(new Persona_Cliente
+            {
+                Id = 1,
+                Codigo = 123,
+                Apellido = "Martinez",
+                Nombre = "Marcos",
+                Dni = "Direccion",
+                Direccion = "Jujuy 362",
+                Sexo = "Masculino",
+                FechaNacimiento = DateTime.Today,
+                Celular = "123",
+                Email = "marcosmartinezmelek@gmail.com"
+            });
+        }
     }
-
-
-
-
-
-
-
-
 }
+
+
