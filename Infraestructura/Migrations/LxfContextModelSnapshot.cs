@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
+#nullable disable
+
 namespace Infraestructura.Migrations
 {
     [DbContext(typeof(LxfContext))]
@@ -15,16 +17,18 @@ namespace Infraestructura.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.23")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("ProductVersion", "8.0.7")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("Dominio.Entidades.Banco", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Nombre")
                         .HasColumnType("nvarchar(max)");
@@ -43,8 +47,9 @@ namespace Infraestructura.Migrations
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Descripcion")
                         .HasColumnType("nvarchar(max)");
@@ -63,8 +68,9 @@ namespace Infraestructura.Migrations
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime>("Fecha")
                         .HasColumnType("datetime2");
@@ -86,8 +92,9 @@ namespace Infraestructura.Migrations
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<long?>("ComprobanteId")
                         .HasColumnType("bigint");
@@ -128,8 +135,9 @@ namespace Infraestructura.Migrations
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<int>("Cantidad")
                         .HasColumnType("int");
@@ -179,8 +187,9 @@ namespace Infraestructura.Migrations
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<long?>("ComprobanteId")
                         .HasColumnType("bigint");
@@ -218,8 +227,9 @@ namespace Infraestructura.Migrations
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<long>("ClienteId")
                         .HasColumnType("bigint");
@@ -271,8 +281,9 @@ namespace Infraestructura.Migrations
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<int>("Codigo")
                         .HasColumnType("int");
@@ -297,8 +308,9 @@ namespace Infraestructura.Migrations
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime>("FechaActualizacion")
                         .HasColumnType("datetime2");
@@ -339,8 +351,9 @@ namespace Infraestructura.Migrations
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Nombre")
                         .HasColumnType("nvarchar(max)");
@@ -367,8 +380,9 @@ namespace Infraestructura.Migrations
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<int>("Codigo")
                         .HasColumnType("int");
@@ -390,8 +404,9 @@ namespace Infraestructura.Migrations
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<int>("Codigo")
                         .HasColumnType("int");
@@ -419,8 +434,9 @@ namespace Infraestructura.Migrations
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Apellido")
                         .HasColumnType("nvarchar(max)");
@@ -429,10 +445,6 @@ namespace Infraestructura.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Direccion")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Dni")
@@ -459,15 +471,16 @@ namespace Infraestructura.Migrations
 
                     b.ToTable("Personas");
 
-                    b.HasDiscriminator<string>("Discriminator").HasValue("Persona");
+                    b.UseTptMappingStrategy();
                 });
 
             modelBuilder.Entity("Dominio.Entidades.Producto", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<long?>("CategoriaId")
                         .HasColumnType("bigint");
@@ -530,8 +543,9 @@ namespace Infraestructura.Migrations
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("CP")
                         .HasColumnType("nvarchar(max)");
@@ -553,8 +567,9 @@ namespace Infraestructura.Migrations
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Descripcion")
                         .HasColumnType("nvarchar(max)");
@@ -573,8 +588,9 @@ namespace Infraestructura.Migrations
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<int>("Codigo")
                         .HasColumnType("int");
@@ -596,8 +612,9 @@ namespace Infraestructura.Migrations
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<int>("Codigo")
                         .HasColumnType("int");
@@ -627,8 +644,9 @@ namespace Infraestructura.Migrations
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<int>("Codigo")
                         .HasColumnType("int");
@@ -656,8 +674,9 @@ namespace Infraestructura.Migrations
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<long?>("BancoId")
                         .HasColumnType("bigint");
@@ -707,8 +726,9 @@ namespace Infraestructura.Migrations
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("Nombre")
                         .HasColumnType("nvarchar(max)");
@@ -730,8 +750,9 @@ namespace Infraestructura.Migrations
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<long>("Cliente_Id")
                         .HasColumnType("bigint");
@@ -777,8 +798,6 @@ namespace Infraestructura.Migrations
 
                     b.ToTable("PersonasClientes");
 
-                    b.HasDiscriminator().HasValue("Persona_Cliente");
-
                     b.HasData(
                         new
                         {
@@ -788,7 +807,7 @@ namespace Infraestructura.Migrations
                             Direccion = "Jujuy 362",
                             Dni = "Direccion",
                             Email = "marcosmartinezmelek@gmail.com",
-                            FechaNacimiento = new DateTime(2024, 7, 24, 0, 0, 0, 0, DateTimeKind.Local),
+                            FechaNacimiento = new DateTime(2024, 8, 7, 0, 0, 0, 0, DateTimeKind.Local),
                             Nombre = "Marcos",
                             Sexo = "Masculino",
                             Codigo = 123
@@ -804,6 +823,8 @@ namespace Infraestructura.Migrations
                     b.HasOne("Dominio.Entidades.Movimiento", null)
                         .WithMany("Facturas")
                         .HasForeignKey("MovimientoId");
+
+                    b.Navigation("Comprobante");
                 });
 
             modelBuilder.Entity("Dominio.Entidades.DetalleComprobante", b =>
@@ -815,6 +836,10 @@ namespace Infraestructura.Migrations
                     b.HasOne("Dominio.Entidades.Producto", "Producto")
                         .WithMany("DetalleComprobantes")
                         .HasForeignKey("ProductoId");
+
+                    b.Navigation("Comprobante");
+
+                    b.Navigation("Producto");
                 });
 
             modelBuilder.Entity("Dominio.Entidades.Envio", b =>
@@ -826,6 +851,10 @@ namespace Infraestructura.Migrations
                     b.HasOne("Dominio.Entidades.Localidad", "Localidad")
                         .WithMany("Envios")
                         .HasForeignKey("LocalidadId");
+
+                    b.Navigation("Comprobante");
+
+                    b.Navigation("Localidad");
                 });
 
             modelBuilder.Entity("Dominio.Entidades.Factura", b =>
@@ -841,6 +870,12 @@ namespace Infraestructura.Migrations
                     b.HasOne("Dominio.Entidades.Persona_Cliente", "Personas_Cliente")
                         .WithMany("Facturas")
                         .HasForeignKey("Personas_ClienteId");
+
+                    b.Navigation("Comprobante");
+
+                    b.Navigation("Movimiento");
+
+                    b.Navigation("Personas_Cliente");
                 });
 
             modelBuilder.Entity("Dominio.Entidades.ListaPrecioProducto", b =>
@@ -852,6 +887,10 @@ namespace Infraestructura.Migrations
                     b.HasOne("Dominio.Entidades.Producto", "Producto")
                         .WithMany("ListaPrecioProductos")
                         .HasForeignKey("ProductoId");
+
+                    b.Navigation("ListaPrecio");
+
+                    b.Navigation("Producto");
                 });
 
             modelBuilder.Entity("Dominio.Entidades.Localidad", b =>
@@ -859,6 +898,8 @@ namespace Infraestructura.Migrations
                     b.HasOne("Dominio.Entidades.Provincia", "Provincia")
                         .WithMany("Localidades")
                         .HasForeignKey("ProvinciaId");
+
+                    b.Navigation("Provincia");
                 });
 
             modelBuilder.Entity("Dominio.Entidades.Producto", b =>
@@ -878,6 +919,14 @@ namespace Infraestructura.Migrations
                     b.HasOne("Dominio.Entidades.Talle", "Talle")
                         .WithMany("Productos")
                         .HasForeignKey("TalleId");
+
+                    b.Navigation("Categoria");
+
+                    b.Navigation("Marca");
+
+                    b.Navigation("SubRubro");
+
+                    b.Navigation("Talle");
                 });
 
             modelBuilder.Entity("Dominio.Entidades.SubRubro", b =>
@@ -885,6 +934,8 @@ namespace Infraestructura.Migrations
                     b.HasOne("Dominio.Entidades.Rubro", "Rubro")
                         .WithMany("SubRubros")
                         .HasForeignKey("RubroId");
+
+                    b.Navigation("Rubro");
                 });
 
             modelBuilder.Entity("Dominio.Entidades.Tarjeta", b =>
@@ -896,6 +947,10 @@ namespace Infraestructura.Migrations
                     b.HasOne("Dominio.Entidades.TipoTarjeta", "TipoTarjeta")
                         .WithMany("Tarjetas")
                         .HasForeignKey("TipoTarjetaId");
+
+                    b.Navigation("Banco");
+
+                    b.Navigation("TipoTarjeta");
                 });
 
             modelBuilder.Entity("Dominio.Entidades.Usuario", b =>
@@ -907,6 +962,104 @@ namespace Infraestructura.Migrations
                     b.HasOne("Dominio.Entidades.Rol", "Rol")
                         .WithMany("Usuarios")
                         .HasForeignKey("RolId");
+
+                    b.Navigation("Persona_Cliente");
+
+                    b.Navigation("Rol");
+                });
+
+            modelBuilder.Entity("Dominio.Entidades.Persona_Cliente", b =>
+                {
+                    b.HasOne("Dominio.Entidades.Persona", null)
+                        .WithOne()
+                        .HasForeignKey("Dominio.Entidades.Persona_Cliente", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Dominio.Entidades.Banco", b =>
+                {
+                    b.Navigation("Tarjetas");
+                });
+
+            modelBuilder.Entity("Dominio.Entidades.Categoria", b =>
+                {
+                    b.Navigation("Productos");
+                });
+
+            modelBuilder.Entity("Dominio.Entidades.Comprobante", b =>
+                {
+                    b.Navigation("CuponDescuentos");
+
+                    b.Navigation("DetalleComprobantes");
+
+                    b.Navigation("Envios");
+
+                    b.Navigation("Facturas");
+                });
+
+            modelBuilder.Entity("Dominio.Entidades.ListaPrecio", b =>
+                {
+                    b.Navigation("ListaPrecioProductos");
+                });
+
+            modelBuilder.Entity("Dominio.Entidades.Localidad", b =>
+                {
+                    b.Navigation("Envios");
+                });
+
+            modelBuilder.Entity("Dominio.Entidades.Marca", b =>
+                {
+                    b.Navigation("Productos");
+                });
+
+            modelBuilder.Entity("Dominio.Entidades.Movimiento", b =>
+                {
+                    b.Navigation("Facturas");
+                });
+
+            modelBuilder.Entity("Dominio.Entidades.Producto", b =>
+                {
+                    b.Navigation("DetalleComprobantes");
+
+                    b.Navigation("ListaPrecioProductos");
+                });
+
+            modelBuilder.Entity("Dominio.Entidades.Provincia", b =>
+                {
+                    b.Navigation("Localidades");
+                });
+
+            modelBuilder.Entity("Dominio.Entidades.Rol", b =>
+                {
+                    b.Navigation("Usuarios");
+                });
+
+            modelBuilder.Entity("Dominio.Entidades.Rubro", b =>
+                {
+                    b.Navigation("SubRubros");
+                });
+
+            modelBuilder.Entity("Dominio.Entidades.SubRubro", b =>
+                {
+                    b.Navigation("Productoes");
+                });
+
+            modelBuilder.Entity("Dominio.Entidades.Talle", b =>
+                {
+                    b.Navigation("Productos");
+                });
+
+            modelBuilder.Entity("Dominio.Entidades.TipoTarjeta", b =>
+                {
+                    b.Navigation("Tarjetas");
+                });
+
+            modelBuilder.Entity("Dominio.Entidades.Persona_Cliente", b =>
+                {
+                    b.Navigation("Facturas");
+
+                    b.Navigation("Usuarios");
                 });
 #pragma warning restore 612, 618
         }

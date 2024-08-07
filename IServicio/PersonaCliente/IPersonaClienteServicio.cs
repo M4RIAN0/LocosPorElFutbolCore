@@ -10,10 +10,10 @@ namespace IServicio.PersonaCliente
         void Update(PersonaClienteDto Dto);
         void Delete(long Id);
 
-        IEnumerable<PersonaClienteDto> GetByFilter(string cadenaBuscar);
+        Task <IEnumerable<PersonaClienteDto>> GetByFilter(string cadenaBuscar);
 
         Task <IEnumerable<PersonaClienteDto>> GetAll();
 
-        PersonaClienteDto GetById(long? Id);
+        Task <PersonaClienteDto> GetById(long? Id);
     }
 }

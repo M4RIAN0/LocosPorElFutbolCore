@@ -9,7 +9,7 @@ namespace Infraestructura.RepositorioBase
     public interface IRepositorioConsulta<T> where T : EntidadBase
     {
         // reveer esto luego
-        Task <IEnumerable<T>> ObtenerTodo();
+        IEnumerable<T> ObtenerTodo();
         IEnumerable<T> ObtenerTodo(params Expression<Func<T, Object>>[] includeProperties);
         IEnumerable<T> ObtenerTodo(string includeProperties);
 

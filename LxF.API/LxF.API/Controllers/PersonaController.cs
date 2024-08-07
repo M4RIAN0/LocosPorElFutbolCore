@@ -1,10 +1,6 @@
-﻿using Dominio.Entidades.MetaData;
-using Infraestructura;
+﻿using Infraestructura;
 using IServicio.PersonaCliente;
-using IServicio.PersonaCliente.Dto;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace LxF.API.Controllers
 {
@@ -22,9 +18,16 @@ namespace LxF.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<PersonaClienteDto>>> GetAllPersonas()
+        public async Task<IActionResult> GetAllPersonas()
         {
-            return Ok (await _personaClienteServicio.GetAll());  
+            return Ok(await _personaClienteServicio.GetAll());
+        }
+
+        [HttpGet]
+        [Route("{id:long}")]
+        public async Task<IActionResult> GetPersonaById(long? id)
+        {
+            return Ok(await _personaClienteServicio.GetById(id));
         }
     }
 }
