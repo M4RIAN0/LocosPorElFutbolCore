@@ -119,9 +119,9 @@ namespace Infraestructura.Repositorio
 
         // Includes
 
-        public async Task<IEnumerable<T>> ObtenerTodo()
+        public IEnumerable<T> ObtenerTodo()
         {
-          return await Context.Set<T>().AsNoTracking().ToListAsync();
+          return Context.Set<T>().AsNoTracking().ToList();
         }
 
         public IEnumerable<T> ObtenerTodo(params Expression<Func<T, Object>>[] includeProperties)

@@ -1,10 +1,10 @@
+using Dominio.Entidades.MetaData;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Dominio.Entidades
 {
-    using Dominio.Entidades.MetaData;
-    using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-
     [Table("PersonasClientes")]
     [MetadataType(typeof(IPersonaCliente))]
     public partial class Persona_Cliente: Persona

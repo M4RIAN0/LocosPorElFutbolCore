@@ -1,20 +1,24 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
+#nullable disable
+
 namespace Infraestructura.Migrations
 {
-    public partial class _2024 : Migration
+    /// <inheritdoc />
+    public partial class newagosto : Migration
     {
+        /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
                 name: "Bancos",
                 columns: table => new
                 {
-                    Id = table.Column<long>(nullable: false)
+                    Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    RowVersion = table.Column<byte[]>(rowVersion: true, nullable: true),
-                    Nombre = table.Column<string>(nullable: true)
+                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -25,10 +29,10 @@ namespace Infraestructura.Migrations
                 name: "Categorias",
                 columns: table => new
                 {
-                    Id = table.Column<long>(nullable: false)
+                    Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    RowVersion = table.Column<byte[]>(rowVersion: true, nullable: true),
-                    Descripcion = table.Column<string>(nullable: true)
+                    Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -39,11 +43,11 @@ namespace Infraestructura.Migrations
                 name: "Comprobantes",
                 columns: table => new
                 {
-                    Id = table.Column<long>(nullable: false)
+                    Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    RowVersion = table.Column<byte[]>(rowVersion: true, nullable: true),
-                    Fecha = table.Column<DateTime>(nullable: false),
-                    Total = table.Column<decimal>(type: "decimal(18,4)", nullable: false)
+                    Fecha = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Total = table.Column<decimal>(type: "decimal(18,4)", nullable: false),
+                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -54,12 +58,12 @@ namespace Infraestructura.Migrations
                 name: "ListaPrecios",
                 columns: table => new
                 {
-                    Id = table.Column<long>(nullable: false)
+                    Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    RowVersion = table.Column<byte[]>(rowVersion: true, nullable: true),
-                    Codigo = table.Column<int>(nullable: false),
-                    Descripcion = table.Column<string>(nullable: true),
-                    EstaEliminado = table.Column<bool>(nullable: false)
+                    Codigo = table.Column<int>(type: "int", nullable: false),
+                    Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EstaEliminado = table.Column<bool>(type: "bit", nullable: false),
+                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -70,11 +74,11 @@ namespace Infraestructura.Migrations
                 name: "Marcas",
                 columns: table => new
                 {
-                    Id = table.Column<long>(nullable: false)
+                    Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    RowVersion = table.Column<byte[]>(rowVersion: true, nullable: true),
-                    Codigo = table.Column<int>(nullable: false),
-                    Descripcion = table.Column<string>(nullable: true)
+                    Codigo = table.Column<int>(type: "int", nullable: false),
+                    Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -85,13 +89,13 @@ namespace Infraestructura.Migrations
                 name: "Movimientos",
                 columns: table => new
                 {
-                    Id = table.Column<long>(nullable: false)
+                    Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    RowVersion = table.Column<byte[]>(rowVersion: true, nullable: true),
-                    Fecha = table.Column<DateTime>(nullable: false),
-                    Tipo = table.Column<string>(nullable: true),
+                    Fecha = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Tipo = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Monto = table.Column<decimal>(type: "decimal(18,4)", nullable: false),
-                    Codigo = table.Column<int>(nullable: false)
+                    Codigo = table.Column<int>(type: "int", nullable: false),
+                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -102,19 +106,17 @@ namespace Infraestructura.Migrations
                 name: "Personas",
                 columns: table => new
                 {
-                    Id = table.Column<long>(nullable: false)
+                    Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    RowVersion = table.Column<byte[]>(rowVersion: true, nullable: true),
-                    Apellido = table.Column<string>(nullable: true),
-                    Nombre = table.Column<string>(nullable: true),
-                    Dni = table.Column<string>(nullable: true),
-                    Direccion = table.Column<string>(nullable: true),
-                    Sexo = table.Column<string>(nullable: true),
-                    FechaNacimiento = table.Column<DateTime>(nullable: false),
-                    Celular = table.Column<string>(nullable: true),
-                    Email = table.Column<string>(nullable: true),
-                    Discriminator = table.Column<string>(nullable: false),
-                    Codigo = table.Column<int>(nullable: true)
+                    Apellido = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Dni = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Direccion = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Sexo = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FechaNacimiento = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Celular = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -125,11 +127,11 @@ namespace Infraestructura.Migrations
                 name: "Provincias",
                 columns: table => new
                 {
-                    Id = table.Column<long>(nullable: false)
+                    Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    RowVersion = table.Column<byte[]>(rowVersion: true, nullable: true),
-                    Nombre = table.Column<string>(nullable: true),
-                    CP = table.Column<string>(nullable: true)
+                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CP = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -140,10 +142,10 @@ namespace Infraestructura.Migrations
                 name: "Roles",
                 columns: table => new
                 {
-                    Id = table.Column<long>(nullable: false)
+                    Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    RowVersion = table.Column<byte[]>(rowVersion: true, nullable: true),
-                    Descripcion = table.Column<string>(nullable: true)
+                    Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -154,11 +156,11 @@ namespace Infraestructura.Migrations
                 name: "Rubros",
                 columns: table => new
                 {
-                    Id = table.Column<long>(nullable: false)
+                    Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    RowVersion = table.Column<byte[]>(rowVersion: true, nullable: true),
-                    Codigo = table.Column<int>(nullable: false),
-                    Descripcion = table.Column<string>(nullable: true)
+                    Codigo = table.Column<int>(type: "int", nullable: false),
+                    Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -169,13 +171,13 @@ namespace Infraestructura.Migrations
                 name: "Talles",
                 columns: table => new
                 {
-                    Id = table.Column<long>(nullable: false)
+                    Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    RowVersion = table.Column<byte[]>(rowVersion: true, nullable: true),
-                    Codigo = table.Column<int>(nullable: false),
-                    Descripcion = table.Column<string>(nullable: true),
-                    Numero = table.Column<int>(nullable: false),
-                    Letra = table.Column<string>(nullable: true)
+                    Codigo = table.Column<int>(type: "int", nullable: false),
+                    Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Numero = table.Column<int>(type: "int", nullable: false),
+                    Letra = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -186,11 +188,11 @@ namespace Infraestructura.Migrations
                 name: "TipoTarjetas",
                 columns: table => new
                 {
-                    Id = table.Column<long>(nullable: false)
+                    Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    RowVersion = table.Column<byte[]>(rowVersion: true, nullable: true),
-                    Nombre = table.Column<string>(nullable: true),
-                    Tipo = table.Column<string>(nullable: true)
+                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Tipo = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -201,16 +203,16 @@ namespace Infraestructura.Migrations
                 name: "CuponDescuentos",
                 columns: table => new
                 {
-                    Id = table.Column<long>(nullable: false)
+                    Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    RowVersion = table.Column<byte[]>(rowVersion: true, nullable: true),
-                    Descripcion = table.Column<string>(nullable: true),
+                    Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Porcentaje = table.Column<decimal>(type: "decimal(18,4)", nullable: false),
-                    FechaEmision = table.Column<DateTime>(nullable: false),
-                    FechaCaducidad = table.Column<DateTime>(nullable: false),
-                    Comprobante_Id = table.Column<long>(nullable: false),
-                    ComprobanteId = table.Column<long>(nullable: true),
-                    MovimientoId = table.Column<long>(nullable: true)
+                    FechaEmision = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    FechaCaducidad = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Comprobante_Id = table.Column<long>(type: "bigint", nullable: false),
+                    ComprobanteId = table.Column<long>(type: "bigint", nullable: true),
+                    MovimientoId = table.Column<long>(type: "bigint", nullable: true),
+                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -219,67 +221,42 @@ namespace Infraestructura.Migrations
                         name: "FK_CuponDescuentos_Comprobantes_ComprobanteId",
                         column: x => x.ComprobanteId,
                         principalTable: "Comprobantes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_CuponDescuentos_Movimientos_MovimientoId",
                         column: x => x.MovimientoId,
                         principalTable: "Movimientos",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
-                name: "Facturas",
+                name: "PersonasClientes",
                 columns: table => new
                 {
-                    Id = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    RowVersion = table.Column<byte[]>(rowVersion: true, nullable: true),
-                    Fecha = table.Column<DateTime>(nullable: false),
-                    Estado = table.Column<string>(nullable: true),
-                    Total = table.Column<decimal>(type: "decimal(18,4)", nullable: false),
-                    Codigo = table.Column<int>(nullable: false),
-                    ClienteId = table.Column<long>(nullable: false),
-                    Comprobante_Id = table.Column<long>(nullable: false),
-                    Movimiento_Id = table.Column<long>(nullable: false),
-                    ComprobanteId = table.Column<long>(nullable: true),
-                    Personas_ClienteId = table.Column<long>(nullable: true),
-                    MovimientoId = table.Column<long>(nullable: true)
+                    Id = table.Column<long>(type: "bigint", nullable: false),
+                    Codigo = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Facturas", x => x.Id);
+                    table.PrimaryKey("PK_PersonasClientes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Facturas_Comprobantes_ComprobanteId",
-                        column: x => x.ComprobanteId,
-                        principalTable: "Comprobantes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Facturas_Movimientos_MovimientoId",
-                        column: x => x.MovimientoId,
-                        principalTable: "Movimientos",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Facturas_Personas_Personas_ClienteId",
-                        column: x => x.Personas_ClienteId,
+                        name: "FK_PersonasClientes_Personas_Id",
+                        column: x => x.Id,
                         principalTable: "Personas",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Localidades",
                 columns: table => new
                 {
-                    Id = table.Column<long>(nullable: false)
+                    Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    RowVersion = table.Column<byte[]>(rowVersion: true, nullable: true),
-                    Nombre = table.Column<string>(nullable: true),
-                    Provincia_Id = table.Column<long>(nullable: false),
-                    ProvinciaId = table.Column<long>(nullable: true)
+                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Provincia_Id = table.Column<long>(type: "bigint", nullable: false),
+                    ProvinciaId = table.Column<long>(type: "bigint", nullable: true),
+                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -288,53 +265,20 @@ namespace Infraestructura.Migrations
                         name: "FK_Localidades_Provincias_ProvinciaId",
                         column: x => x.ProvinciaId,
                         principalTable: "Provincias",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Usuarios",
-                columns: table => new
-                {
-                    Id = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    RowVersion = table.Column<byte[]>(rowVersion: true, nullable: true),
-                    NombreUsuario = table.Column<string>(nullable: true),
-                    Password = table.Column<string>(nullable: true),
-                    EstaBloqueado = table.Column<bool>(nullable: false),
-                    Cliente_Id = table.Column<long>(nullable: false),
-                    Persona_ClienteId = table.Column<long>(nullable: true),
-                    Rol_Id = table.Column<long>(nullable: false),
-                    RolId = table.Column<long>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Usuarios", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Usuarios_Personas_Persona_ClienteId",
-                        column: x => x.Persona_ClienteId,
-                        principalTable: "Personas",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Usuarios_Roles_RolId",
-                        column: x => x.RolId,
-                        principalTable: "Roles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
                 name: "SubRubros",
                 columns: table => new
                 {
-                    Id = table.Column<long>(nullable: false)
+                    Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    RowVersion = table.Column<byte[]>(rowVersion: true, nullable: true),
-                    Codigo = table.Column<int>(nullable: false),
-                    Descripcion = table.Column<string>(nullable: true),
-                    Rubro_Id = table.Column<long>(nullable: false),
-                    RubroId = table.Column<long>(nullable: true)
+                    Codigo = table.Column<int>(type: "int", nullable: false),
+                    Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Rubro_Id = table.Column<long>(type: "bigint", nullable: false),
+                    RubroId = table.Column<long>(type: "bigint", nullable: true),
+                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -343,27 +287,26 @@ namespace Infraestructura.Migrations
                         name: "FK_SubRubros_Rubros_RubroId",
                         column: x => x.RubroId,
                         principalTable: "Rubros",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
                 name: "Tarjetas",
                 columns: table => new
                 {
-                    Id = table.Column<long>(nullable: false)
+                    Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    RowVersion = table.Column<byte[]>(rowVersion: true, nullable: true),
-                    NombreTitular = table.Column<string>(nullable: true),
-                    Numero = table.Column<int>(nullable: false),
-                    DniTitular = table.Column<string>(nullable: true),
-                    CodigoSeguridad = table.Column<int>(nullable: false),
-                    FechaExpiracion = table.Column<DateTime>(nullable: false),
-                    Cuotas = table.Column<int>(nullable: false),
-                    Banco_Id = table.Column<long>(nullable: false),
-                    TipoTarjeta_Id = table.Column<long>(nullable: false),
-                    BancoId = table.Column<long>(nullable: true),
-                    TipoTarjetaId = table.Column<long>(nullable: true)
+                    NombreTitular = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Numero = table.Column<int>(type: "int", nullable: false),
+                    DniTitular = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CodigoSeguridad = table.Column<int>(type: "int", nullable: false),
+                    FechaExpiracion = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Cuotas = table.Column<int>(type: "int", nullable: false),
+                    Banco_Id = table.Column<long>(type: "bigint", nullable: false),
+                    TipoTarjeta_Id = table.Column<long>(type: "bigint", nullable: false),
+                    BancoId = table.Column<long>(type: "bigint", nullable: true),
+                    TipoTarjetaId = table.Column<long>(type: "bigint", nullable: true),
+                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -372,29 +315,95 @@ namespace Infraestructura.Migrations
                         name: "FK_Tarjetas_Bancos_BancoId",
                         column: x => x.BancoId,
                         principalTable: "Bancos",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Tarjetas_TipoTarjetas_TipoTarjetaId",
                         column: x => x.TipoTarjetaId,
                         principalTable: "TipoTarjetas",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Facturas",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Fecha = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Estado = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Total = table.Column<decimal>(type: "decimal(18,4)", nullable: false),
+                    Codigo = table.Column<int>(type: "int", nullable: false),
+                    ClienteId = table.Column<long>(type: "bigint", nullable: false),
+                    Comprobante_Id = table.Column<long>(type: "bigint", nullable: false),
+                    Movimiento_Id = table.Column<long>(type: "bigint", nullable: false),
+                    ComprobanteId = table.Column<long>(type: "bigint", nullable: true),
+                    Personas_ClienteId = table.Column<long>(type: "bigint", nullable: true),
+                    MovimientoId = table.Column<long>(type: "bigint", nullable: true),
+                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Facturas", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Facturas_Comprobantes_ComprobanteId",
+                        column: x => x.ComprobanteId,
+                        principalTable: "Comprobantes",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Facturas_Movimientos_MovimientoId",
+                        column: x => x.MovimientoId,
+                        principalTable: "Movimientos",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Facturas_PersonasClientes_Personas_ClienteId",
+                        column: x => x.Personas_ClienteId,
+                        principalTable: "PersonasClientes",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Usuarios",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    NombreUsuario = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    EstaBloqueado = table.Column<bool>(type: "bit", nullable: false),
+                    Cliente_Id = table.Column<long>(type: "bigint", nullable: false),
+                    Persona_ClienteId = table.Column<long>(type: "bigint", nullable: true),
+                    Rol_Id = table.Column<long>(type: "bigint", nullable: false),
+                    RolId = table.Column<long>(type: "bigint", nullable: true),
+                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Usuarios", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Usuarios_PersonasClientes_Persona_ClienteId",
+                        column: x => x.Persona_ClienteId,
+                        principalTable: "PersonasClientes",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Usuarios_Roles_RolId",
+                        column: x => x.RolId,
+                        principalTable: "Roles",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
                 name: "Envios",
                 columns: table => new
                 {
-                    Id = table.Column<long>(nullable: false)
+                    Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    RowVersion = table.Column<byte[]>(rowVersion: true, nullable: true),
-                    Tipo = table.Column<string>(nullable: true),
+                    Tipo = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Monto = table.Column<decimal>(type: "decimal(18,4)", nullable: false),
-                    Localidad_Id = table.Column<long>(nullable: false),
-                    Comprobante_Id = table.Column<long>(nullable: false),
-                    ComprobanteId = table.Column<long>(nullable: true),
-                    LocalidadId = table.Column<long>(nullable: true)
+                    Localidad_Id = table.Column<long>(type: "bigint", nullable: false),
+                    Comprobante_Id = table.Column<long>(type: "bigint", nullable: false),
+                    ComprobanteId = table.Column<long>(type: "bigint", nullable: true),
+                    LocalidadId = table.Column<long>(type: "bigint", nullable: true),
+                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -403,36 +412,34 @@ namespace Infraestructura.Migrations
                         name: "FK_Envios_Comprobantes_ComprobanteId",
                         column: x => x.ComprobanteId,
                         principalTable: "Comprobantes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Envios_Localidades_LocalidadId",
                         column: x => x.LocalidadId,
                         principalTable: "Localidades",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
                 name: "Productos",
                 columns: table => new
                 {
-                    Id = table.Column<long>(nullable: false)
+                    Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    RowVersion = table.Column<byte[]>(rowVersion: true, nullable: true),
-                    Codigo = table.Column<int>(nullable: false),
-                    CodigoBarra = table.Column<int>(nullable: false),
-                    Descripcion = table.Column<string>(nullable: true),
-                    Stock = table.Column<int>(nullable: false),
-                    Rubro_Id = table.Column<long>(nullable: false),
-                    Marca_Id = table.Column<long>(nullable: false),
-                    Talle_Id = table.Column<long>(nullable: false),
-                    Categoria_Id = table.Column<long>(nullable: false),
-                    SubRubro_Id = table.Column<long>(nullable: false),
-                    CategoriaId = table.Column<long>(nullable: true),
-                    MarcaId = table.Column<long>(nullable: true),
-                    SubRubroId = table.Column<long>(nullable: true),
-                    TalleId = table.Column<long>(nullable: true)
+                    Codigo = table.Column<int>(type: "int", nullable: false),
+                    CodigoBarra = table.Column<int>(type: "int", nullable: false),
+                    Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Stock = table.Column<int>(type: "int", nullable: false),
+                    Rubro_Id = table.Column<long>(type: "bigint", nullable: false),
+                    Marca_Id = table.Column<long>(type: "bigint", nullable: false),
+                    Talle_Id = table.Column<long>(type: "bigint", nullable: false),
+                    Categoria_Id = table.Column<long>(type: "bigint", nullable: false),
+                    SubRubro_Id = table.Column<long>(type: "bigint", nullable: false),
+                    CategoriaId = table.Column<long>(type: "bigint", nullable: true),
+                    MarcaId = table.Column<long>(type: "bigint", nullable: true),
+                    SubRubroId = table.Column<long>(type: "bigint", nullable: true),
+                    TalleId = table.Column<long>(type: "bigint", nullable: true),
+                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -441,45 +448,41 @@ namespace Infraestructura.Migrations
                         name: "FK_Productos_Categorias_CategoriaId",
                         column: x => x.CategoriaId,
                         principalTable: "Categorias",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Productos_Marcas_MarcaId",
                         column: x => x.MarcaId,
                         principalTable: "Marcas",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Productos_SubRubros_SubRubroId",
                         column: x => x.SubRubroId,
                         principalTable: "SubRubros",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Productos_Talles_TalleId",
                         column: x => x.TalleId,
                         principalTable: "Talles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
                 name: "DetalleComprobantes",
                 columns: table => new
                 {
-                    Id = table.Column<long>(nullable: false)
+                    Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    RowVersion = table.Column<byte[]>(rowVersion: true, nullable: true),
-                    Cantidad = table.Column<int>(nullable: false),
+                    Cantidad = table.Column<int>(type: "int", nullable: false),
                     SubTotal = table.Column<decimal>(type: "decimal(18,4)", nullable: false),
-                    Codigo = table.Column<int>(nullable: false),
-                    CodigoBarra = table.Column<int>(nullable: false),
-                    Descripcion = table.Column<string>(nullable: true),
+                    Codigo = table.Column<int>(type: "int", nullable: false),
+                    CodigoBarra = table.Column<int>(type: "int", nullable: false),
+                    Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Precio = table.Column<decimal>(type: "decimal(18,4)", nullable: false),
-                    Producto_Id = table.Column<long>(nullable: false),
-                    Comprobante_Id = table.Column<long>(nullable: false),
-                    ComprobanteId = table.Column<long>(nullable: true),
-                    ProductoId = table.Column<long>(nullable: true)
+                    Producto_Id = table.Column<long>(type: "bigint", nullable: false),
+                    Comprobante_Id = table.Column<long>(type: "bigint", nullable: false),
+                    ComprobanteId = table.Column<long>(type: "bigint", nullable: true),
+                    ProductoId = table.Column<long>(type: "bigint", nullable: true),
+                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -488,30 +491,28 @@ namespace Infraestructura.Migrations
                         name: "FK_DetalleComprobantes_Comprobantes_ComprobanteId",
                         column: x => x.ComprobanteId,
                         principalTable: "Comprobantes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_DetalleComprobantes_Productos_ProductoId",
                         column: x => x.ProductoId,
                         principalTable: "Productos",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
                 name: "ListaPrecioProductos",
                 columns: table => new
                 {
-                    Id = table.Column<long>(nullable: false)
+                    Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    RowVersion = table.Column<byte[]>(rowVersion: true, nullable: true),
                     PrecioCosto = table.Column<decimal>(type: "decimal(18,4)", nullable: false),
                     PrecioPublico = table.Column<decimal>(type: "decimal(18,4)", nullable: false),
-                    FechaActualizacion = table.Column<DateTime>(nullable: false),
-                    ListaPrecio_Id = table.Column<long>(nullable: false),
-                    Producto_Id = table.Column<long>(nullable: false),
-                    ListaPrecioId = table.Column<long>(nullable: true),
-                    ProductoId = table.Column<long>(nullable: true)
+                    FechaActualizacion = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ListaPrecio_Id = table.Column<long>(type: "bigint", nullable: false),
+                    Producto_Id = table.Column<long>(type: "bigint", nullable: false),
+                    ListaPrecioId = table.Column<long>(type: "bigint", nullable: true),
+                    ProductoId = table.Column<long>(type: "bigint", nullable: true),
+                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -520,20 +521,23 @@ namespace Infraestructura.Migrations
                         name: "FK_ListaPrecioProductos_ListaPrecios_ListaPrecioId",
                         column: x => x.ListaPrecioId,
                         principalTable: "ListaPrecios",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_ListaPrecioProductos_Productos_ProductoId",
                         column: x => x.ProductoId,
                         principalTable: "Productos",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.InsertData(
                 table: "Personas",
-                columns: new[] { "Id", "Apellido", "Celular", "Direccion", "Discriminator", "Dni", "Email", "FechaNacimiento", "Nombre", "Sexo", "Codigo" },
-                values: new object[] { 1L, "Martinez", "123", "Jujuy 362", "Persona_Cliente", "Direccion", "marcosmartinezmelek@gmail.com", new DateTime(2024, 7, 24, 0, 0, 0, 0, DateTimeKind.Local), "Marcos", "Masculino", 123 });
+                columns: new[] { "Id", "Apellido", "Celular", "Direccion", "Dni", "Email", "FechaNacimiento", "Nombre", "Sexo" },
+                values: new object[] { 1L, "Martinez", "123", "Jujuy 362", "Direccion", "marcosmartinezmelek@gmail.com", new DateTime(2024, 8, 7, 0, 0, 0, 0, DateTimeKind.Local), "Marcos", "Masculino" });
+
+            migrationBuilder.InsertData(
+                table: "PersonasClientes",
+                columns: new[] { "Id", "Codigo" },
+                values: new object[] { 1L, 123 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_CuponDescuentos_ComprobanteId",
@@ -641,6 +645,7 @@ namespace Infraestructura.Migrations
                 column: "RolId");
         }
 
+        /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
@@ -686,7 +691,7 @@ namespace Infraestructura.Migrations
                 name: "TipoTarjetas");
 
             migrationBuilder.DropTable(
-                name: "Personas");
+                name: "PersonasClientes");
 
             migrationBuilder.DropTable(
                 name: "Roles");
@@ -705,6 +710,9 @@ namespace Infraestructura.Migrations
 
             migrationBuilder.DropTable(
                 name: "Talles");
+
+            migrationBuilder.DropTable(
+                name: "Personas");
 
             migrationBuilder.DropTable(
                 name: "Rubros");

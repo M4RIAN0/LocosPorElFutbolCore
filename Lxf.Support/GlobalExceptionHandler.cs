@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
-
+using FluentValidation;
 namespace Lxf.Support
 {
     public sealed class GlobalExceptionHandler
@@ -13,7 +13,16 @@ namespace Lxf.Support
 
         public async Task Invoke(HttpContext httpContext)
         {
-            await _next(httpContext);
+            try
+            {
+                await _next(httpContext);
+            }
+            catch (ValidationException exception)
+            {
+
+                throw;
+            }
+         
         }
 
     }

@@ -48,9 +48,7 @@ namespace Servicio.PersonaCliente
 
         public async Task <IEnumerable<PersonaClienteDto>> GetAll()
         {
-            var list = await _personaClienteRepositorio.ObtenerTodo();
-
-            return list.Select(x => new PersonaClienteDto
+            return _personaClienteRepositorio.ObtenerTodo().Select(x => new PersonaClienteDto
             {
                 Id = 1,
                 Codigo = x.Codigo,
@@ -68,9 +66,7 @@ namespace Servicio.PersonaCliente
 
         }
 
-
-
-        public IEnumerable<PersonaClienteDto> GetByFilter(string cadenaBuscar)
+        public async Task <IEnumerable<PersonaClienteDto>> GetByFilter(string cadenaBuscar)
         {
             var codigo = -1;
             int.TryParse(cadenaBuscar, out codigo);
@@ -92,11 +88,12 @@ namespace Servicio.PersonaCliente
             }).ToList();
         }
 
-        public PersonaClienteDto GetById(long? Id)
+        public async Task <PersonaClienteDto> GetById(long? Id)
         {
             var personaCliente = _personaClienteRepositorio.ObtenerPorId(Id);
 
-            if (personaCliente == null) throw new ArgumentNullException("No se encontro la persona");
+            if (personaCliente == null)
+            throw new ArgumentNullException("people was not found");
 
             return new PersonaClienteDto
             {
