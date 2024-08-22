@@ -6,6 +6,7 @@ using IServicio.PersonaCliente;
 using LxF.API;
 using Microsoft.EntityFrameworkCore;
 using Servicio.PersonaCliente;
+using LxF.Support;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -48,5 +49,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseGlobalExceptionHandler();
 
 app.Run();

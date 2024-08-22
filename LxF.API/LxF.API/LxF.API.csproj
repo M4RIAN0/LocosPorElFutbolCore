@@ -27,6 +27,7 @@
     <ProjectReference Include="..\..\Infraestructura.Repositorio\Infraestructura.Repositorio.csproj" />
     <ProjectReference Include="..\..\Infraestructura\Infraestructura.csproj" />
     <ProjectReference Include="..\..\IServicio\IServicio.csproj" />
+    <ProjectReference Include="..\..\LxF.Support\LxF.Support.csproj" />
     <ProjectReference Include="..\..\Servicio\Servicio.csproj" />
   </ItemGroup>
 

@@ -1,6 +1,7 @@
 ﻿using Dominio.Repositorio.PersonaCliente;
 using IServicio.PersonaCliente;
 using IServicio.PersonaCliente.Dto;
+using Lxf.Support.BuildingBlocks;
 using Servicio.Base;
 using System;
 using System.Collections.Generic;
@@ -93,7 +94,7 @@ namespace Servicio.PersonaCliente
             var personaCliente = _personaClienteRepositorio.ObtenerPorId(Id);
 
             if (personaCliente == null)
-            throw new ArgumentNullException("people was not found");
+            throw new ElementNotFoundException("People with identifier {0} was not found.", Id);
 
             return new PersonaClienteDto
             {
