@@ -1,12 +1,16 @@
 using AutoMapper;
+using Dominio.Entidades;
 using Dominio.Repositorio.PersonaCliente;
 using Infraestructura;
 using Infraestructura.Repositorio.PersonaCliente;
+using IServicio.Identity;
 using IServicio.PersonaCliente;
 using LxF.API;
-using Microsoft.EntityFrameworkCore;
-using Servicio.PersonaCliente;
 using LxF.Support;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using Servicio.Identity;
+using Servicio.PersonaCliente;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +21,10 @@ builder.Services.AddDbContext<LxfContext>(option =>
 {
     option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+#endregion
+
+#region Identity
+builder.Services.AddIdentity<Usuario, IdentityRole>().AddEntityFrameworkStores<LxfContext>().AddDefaultTokenProviders();
 #endregion
 
 #region Automapping
@@ -30,10 +38,11 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-// Servicios
 
+// Servicios
 builder.Services.AddScoped<IPersonaClienteServicio, PersonaClienteServicio>();
 builder.Services.AddScoped<IPersonaClienteRepositorio, PersonaClienteRepositorio>();
+builder.Services.AddScoped<IIdentityServicio, IndentityServicio>();
 
 var app = builder.Build();
 

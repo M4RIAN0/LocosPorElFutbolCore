@@ -1,16 +1,16 @@
 ﻿using Dominio.Entidades;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 
 namespace Infraestructura
 {
-    public class LxfContext : DbContext
+    public class LxfContext : IdentityDbContext<Usuario>
     {
-        public LxfContext()
-        {
-        }
-
         public LxfContext(DbContextOptions<LxfContext> options) : base(options)
+        { }
+
+        public LxfContext()
         { }
 
         public DbSet<Banco> Banco { get; set; }
@@ -29,7 +29,6 @@ namespace Infraestructura
         public DbSet<Persona_Cliente> Persona_Cliente { get; set; }
         public DbSet<Producto> Producto { get; set; }
         public DbSet<Provincia> Provincia { get; set; }
-        public DbSet<Rol> Rol { get; set; }
         public DbSet<Rubro> Rubro { get; set; }
         public DbSet<SubRubro> SubRubro { get; set; }
         public DbSet<Talle> Talle { get; set; }
