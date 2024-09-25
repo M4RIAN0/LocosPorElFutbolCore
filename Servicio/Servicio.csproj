@@ -3,6 +3,9 @@
     <TargetFramework>net8.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="12.0.1" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\Dominio.Repositorio\Dominio.Repositorio.csproj" />
     <ProjectReference Include="..\IServicio\IServicio.csproj" />
     <ProjectReference Include="..\Lxf.Support.BuildingBlocks\Lxf.Support.BuildingBlocks.csproj" />

@@ -1,11 +1,13 @@
 ﻿using Dominio.Entidades;
+using Infraestructura.Configurations;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 
 namespace Infraestructura
 {
-    public class LxfContext : IdentityDbContext<Usuario>
+    public class LxfContext : IdentityDbContext<Usuario, Role, string>
     {
         public LxfContext(DbContextOptions<LxfContext> options) : base(options)
         { }
@@ -35,6 +37,9 @@ namespace Infraestructura
         public DbSet<Tarjeta> Tarjeta { get; set; }
         public DbSet<TipoTarjeta> TipoTarjeta { get; set; }
         public DbSet<Usuario> Usuario { get; set; }
+        public DbSet<Role> Role { get; set; }
+
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -53,6 +58,16 @@ namespace Infraestructura
                 Celular = "123",
                 Email = "marcosmartinezmelek@gmail.com"
             });
+
+            modelBuilder.ApplyConfiguration(new UserConfiguration());
+            modelBuilder.ApplyConfiguration(new RoleConfiguration());
+            modelBuilder.Entity<IdentityUserRole<string>>().ToTable("UsuarioRoles");
+
+            modelBuilder.Ignore<IdentityUserClaim<string>>();
+            modelBuilder.Ignore<IdentityUserLogin<string>>();
+            modelBuilder.Ignore<IdentityUserToken<string>>();
+            modelBuilder.Ignore<IdentityRoleClaim<string>>();
+
         }
     }
 }

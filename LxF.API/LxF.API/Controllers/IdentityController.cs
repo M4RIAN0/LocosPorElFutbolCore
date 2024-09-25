@@ -1,8 +1,6 @@
 ﻿using IServicio.Identity;
 using IServicio.Identity.Dto;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Servicio.Identity;
 
 namespace LxF.API.Controllers
 {
@@ -16,7 +14,7 @@ namespace LxF.API.Controllers
         public IdentityController(IIdentityServicio identityServicio)
         {
             _identityServicio = identityServicio;
-            _response = new();
+            _response = new();  
         }
 
         [HttpPost("Register")]
@@ -53,11 +51,11 @@ namespace LxF.API.Controllers
         [HttpPost("AssingRole")]
         public async Task<IActionResult> AssingRole([FromBody] RegistrationRequestDto model)
         {
-            var assignRoleSuccesful = await _identityServicio.AssignRole(model.Email, model.Role.ToUpper());
+            var assignRoleSuccesful = await _identityServicio.AssignRole(model.Email, model.Role);
             if (!assignRoleSuccesful)
             {
                 _response.IsSuccess = false;
-                _response.Message = "Username or Password is incorrect";
+                _response.Message = "Username is incorrect or not exist";
                 return BadRequest(_response);
             }
 

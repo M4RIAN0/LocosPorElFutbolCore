@@ -1,4 +1,5 @@
-﻿using Dominio.Entidades;
+﻿using AutoMapper;
+using Dominio.Entidades;
 using Infraestructura;
 using IServicio.Identity;
 using IServicio.Identity.Dto;
@@ -13,12 +14,14 @@ namespace Servicio.Identity
         private readonly LxfContext _db;
         private readonly UserManager<Usuario> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly IMapper _mapper;
 
-        public IndentityServicio(LxfContext db, UserManager<Usuario> userManager, RoleManager<IdentityRole> roleManager)
+        public IndentityServicio(LxfContext db, UserManager<Usuario> userManager, RoleManager<IdentityRole> roleManager, IMapper mapper)
         {
            _db = db;
            _userManager = userManager;
            _roleManager = roleManager;
+           _mapper = mapper;
         }
 
         public async Task<bool> AssignRole(string email, string roleName)
@@ -40,24 +43,18 @@ namespace Servicio.Identity
         }
 
 
-
         public async Task<LoginResponseDto> Login(LoginRequestDto loginRequestDto)
         {
-            var user = _db.Usuario.FirstOrDefault(x => x.Nombre.ToLower() == loginRequestDto.NombreUsuario.ToLower());
+            var user = _db.Usuario.FirstOrDefault(x => x.UserName.ToLower() == loginRequestDto.NombreUsuario);
 
             bool isValid = await _userManager.CheckPasswordAsync(user, loginRequestDto.Password);
 
-            if (user != null || isValid == false)
+            if (user == null || isValid == false)
             {
-                return new LoginResponseDto() { Usuario = null, Token = "" };
+                return new LoginResponseDto() { Usuario = null};
             }
 
-            UsuarioDto userDto = new()
-            {
-                EMAIL = user.Email,
-                ID = user.Id,
-                Nombre = user.Nombre
-            };
+            UsuarioDto userDto = _mapper.Map<UsuarioDto>(user);
 
             LoginResponseDto loginResponseDto = new LoginResponseDto()
             {
