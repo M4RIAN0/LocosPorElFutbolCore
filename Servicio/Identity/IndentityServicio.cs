@@ -13,10 +13,10 @@ namespace Servicio.Identity
     {
         private readonly LxfContext _db;
         private readonly UserManager<Usuario> _userManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly RoleManager<Role> _roleManager;
         private readonly IMapper _mapper;
 
-        public IndentityServicio(LxfContext db, UserManager<Usuario> userManager, RoleManager<IdentityRole> roleManager, IMapper mapper)
+        public IndentityServicio(LxfContext db, UserManager<Usuario> userManager, RoleManager<Role> roleManager, IMapper mapper)
         {
            _db = db;
            _userManager = userManager;
@@ -32,7 +32,7 @@ namespace Servicio.Identity
             {
                 if (!_roleManager.RoleExistsAsync(roleName).GetAwaiter().GetResult())
                 {
-                    _roleManager.CreateAsync(new IdentityRole(roleName)).GetAwaiter().GetResult();
+                    _roleManager.CreateAsync(new Role() { Name = roleName}).GetAwaiter().GetResult();
                 }
 
                 await _userManager.AddToRoleAsync(user, roleName);

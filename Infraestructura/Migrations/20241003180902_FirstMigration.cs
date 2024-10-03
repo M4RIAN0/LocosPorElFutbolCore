@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Infraestructura.Migrations
 {
     /// <inheritdoc />
-    public partial class IdentityDbContext_Customize : Migration
+    public partial class FirstMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -213,7 +213,7 @@ namespace Infraestructura.Migrations
                     PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Celular = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
                     TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
@@ -552,7 +552,7 @@ namespace Infraestructura.Migrations
             migrationBuilder.InsertData(
                 table: "Personas",
                 columns: new[] { "Id", "Apellido", "Celular", "Direccion", "Dni", "Email", "FechaNacimiento", "Nombre", "Sexo" },
-                values: new object[] { 1L, "Martinez", "123", "Jujuy 362", "Direccion", "marcosmartinezmelek@gmail.com", new DateTime(2024, 9, 25, 0, 0, 0, 0, DateTimeKind.Local), "Marcos", "Masculino" });
+                values: new object[] { 1L, "Martinez", "123", "Jujuy 362", "Direccion", "marcosmartinezmelek@gmail.com", new DateTime(2024, 10, 3, 0, 0, 0, 0, DateTimeKind.Local), "Marcos", "Masculino" });
 
             migrationBuilder.InsertData(
                 table: "PersonasClientes",

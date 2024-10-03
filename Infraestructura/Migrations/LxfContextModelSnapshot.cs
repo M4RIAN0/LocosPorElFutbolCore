@@ -792,7 +792,8 @@ namespace Infraestructura.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Celular");
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
@@ -854,7 +855,7 @@ namespace Infraestructura.Migrations
                             Direccion = "Jujuy 362",
                             Dni = "Direccion",
                             Email = "marcosmartinezmelek@gmail.com",
-                            FechaNacimiento = new DateTime(2024, 9, 25, 0, 0, 0, 0, DateTimeKind.Local),
+                            FechaNacimiento = new DateTime(2024, 10, 3, 0, 0, 0, 0, DateTimeKind.Local),
                             Nombre = "Marcos",
                             Sexo = "Masculino",
                             Codigo = 123

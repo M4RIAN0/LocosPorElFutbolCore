@@ -24,7 +24,7 @@ builder.Services.AddDbContext<LxfContext>(option =>
 #endregion
 
 #region Identity
-builder.Services.AddIdentity<Usuario, IdentityRole>().AddEntityFrameworkStores<LxfContext>().AddDefaultTokenProviders();
+builder.Services.AddIdentity<Usuario, Role>().AddEntityFrameworkStores<LxfContext>().AddDefaultTokenProviders();
 #endregion
 
 #region Automapping
