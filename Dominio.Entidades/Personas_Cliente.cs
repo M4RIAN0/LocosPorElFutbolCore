@@ -11,11 +11,8 @@ namespace Dominio.Entidades
     {
         public int Codigo { get; set; }
 
-
         //propiedades de navegacion
        
         public virtual IEnumerable<Factura> Facturas { get; set; }
-
-        public virtual IEnumerable<Usuario> Usuarios { get; set; }
     }
 }

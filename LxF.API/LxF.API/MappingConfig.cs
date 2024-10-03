@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Dominio.Entidades;
+using IServicio.Identity.Dto;
 using IServicio.PersonaCliente.Dto;
 
 namespace LxF.API
@@ -12,6 +13,7 @@ namespace LxF.API
             {
                 config.CreateMap<PersonaClienteDto, Persona_Cliente>();
                 config.CreateMap<Persona_Cliente, PersonaClienteDto>();
+                config.CreateMap<Usuario, UsuarioDto>();
             });
             return mappingConfig;
         }

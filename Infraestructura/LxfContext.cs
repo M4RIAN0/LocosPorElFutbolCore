@@ -1,16 +1,18 @@
 ﻿using Dominio.Entidades;
+using Infraestructura.Configurations;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 
 namespace Infraestructura
 {
-    public class LxfContext : DbContext
+    public class LxfContext : IdentityDbContext<Usuario, Role, string>
     {
-        public LxfContext()
-        {
-        }
-
         public LxfContext(DbContextOptions<LxfContext> options) : base(options)
+        { }
+
+        public LxfContext()
         { }
 
         public DbSet<Banco> Banco { get; set; }
@@ -29,13 +31,15 @@ namespace Infraestructura
         public DbSet<Persona_Cliente> Persona_Cliente { get; set; }
         public DbSet<Producto> Producto { get; set; }
         public DbSet<Provincia> Provincia { get; set; }
-        public DbSet<Rol> Rol { get; set; }
         public DbSet<Rubro> Rubro { get; set; }
         public DbSet<SubRubro> SubRubro { get; set; }
         public DbSet<Talle> Talle { get; set; }
         public DbSet<Tarjeta> Tarjeta { get; set; }
         public DbSet<TipoTarjeta> TipoTarjeta { get; set; }
         public DbSet<Usuario> Usuario { get; set; }
+        public DbSet<Role> Role { get; set; }
+
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -54,6 +58,16 @@ namespace Infraestructura
                 Celular = "123",
                 Email = "marcosmartinezmelek@gmail.com"
             });
+
+            modelBuilder.ApplyConfiguration(new UserConfiguration());
+            modelBuilder.ApplyConfiguration(new RoleConfiguration());
+            modelBuilder.Entity<IdentityUserRole<string>>().ToTable("UsuarioRoles");
+
+            modelBuilder.Ignore<IdentityUserClaim<string>>();
+            modelBuilder.Ignore<IdentityUserLogin<string>>();
+            modelBuilder.Ignore<IdentityUserToken<string>>();
+            modelBuilder.Ignore<IdentityRoleClaim<string>>();
+
         }
     }
 }
