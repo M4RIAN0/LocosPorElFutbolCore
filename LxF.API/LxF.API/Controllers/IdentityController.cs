@@ -17,7 +17,7 @@ namespace LxF.API.Controllers
         public IdentityController(IIdentityServicio identityServicio)
         {
             _identityServicio = identityServicio;
-            _response = new();
+            _response = new();  
         }
 
         [HttpPost("Register")]
