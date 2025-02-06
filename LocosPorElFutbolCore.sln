@@ -32,9 +32,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LxF.API", "LxF.API\LxF.API\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LxF.Support", "LxF.Support", "{D967EBE8-9B25-41E9-8E40-36C1F38471D5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LxF.Support", "LxF.Support\LxF.Support.csproj", "{ECD3E260-7571-4B80-9DC2-B1E6BBE199BA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LxF.Support", "LxF.Support\LxF.Support.csproj", "{ECD3E260-7571-4B80-9DC2-B1E6BBE199BA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lxf.Support.BuildingBlocks", "Lxf.Support.BuildingBlocks\Lxf.Support.BuildingBlocks.csproj", "{19D4D3C2-F02C-4892-8C56-88B6B687599E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lxf.Support.BuildingBlocks", "Lxf.Support.BuildingBlocks\Lxf.Support.BuildingBlocks.csproj", "{19D4D3C2-F02C-4892-8C56-88B6B687599E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

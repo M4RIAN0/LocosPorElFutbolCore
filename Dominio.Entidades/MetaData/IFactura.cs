@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Dominio.Entidades.MetaData
 {
@@ -16,9 +12,9 @@ namespace Dominio.Entidades.MetaData
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         string Estado { get; set; }
 
-         decimal Total { get; set; }
+        decimal Total { get; set; }
 
-         int Codigo { get; set; }
+        int Codigo { get; set; }
 
     }
 }

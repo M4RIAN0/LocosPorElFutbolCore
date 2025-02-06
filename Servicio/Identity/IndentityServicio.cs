@@ -1,9 +1,12 @@
 ﻿using AutoMapper;
 using Dominio.Entidades;
 using Infraestructura;
+using IServicio.Email;
 using IServicio.Identity;
 using IServicio.Identity.Dto;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Tokens;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -14,13 +17,15 @@ namespace Servicio.Identity
         private readonly LxfContext _db;
         private readonly UserManager<Usuario> _userManager;
         private readonly RoleManager<Role> _roleManager;
+        private readonly IEmailSender _emailSender;
         private readonly IMapper _mapper;
 
-        public IndentityServicio(LxfContext db, UserManager<Usuario> userManager, RoleManager<Role> roleManager, IMapper mapper)
+        public IndentityServicio(LxfContext db, UserManager<Usuario> userManager, RoleManager<Role> roleManager, IEmailSender emailSender, IMapper mapper)
         {
            _db = db;
            _userManager = userManager;
            _roleManager = roleManager;
+           _emailSender = emailSender;
            _mapper = mapper;
         }
 
@@ -95,6 +100,41 @@ namespace Servicio.Identity
             {
                 return result.Errors.FirstOrDefault().Description;
             }
+        }
+    
+        public async Task<UserToken> ForgotPassword(string email)
+        {
+            var user = _db.Usuario.FirstOrDefault(x => x.Email.ToLower() == email.ToLower());
+
+            if (user != null)
+            {
+                var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+                return new UserToken() { User = user.Email, Token = token };
+            }
+
+            return new UserToken();
+        }
+
+        public async Task<IdentityResult> ResetPassword(string email, string token, string password)
+        {
+            var user = _db.Usuario.FirstOrDefault(x => x.Email.ToLower() == email.ToLower());
+
+            if (user != null)
+            {
+                var result = await _userManager.ResetPasswordAsync(user, token, password);
+                if (result.Succeeded)
+                    return result;
+            }
+            return new IdentityResult();
+        }
+
+        public bool SendMail(UserToken userToken, Message message)
+        {
+            if (string.IsNullOrEmpty(userToken.User))
+                return false;
+
+            _emailSender.SendEmail(message);
+            return true;
         }
     }
 }
