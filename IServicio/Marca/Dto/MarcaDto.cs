@@ -1,14 +1,19 @@
 ﻿using Servicio.Base;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace IServicio.Marca.Dto
 {
-    public class MarcaDto : DtoBase
+    public class MarcaDto
     {
-        public int Codigo { get; set; }
-
         public string Descripcion { get; set; }
+    }
+
+    public class MarcaPutDto : DtoBase
+    {
+        public string Descripcion { get; set; }
+    }
+
+    public class MarcaGetDto : DtoBase
+    {
+        public string Descripcion { get; init; }
     }
 }

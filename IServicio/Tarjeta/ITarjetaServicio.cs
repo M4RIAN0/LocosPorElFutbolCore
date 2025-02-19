@@ -11,12 +11,12 @@ namespace IServicio.Tarjeta
     {
         void Add(TarjetaDto Dto);
         void Update(TarjetaDto Dto);
-        void Delete(long Id);
+        void SoftDelete(int Id);
 
         IEnumerable<TarjetaDto> GetByFilter(string cadenaBuscar); // obtener por filtro
 
         //IEnumerable<TarjetaDto> GetAll();
 
-        TarjetaDto GetById(long? Id);
+        TarjetaDto GetById(int? Id);
     }
 }

@@ -6,14 +6,14 @@ namespace IServicio.PersonaCliente
 {
     public interface IPersonaClienteServicio
     {
-        void Add(PersonaClienteDto Dto);
-        void Update(PersonaClienteDto Dto);
-        void Delete(long Id);
+        void Add(PersonaClienteDto dto);
+        void Update(PersonaClientePutDto dto);
+        void SoftDelete(int Id);
 
-        Task <IEnumerable<PersonaClienteDto>> GetByFilter(string cadenaBuscar);
+        IEnumerable<PersonaClienteGetDto> GetByFilter(string cadenaBuscar);
 
-        Task <IEnumerable<PersonaClienteDto>> GetAll();
+        IEnumerable<PersonaClienteGetDto> GetAll();
 
-        Task <PersonaClienteDto> GetById(long? Id);
+        PersonaClienteGetDto GetById(int? id);
     }
 }

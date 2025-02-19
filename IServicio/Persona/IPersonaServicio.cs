@@ -5,14 +5,11 @@ namespace IServicio.Persona
 {
     public interface IPersonaServicio
     {
-        void Add(PersonaDto Dto);
-        void Update(PersonaDto Dto);
-        void Delete(long Id);
-
-        IEnumerable<PersonaDto> GetByFilter(string cadenaBuscar); // obtener por filtro
-
-       // IEnumerable<PersonaDto> GetAll();
-
-        PersonaDto GetById(long? Id);
+        void Add(PersonaDto dto);
+        void Update(PersonaDto dto);
+        void SoftDelete(int id);
+        IEnumerable<PersonaDto> GetByFilter(string cadenaBuscar); 
+        IEnumerable<PersonaDto> GetAll();
+        PersonaDto GetById(int? id);
     }
 }

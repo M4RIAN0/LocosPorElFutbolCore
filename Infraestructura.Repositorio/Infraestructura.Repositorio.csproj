@@ -7,5 +7,6 @@
     <ProjectReference Include="..\DominioBase\DominioBase.csproj" />
     <ProjectReference Include="..\Infraestructura.RepositorioBase\Infraestructura.RepositorioBase.csproj" />
     <ProjectReference Include="..\Infraestructura\Infraestructura.csproj" />
+    <ProjectReference Include="..\Lxf.Support.BuildingBlocks\Lxf.Support.BuildingBlocks.csproj" />
   </ItemGroup>
 </Project>

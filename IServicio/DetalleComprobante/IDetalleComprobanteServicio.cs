@@ -7,12 +7,12 @@ namespace IServicio.DetalleComprobante
     {
         void Add(DetalleComprobanteDto Dto);
         void Update(DetalleComprobanteDto Dto);
-        void Delete(long Id);
+        void SoftDelete(int Id);
 
         IEnumerable<DetalleComprobanteDto> GetByFilter(string cadenaBuscar); // obtener por filtro
 
         IEnumerable<DetalleComprobanteDto> GetAll();
 
-        DetalleComprobanteDto GetById(long? Id);
+        DetalleComprobanteDto GetById(int? Id);
     }
 }

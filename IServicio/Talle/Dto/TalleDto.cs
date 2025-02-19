@@ -4,12 +4,10 @@ namespace IServicio.Talle.Dto
 {
     public class TalleDto : DtoBase
     {
-        public int Codigo { get; set; }
+        public int Codigo { get; init; }
 
-        public string Descripcion { get; set; }
+        public int Numero { get; init; }
 
-        public int Numero { get; set; }
-
-        public string Letra { get; set; }
+        public string Letra { get; init; }
     }
 }

@@ -16,7 +16,7 @@ namespace Servicio.Localidad
             throw new NotImplementedException();
         }
 
-        public void Delete(long Id)
+        public void SoftDelete(int Id)
         {
             throw new NotImplementedException();
         }
@@ -31,7 +31,7 @@ namespace Servicio.Localidad
             throw new NotImplementedException();
         }
 
-        public LocalidadDto GetById(long? Id)
+        public LocalidadDto GetById(int? Id)
         {
             throw new NotImplementedException();
         }

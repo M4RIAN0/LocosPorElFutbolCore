@@ -1,23 +1,19 @@
 ﻿using IServicio.Marca.Dto;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace IServicio.Marca
 {
     public interface IMarcaServicio
     {
-        void Add(MarcaDto Dto);
-        void Update(MarcaDto Dto);
-        void Delete(long Id);
+        void Add(MarcaDto dto);
+        void Update(MarcaPutDto dto);
+        void SoftDelete(int id);
 
-        IEnumerable<MarcaDto> GetByFilter(string cadenaBuscar); // obtener por filtro
+        IEnumerable<MarcaGetDto> GetByFilter(string cadenaBuscar);
 
-        IEnumerable<MarcaDto> GetAll();
+        IEnumerable<MarcaGetDto> GetAll();
 
-        MarcaDto GetById(long? Id);
+        MarcaGetDto GetById(int? Id);
 
     }
 }

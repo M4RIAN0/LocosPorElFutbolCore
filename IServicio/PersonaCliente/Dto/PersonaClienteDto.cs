@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace IServicio.PersonaCliente.Dto
 {
-    public class PersonaClienteDto : DtoBase
+    public class PersonaClienteDto
     {
         public int Codigo { get; set; }
 
@@ -18,13 +18,40 @@ namespace IServicio.PersonaCliente.Dto
 
         public string Sexo { get; set; }
 
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime FechaNacimiento { get; set; }
 
         public string Celular { get; set; }
 
         public string Email { get; set; }
-        public string PersonaStr { get { return Apellido + " " + Nombre; } } // solo lectura
+    }
+
+    public class PersonaClientePutDto : PersonaClienteDto
+    {
+        public int Id { get; set; }
+    }
+
+    public class PersonaClienteGetDto : DtoBase
+    {
+        public int Codigo { get; init; }
+
+        public string Apellido { get; init; }
+
+        public string Nombre { get; init; }
+
+        public string Dni { get; init; }
+
+        public string Direccion { get; init; }
+
+        public string Sexo { get; init; }
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+        public DateTime FechaNacimiento { get; init; }
+
+        public string Celular { get; init; }
+
+        public string Email { get; init; }
+
+        public string PersonaStr => Apellido + " " + Nombre;
     }
 }

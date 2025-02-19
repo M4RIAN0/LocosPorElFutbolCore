@@ -12,7 +12,7 @@ namespace Servicio.TipoTarjeta
             throw new System.NotImplementedException();
         }
 
-        public void Delete(long Id)
+        public void SoftDelete(int Id)
         {
             throw new System.NotImplementedException();
         }
@@ -27,7 +27,7 @@ namespace Servicio.TipoTarjeta
             throw new System.NotImplementedException();
         }
 
-        public TipoTarjetaDto GetById(long? Id)
+        public TipoTarjetaDto GetById(int? Id)
         {
             throw new System.NotImplementedException();
         }

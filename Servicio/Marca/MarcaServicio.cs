@@ -1,85 +1,77 @@
-﻿using Dominio.Repositorio.Marca;
+﻿using AutoMapper;
+using Dominio.Entidades;
+using Dominio.Repositorio;
 using IServicio.Marca;
 using IServicio.Marca.Dto;
+using Lxf.Support.BuildingBlocks;
 using Servicio.Base;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Servicio.Marca
+namespace Servicio
 {
     public class MarcaServicio : ServicioBase, IMarcaServicio
     {
-        private readonly IMarcaRepositorio _marcaRepositorio;
+        private readonly IMarcaRepository _repository;
+        private readonly IMapper _mapper;
 
-        public MarcaServicio(IMarcaRepositorio marcaRepositorio)
+        public MarcaServicio(IMarcaRepository repository, IMapper mapper)
         {
-            _marcaRepositorio = marcaRepositorio;
+            _repository = repository;
+            _mapper = mapper;
         }
-        public void Add(MarcaDto Dto)
+        public void Add(MarcaDto dto)
         {
-            var marca = new Dominio.Entidades.Marca()
-            {
-                Codigo = Dto.Codigo,
-                Descripcion = Dto.Descripcion,
-                RowVersion = Dto.RowVersion,
-            };
-
-            _marcaRepositorio.Agregar(marca);
-            _marcaRepositorio.Save();
+            var model = ToEntityPost(dto);
+            _repository.Add(model);
+            _repository.Save();
         }
 
-        public void Delete(long Id)
+        public void SoftDelete(int id)
         {
-            _marcaRepositorio.Eliminar(Id);
-            _marcaRepositorio.Save();
+            _repository.SoftDelete(id);
+            _repository.Save();
         }
 
-        public IEnumerable<MarcaDto> GetAll()
+        public IEnumerable<MarcaGetDto> GetAll()
         {
-            return _marcaRepositorio.ObtenerTodo("Marca")
-                            .Select(x => new MarcaDto()
-                            {
-                                Id = x.Id,
-                                Codigo = x.Codigo,
-                                Descripcion = x.Descripcion
-
-                            }).ToList();
+            return _repository.GetAll().Select(x => ToGetDto(x)).ToList();
         }
 
-        public IEnumerable<MarcaDto> GetByFilter(string cadenaBuscar)
+        public IEnumerable<MarcaGetDto> GetByFilter(string cadenaBuscar)
         {
-            return _marcaRepositorio.ObtenerPorFlitro(x => x.Descripcion.Contains(cadenaBuscar), "Marca")
-                  .Select(x => new MarcaDto()
-                  {
-                      Id = x.Id,
-                      Codigo = x.Codigo,
-                      Descripcion = x.Descripcion,
-                  }).ToList();
+            return _repository.GetByFilter(x => x.Descripcion.Contains(cadenaBuscar))
+                  .Select(x => ToGetDto(x)).ToList();
         }
 
-        public MarcaDto GetById(long? Id)
+        public MarcaGetDto GetById(int? id)
         {
-            var marca = _marcaRepositorio.ObtenerPorId(Id, "Marca");
-
-            return new MarcaDto()
-            {
-                Id = marca.Id,
-                Codigo = marca.Codigo,
-                Descripcion = marca.Descripcion,
-
-            };
+            var model = _repository.GetById(id);
+            return ToGetDto(model);
         }
 
-        public void Update(MarcaDto Dto)
+        public void Update(MarcaPutDto dto)
         {
-            var marca = _marcaRepositorio.ObtenerPorId(Dto.Id, "Marca");
-
-            marca.Codigo = Dto.Codigo;
-            marca.Descripcion = Dto.Descripcion;
-
-            _marcaRepositorio.Modificar(marca);
-            _marcaRepositorio.Save();
+            var model = ToEntityPut(dto);
+            _repository.Edit(model);
+            _repository.Save();
         }
+
+        #region Private Methods
+        private MarcaGetDto ToGetDto(Marca model)
+        {
+            return _mapper.Map<MarcaGetDto>(model);
+        }
+
+        private Marca ToEntityPost(MarcaDto dto)
+        {
+            return _mapper.Map<Marca>(dto);
+        }
+
+        private Marca ToEntityPut(MarcaPutDto dto)
+        {
+            return _mapper.Map<Marca>(dto);
+        }
+        #endregion
     }
 }

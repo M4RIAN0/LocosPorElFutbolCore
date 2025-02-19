@@ -9,12 +9,12 @@ namespace IServicio.Comprobante
     {
         void Add(ComprobanteDto Dto);
         void Update(ComprobanteDto Dto);
-        void Delete(long Id);
+        void SoftDelete(int Id);
 
         IEnumerable<ComprobanteDto> GetByFilter(string cadenaBuscar); // obtener por filtro
 
         IEnumerable<ComprobanteDto> GetAll();
 
-        ComprobanteDto GetById(long? Id);
+        ComprobanteDto GetById(int? Id);
     }
 }

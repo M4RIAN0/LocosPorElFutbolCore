@@ -18,11 +18,11 @@ namespace IServicio.Factura.Dto
 
         public int Codigo { get; set; }
 
-        public long ClienteId { get; set; }
+        public int ClienteId { get; set; }
 
-        public long Comprobante_Id { get; set; }
+        public int Comprobante_Id { get; set; }
 
-        public long Movimiento_Id { get; set; }
+        public int Movimiento_Id { get; set; }
 
         public string ComprobanteStr { get; set; }
 

@@ -1,4 +1,4 @@
-﻿using Dominio.Repositorio.Banco;
+﻿using Dominio.Repositorio;
 using IServicio.Banco;
 using IServicio.Banco.Dto;
 using Servicio.Base;
@@ -17,12 +17,12 @@ namespace Servicio.Banco
         }
 
         //dsa
-        public void Delete(long Id)
+        public void SoftDelete(int Id)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<BancoDto> GetAll(long id)
+        public IEnumerable<BancoDto> GetAll(int id)
         {
             throw new NotImplementedException();
         }
@@ -37,7 +37,7 @@ namespace Servicio.Banco
             throw new NotImplementedException();
         }
 
-        public BancoDto GetById(long? Id)
+        public BancoDto GetById(int? Id)
         {
             throw new NotImplementedException();
         }

@@ -2,7 +2,7 @@
 
 namespace IServicio.Producto.Dto
 {
-    public class ProductoDto : DtoBase
+    public class ProductoDto
     {
         public int Codigo { get; set; }
 
@@ -12,22 +12,32 @@ namespace IServicio.Producto.Dto
 
         public int Stock { get; set; }
 
-        public long RubroId { get; set; }
+        public int MarcaId { get; set; }
 
-        public long MarcaId { get; set; }
+        public int TalleId { get; set; }
 
-        public long TalleId { get; set; }
+        public int CategoriaId { get; set; }
+    }
 
-        public long CategoriaId { get; set; }
+    public class ProductoPutDto: ProductoDto 
+    { 
+        public int Id { get; set; }
+    }
 
-        public long SubRubroId { get; set; }
+    public class ProductoGetDto : DtoBase
+    {
+        public int Codigo { get; init; }
 
-        public string CategoriaStr { get; set; }
+        public int CodigoBarra { get; init; }
 
-        public string MarcaStr { get; set; }
+        public string Descripcion { get; init; }
 
-        public string SubRubroStr { get; set; }
+        public int Stock { get; init; }
 
-        public string TalleStr { get; set; }
+        public string Categoria { get; init; }
+
+        public string Marca { get; set; }
+
+        public string Talle { get; set; }
     }
 }

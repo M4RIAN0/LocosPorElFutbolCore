@@ -1,4 +1,4 @@
-﻿using Dominio.Repositorio.Movimiento;
+﻿using Dominio.Repositorio;
 using IServicio.Movimiento;
 using IServicio.Movimiento.Dto;
 using Servicio.Base;
@@ -20,19 +20,18 @@ namespace Servicio.Movimiento
         {
             var facturacion = new Dominio.Entidades.Movimiento()
             {
-                Codigo = Dto.Codigo,
                 Fecha = Dto.Fecha,
                 Tipo = Dto.Tipo,
                 Monto = Dto.Monto
             };
 
-            _movimientoRepositorio.Agregar(facturacion);
+            _movimientoRepositorio.Add(facturacion);
             _movimientoRepositorio.Save();
         }
 
-        public void Delete(long Id)
+        public void SoftDelete(int Id)
         {
-            _movimientoRepositorio.Eliminar(Id);
+           // _movimientoRepositorio.SoftDelete(Id);
             _movimientoRepositorio.Save();
         }
 
@@ -41,7 +40,7 @@ namespace Servicio.Movimiento
         //    return _movimientoRepositorio.ObtenerTodo()
         //        .Select(x => new MovimientoDto()
         //        {
-        //            Id = x.Id,
+        //            Id = x.ID,
         //            Codigo = x.Codigo,
         //            Fecha = x.Fecha,
         //            Tipo = x.Tipo,
@@ -56,11 +55,10 @@ namespace Servicio.Movimiento
             int.TryParse(cadenaBuscar, out codigo);
 
 
-            return _movimientoRepositorio.ObtenerPorFlitro(x => x.Codigo == codigo)
+            return _movimientoRepositorio.GetByFilter(x => x.ID == codigo)
                   .Select(x => new MovimientoDto()
                   {
-                      Id = x.Id,
-                      Codigo = x.Codigo,
+                      Id = x.ID,
                       Fecha = x.Fecha,
                       Tipo = x.Tipo,
                       Monto = x.Monto
@@ -68,14 +66,13 @@ namespace Servicio.Movimiento
                   }).ToList();
         }
 
-        public MovimientoDto GetById(long? Id)
+        public MovimientoDto GetById(int? Id)
         {
-            var movimento = _movimientoRepositorio.ObtenerPorId(Id);
+            var movimento = _movimientoRepositorio.GetById(Id);
 
             return new MovimientoDto()
             {
-                Id = movimento.Id,
-                Codigo = movimento.Codigo,
+                Id = movimento.ID,
                 Fecha = movimento.Fecha,
                 Tipo = movimento.Tipo,
                 Monto = movimento.Monto
@@ -84,12 +81,12 @@ namespace Servicio.Movimiento
 
         public void Update(MovimientoDto Dto)
         {
-            var movimiento = _movimientoRepositorio.ObtenerPorId(Dto.Id);
+            var movimiento = _movimientoRepositorio.GetById(Dto.Id);
 
             movimiento.Fecha = Dto.Fecha;
             movimiento.Monto = Dto.Monto;
 
-            _movimientoRepositorio.Modificar(movimiento);
+            _movimientoRepositorio.Edit(movimiento);
             _movimientoRepositorio.Save();
 
 

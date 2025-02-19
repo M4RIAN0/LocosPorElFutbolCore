@@ -1,119 +1,83 @@
-﻿using Dominio.Repositorio.Producto;
+﻿using AutoMapper;
+using Dominio.Entidades;
+using Dominio.Repositorio;
 using IServicio.Producto;
 using IServicio.Producto.Dto;
 using Servicio.Base;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Servicio.Producto
+namespace Servicio
 {
     public class ProductoServicio : ServicioBase, IProductoServicio
     {
-        private readonly IProductoRepositorio _productoRepositorio;
+        private readonly IProductoRepository _repository;
+        private readonly IMapper _mapper;
 
-        public ProductoServicio(IProductoRepositorio productoRepositorio)
+        public ProductoServicio(IProductoRepository repository, IMapper mapper)
         {
-            _productoRepositorio = productoRepositorio;
+            _repository = repository;
+            _mapper = mapper;
         }
 
-        public void Add(ProductoDto Dto)
+        public void Add(ProductoDto dto)
         {
-            var producto = new Dominio.Entidades.Producto
-            {
-                Id = Dto.Id,
-                Codigo = Dto.Codigo,
-                CodigoBarra = Dto.CodigoBarra,
-                Descripcion = Dto.Descripcion,
-                Stock = Dto.Stock,
-                Rubro_Id = Dto.RubroId,
-                Marca_Id = Dto.MarcaId,
-                Talle_Id = Dto.TalleId,
-                Categoria_Id = Dto.CategoriaId,
-                SubRubro_Id = Dto.SubRubroId,
-                RowVersion = Dto.RowVersion
-
-            };
-
-            _productoRepositorio.Agregar(producto);
-            _productoRepositorio.Save();
+            var model = ToPostEntity(dto);
+            _repository.Add(model);
+            _repository.Save();
         }
 
-        public void Delete(long Id)
+        public void SoftDelete(int id)
         {
-            _productoRepositorio.Eliminar(Id);
-            _productoRepositorio.Save();
+            _repository.SoftDelete(id);
+            _repository.Save();
         }
 
-        //public IEnumerable<ProductoDto> GetAll()
-        //{
-        //    return _productoRepositorio.ObtenerTodo()
-        //         .Select(x => new ProductoDto
-        //         {
-        //             Id = x.Id,
-        //             Codigo = x.Codigo,
-        //             CodigoBarra = x.CodigoBarra,
-        //             Descripcion = x.Descripcion,
-        //             Stock = x.Stock,
-        //             RubroId = x.Rubro_Id,
-        //             MarcaId = x.Marca_Id,
-        //             TalleId = x.Talle_Id,
-        //             CategoriaId = x.Categoria_Id,
-        //             SubRubroId = x.SubRubro_Id,
-        //             RowVersion = x.RowVersion
+        public IEnumerable<ProductoGetDto> GetAll()
+        {
+            return _repository.GetAll("Talle,Marca,Categoria")
+                 .Select(x => ToGetDto(x)).ToList();
+        }
 
-        //         }).ToList();
-        //}
-
-        public IEnumerable<ProductoDto> GetByFilter(string cadenaBuscar)
+        public IEnumerable<ProductoGetDto> GetByFilter(string cadenaBuscar)
         {
             var codigo = -1;
             int.TryParse(cadenaBuscar, out codigo);
 
-            return _productoRepositorio.ObtenerPorFlitro(x => x.Descripcion.Contains(cadenaBuscar) || x.CodigoBarra == codigo || x.Codigo == codigo)
-               .Select(x => new ProductoDto
-               {
-                   Id = x.Id,
-                   Codigo = x.Codigo,
-                   CodigoBarra = x.CodigoBarra,
-                   Descripcion = x.Descripcion,
-                   Stock = x.Stock,
-                   RubroId = x.Rubro_Id,
-                   MarcaId = x.Marca_Id,
-                   TalleId = x.Talle_Id,
-                   CategoriaId = x.Categoria_Id,
-                   SubRubroId = x.SubRubro_Id,
-                   RowVersion = x.RowVersion
-
-               }).ToList();
+            return _repository.GetByFilter(x => x.Descripcion.Contains(cadenaBuscar) || x.CodigoBarra == codigo || x.Codigo == codigo)
+               .Select(x => ToGetDto(x)).ToList();
         }
 
-        public ProductoDto GetById(long? Id)
+        public ProductoGetDto GetById(int? id)
         {
-            var producto = _productoRepositorio.ObtenerPorId(Id);
+            var model = _repository.GetById(id);
 
-            return new ProductoDto
-            {
-                Id = producto.Id,
-                Codigo = producto.Codigo,
-                CodigoBarra = producto.CodigoBarra,
-                Descripcion = producto.Descripcion,
-                Stock = producto.Stock,
-                RubroId = producto.Rubro_Id,
-                MarcaId = producto.Marca_Id,
-                TalleId = producto.Talle_Id,
-                CategoriaId = producto.Categoria_Id,
-                SubRubroId = producto.SubRubro_Id,
-                RowVersion = producto.RowVersion
-
-            };
+            return ToGetDto(model);
         }
 
-        public void Update(ProductoDto Dto)
+        public void Update(ProductoPutDto dto)
         {
-            var producto = _productoRepositorio.ObtenerPorId(Dto.Id);
+            var model = ToPutEntity(dto);
 
-            producto.Descripcion = Dto.Descripcion;
-            producto.Categoria_Id = Dto.CategoriaId;
+            _repository.Edit(model);
+            _repository.Save();
         }
+
+        #region Private Methods
+        private ProductoGetDto ToGetDto(Producto model)
+        {
+            return _mapper.Map<ProductoGetDto>(model);
+        }
+
+        private Producto ToPostEntity(ProductoDto dto)
+        {
+            return _mapper.Map<Producto>(dto);
+        }
+
+        private Producto ToPutEntity(ProductoPutDto dto)
+        {
+            return _mapper.Map<Producto>(dto);
+        }
+        #endregion
     }
 }

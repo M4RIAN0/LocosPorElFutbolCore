@@ -11,12 +11,12 @@ namespace IServicio.Localidad
     {
         void Add(LocalidadDto Dto);
         void Update(LocalidadDto Dto);
-        void Delete(long Id);
+        void SoftDelete(int Id);
 
         IEnumerable<LocalidadDto> GetByFilter(string cadenaBuscar); // obtener por filtro
 
         IEnumerable<LocalidadDto> GetAll();
 
-        LocalidadDto GetById(long? Id);
+        LocalidadDto GetById(int? Id);
     }
 }

@@ -1,19 +1,24 @@
 using AutoMapper;
+using Dominio;
 using Dominio.Entidades;
-using Dominio.Repositorio.PersonaCliente;
+using Dominio.Repositorio;
 using Infraestructura;
-using Infraestructura.Repositorio.PersonaCliente;
+using Infraestructura.Repositorio;
+using IServicio.Categoria;
 using IServicio.Email;
 using IServicio.Identity;
 using IServicio.Mail;
+using IServicio.Marca;
 using IServicio.PersonaCliente;
+using IServicio.Producto;
+using IServicio.Talle;
 using LxF.API;
 using LxF.Support;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Servicio;
 using Servicio.Email;
 using Servicio.Identity;
-using Servicio.PersonaCliente;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -49,11 +54,20 @@ builder.Services.AddSwaggerGen();
 
 // Servicios
 builder.Services.AddScoped<IIdentityServicio, IndentityServicio>();
-builder.Services.AddScoped<IPersonaClienteServicio, PersonaClienteServicio>();
-builder.Services.AddScoped<IPersonaClienteRepositorio, PersonaClienteRepositorio>();
-builder.Services.AddTransient<IEmailSender, EmailSender>(); 
+builder.Services.AddTransient<IEmailSender, EmailSender>();
 builder.Services.AddSingleton(emailConfig);
-
+builder.Services.AddScoped<IPersonaClienteServicio, PersonaClienteServicio>();
+builder.Services.AddScoped<IPersonaClienteRepository, PersonaClienteRepository>();
+builder.Services.AddScoped<IPersonaClienteServicio, PersonaClienteServicio>();
+builder.Services.AddScoped<IPersonaClienteRepository, PersonaClienteRepository>();
+builder.Services.AddScoped<ITalleServicio, TalleServicio>();
+builder.Services.AddScoped<ITalleRepository, TalleRepository>();
+builder.Services.AddScoped<ICategoriaServicio, CategoriaServicio>();
+builder.Services.AddScoped<ICategoriaRepository, CategoriaRepository>();
+builder.Services.AddScoped<IMarcaServicio, MarcaServicio>();
+builder.Services.AddScoped<IMarcaRepository, MarcaRepository>();
+builder.Services.AddScoped<IProductoServicio, ProductoServicio>();
+builder.Services.AddScoped<IProductoRepository, ProductoRepository>();
 
 var app = builder.Build();
 

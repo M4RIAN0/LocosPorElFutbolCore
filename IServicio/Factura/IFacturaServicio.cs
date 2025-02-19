@@ -7,12 +7,12 @@ namespace IServicio.Factura
     {
         void Add(FacturaDto Dto);
         void Update(FacturaDto Dto);
-        void Delete(long Id);
+        void SoftDelete(int Id);
 
         IEnumerable<FacturaDto> GetByFilter(string cadenaBuscar); // obtener por filtro
 
         IEnumerable<FacturaDto> GetAll();
 
-        FacturaDto GetById(long? Id);
+        FacturaDto GetById(int? Id);
     }
 }
