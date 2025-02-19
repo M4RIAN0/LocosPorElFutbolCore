@@ -24,157 +24,165 @@ namespace Infraestructura.Migrations
 
             modelBuilder.Entity("Dominio.Entidades.Banco", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
+                        .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsEnabled")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Nombre")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.HasKey("Id");
+                    b.HasKey("ID");
 
                     b.ToTable("Bancos");
                 });
 
             modelBuilder.Entity("Dominio.Entidades.Categoria", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
+                        .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<string>("Descripcion")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
-                    b.HasKey("Id");
+                    b.Property<bool>("IsEnabled")
+                        .HasColumnType("bit");
+
+                    b.HasKey("ID");
 
                     b.ToTable("Categorias");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = 1,
+                            Descripcion = "Camisetas Futbol Masculinas",
+                            IsDeleted = false,
+                            IsEnabled = false
+                        },
+                        new
+                        {
+                            ID = 2,
+                            Descripcion = "Camisetas Futbol Femeninas",
+                            IsDeleted = false,
+                            IsEnabled = false
+                        },
+                        new
+                        {
+                            ID = 3,
+                            Descripcion = "Remeras",
+                            IsDeleted = false,
+                            IsEnabled = false
+                        },
+                        new
+                        {
+                            ID = 4,
+                            Descripcion = "Musculosas",
+                            IsDeleted = false,
+                            IsEnabled = false
+                        },
+                        new
+                        {
+                            ID = 5,
+                            Descripcion = "Shorts",
+                            IsDeleted = false,
+                            IsEnabled = false
+                        },
+                        new
+                        {
+                            ID = 6,
+                            Descripcion = "Medias",
+                            IsDeleted = false,
+                            IsEnabled = false
+                        },
+                        new
+                        {
+                            ID = 7,
+                            Descripcion = "Pantalones",
+                            IsDeleted = false,
+                            IsEnabled = false
+                        });
                 });
 
             modelBuilder.Entity("Dominio.Entidades.Comprobante", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
+                        .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<DateTime>("Fecha")
                         .HasColumnType("datetime2");
 
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsEnabled")
+                        .HasColumnType("bit");
 
                     b.Property<decimal>("Total")
                         .HasColumnType("decimal(18,4)");
 
-                    b.HasKey("Id");
+                    b.HasKey("ID");
 
                     b.ToTable("Comprobantes");
                 });
 
-            modelBuilder.Entity("Dominio.Entidades.CuponDescuento", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<long?>("ComprobanteId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("Comprobante_Id")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("Descripcion")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("FechaCaducidad")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("FechaEmision")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long?>("MovimientoId")
-                        .HasColumnType("bigint");
-
-                    b.Property<decimal>("Porcentaje")
-                        .HasColumnType("decimal(18,4)");
-
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ComprobanteId");
-
-                    b.HasIndex("MovimientoId");
-
-                    b.ToTable("CuponDescuentos");
-                });
-
             modelBuilder.Entity("Dominio.Entidades.DetalleComprobante", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<int>("Cantidad")
                         .HasColumnType("int");
 
-                    b.Property<int>("Codigo")
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<int>("Cantidad")
                         .HasColumnType("int");
 
                     b.Property<int>("CodigoBarra")
                         .HasColumnType("int");
 
-                    b.Property<long?>("ComprobanteId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("Comprobante_Id")
-                        .HasColumnType("bigint");
+                    b.Property<int>("ComprobanteId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Descripcion")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsEnabled")
+                        .HasColumnType("bit");
 
                     b.Property<decimal>("Precio")
                         .HasColumnType("decimal(18,4)");
 
-                    b.Property<long?>("ProductoId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("Producto_Id")
-                        .HasColumnType("bigint");
-
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
+                    b.Property<int>("ProductoId")
+                        .HasColumnType("int");
 
                     b.Property<decimal>("SubTotal")
                         .HasColumnType("decimal(18,4)");
 
-                    b.HasKey("Id");
+                    b.HasKey("ID");
 
                     b.HasIndex("ComprobanteId");
 
@@ -185,36 +193,32 @@ namespace Infraestructura.Migrations
 
             modelBuilder.Entity("Dominio.Entidades.Envio", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
+                        .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
-                    b.Property<long?>("ComprobanteId")
-                        .HasColumnType("bigint");
+                    b.Property<int>("ComprobanteId")
+                        .HasColumnType("int");
 
-                    b.Property<long>("Comprobante_Id")
-                        .HasColumnType("bigint");
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
-                    b.Property<long?>("LocalidadId")
-                        .HasColumnType("bigint");
+                    b.Property<bool>("IsEnabled")
+                        .HasColumnType("bit");
 
-                    b.Property<long>("Localidad_Id")
-                        .HasColumnType("bigint");
+                    b.Property<int>("LocalidadId")
+                        .HasColumnType("int");
 
                     b.Property<decimal>("Monto")
                         .HasColumnType("decimal(18,4)");
 
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
                     b.Property<string>("Tipo")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("ID");
 
                     b.HasIndex("ComprobanteId");
 
@@ -225,151 +229,73 @@ namespace Infraestructura.Migrations
 
             modelBuilder.Entity("Dominio.Entidades.Factura", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<long>("ClienteId")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("Codigo")
                         .HasColumnType("int");
 
-                    b.Property<long?>("ComprobanteId")
-                        .HasColumnType("bigint");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
-                    b.Property<long>("Comprobante_Id")
-                        .HasColumnType("bigint");
+                    b.Property<int>("ClienteId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ComprobanteId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Estado")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Fecha")
                         .HasColumnType("datetime2");
 
-                    b.Property<long?>("MovimientoId")
-                        .HasColumnType("bigint");
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
-                    b.Property<long>("Movimiento_Id")
-                        .HasColumnType("bigint");
+                    b.Property<bool>("IsEnabled")
+                        .HasColumnType("bit");
 
-                    b.Property<long?>("Personas_ClienteId")
-                        .HasColumnType("bigint");
+                    b.Property<int>("MovimientoId")
+                        .HasColumnType("int");
 
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
+                    b.Property<int?>("PersonasClienteID")
+                        .HasColumnType("int");
 
                     b.Property<decimal>("Total")
                         .HasColumnType("decimal(18,4)");
 
-                    b.HasKey("Id");
+                    b.HasKey("ID");
 
                     b.HasIndex("ComprobanteId");
 
                     b.HasIndex("MovimientoId");
 
-                    b.HasIndex("Personas_ClienteId");
+                    b.HasIndex("PersonasClienteID");
 
                     b.ToTable("Facturas");
                 });
 
-            modelBuilder.Entity("Dominio.Entidades.ListaPrecio", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<int>("Codigo")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Descripcion")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("EstaEliminado")
-                        .HasColumnType("bit");
-
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ListaPrecios");
-                });
-
-            modelBuilder.Entity("Dominio.Entidades.ListaPrecioProducto", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<DateTime>("FechaActualizacion")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long?>("ListaPrecioId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("ListaPrecio_Id")
-                        .HasColumnType("bigint");
-
-                    b.Property<decimal>("PrecioCosto")
-                        .HasColumnType("decimal(18,4)");
-
-                    b.Property<decimal>("PrecioPublico")
-                        .HasColumnType("decimal(18,4)");
-
-                    b.Property<long?>("ProductoId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("Producto_Id")
-                        .HasColumnType("bigint");
-
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ListaPrecioId");
-
-                    b.HasIndex("ProductoId");
-
-                    b.ToTable("ListaPrecioProductos");
-                });
-
             modelBuilder.Entity("Dominio.Entidades.Localidad", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
+                        .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsEnabled")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Nombre")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long?>("ProvinciaId")
-                        .HasColumnType("bigint");
+                    b.Property<int>("ProvinciaId")
+                        .HasColumnType("int");
 
-                    b.Property<long>("Provincia_Id")
-                        .HasColumnType("bigint");
-
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.HasKey("Id");
+                    b.HasKey("ID");
 
                     b.HasIndex("ProvinciaId");
 
@@ -378,96 +304,158 @@ namespace Infraestructura.Migrations
 
             modelBuilder.Entity("Dominio.Entidades.Marca", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<int>("Codigo")
                         .HasColumnType("int");
 
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
                     b.Property<string>("Descripcion")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(240)
+                        .HasColumnType("nvarchar(240)");
 
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
-                    b.HasKey("Id");
+                    b.Property<bool>("IsEnabled")
+                        .HasColumnType("bit");
+
+                    b.HasKey("ID");
 
                     b.ToTable("Marcas");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = 1,
+                            Descripcion = "Nike",
+                            IsDeleted = false,
+                            IsEnabled = false
+                        },
+                        new
+                        {
+                            ID = 2,
+                            Descripcion = "Adidas",
+                            IsDeleted = false,
+                            IsEnabled = false
+                        },
+                        new
+                        {
+                            ID = 3,
+                            Descripcion = "Fila",
+                            IsDeleted = false,
+                            IsEnabled = false
+                        },
+                        new
+                        {
+                            ID = 4,
+                            Descripcion = "Topper",
+                            IsDeleted = false,
+                            IsEnabled = false
+                        },
+                        new
+                        {
+                            ID = 5,
+                            Descripcion = "Reebok",
+                            IsDeleted = false,
+                            IsEnabled = false
+                        },
+                        new
+                        {
+                            ID = 6,
+                            Descripcion = "Umbro",
+                            IsDeleted = false,
+                            IsEnabled = false
+                        },
+                        new
+                        {
+                            ID = 7,
+                            Descripcion = "Puma",
+                            IsDeleted = false,
+                            IsEnabled = false
+                        });
                 });
 
             modelBuilder.Entity("Dominio.Entidades.Movimiento", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<int>("Codigo")
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<DateTime>("Fecha")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsEnabled")
+                        .HasColumnType("bit");
+
                     b.Property<decimal>("Monto")
                         .HasColumnType("decimal(18,4)");
 
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
                     b.Property<string>("Tipo")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("ID");
 
                     b.ToTable("Movimientos");
                 });
 
             modelBuilder.Entity("Dominio.Entidades.Persona", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
+                        .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<string>("Apellido")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Celular")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.Property<string>("Direccion")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Dni")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(8)
+                        .HasColumnType("nvarchar(8)");
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("FechaNacimiento")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Nombre")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
+                    b.Property<bool>("IsEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Sexo")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("ID");
 
                     b.ToTable("Personas");
 
@@ -476,17 +464,14 @@ namespace Infraestructura.Migrations
 
             modelBuilder.Entity("Dominio.Entidades.Producto", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
+                        .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
-                    b.Property<long?>("CategoriaId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("Categoria_Id")
-                        .HasColumnType("bigint");
+                    b.Property<int>("CategoriaId")
+                        .HasColumnType("int");
 
                     b.Property<int>("Codigo")
                         .HasColumnType("int");
@@ -495,44 +480,30 @@ namespace Infraestructura.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Descripcion")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
-                    b.Property<long?>("MarcaId")
-                        .HasColumnType("bigint");
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
-                    b.Property<long>("Marca_Id")
-                        .HasColumnType("bigint");
+                    b.Property<bool>("IsEnabled")
+                        .HasColumnType("bit");
 
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.Property<long>("Rubro_Id")
-                        .HasColumnType("bigint");
+                    b.Property<int>("MarcaId")
+                        .HasColumnType("int");
 
                     b.Property<int>("Stock")
                         .HasColumnType("int");
 
-                    b.Property<long?>("SubRubroId")
-                        .HasColumnType("bigint");
+                    b.Property<int>("TalleId")
+                        .HasColumnType("int");
 
-                    b.Property<long>("SubRubro_Id")
-                        .HasColumnType("bigint");
-
-                    b.Property<long?>("TalleId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("Talle_Id")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
+                    b.HasKey("ID");
 
                     b.HasIndex("CategoriaId");
 
                     b.HasIndex("MarcaId");
-
-                    b.HasIndex("SubRubroId");
 
                     b.HasIndex("TalleId");
 
@@ -541,24 +512,27 @@ namespace Infraestructura.Migrations
 
             modelBuilder.Entity("Dominio.Entidades.Provincia", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
+                        .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<string>("CP")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsEnabled")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Nombre")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.HasKey("Id");
+                    b.HasKey("ID");
 
                     b.ToTable("Provincias");
                 });
@@ -590,136 +564,127 @@ namespace Infraestructura.Migrations
                     b.ToTable("Roles", (string)null);
                 });
 
-            modelBuilder.Entity("Dominio.Entidades.Rubro", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<int>("Codigo")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Descripcion")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Rubros");
-                });
-
-            modelBuilder.Entity("Dominio.Entidades.SubRubro", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<int>("Codigo")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Descripcion")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.Property<long?>("RubroId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("Rubro_Id")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RubroId");
-
-                    b.ToTable("SubRubros");
-                });
-
             modelBuilder.Entity("Dominio.Entidades.Talle", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<int>("Codigo")
                         .HasColumnType("int");
 
-                    b.Property<string>("Descripcion")
-                        .HasColumnType("nvarchar(max)");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsEnabled")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Letra")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Numero")
                         .HasColumnType("int");
 
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.HasKey("Id");
+                    b.HasKey("ID");
 
                     b.ToTable("Talles");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = 1,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Letra = "XS",
+                            Numero = 36
+                        },
+                        new
+                        {
+                            ID = 2,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Letra = "S",
+                            Numero = 38
+                        },
+                        new
+                        {
+                            ID = 3,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Letra = "M",
+                            Numero = 40
+                        },
+                        new
+                        {
+                            ID = 4,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Letra = "L",
+                            Numero = 42
+                        },
+                        new
+                        {
+                            ID = 5,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Letra = "XL",
+                            Numero = 44
+                        },
+                        new
+                        {
+                            ID = 6,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Letra = "XXL",
+                            Numero = 46
+                        });
                 });
 
             modelBuilder.Entity("Dominio.Entidades.Tarjeta", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
+                        .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
-                    b.Property<long?>("BancoId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("Banco_Id")
-                        .HasColumnType("bigint");
+                    b.Property<int>("BancoId")
+                        .HasColumnType("int");
 
                     b.Property<int>("CodigoSeguridad")
+                        .HasMaxLength(3)
                         .HasColumnType("int");
 
                     b.Property<int>("Cuotas")
                         .HasColumnType("int");
 
                     b.Property<string>("DniTitular")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(8)
+                        .HasColumnType("nvarchar(8)");
 
                     b.Property<DateTime>("FechaExpiracion")
                         .HasColumnType("datetime2");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsEnabled")
+                        .HasColumnType("bit");
+
                     b.Property<string>("NombreTitular")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
                     b.Property<int>("Numero")
+                        .HasMaxLength(16)
                         .HasColumnType("int");
 
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
+                    b.Property<int>("TipoTarjetaId")
+                        .HasColumnType("int");
 
-                    b.Property<long?>("TipoTarjetaId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("TipoTarjeta_Id")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
+                    b.HasKey("ID");
 
                     b.HasIndex("BancoId");
 
@@ -730,24 +695,27 @@ namespace Infraestructura.Migrations
 
             modelBuilder.Entity("Dominio.Entidades.TipoTarjeta", b =>
                 {
-                    b.Property<long>("Id")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
+                        .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsEnabled")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Nombre")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
 
                     b.Property<string>("Tipo")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("ID");
 
                     b.ToTable("TipoTarjetas");
                 });
@@ -837,7 +805,7 @@ namespace Infraestructura.Migrations
                     b.ToTable("UsuarioRoles", (string)null);
                 });
 
-            modelBuilder.Entity("Dominio.Entidades.Persona_Cliente", b =>
+            modelBuilder.Entity("Dominio.Entidades.PersonaCliente", b =>
                 {
                     b.HasBaseType("Dominio.Entidades.Persona");
 
@@ -849,41 +817,49 @@ namespace Infraestructura.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 1L,
+                            ID = 1,
                             Apellido = "Martinez",
                             Celular = "123",
                             Direccion = "Jujuy 362",
-                            Dni = "Direccion",
+                            Dni = "38060619",
                             Email = "marcosmartinezmelek@gmail.com",
-                            FechaNacimiento = new DateTime(2024, 10, 3, 0, 0, 0, 0, DateTimeKind.Local),
+                            FechaNacimiento = new DateTime(2025, 2, 17, 0, 0, 0, 0, DateTimeKind.Local),
+                            IsDeleted = false,
+                            IsEnabled = false,
                             Nombre = "Marcos",
                             Sexo = "Masculino",
                             Codigo = 123
+                        },
+                        new
+                        {
+                            ID = 2,
+                            Apellido = "Garcia",
+                            Celular = "34567",
+                            Direccion = "Heras 1255",
+                            Dni = "45607656",
+                            Email = "juan@gmail.com",
+                            FechaNacimiento = new DateTime(2025, 2, 17, 0, 0, 0, 0, DateTimeKind.Local),
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Nombre = "Juan Carlos",
+                            Sexo = "Masculino",
+                            Codigo = 456
                         });
-                });
-
-            modelBuilder.Entity("Dominio.Entidades.CuponDescuento", b =>
-                {
-                    b.HasOne("Dominio.Entidades.Comprobante", "Comprobante")
-                        .WithMany("CuponDescuentos")
-                        .HasForeignKey("ComprobanteId");
-
-                    b.HasOne("Dominio.Entidades.Movimiento", null)
-                        .WithMany("Facturas")
-                        .HasForeignKey("MovimientoId");
-
-                    b.Navigation("Comprobante");
                 });
 
             modelBuilder.Entity("Dominio.Entidades.DetalleComprobante", b =>
                 {
                     b.HasOne("Dominio.Entidades.Comprobante", "Comprobante")
                         .WithMany("DetalleComprobantes")
-                        .HasForeignKey("ComprobanteId");
+                        .HasForeignKey("ComprobanteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Dominio.Entidades.Producto", "Producto")
                         .WithMany("DetalleComprobantes")
-                        .HasForeignKey("ProductoId");
+                        .HasForeignKey("ProductoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Comprobante");
 
@@ -894,11 +870,15 @@ namespace Infraestructura.Migrations
                 {
                     b.HasOne("Dominio.Entidades.Comprobante", "Comprobante")
                         .WithMany("Envios")
-                        .HasForeignKey("ComprobanteId");
+                        .HasForeignKey("ComprobanteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Dominio.Entidades.Localidad", "Localidad")
                         .WithMany("Envios")
-                        .HasForeignKey("LocalidadId");
+                        .HasForeignKey("LocalidadId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Comprobante");
 
@@ -909,43 +889,34 @@ namespace Infraestructura.Migrations
                 {
                     b.HasOne("Dominio.Entidades.Comprobante", "Comprobante")
                         .WithMany("Facturas")
-                        .HasForeignKey("ComprobanteId");
+                        .HasForeignKey("ComprobanteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Dominio.Entidades.Movimiento", "Movimiento")
-                        .WithMany()
-                        .HasForeignKey("MovimientoId");
-
-                    b.HasOne("Dominio.Entidades.Persona_Cliente", "Personas_Cliente")
                         .WithMany("Facturas")
-                        .HasForeignKey("Personas_ClienteId");
+                        .HasForeignKey("MovimientoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Dominio.Entidades.PersonaCliente", "PersonasCliente")
+                        .WithMany("Facturas")
+                        .HasForeignKey("PersonasClienteID");
 
                     b.Navigation("Comprobante");
 
                     b.Navigation("Movimiento");
 
-                    b.Navigation("Personas_Cliente");
-                });
-
-            modelBuilder.Entity("Dominio.Entidades.ListaPrecioProducto", b =>
-                {
-                    b.HasOne("Dominio.Entidades.ListaPrecio", "ListaPrecio")
-                        .WithMany("ListaPrecioProductos")
-                        .HasForeignKey("ListaPrecioId");
-
-                    b.HasOne("Dominio.Entidades.Producto", "Producto")
-                        .WithMany("ListaPrecioProductos")
-                        .HasForeignKey("ProductoId");
-
-                    b.Navigation("ListaPrecio");
-
-                    b.Navigation("Producto");
+                    b.Navigation("PersonasCliente");
                 });
 
             modelBuilder.Entity("Dominio.Entidades.Localidad", b =>
                 {
                     b.HasOne("Dominio.Entidades.Provincia", "Provincia")
                         .WithMany("Localidades")
-                        .HasForeignKey("ProvinciaId");
+                        .HasForeignKey("ProvinciaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Provincia");
                 });
@@ -954,47 +925,42 @@ namespace Infraestructura.Migrations
                 {
                     b.HasOne("Dominio.Entidades.Categoria", "Categoria")
                         .WithMany("Productos")
-                        .HasForeignKey("CategoriaId");
+                        .HasForeignKey("CategoriaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Dominio.Entidades.Marca", "Marca")
                         .WithMany("Productos")
-                        .HasForeignKey("MarcaId");
-
-                    b.HasOne("Dominio.Entidades.SubRubro", "SubRubro")
-                        .WithMany("Productoes")
-                        .HasForeignKey("SubRubroId");
+                        .HasForeignKey("MarcaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Dominio.Entidades.Talle", "Talle")
                         .WithMany("Productos")
-                        .HasForeignKey("TalleId");
+                        .HasForeignKey("TalleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Categoria");
 
                     b.Navigation("Marca");
 
-                    b.Navigation("SubRubro");
-
                     b.Navigation("Talle");
-                });
-
-            modelBuilder.Entity("Dominio.Entidades.SubRubro", b =>
-                {
-                    b.HasOne("Dominio.Entidades.Rubro", "Rubro")
-                        .WithMany("SubRubros")
-                        .HasForeignKey("RubroId");
-
-                    b.Navigation("Rubro");
                 });
 
             modelBuilder.Entity("Dominio.Entidades.Tarjeta", b =>
                 {
                     b.HasOne("Dominio.Entidades.Banco", "Banco")
                         .WithMany("Tarjetas")
-                        .HasForeignKey("BancoId");
+                        .HasForeignKey("BancoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Dominio.Entidades.TipoTarjeta", "TipoTarjeta")
                         .WithMany("Tarjetas")
-                        .HasForeignKey("TipoTarjetaId");
+                        .HasForeignKey("TipoTarjetaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Banco");
 
@@ -1016,11 +982,11 @@ namespace Infraestructura.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Dominio.Entidades.Persona_Cliente", b =>
+            modelBuilder.Entity("Dominio.Entidades.PersonaCliente", b =>
                 {
                     b.HasOne("Dominio.Entidades.Persona", null)
                         .WithOne()
-                        .HasForeignKey("Dominio.Entidades.Persona_Cliente", "Id")
+                        .HasForeignKey("Dominio.Entidades.PersonaCliente", "ID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -1037,18 +1003,11 @@ namespace Infraestructura.Migrations
 
             modelBuilder.Entity("Dominio.Entidades.Comprobante", b =>
                 {
-                    b.Navigation("CuponDescuentos");
-
                     b.Navigation("DetalleComprobantes");
 
                     b.Navigation("Envios");
 
                     b.Navigation("Facturas");
-                });
-
-            modelBuilder.Entity("Dominio.Entidades.ListaPrecio", b =>
-                {
-                    b.Navigation("ListaPrecioProductos");
                 });
 
             modelBuilder.Entity("Dominio.Entidades.Localidad", b =>
@@ -1069,23 +1028,11 @@ namespace Infraestructura.Migrations
             modelBuilder.Entity("Dominio.Entidades.Producto", b =>
                 {
                     b.Navigation("DetalleComprobantes");
-
-                    b.Navigation("ListaPrecioProductos");
                 });
 
             modelBuilder.Entity("Dominio.Entidades.Provincia", b =>
                 {
                     b.Navigation("Localidades");
-                });
-
-            modelBuilder.Entity("Dominio.Entidades.Rubro", b =>
-                {
-                    b.Navigation("SubRubros");
-                });
-
-            modelBuilder.Entity("Dominio.Entidades.SubRubro", b =>
-                {
-                    b.Navigation("Productoes");
                 });
 
             modelBuilder.Entity("Dominio.Entidades.Talle", b =>
@@ -1098,7 +1045,7 @@ namespace Infraestructura.Migrations
                     b.Navigation("Tarjetas");
                 });
 
-            modelBuilder.Entity("Dominio.Entidades.Persona_Cliente", b =>
+            modelBuilder.Entity("Dominio.Entidades.PersonaCliente", b =>
                 {
                     b.Navigation("Facturas");
                 });

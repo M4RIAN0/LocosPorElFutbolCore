@@ -1,4 +1,4 @@
-﻿using Dominio.Repositorio.DetalleComprobante;
+﻿using Dominio.Repositorio;
 using IServicio.DetalleComprobante;
 using IServicio.DetalleComprobante.Dto;
 using Servicio.Base;
@@ -22,36 +22,34 @@ namespace Servicio.DetalleComprobante
             {
                 Cantidad = Dto.Cantidad,
                 SubTotal = Dto.SubTotal,
-                Codigo = Dto.Codigo,
                 CodigoBarra = Dto.CodigoBarra,
                 Descripcion = Dto.Descripcion,
                 Precio = Dto.Precio,
 
             };
 
-            _detalleComprobanteRepositorio.Agregar(detalleComprobante);
+            _detalleComprobanteRepositorio.Add(detalleComprobante);
             _detalleComprobanteRepositorio.Save();
         }
 
-        public void Delete(long Id)
+        public void SoftDelete(int Id)
         {
-            _detalleComprobanteRepositorio.Eliminar(Id);
+            //_detalleComprobanteRepositorio.SoftDelete(Id);
             _detalleComprobanteRepositorio.Save();
         }
 
         public IEnumerable<DetalleComprobanteDto> GetAll()
         {
-            return _detalleComprobanteRepositorio.ObtenerTodo("DetalleComprobante").Select(x => new
+            return _detalleComprobanteRepositorio.GetAll("DetalleComprobante").Select(x => new
             DetalleComprobanteDto()
             {
-                Id = x.Id,
+                Id = x.ID,
                 Descripcion = x.Descripcion,
                 Cantidad = x.Cantidad,
-                Codigo = x.Codigo,
                 CodigoBarra = x.CodigoBarra,
-                ComprobanteId = x.Comprobante_Id,
+                ComprobanteId = x.ComprobanteId,
                 Precio = x.Precio,
-                ProductoId = x.Producto_Id,
+                ProductoId = x.ProductoId,
                 SubTotal = x.SubTotal,
 
             });
@@ -62,7 +60,7 @@ namespace Servicio.DetalleComprobante
             throw new System.NotImplementedException();
         }
 
-        public DetalleComprobanteDto GetById(long? Id)
+        public DetalleComprobanteDto GetById(int? Id)
         {
             throw new System.NotImplementedException();
         }

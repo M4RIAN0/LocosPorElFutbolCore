@@ -1,4 +1,3 @@
-using Dominio.Entidades.MetaData;
 using DominioBase;
 using System;
 using System.Collections.Generic;
@@ -8,21 +7,22 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Dominio.Entidades
 {
     [Table("Movimientos")]
-    [MetadataType(typeof(IMovimiento))]
-    public partial class Movimiento: EntidadBase
+    public partial class Movimiento : MasterEntityModel
     {
-       
+        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime Fecha { get; set; }
 
+        [Required(AllowEmptyStrings = false, ErrorMessage = "El campo {0} es obligatorio.")]
         public string Tipo { get; set; }
 
+        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         [Column(TypeName = "decimal(18,4)")]
         public decimal Monto { get; set; }
 
-        public int Codigo { get; set; }
-
 
         //propiedades de navegacion
-        public virtual IEnumerable<CuponDescuento> Facturas { get; set; }
+        public virtual IEnumerable<Factura> Facturas { get; set; }
     }
 }

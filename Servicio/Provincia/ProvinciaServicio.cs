@@ -12,7 +12,7 @@ namespace Servicio.Provincia
             throw new System.NotImplementedException();
         }
 
-        public void Delete(long Id)
+        public void SoftDelete(int Id)
         {
             throw new System.NotImplementedException();
         }
@@ -27,7 +27,7 @@ namespace Servicio.Provincia
             throw new System.NotImplementedException();
         }
 
-        public ProvinciaDto GetById(long? Id)
+        public ProvinciaDto GetById(int? Id)
         {
             throw new System.NotImplementedException();
         }

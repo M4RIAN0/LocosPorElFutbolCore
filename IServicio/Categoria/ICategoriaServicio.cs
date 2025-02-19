@@ -1,16 +1,15 @@
 ﻿using IServicio.Categoria.Dto;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace IServicio.Categoria
 {
     public interface ICategoriaServicio
     {
-        void Add(CategoriaDto Dto);
-        void Update(CategoriaDto Dto);
-        void Delete(long Id);
-
-        IEnumerable<CategoriaDto> GetByFilter(string cadenaBuscar); // obtener por filtro
+        void Add(CategoriaDto dto);
+        void Update(CategoriaPutDto dto);
+        void SoftDelete(int id);
+        IEnumerable<CategoriaGetDto> GetByFilter(string cadenaBuscar);
+        IEnumerable<CategoriaGetDto> GetAll();
+        CategoriaGetDto GetById(int? id);
     }
 }

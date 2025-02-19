@@ -1,96 +1,52 @@
-﻿using Dominio.Repositorio.Talle;
+﻿using AutoMapper;
+using Dominio;
+using Dominio.Entidades;
 using IServicio.Talle;
 using IServicio.Talle.Dto;
+using Lxf.Support.BuildingBlocks;
 using Servicio.Base;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Servicio.Talle
+namespace Servicio
 {
     public class TalleServicio : ServicioBase, ITalleServicio
     {
-        private readonly ITalleRepositorio _talleRepositorio;
+        private readonly ITalleRepository _repository;
+        private readonly IMapper _mapper;
 
-        public TalleServicio(ITalleRepositorio talleRepositorio)
+        public TalleServicio(ITalleRepository repository, IMapper mapper)
         {
-            _talleRepositorio = talleRepositorio;
+            _repository = repository;
+            _mapper = mapper;
         }
-
-        public void Add(TalleDto Dto)
+        public IEnumerable<TalleDto> GetAll()
         {
-            var talle = new Dominio.Entidades.Talle
-            {
-                Codigo = Dto.Codigo,
-                Descripcion = Dto.Descripcion,
-                Numero = Dto.Numero,
-                Letra = Dto.Letra
-            };
-
-            _talleRepositorio.Agregar(talle);
-            _talleRepositorio.Save();
+            return _repository.GetAll()
+                 .Select(x => ToDto(x)).ToList();
         }
-
-        public void Delete(long Id)
-        {
-            _talleRepositorio.Eliminar(Id);
-            _talleRepositorio.Save();
-        }
-
-        //public IEnumerable<TalleDto> GetAll()
-        //{
-        //    return _talleRepositorio.ObtenerTodo()
-        //         .Select(x => new TalleDto
-        //         {
-        //             Id = x.Id,
-        //             Codigo = x.Codigo,
-        //             Descripcion = x.Descripcion,
-        //             Numero = x.Numero,
-        //             Letra = x.Letra
-
-        //         }).ToList();
-        //}
 
         public IEnumerable<TalleDto> GetByFilter(string cadenaBuscar)
         {
             var numero = -1;
-            int.TryParse(cadenaBuscar, out numero);
+            _ = int.TryParse(cadenaBuscar, out numero);
 
-            return _talleRepositorio.ObtenerPorFlitro(x => x.Descripcion.Contains(cadenaBuscar) || x.Codigo == numero)
-                 .Select(x => new TalleDto
-                 {
-                     Id = x.Id,
-                     Codigo = x.Codigo,
-                     Descripcion = x.Descripcion,
-                     Numero = x.Numero,
-                     Letra = x.Letra
-
-                 }).ToList();
+            return _repository.GetByFilter(x => x.Letra.Contains(cadenaBuscar))
+                   .Select(x => ToDto(x)).ToList();
         }
 
-        public TalleDto GetById(long? Id)
+        public TalleDto GetById(int? id)
         {
-            var talle = _talleRepositorio.ObtenerPorId(Id);
-
-            return new TalleDto
-            {
-                Id = talle.Id,
-                Codigo = talle.Codigo,
-                Descripcion = talle.Descripcion,
-                Numero = talle.Numero,
-                Letra = talle.Letra
-            };
+            var model = _repository.GetById(id);
+            return ToDto(model);
         }
 
-        public void Update(TalleDto Dto)
+        #region Private Mhetods
+        private TalleDto ToDto(Talle model)
         {
-            var talle = _talleRepositorio.ObtenerPorId(Dto.Id);
-
-            talle.Descripcion = talle.Descripcion;
-            talle.Numero = talle.Numero;
-            talle.Letra = talle.Letra;
-
-            _talleRepositorio.Modificar(talle);
-            _talleRepositorio.Save();
+            return _mapper.Map<TalleDto>(model);
         }
+        #endregion
     }
+
 }

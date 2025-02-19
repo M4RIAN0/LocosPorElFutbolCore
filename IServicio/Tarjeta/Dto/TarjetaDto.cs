@@ -17,9 +17,9 @@ namespace IServicio.Tarjeta.Dto
 
         public int Cuotas { get; set; }
 
-        public long BancoId { get; set; }
+        public int BancoId { get; set; }
 
-        public long TipoTarjetaId { get; set; }
+        public int TipoTarjetaId { get; set; }
 
         public string BancoStr { get; set; }
 

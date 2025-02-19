@@ -9,14 +9,14 @@ namespace IServicio.Banco
     {
         void Add(BancoDto Dto);
         void Update(BancoDto Dto);
-        void Delete(long Id);
+        void SoftDelete(int Id);
 
         IEnumerable<BancoDto> GetByFilter(string cadenaBuscar); // obtener por filtro
 
-        IEnumerable<BancoDto> GetAll(long id);
+        IEnumerable<BancoDto> GetAll(int id);
 
         IEnumerable<BancoDto> GetAll();
 
-        BancoDto GetById(long? Id);
+        BancoDto GetById(int? Id);
     }
 }

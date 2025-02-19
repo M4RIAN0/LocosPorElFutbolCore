@@ -1,21 +1,19 @@
 namespace Dominio.Entidades
 {
-    using Dominio.Entidades.MetaData;
     using DominioBase;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
     [Table("Localidades")]
-    [MetadataType(typeof(ILocalidades))]
-    public partial class Localidad: EntidadBase
+    public partial class Localidad : MasterEntityModel
     {
-       
+        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public string Nombre { get; set; }
 
 
         //propiedades de navegacion
-        public long Provincia_Id { get; set; }
+        public int ProvinciaId { get; set; }
 
         public virtual IEnumerable<Envio> Envios { get; set; }
 

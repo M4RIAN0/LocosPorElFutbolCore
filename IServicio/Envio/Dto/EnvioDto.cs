@@ -9,8 +9,8 @@ namespace IServicio.Envio.Dto
     {
         public string Tipo { get; set; }
         public decimal Monto { get; set; }
-        public long LocalidadId { get; set; }
-        public long Comprobante_Id { get; set; }
+        public int LocalidadId { get; set; }
+        public int Comprobante_Id { get; set; }
         public string ComprobanteStr { get; set; }
         public string LocalidadeStr { get; set; }
     }

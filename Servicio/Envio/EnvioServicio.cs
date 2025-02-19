@@ -1,4 +1,4 @@
-﻿using Dominio.Repositorio.Envio;
+﻿using Dominio.Repositorio;
 using IServicio.Envio;
 using IServicio.Envio.Dto;
 using Servicio.Base;
@@ -22,42 +22,42 @@ namespace Servicio.Envio
             {
                 Tipo = Dto.Tipo,
                 Monto = Dto.Monto,
-                Localidad_Id = Dto.LocalidadId,
-                RowVersion = Dto.RowVersion
+                LocalidadId = Dto.LocalidadId,
+                
             };
 
-            _envioRepositorio.Agregar(envio);
+            _envioRepositorio.Add(envio);
             _envioRepositorio.Save();
         }
 
 
         public void Update(EnvioDto Dto)
         {
-            var envio = _envioRepositorio.ObtenerPorId(Dto.Id, "Envio");
+            var envio = _envioRepositorio.GetById(Dto.Id, "Envio");
 
             envio.Tipo = Dto.Tipo;
             envio.Monto = Dto.Monto;
-            envio.Localidad_Id = Dto.LocalidadId;
+            envio.LocalidadId = Dto.LocalidadId;
 
-            _envioRepositorio.Modificar(envio);
+            _envioRepositorio.Edit(envio);
             _envioRepositorio.Save();
         }
 
-        public void Delete(long Id)
+        public void SoftDelete(int Id)
         {
-            _envioRepositorio.Eliminar(Id);
+            _envioRepositorio.SoftDelete(Id);
             _envioRepositorio.Save();
         }
 
 
         public IEnumerable<EnvioDto> GetAll()
         {
-            return _envioRepositorio.ObtenerTodo("Envios").Select(x => new EnvioDto()
+            return _envioRepositorio.GetAll("Envios").Select(x => new EnvioDto()
             {
-                Id = x.Id,
+                Id = x.ID,
                 Tipo = x.Tipo,
                 Monto = x.Monto,
-                LocalidadId = x.Localidad_Id,
+                LocalidadId = x.LocalidadId,
                 //LocalidadeStr = x.Localidades.Nombre, //ver entidad Localidad
             }).ToList();
         }
@@ -67,16 +67,16 @@ namespace Servicio.Envio
             throw new System.NotImplementedException();//ver si se va a usar mas adelante
         }
 
-        public EnvioDto GetById(long? Id)
+        public EnvioDto GetById(int? Id)
         {
-            var envio = _envioRepositorio.ObtenerPorId(Id, "Envio");
+            var envio = _envioRepositorio.GetById(Id, "Envio");
 
             return new EnvioDto()
             {
-                Id = envio.Id,
+                Id = envio.ID,
                 Tipo = envio.Tipo,
                 Monto = envio.Monto,
-                LocalidadId = envio.Localidad_Id,
+                LocalidadId = envio.LocalidadId,
                 //LocalidadeStr = envio.Localidade.Nombre,
             };
         }

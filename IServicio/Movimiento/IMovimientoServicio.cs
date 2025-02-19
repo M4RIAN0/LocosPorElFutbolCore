@@ -7,12 +7,12 @@ namespace IServicio.Movimiento
     {
         void Add(MovimientoDto Dto);
         void Update(MovimientoDto Dto);
-        void Delete(long Id);
+        void SoftDelete(int Id);
 
         IEnumerable<MovimientoDto> GetByFilter(string cadenaBuscar); // obtener por filtro
 
         //IEnumerable<MovimientoDto> GetAll();
 
-        MovimientoDto GetById(long? Id);
+        MovimientoDto GetById(int? Id);
     }
 }

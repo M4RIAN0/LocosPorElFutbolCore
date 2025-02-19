@@ -19,9 +19,9 @@ namespace IServicio.DetalleComprobante.Dto
 
         public decimal Precio { get; set; }
 
-        public long ProductoId { get; set; }
+        public int ProductoId { get; set; }
 
-        public long ComprobanteId { get; set; }
+        public int ComprobanteId { get; set; }
 
         public string ComprobanteStr { get; set; }
 

@@ -1,4 +1,4 @@
-﻿using Dominio.Repositorio.Comprobante;
+﻿using Dominio.Repositorio;
 using IServicio.Comprobante;
 using IServicio.Comprobante.Dto;
 using Servicio.Base;
@@ -20,25 +20,24 @@ namespace Servicio.Comprobante
             var comprobante = new Dominio.Entidades.Comprobante
             {
                 Fecha = Dto.Fecha,
-                Total = Dto.Total,
-                RowVersion = Dto.RowVersion
+                Total = Dto.Total
             };
 
-            _comprobanteRepositorio.Agregar(comprobante);
+            _comprobanteRepositorio.Add(comprobante);
             _comprobanteRepositorio.Save();
         }
 
-        public void Delete(long Id)
+        public void SoftDelete(int Id)
         {
-            _comprobanteRepositorio.Eliminar(Id);
+           // _comprobanteRepositorio.SoftDelete(Id);
             _comprobanteRepositorio.Save();
         }
 
         public IEnumerable<ComprobanteDto> GetAll()
         {
-            return _comprobanteRepositorio.ObtenerTodo("Comprobante").Select(x => new ComprobanteDto()
+            return _comprobanteRepositorio.GetAll("Comprobante").Select(x => new ComprobanteDto()
             {
-                Id = x.Id,
+                Id = x.ID,
                 Fecha = x.Fecha,
                 Total = x.Total
             }).ToList();
@@ -49,7 +48,7 @@ namespace Servicio.Comprobante
             throw new System.NotImplementedException();
         }
 
-        public ComprobanteDto GetById(long? Id)
+        public ComprobanteDto GetById(int? Id)
         {
             throw new System.NotImplementedException();
         }

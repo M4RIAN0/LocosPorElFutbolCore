@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Lxf.Support.BuildingBlocks;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace LxF.Support;
 public sealed class GlobalExceptionHandler(RequestDelegate next)
@@ -20,6 +21,12 @@ public sealed class GlobalExceptionHandler(RequestDelegate next)
             var errros = exception.Errors.GroupBy(t => t.PropertyName).ToDictionary(g => g.Key, g => g.Select(t => t.ErrorMessage).ToArray());
 
             await Results.ValidationProblem(errros).ExecuteAsync(httpContext);
+        }
+        catch (BadRequestException exception)
+        {
+            var problem = new ProblemDetails { Status = StatusCodes.Status400BadRequest, Detail = exception.Message };
+
+            await Results.BadRequest(problem).ExecuteAsync(httpContext);
         }
         catch (ElementNotFoundException exception)
         {

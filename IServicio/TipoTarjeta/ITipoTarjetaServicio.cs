@@ -11,12 +11,12 @@ namespace IServicio.TipoTarjeta
     {
         void Add(TipoTarjetaDto Dto);
         void Update(TipoTarjetaDto Dto);
-        void Delete(long Id);
+        void SoftDelete(int Id);
 
         IEnumerable<TipoTarjetaDto> GetByFilter(string cadenaBuscar); // obtener por filtro
 
         IEnumerable<TipoTarjetaDto> GetAll();
 
-        TipoTarjetaDto GetById(long? Id);
+        TipoTarjetaDto GetById(int? Id);
     }
 }

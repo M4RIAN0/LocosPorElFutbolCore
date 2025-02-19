@@ -1,24 +1,24 @@
 namespace Dominio.Entidades
 {
-    using Dominio.Entidades.MetaData;
     using DominioBase;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
     [Table("Envios")]
-    [MetadataType(typeof(IEnvio))]
-    public partial class Envio: EntidadBase
+    public partial class Envio : MasterEntityModel
     {
+        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public string Tipo { get; set; }
 
+        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         [Column(TypeName = "decimal(18,4)")]
         public decimal Monto { get; set; }
 
 
         //propiedades de navegacion
-        public long Localidad_Id { get; set; }
+        public int LocalidadId { get; set; }
 
-        public long Comprobante_Id { get; set; }
+        public int ComprobanteId { get; set; }
 
         public virtual Comprobante Comprobante { get; set; }
 

@@ -11,12 +11,12 @@ namespace IServicio.Envio
     {
         void Add(EnvioDto Dto);
         void Update(EnvioDto Dto);
-        void Delete(long Id);
+        void SoftDelete(int Id);
 
         IEnumerable<EnvioDto> GetByFilter(string cadenaBuscar); // obtener por filtro
 
         IEnumerable<EnvioDto> GetAll();
 
-        EnvioDto GetById(long? Id);
+        EnvioDto GetById(int? Id);
     }
 }

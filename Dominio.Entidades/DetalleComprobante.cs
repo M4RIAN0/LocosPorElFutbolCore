@@ -1,34 +1,36 @@
 namespace Dominio.Entidades
 {
-    using Dominio.Entidades.MetaData;
     using DominioBase;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
     [Table("DetalleComprobantes")]
-    [MetadataType(typeof(IDetalleComprobante))]
-    public partial class DetalleComprobante: EntidadBase
+    public partial class DetalleComprobante : MasterEntityModel
     {
+        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
+        [Range(1, 999)]
         public int Cantidad { get; set; }
 
+        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         [Column(TypeName = "decimal(18,4)")]
         public decimal SubTotal { get; set; }
 
-        public int Codigo { get; set; }
-
+        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public int CodigoBarra { get; set; }
 
+        [Required(AllowEmptyStrings = false, ErrorMessage = "El campo {0} es obligatorio.")]
         public string Descripcion { get; set; }
 
+        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         [Column(TypeName = "decimal(18,4)")]
         public decimal Precio { get; set; }
 
 
 
         //propiedades de navegacion
-        public long Producto_Id { get; set; }
+        public int ProductoId { get; set; }
 
-        public long Comprobante_Id { get; set; }
+        public int ComprobanteId { get; set; }
 
         public virtual Comprobante Comprobante { get; set; }
 

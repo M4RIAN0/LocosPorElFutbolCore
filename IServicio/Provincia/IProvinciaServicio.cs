@@ -11,12 +11,12 @@ namespace IServicio.Provincia
     {
         void Add(ProvinciaDto Dto);
         void Update(ProvinciaDto Dto);
-        void Delete(long Id);
+        void SoftDelete(int Id);
 
         IEnumerable<ProvinciaDto> GetByFilter(string cadenaBuscar); // obtener por filtro
 
         IEnumerable<ProvinciaDto> GetAll();
 
-        ProvinciaDto GetById(long? Id);
+        ProvinciaDto GetById(int? Id);
     }
 }

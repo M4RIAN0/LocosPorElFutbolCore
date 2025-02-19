@@ -1,26 +1,22 @@
 namespace Dominio.Entidades
 {
-    using Dominio.Entidades.MetaData;
     using DominioBase;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
     [Table("Talles")]
-    [MetadataType(typeof(ITalle))]
-    public partial class Talle: EntidadBase
+    public partial class Talle : MasterEntityModel
     {
-        public int Codigo { get; set; }
-
-        public string Descripcion { get; set; }
-
+        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public int Numero { get; set; }
 
+        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public string Letra { get; set; }
 
 
         //propiedades de navegacion
-      
+
         public virtual IEnumerable<Producto> Productos { get; set; }
     }
 }

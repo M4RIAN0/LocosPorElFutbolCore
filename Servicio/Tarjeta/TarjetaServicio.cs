@@ -1,4 +1,4 @@
-﻿using Dominio.Repositorio.Tarjeta;
+﻿using Dominio.Repositorio;
 using IServicio.Tarjeta;
 using IServicio.Tarjeta.Dto;
 using Servicio.Base;
@@ -26,18 +26,18 @@ namespace Servicio.Tarjeta
                 CodigoSeguridad = Dto.CodigoSeguridad,
                 FechaExpiracion = Dto.FechaExpiracion,
                 Cuotas = Dto.Cuotas,
-                Banco_Id = Dto.BancoId,
-                TipoTarjeta_Id = Dto.TipoTarjetaId,
+                BancoId = Dto.BancoId,
+                TipoTarjetaId = Dto.TipoTarjetaId,
 
             };
 
-            _tarjetaRepositorio.Agregar(tarjeta);
+            _tarjetaRepositorio.Add(tarjeta);
             _tarjetaRepositorio.Save();
         }
 
-        public void Delete(long Id)
+        public void SoftDelete(int Id)
         {
-            _tarjetaRepositorio.Eliminar(Id);
+            //_tarjetaRepositorio.SoftDelete(Id);
             _tarjetaRepositorio.Save();
 
         }
@@ -47,7 +47,7 @@ namespace Servicio.Tarjeta
         //    return _tarjetaRepositorio.ObtenerTodo()
         //         .Select(x => new TarjetaDto
         //         {
-        //             Id = x.Id,
+        //             Id = x.ID,
         //             NombreTitular = x.NombreTitular,
         //             Numero = x.Numero,
         //             DniTitular = x.DniTitular,
@@ -66,53 +66,53 @@ namespace Servicio.Tarjeta
             var numero = -1;
             int.TryParse(cadenaBuscar, out numero);
 
-            return _tarjetaRepositorio.ObtenerPorFlitro(x => x.NombreTitular.Contains(cadenaBuscar) || x.Numero == numero)
+            return _tarjetaRepositorio.GetByFilter(x => x.NombreTitular.Contains(cadenaBuscar) || x.Numero == numero)
                 .Select(x => new TarjetaDto
                 {
-                    Id = x.Id,
+                    Id = x.ID,
                     NombreTitular = x.NombreTitular,
                     Numero = x.Numero,
                     DniTitular = x.DniTitular,
                     CodigoSeguridad = x.CodigoSeguridad,
                     FechaExpiracion = x.FechaExpiracion,
                     Cuotas = x.Cuotas,
-                    BancoId = x.Banco_Id,
-                    TipoTarjetaId = x.TipoTarjeta_Id
+                    BancoId = x.BancoId,
+                    TipoTarjetaId = x.TipoTarjetaId
 
                 }).ToList();
         }
 
-        public TarjetaDto GetById(long? Id)
+        public TarjetaDto GetById(int? Id)
         {
-            var tarjeta = _tarjetaRepositorio.ObtenerPorId(Id);
+            var tarjeta = _tarjetaRepositorio.GetById(Id);
 
             return new TarjetaDto
             {
-                Id = tarjeta.Id,
+                Id = tarjeta.ID,
                 NombreTitular = tarjeta.NombreTitular,
                 Numero = tarjeta.Numero,
                 DniTitular = tarjeta.DniTitular,
                 CodigoSeguridad = tarjeta.CodigoSeguridad,
                 FechaExpiracion = tarjeta.FechaExpiracion,
                 Cuotas = tarjeta.Cuotas,
-                BancoId = tarjeta.Banco_Id,
-                TipoTarjetaId = tarjeta.TipoTarjeta_Id
+                BancoId = tarjeta.BancoId,
+                TipoTarjetaId = tarjeta.TipoTarjetaId
             };
         }
 
         public void Update(TarjetaDto Dto)
         {
-            var tarjeta = _tarjetaRepositorio.ObtenerPorId(Dto.Id);
+            var tarjeta = _tarjetaRepositorio.GetById(Dto.Id);
 
             tarjeta.NombreTitular = tarjeta.NombreTitular;
             tarjeta.Numero = tarjeta.Numero;
             tarjeta.DniTitular = tarjeta.DniTitular;
             tarjeta.CodigoSeguridad = tarjeta.CodigoSeguridad;
             tarjeta.FechaExpiracion = tarjeta.FechaExpiracion;
-            tarjeta.Banco_Id = tarjeta.Banco_Id;
-            tarjeta.TipoTarjeta_Id = tarjeta.TipoTarjeta_Id;
+            tarjeta.BancoId = tarjeta.BancoId;
+            tarjeta.TipoTarjetaId = tarjeta.TipoTarjetaId;
 
-            _tarjetaRepositorio.Modificar(tarjeta);
+            _tarjetaRepositorio.Edit(tarjeta);
             _tarjetaRepositorio.Save();
 
         }

@@ -7,7 +7,7 @@ namespace IServicio.Localidad.Dto
 {
     public class LocalidadDto : DtoBase
     {
-        public long ProvinciaId { get; set; }
+        public int ProvinciaId { get; set; }
 
         public string ProvinciaStr { get; set; }
     }
