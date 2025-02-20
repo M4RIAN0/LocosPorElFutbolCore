@@ -8,6 +8,8 @@ namespace Dominio.Entidades
     [Table("Tarjetas")]
     public partial class Tarjeta : MasterEntityModel
     {
+        [Required(AllowEmptyStrings = false, ErrorMessage = "El campo {0} es obligatorio.")]
+        public string TipoTarjeta { get; set; } //Enum
 
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         [StringLength(250, ErrorMessage = "El campo {0} no debe superar los {1} caracteres.")]
@@ -29,6 +31,9 @@ namespace Dominio.Entidades
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime FechaExpiracion { get; set; }
+
+        [Required(AllowEmptyStrings = false, ErrorMessage = "El campo {0} es obligatorio.")]
+        public string BancoEmisor { get; set; }
 
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         public int Cuotas { get; set; }
