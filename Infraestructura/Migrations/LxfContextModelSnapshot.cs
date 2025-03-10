@@ -44,6 +44,64 @@ namespace Infraestructura.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Bancos");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = 1,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Nombre = "Nacion"
+                        },
+                        new
+                        {
+                            ID = 2,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Nombre = "Macro"
+                        },
+                        new
+                        {
+                            ID = 3,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Nombre = "BBVA Frances"
+                        },
+                        new
+                        {
+                            ID = 4,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Nombre = "Santander"
+                        },
+                        new
+                        {
+                            ID = 5,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Nombre = "Galicia"
+                        },
+                        new
+                        {
+                            ID = 6,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Nombre = "Santiago Del Estero"
+                        },
+                        new
+                        {
+                            ID = 7,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Nombre = "Galicia Mas"
+                        },
+                        new
+                        {
+                            ID = 8,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Nombre = "Comafi"
+                        });
                 });
 
             modelBuilder.Entity("Dominio.Entidades.Categoria", b =>
@@ -129,8 +187,8 @@ namespace Infraestructura.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
-                    b.Property<DateTime>("Fecha")
-                        .HasColumnType("datetime2");
+                    b.Property<DateOnly>("Fecha")
+                        .HasColumnType("date");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -139,7 +197,7 @@ namespace Infraestructura.Migrations
                         .HasColumnType("bit");
 
                     b.Property<decimal>("Total")
-                        .HasColumnType("decimal(18,4)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("ID");
 
@@ -174,13 +232,13 @@ namespace Infraestructura.Migrations
                         .HasColumnType("bit");
 
                     b.Property<decimal>("Precio")
-                        .HasColumnType("decimal(18,4)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("ProductoId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("SubTotal")
-                        .HasColumnType("decimal(18,4)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("ID");
 
@@ -212,7 +270,7 @@ namespace Infraestructura.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("Monto")
-                        .HasColumnType("decimal(18,4)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Tipo")
                         .IsRequired()
@@ -245,8 +303,8 @@ namespace Infraestructura.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("Fecha")
-                        .HasColumnType("datetime2");
+                    b.Property<DateOnly>("Fecha")
+                        .HasColumnType("date");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -254,22 +312,22 @@ namespace Infraestructura.Migrations
                     b.Property<bool>("IsEnabled")
                         .HasColumnType("bit");
 
-                    b.Property<int>("MovimientoId")
+                    b.Property<int?>("TarjetaId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("PersonasClienteID")
-                        .HasColumnType("int");
+                    b.Property<string>("TipoPago")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Total")
-                        .HasColumnType("decimal(18,4)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("ID");
 
+                    b.HasIndex("ClienteId");
+
                     b.HasIndex("ComprobanteId");
 
-                    b.HasIndex("MovimientoId");
-
-                    b.HasIndex("PersonasClienteID");
+                    b.HasIndex("TarjetaId");
 
                     b.ToTable("Facturas");
                 });
@@ -281,6 +339,9 @@ namespace Infraestructura.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<int>("CP")
+                        .HasColumnType("int");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -300,6 +361,422 @@ namespace Infraestructura.Migrations
                     b.HasIndex("ProvinciaId");
 
                     b.ToTable("Localidades");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = 1,
+                            CP = 6430,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Nombre = "Adolfo Alsina",
+                            ProvinciaId = 1
+                        },
+                        new
+                        {
+                            ID = 2,
+                            CP = 1870,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Nombre = "Avellaneda",
+                            ProvinciaId = 1
+                        },
+                        new
+                        {
+                            ID = 3,
+                            CP = 4751,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Nombre = "San Fernando del Valle de Catamarca",
+                            ProvinciaId = 2
+                        },
+                        new
+                        {
+                            ID = 4,
+                            CP = 4139,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Nombre = "Santa Maria",
+                            ProvinciaId = 2
+                        },
+                        new
+                        {
+                            ID = 5,
+                            CP = 3500,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Nombre = "Resistencia",
+                            ProvinciaId = 3
+                        },
+                        new
+                        {
+                            ID = 6,
+                            CP = 3503,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Nombre = "Barranqueras",
+                            ProvinciaId = 3
+                        },
+                        new
+                        {
+                            ID = 7,
+                            CP = 9100,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Nombre = "Trelew",
+                            ProvinciaId = 4
+                        },
+                        new
+                        {
+                            ID = 8,
+                            CP = 9120,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Nombre = "Puerto Madryn",
+                            ProvinciaId = 4
+                        },
+                        new
+                        {
+                            ID = 9,
+                            CP = 5152,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Nombre = "Carlos Paz",
+                            ProvinciaId = 5
+                        },
+                        new
+                        {
+                            ID = 10,
+                            CP = 5223,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Nombre = "Jesus Maria",
+                            ProvinciaId = 5
+                        },
+                        new
+                        {
+                            ID = 11,
+                            CP = 3409,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Nombre = "Paso de la Patria",
+                            ProvinciaId = 6
+                        },
+                        new
+                        {
+                            ID = 12,
+                            CP = 3302,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Nombre = "Ituzaingo",
+                            ProvinciaId = 6
+                        },
+                        new
+                        {
+                            ID = 13,
+                            CP = 3100,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Nombre = "Parana",
+                            ProvinciaId = 7
+                        },
+                        new
+                        {
+                            ID = 14,
+                            CP = 3200,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Nombre = "Concordia",
+                            ProvinciaId = 7
+                        },
+                        new
+                        {
+                            ID = 15,
+                            CP = 3630,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Nombre = "Las Lomitas",
+                            ProvinciaId = 8
+                        },
+                        new
+                        {
+                            ID = 16,
+                            CP = 3610,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Nombre = "Clorinda",
+                            ProvinciaId = 8
+                        },
+                        new
+                        {
+                            ID = 17,
+                            CP = 4600,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Nombre = "San Salvador de Jujuy",
+                            ProvinciaId = 9
+                        },
+                        new
+                        {
+                            ID = 18,
+                            CP = 4500,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Nombre = "San Pedro",
+                            ProvinciaId = 9
+                        },
+                        new
+                        {
+                            ID = 19,
+                            CP = 6300,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Nombre = "Santa Rosa",
+                            ProvinciaId = 10
+                        },
+                        new
+                        {
+                            ID = 20,
+                            CP = 6360,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Nombre = "General Pico",
+                            ProvinciaId = 10
+                        },
+                        new
+                        {
+                            ID = 21,
+                            CP = 5360,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Nombre = "Chalecito",
+                            ProvinciaId = 11
+                        },
+                        new
+                        {
+                            ID = 22,
+                            CP = 26540,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Nombre = "Alfaro",
+                            ProvinciaId = 11
+                        },
+                        new
+                        {
+                            ID = 23,
+                            CP = 5501,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Nombre = "Godoy Cruz",
+                            ProvinciaId = 12
+                        },
+                        new
+                        {
+                            ID = 24,
+                            CP = 5507,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Nombre = "Lujan de Cuyo",
+                            ProvinciaId = 12
+                        },
+                        new
+                        {
+                            ID = 25,
+                            CP = 3300,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Nombre = "Posadas",
+                            ProvinciaId = 13
+                        },
+                        new
+                        {
+                            ID = 26,
+                            CP = 3370,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Nombre = "Puerto Iguazu",
+                            ProvinciaId = 13
+                        },
+                        new
+                        {
+                            ID = 27,
+                            CP = 8300,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Nombre = "Neuquen",
+                            ProvinciaId = 14
+                        },
+                        new
+                        {
+                            ID = 28,
+                            CP = 8316,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Nombre = "Plottier",
+                            ProvinciaId = 14
+                        },
+                        new
+                        {
+                            ID = 29,
+                            CP = 8332,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Nombre = "General Roca",
+                            ProvinciaId = 15
+                        },
+                        new
+                        {
+                            ID = 30,
+                            CP = 8324,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Nombre = "Cipolletti",
+                            ProvinciaId = 15
+                        },
+                        new
+                        {
+                            ID = 31,
+                            CP = 4440,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Nombre = "Metan",
+                            ProvinciaId = 16
+                        },
+                        new
+                        {
+                            ID = 32,
+                            CP = 4430,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Nombre = "Guemes",
+                            ProvinciaId = 16
+                        },
+                        new
+                        {
+                            ID = 33,
+                            CP = 5400,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Nombre = "Rivadavia",
+                            ProvinciaId = 17
+                        },
+                        new
+                        {
+                            ID = 34,
+                            CP = 5411,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Nombre = "Santa Lucia",
+                            ProvinciaId = 17
+                        },
+                        new
+                        {
+                            ID = 35,
+                            CP = 5700,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Nombre = "Juan Martín de Pueyrredón",
+                            ProvinciaId = 18
+                        },
+                        new
+                        {
+                            ID = 36,
+                            CP = 5705,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Nombre = "San Francisco del Monte de Oro",
+                            ProvinciaId = 18
+                        },
+                        new
+                        {
+                            ID = 37,
+                            CP = 9400,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Nombre = "Río Gallegos",
+                            ProvinciaId = 19
+                        },
+                        new
+                        {
+                            ID = 38,
+                            CP = 9405,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Nombre = "El Calafate",
+                            ProvinciaId = 19
+                        },
+                        new
+                        {
+                            ID = 39,
+                            CP = 2000,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Nombre = "Rosario",
+                            ProvinciaId = 20
+                        },
+                        new
+                        {
+                            ID = 40,
+                            CP = 3560,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Nombre = "Reconquista",
+                            ProvinciaId = 20
+                        },
+                        new
+                        {
+                            ID = 41,
+                            CP = 4200,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Nombre = "Santiago del Estero",
+                            ProvinciaId = 21
+                        },
+                        new
+                        {
+                            ID = 42,
+                            CP = 4202,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Nombre = "La Banda",
+                            ProvinciaId = 21
+                        },
+                        new
+                        {
+                            ID = 43,
+                            CP = 9410,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Nombre = "Ushuaia ",
+                            ProvinciaId = 22
+                        },
+                        new
+                        {
+                            ID = 44,
+                            CP = 9420,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Nombre = "Rio Grande",
+                            ProvinciaId = 22
+                        },
+                        new
+                        {
+                            ID = 45,
+                            CP = 4000,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Nombre = "San Miguel de Tucuman",
+                            ProvinciaId = 23
+                        },
+                        new
+                        {
+                            ID = 46,
+                            CP = 4001,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Nombre = "Yerba Buena",
+                            ProvinciaId = 23
+                        });
                 });
 
             modelBuilder.Entity("Dominio.Entidades.Marca", b =>
@@ -385,8 +862,11 @@ namespace Infraestructura.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
-                    b.Property<DateTime>("Fecha")
-                        .HasColumnType("datetime2");
+                    b.Property<int>("FacturaId")
+                        .HasColumnType("int");
+
+                    b.Property<DateOnly>("Fecha")
+                        .HasColumnType("date");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -395,13 +875,15 @@ namespace Infraestructura.Migrations
                         .HasColumnType("bit");
 
                     b.Property<decimal>("Monto")
-                        .HasColumnType("decimal(18,4)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Tipo")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
+
+                    b.HasIndex("FacturaId");
 
                     b.ToTable("Movimientos");
                 });
@@ -437,8 +919,8 @@ namespace Infraestructura.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("FechaNacimiento")
-                        .HasColumnType("datetime2");
+                    b.Property<DateOnly>("FechaNacimiento")
+                        .HasColumnType("date");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -473,10 +955,8 @@ namespace Infraestructura.Migrations
                     b.Property<int>("CategoriaId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Codigo")
-                        .HasColumnType("int");
-
                     b.Property<int>("CodigoBarra")
+                        .HasMaxLength(6)
                         .HasColumnType("int");
 
                     b.Property<string>("Descripcion")
@@ -493,6 +973,9 @@ namespace Infraestructura.Migrations
                     b.Property<int>("MarcaId")
                         .HasColumnType("int");
 
+                    b.Property<decimal>("Precio")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<int>("Stock")
                         .HasColumnType("int");
 
@@ -508,6 +991,34 @@ namespace Infraestructura.Migrations
                     b.HasIndex("TalleId");
 
                     b.ToTable("Productos");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = 1,
+                            CategoriaId = 1,
+                            CodigoBarra = 123123,
+                            Descripcion = "Camiseta Titular Manchester United 24/25",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 1,
+                            Precio = 150000.00m,
+                            Stock = 10,
+                            TalleId = 1
+                        },
+                        new
+                        {
+                            ID = 2,
+                            CategoriaId = 1,
+                            CodigoBarra = 323232,
+                            Descripcion = "Camiseta Titular Mancheste City 24/25",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 1,
+                            Precio = 175000.00m,
+                            Stock = 10,
+                            TalleId = 1
+                        });
                 });
 
             modelBuilder.Entity("Dominio.Entidades.Provincia", b =>
@@ -517,10 +1028,6 @@ namespace Infraestructura.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
-
-                    b.Property<string>("CP")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -535,6 +1042,169 @@ namespace Infraestructura.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Provincias");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = 1,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Nombre = "Buenos Aires"
+                        },
+                        new
+                        {
+                            ID = 2,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Nombre = "Catamarca	"
+                        },
+                        new
+                        {
+                            ID = 3,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Nombre = "Chaco"
+                        },
+                        new
+                        {
+                            ID = 4,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Nombre = "Chubut"
+                        },
+                        new
+                        {
+                            ID = 5,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Nombre = "Cordoba"
+                        },
+                        new
+                        {
+                            ID = 6,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Nombre = "Corrientes"
+                        },
+                        new
+                        {
+                            ID = 7,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Nombre = "Entre Ríos"
+                        },
+                        new
+                        {
+                            ID = 8,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Nombre = "Formosa"
+                        },
+                        new
+                        {
+                            ID = 9,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Nombre = "Jujuy"
+                        },
+                        new
+                        {
+                            ID = 10,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Nombre = "La Pampa"
+                        },
+                        new
+                        {
+                            ID = 11,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Nombre = "La Rioja"
+                        },
+                        new
+                        {
+                            ID = 12,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Nombre = "Mendoza"
+                        },
+                        new
+                        {
+                            ID = 13,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Nombre = "Misiones"
+                        },
+                        new
+                        {
+                            ID = 14,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Nombre = "Neuquén"
+                        },
+                        new
+                        {
+                            ID = 15,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Nombre = "Río Negro"
+                        },
+                        new
+                        {
+                            ID = 16,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Nombre = "Salta"
+                        },
+                        new
+                        {
+                            ID = 17,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Nombre = "San Juan"
+                        },
+                        new
+                        {
+                            ID = 18,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Nombre = "San Luis"
+                        },
+                        new
+                        {
+                            ID = 19,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Nombre = "Santa Cruz"
+                        },
+                        new
+                        {
+                            ID = 20,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Nombre = "Santa Fe"
+                        },
+                        new
+                        {
+                            ID = 21,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Nombre = "Santiago del Estero"
+                        },
+                        new
+                        {
+                            ID = 22,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Nombre = "Tierra del Fuego"
+                        },
+                        new
+                        {
+                            ID = 23,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Nombre = "Tucumán"
+                        });
                 });
 
             modelBuilder.Entity("Dominio.Entidades.Role", b =>
@@ -651,9 +1321,10 @@ namespace Infraestructura.Migrations
                     b.Property<int>("BancoId")
                         .HasColumnType("int");
 
-                    b.Property<int>("CodigoSeguridad")
+                    b.Property<string>("CodigoSeguridad")
+                        .IsRequired()
                         .HasMaxLength(3)
-                        .HasColumnType("int");
+                        .HasColumnType("nvarchar(3)");
 
                     b.Property<int>("Cuotas")
                         .HasColumnType("int");
@@ -663,8 +1334,8 @@ namespace Infraestructura.Migrations
                         .HasMaxLength(8)
                         .HasColumnType("nvarchar(8)");
 
-                    b.Property<DateTime>("FechaExpiracion")
-                        .HasColumnType("datetime2");
+                    b.Property<DateOnly>("FechaExpiracion")
+                        .HasColumnType("date");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -672,14 +1343,20 @@ namespace Infraestructura.Migrations
                     b.Property<bool>("IsEnabled")
                         .HasColumnType("bit");
 
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
                     b.Property<string>("NombreTitular")
                         .IsRequired()
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
 
-                    b.Property<int>("Numero")
+                    b.Property<string>("Numero")
+                        .IsRequired()
                         .HasMaxLength(16)
-                        .HasColumnType("int");
+                        .HasColumnType("nvarchar(16)");
 
                     b.Property<int>("TipoTarjetaId")
                         .HasColumnType("int");
@@ -707,10 +1384,6 @@ namespace Infraestructura.Migrations
                     b.Property<bool>("IsEnabled")
                         .HasColumnType("bit");
 
-                    b.Property<string>("Nombre")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Tipo")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -718,6 +1391,22 @@ namespace Infraestructura.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("TipoTarjetas");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = 1,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Tipo = "Credito"
+                        },
+                        new
+                        {
+                            ID = 2,
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            Tipo = "Debito"
+                        });
                 });
 
             modelBuilder.Entity("Dominio.Entidades.Usuario", b =>
@@ -823,7 +1512,7 @@ namespace Infraestructura.Migrations
                             Direccion = "Jujuy 362",
                             Dni = "38060619",
                             Email = "marcosmartinezmelek@gmail.com",
-                            FechaNacimiento = new DateTime(2025, 2, 17, 0, 0, 0, 0, DateTimeKind.Local),
+                            FechaNacimiento = new DateOnly(1994, 4, 22),
                             IsDeleted = false,
                             IsEnabled = false,
                             Nombre = "Marcos",
@@ -838,7 +1527,7 @@ namespace Infraestructura.Migrations
                             Direccion = "Heras 1255",
                             Dni = "45607656",
                             Email = "juan@gmail.com",
-                            FechaNacimiento = new DateTime(2025, 2, 17, 0, 0, 0, 0, DateTimeKind.Local),
+                            FechaNacimiento = new DateOnly(1994, 4, 22),
                             IsDeleted = false,
                             IsEnabled = false,
                             Nombre = "Juan Carlos",
@@ -887,27 +1576,27 @@ namespace Infraestructura.Migrations
 
             modelBuilder.Entity("Dominio.Entidades.Factura", b =>
                 {
+                    b.HasOne("Dominio.Entidades.PersonaCliente", "PersonaCliente")
+                        .WithMany("Facturas")
+                        .HasForeignKey("ClienteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Dominio.Entidades.Comprobante", "Comprobante")
                         .WithMany("Facturas")
                         .HasForeignKey("ComprobanteId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Dominio.Entidades.Movimiento", "Movimiento")
-                        .WithMany("Facturas")
-                        .HasForeignKey("MovimientoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Dominio.Entidades.PersonaCliente", "PersonasCliente")
-                        .WithMany("Facturas")
-                        .HasForeignKey("PersonasClienteID");
+                    b.HasOne("Dominio.Entidades.Tarjeta", "Tarjeta")
+                        .WithMany()
+                        .HasForeignKey("TarjetaId");
 
                     b.Navigation("Comprobante");
 
-                    b.Navigation("Movimiento");
+                    b.Navigation("PersonaCliente");
 
-                    b.Navigation("PersonasCliente");
+                    b.Navigation("Tarjeta");
                 });
 
             modelBuilder.Entity("Dominio.Entidades.Localidad", b =>
@@ -919,6 +1608,17 @@ namespace Infraestructura.Migrations
                         .IsRequired();
 
                     b.Navigation("Provincia");
+                });
+
+            modelBuilder.Entity("Dominio.Entidades.Movimiento", b =>
+                {
+                    b.HasOne("Dominio.Entidades.Factura", "Factura")
+                        .WithMany("Movimientos")
+                        .HasForeignKey("FacturaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Factura");
                 });
 
             modelBuilder.Entity("Dominio.Entidades.Producto", b =>
@@ -1010,6 +1710,11 @@ namespace Infraestructura.Migrations
                     b.Navigation("Facturas");
                 });
 
+            modelBuilder.Entity("Dominio.Entidades.Factura", b =>
+                {
+                    b.Navigation("Movimientos");
+                });
+
             modelBuilder.Entity("Dominio.Entidades.Localidad", b =>
                 {
                     b.Navigation("Envios");
@@ -1018,11 +1723,6 @@ namespace Infraestructura.Migrations
             modelBuilder.Entity("Dominio.Entidades.Marca", b =>
                 {
                     b.Navigation("Productos");
-                });
-
-            modelBuilder.Entity("Dominio.Entidades.Movimiento", b =>
-                {
-                    b.Navigation("Facturas");
                 });
 
             modelBuilder.Entity("Dominio.Entidades.Producto", b =>

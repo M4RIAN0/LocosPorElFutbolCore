@@ -12,7 +12,7 @@ namespace Dominio.Entidades
         public int Cantidad { get; set; }
 
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
-        [Column(TypeName = "decimal(18,4)")]
+        [Column(TypeName = "decimal(18,2)")]
         public decimal SubTotal { get; set; }
 
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
@@ -22,7 +22,7 @@ namespace Dominio.Entidades
         public string Descripcion { get; set; }
 
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
-        [Column(TypeName = "decimal(18,4)")]
+        [Column(TypeName = "decimal(18,2)")]
         public decimal Precio { get; set; }
 
 

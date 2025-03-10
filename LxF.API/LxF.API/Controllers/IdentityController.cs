@@ -1,9 +1,9 @@
 ﻿using IServicio.Email;
 using IServicio.Identity;
 using IServicio.Identity.Dto;
-using Lxf.Support.BuildingBlocks;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
+using System.Net;
 
 namespace LxF.API.Controllers
 {
@@ -21,58 +21,37 @@ namespace LxF.API.Controllers
         }
 
         [HttpPost("Register")]
-        public async Task<IActionResult> Register([FromBody] RegistrationRequestDto model)
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        public async Task<IActionResult> Register([FromBody] RegisterDto model)
         {
-            var errorMessage = await _identityServicio.Register(model);
-
-            if (!string.IsNullOrEmpty(errorMessage))
-            {
-                _response.IsSuccess = false;
-                _response.Message = errorMessage;
-                return BadRequest(_response);
-            }
-
+            _response.Result = await _identityServicio.Register(model);
+            _response.Message = "Usuario creado con éxito.";
             return Ok(_response);
         }
 
         [HttpPost("Login")]
-        public async Task<IActionResult> Login([FromBody] LoginRequestDto model)
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        public async Task<IActionResult> Login([FromBody] LoginDto model)
         {
-            var loginResponse = await _identityServicio.Login(model);
-
-            if (loginResponse.Usuario == null)
-            {
-                _response.IsSuccess = false;
-                _response.Message = "Username or Password is incorrect";
-                return BadRequest(_response);
-            }
-
-            _response.Result = loginResponse;
+            _response.Result = await _identityServicio.Login(model);
+            _response.Message = "Login correcto.";
             return Ok(_response);
         }
 
         [HttpPost("AssingRole")]
-        public async Task<IActionResult> AssingRole([FromBody] RegistrationRequestDto model)
+        public async Task<IActionResult> AssingRole([FromBody] AssignRoleDto model)
         {
-            var assignRoleSuccesful = await _identityServicio.AssignRole(model.Email, model.Role);
-            if (!assignRoleSuccesful)
-            {
-                _response.IsSuccess = false;
-                _response.Message = "Username is incorrect or not exist";
-                return BadRequest(_response);
-            }
-
-            _response.Result = assignRoleSuccesful;
+            _response.Result = await _identityServicio.AssignRole(model.Email, model.Role);
+            _response.Message = "Rol asignado correctamente.";
             return Ok(_response);
         }
 
         [HttpPost("ForgotPassword")]
         public async Task<IActionResult> ForgotPassword([Required] string email)
         {
-            var tokenPassword = await _identityServicio.ForgotPassword(email);
-
-            if (string.IsNullOrEmpty(tokenPassword.User))
-                throw new ElementNotFoundException("Could not send link to email, pelase try again.");
+            var tokenPassword = await _identityServicio.TokenPassword(email);
 
             var callBackLink = $"{Request.Scheme}://{Request.Host}{Request.PathBase}/ForgotPassword/IdentityController?token={tokenPassword.Token}&email={email}";
 
@@ -80,14 +59,15 @@ namespace LxF.API.Controllers
 
             var sendMail = _identityServicio.SendMail(tokenPassword, message);
 
-            if (sendMail)
+            if (!sendMail)
             {
-                _response.Result = sendMail;
-                // a la hs de implementar en el view eliminar la seccion donde se pasa el token en 'response.Message '
-                _response.Message = $"Password Changed request is sent on Email {tokenPassword.User}. Please Open your email and click the link, token={tokenPassword.Token}";
+                _response.Message = "La solicitud no pudo ser enviada.";
+                return BadRequest(_response);
             }
-            return Ok(_response);
 
+            // a la hs de implementar en el view eliminar la seccion donde se pasa el token en 'response.Message '
+            _response.Message = $"La solicitud de cambio de contraseña se envía por correo electrónico {tokenPassword.User} Abra su correo electrónico y haga clic en el link, token = {tokenPassword.Token}";
+            return Ok(_response);
         }
 
         [HttpPost("ResetPassword")]
@@ -97,8 +77,9 @@ namespace LxF.API.Controllers
 
             if (result.Succeeded)
             {
-                _response.Message = $"Password was changed succesfully";
+                _response.Message = $"La contraseña fue cambiada exitosamente.";
             }
+
             return Ok(_response);
 
         }

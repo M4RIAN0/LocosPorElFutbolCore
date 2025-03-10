@@ -8,8 +8,9 @@ namespace Dominio.Entidades
     [Table("Tarjetas")]
     public partial class Tarjeta : MasterEntityModel
     {
-        [Required(AllowEmptyStrings = false, ErrorMessage = "El campo {0} es obligatorio.")]
-        public string TipoTarjeta { get; set; } //Enum
+        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
+        [StringLength(250, ErrorMessage = "El campo {0} no debe superar los {1} caracteres.")]
+        public string Nombre { get; set; }
 
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         [StringLength(250, ErrorMessage = "El campo {0} no debe superar los {1} caracteres.")]
@@ -17,7 +18,7 @@ namespace Dominio.Entidades
 
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         [StringLength(16, ErrorMessage = "El campo {0} no debe superar los {1} caracteres.")]
-        public int Numero { get; set; }
+        public string Numero { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "El campo {0} es obligatorio.")]
         [StringLength(8, ErrorMessage = "El campo {0} no debe superar los {1} caracteres.")]
@@ -25,15 +26,11 @@ namespace Dominio.Entidades
 
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         [StringLength(3, ErrorMessage = "El campo {0} no debe superar los {1} caracteres.")]
-        public int CodigoSeguridad { get; set; }
+        public string CodigoSeguridad { get; set; }
 
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
-        public DateTime FechaExpiracion { get; set; }
-
-        [Required(AllowEmptyStrings = false, ErrorMessage = "El campo {0} es obligatorio.")]
-        public string BancoEmisor { get; set; }
+        [DisplayFormat(DataFormatString = "{0:MM/yy}")]
+        public DateOnly FechaExpiracion { get; set; }
 
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
         public int Cuotas { get; set; }

@@ -10,19 +10,18 @@ namespace Dominio.Entidades
     public partial class Movimiento : MasterEntityModel
     {
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
-        public DateTime Fecha { get; set; }
+        public DateOnly Fecha { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "El campo {0} es obligatorio.")]
         public string Tipo { get; set; }
 
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
-        [Column(TypeName = "decimal(18,4)")]
+        [Column(TypeName = "decimal(18,2)")]
         public decimal Monto { get; set; }
 
 
         //propiedades de navegacion
-        public virtual IEnumerable<Factura> Facturas { get; set; }
+        public int FacturaId { get; set; }
+        public virtual Factura Factura { get; set; }
     }
 }

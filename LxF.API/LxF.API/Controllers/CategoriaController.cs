@@ -1,7 +1,6 @@
 ﻿using Infraestructura;
-using IServicio.Categoria;
-using IServicio.Categoria.Dto;
-using IServicio.PersonaCliente;
+using IServicio;
+using IServicio.Dtos;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
@@ -19,7 +18,7 @@ namespace LxF.API.Controllers
             _db = db;
             _service = service;
         }
-        
+
         [HttpGet]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         public IActionResult GetCategorias()

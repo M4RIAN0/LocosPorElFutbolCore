@@ -23,25 +23,15 @@ namespace Infraestructura.Repositorio.repository
 
         public void Add(T entity)
         {
-            var ModelErrors = CheckProperties(entity);
+            var modelErrors = CheckProperties(entity);
 
-            if (ModelErrors.Count > 0)
-                throw new BadRequestException(ModelErrors);
+            if (modelErrors.Count > 0)
+                throw new BadRequestException(modelErrors);
 
             _context.Set<T>().Add(entity);
         }
 
-        public void SoftDelete(int id)
-        {
-            var model = _context.Set<T>().Where(x => x.ID == id && !x.IsDeleted).FirstOrDefault();
-
-            if (model == null)
-                throw new ElementNotFoundException($"No se encontro {typeof(T).Name} con el Id: {id}.");
-
-            model.IsDeleted = true;
-        }
-
-        public void Edit(T entity)
+        public void Attach(T entity)
         {
             var exist = _context.Set<T>().Where(x => x.ID == entity.ID && !x.IsDeleted).Any();
 
@@ -57,9 +47,19 @@ namespace Infraestructura.Repositorio.repository
             _context.Entry(entity).State = EntityState.Modified;
         }
 
+        public void SoftDelete(int id)
+        {
+            var model = _context.Set<T>().Where(x => x.ID == id && !x.IsDeleted).FirstOrDefault();
+
+            if (model == null)
+                throw new ElementNotFoundException($"No se encontro {typeof(T).Name} con el Id: {id}.");
+
+            model.IsDeleted = true;
+        }
+
         public IEnumerable<T> GetByFilter(Expression<Func<T, bool>> predicate)
         {
-            return _context.Set<T>().AsNoTracking().Where(predicate).Where(x => !x.IsDeleted);
+            return [.. _context.Set<T>().AsNoTracking().Where(predicate).Where(x => !x.IsDeleted)];
         }
 
         public IEnumerable<T> GetByFilter(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includeProperties)
@@ -163,6 +163,11 @@ namespace Infraestructura.Repositorio.repository
             }
 
             return [.. query.AsNoTracking().Where(x => !x.IsDeleted)];
+        }
+
+        public IEnumerable<T> OrderByDescending(Expression<Func<T, Object>> predicate)
+        {
+            return [.. _context.Set<T>().AsNoTracking().Where(x => !x.IsDeleted).OrderByDescending(predicate)];
         }
 
         public void Save()

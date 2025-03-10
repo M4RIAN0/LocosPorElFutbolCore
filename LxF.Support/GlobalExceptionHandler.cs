@@ -1,9 +1,8 @@
 ﻿using FluentValidation;
+using Lxf.Support.BuildingBlocks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Lxf.Support.BuildingBlocks;
-using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace LxF.Support;
 public sealed class GlobalExceptionHandler(RequestDelegate next)

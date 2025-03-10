@@ -11,12 +11,16 @@ namespace Dominio.Entidades
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public string Nombre { get; set; }
 
+        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
+        public int CP { get; set; }
+
+
+
 
         //propiedades de navegacion
         public int ProvinciaId { get; set; }
-
+        public virtual Provincia Provincia { get; set; }
         public virtual IEnumerable<Envio> Envios { get; set; }
 
-        public virtual Provincia Provincia { get; set; }
     }
 }

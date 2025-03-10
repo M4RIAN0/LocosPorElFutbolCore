@@ -27,7 +27,8 @@ namespace Dominio.Entidades
         public string Sexo { get; set; }
 
         [Required(ErrorMessage = "El campo {0} es obligatorio")]
-        public DateTime FechaNacimiento { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+        public DateOnly FechaNacimiento { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "El campo {0} es obligatorio")]
         [StringLength(10, ErrorMessage = "El campo {0} no debe superar los {1} caractere")]

@@ -15,7 +15,7 @@ namespace Lxf.Support.BuildingBlocks
 
         public Dictionary<string, string> Args { get; }
 
-        private string Msg (Dictionary<string, string> args)
+        private static string Msg (Dictionary<string, string> args)
         {
             var message = new StringBuilder();
 

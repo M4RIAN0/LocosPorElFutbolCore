@@ -9,14 +9,16 @@ namespace Dominio.Entidades
     public partial class Producto : MasterEntityModel
     {
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
-        public int Codigo { get; set; }
-
-        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
+        [StringLength(6, ErrorMessage = "El campo {0} no debe superar los {1} caracteres.")]
         public int CodigoBarra { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "El campo {0} es obligatorio.")]
         [StringLength(250, ErrorMessage = "El campo {0} no debe superar los {1} caracteres.")]
         public string Descripcion { get; set; }
+
+        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
+        [Column(TypeName = "decimal(18,2)")]
+        public decimal Precio { get; set; }
 
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public int Stock { get; set; }

@@ -2,23 +2,24 @@ namespace Dominio.Entidades
 {
     using DominioBase;
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
     [Table("Facturas")]
     public partial class Factura : MasterEntityModel
     {
-        [Required(AllowEmptyStrings = false, ErrorMessage = "El campo {0} es obligatorio.")]
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
-        public DateTime Fecha { get; set; }
+        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
+        public DateOnly Fecha { get; set; }
 
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public string Estado { get; set; }
 
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
-        [Column(TypeName = "decimal(18,4)")]
+        [Column(TypeName = "decimal(18,2)")]
         public decimal Total { get; set; }
+
+        public string TipoPago { get; set; }
 
 
         //propiedades de navegacion
@@ -26,12 +27,14 @@ namespace Dominio.Entidades
 
         public int ComprobanteId { get; set; }
 
-        public int MovimientoId { get; set; }
+        public int? TarjetaId { get; set; }
 
         public virtual Comprobante Comprobante { get; set; }
 
-        public virtual PersonaCliente PersonasCliente { get; set; }
+        public virtual PersonaCliente PersonaCliente { get; set; }
 
-        public virtual Movimiento Movimiento { get; set; }
+        public virtual Tarjeta Tarjeta { get; set; }
+
+        public virtual IEnumerable<Movimiento> Movimientos { get; set; }
     }
 }

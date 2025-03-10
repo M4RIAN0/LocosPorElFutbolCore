@@ -1,5 +1,5 @@
 ﻿using Infraestructura;
-using IServicio.Talle;
+using IServicio;
 using Lxf.Support.BuildingBlocks;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;

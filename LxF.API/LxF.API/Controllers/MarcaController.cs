@@ -1,7 +1,6 @@
 ﻿using Infraestructura;
-using IServicio.Marca;
-using IServicio.Marca.Dto;
-using IServicio.PersonaCliente;
+using IServicio;
+using IServicio.Dtos;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 

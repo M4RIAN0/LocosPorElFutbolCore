@@ -1,11 +1,7 @@
 ﻿using AutoMapper;
 using Dominio.Entidades;
-using IServicio.Categoria.Dto;
+using IServicio.Dtos;
 using IServicio.Identity.Dto;
-using IServicio.Marca.Dto;
-using IServicio.PersonaCliente.Dto;
-using IServicio.Producto.Dto;
-using IServicio.Talle.Dto;
 
 namespace LxF.API
 {
@@ -15,11 +11,24 @@ namespace LxF.API
         {
             var mappingConfig = new MapperConfiguration(config =>
             {
-                config.CreateMap<PersonaClienteDto, PersonaCliente>();
-                config.CreateMap<PersonaClientePutDto, PersonaCliente>();
-                config.CreateMap<PersonaCliente, PersonaClienteGetDto>();
+                config.CreateMap<Usuario, UsuarioDto>()
+                .ForMember(vm => vm.Celular, m => m.MapFrom(u => u.PhoneNumber));
 
-                config.CreateMap<Usuario, UsuarioDto>();
+                config.CreateMap<RegisterDto, Usuario>()
+                .ForMember(vm => vm.UserName, m => m.MapFrom(u => u.Email))
+                .ForMember(vm => vm.NormalizedEmail, m => m.MapFrom(u => u.Email.ToUpper()))
+                .ForMember(vm => vm.PhoneNumber, m => m.MapFrom(u => u.Celular));
+
+                config.CreateMap<UsuarioDto, Usuario>()
+               .ForMember(vm => vm.NormalizedEmail, m => m.MapFrom(u => u.EMAIL.ToLower()));
+
+                config.CreateMap<PersonaClienteDto, PersonaCliente>()
+                .ForMember(vm => vm.FechaNacimiento, m => m.MapFrom(u => DateOnly.Parse(u.FechaNacimiento)));
+                config.CreateMap<PersonaClientePutDto, PersonaCliente>()
+                .ForMember(vm => vm.FechaNacimiento, m => m.MapFrom(u => DateOnly.Parse(u.FechaNacimiento)));
+                config.CreateMap<PersonaCliente, PersonaClienteGetDto>()
+                .ForMember(vm => vm.FechaNacimiento, m => m.MapFrom(u => u.FechaNacimiento.ToString()));
+
                 config.CreateMap<Talle, TalleDto>();
 
                 config.CreateMap<CategoriaDto, Categoria>();
@@ -37,7 +46,35 @@ namespace LxF.API
                 .ForMember(vm => vm.Talle, m => m.MapFrom(u => u.Talle.Letra))
                 .ForMember(vm => vm.Marca, m => m.MapFrom(u => u.Marca.Descripcion));
 
+                config.CreateMap<TarjetaDto, Tarjeta>()
+                .ForMember(vm => vm.FechaExpiracion, m => m.MapFrom(u => DateOnly.Parse(u.FechaExpiracion)));
+                config.CreateMap<Tarjeta, TarjetaGetDto>()
+                .ForMember(vm => vm.Banco, m => m.MapFrom(u => u.Banco.Nombre))
+                .ForMember(vm => vm.TipoTarjeta, m => m.MapFrom(u => u.TipoTarjeta.Tipo))
+                .ForMember(vm => vm.FechaExpiracion, m => m.MapFrom(u => u.FechaExpiracion.ToString()));
+
+                config.CreateMap<MovimientoDto, Movimiento>()
+                .ForMember(vm => vm.Fecha, m => m.MapFrom(u => DateOnly.Parse(u.Fecha)));
+                config.CreateMap<Movimiento, MovimientoGetDto>()
+                .ForMember(vm => vm.Fecha, m => m.MapFrom(u => u.Fecha.ToString()));
+
+                config.CreateMap<DetalleComprobanteDto, DetalleComprobante>();
+                config.CreateMap<DetalleComprobante, DetalleComprobanteGetDto>()
+                .ForMember(vm => vm.Producto, m => m.MapFrom(u => u.Producto.Descripcion));
+
+                config.CreateMap<ComprobanteDto, Comprobante>()
+                .ForMember(vm => vm.Fecha, m => m.MapFrom(u => DateOnly.Parse(u.Fecha)));
+                config.CreateMap<Comprobante, ComprobanteGetDto>()
+                .ForMember(vm => vm.Fecha, m => m.MapFrom(u => u.Fecha.ToString()));
+
+                config.CreateMap<FacturaDto, Factura>()
+                .ForMember(vm => vm.Fecha, m => m.MapFrom(u => DateOnly.Parse(u.Fecha)));
+                config.CreateMap<Factura, FacturaGetDto>()
+                .ForMember(vm => vm.Cliente, m => m.MapFrom(u => u.PersonaCliente.Nombre + " " + u.PersonaCliente.Apellido))
+                .ForMember(vm => vm.Tarjeta, m => m.MapFrom(u => u.Tarjeta.Nombre))
+                .ForMember(vm => vm.Fecha, m => m.MapFrom(u => u.Fecha.ToString()));
             });
+
             return mappingConfig;
         }
     }
