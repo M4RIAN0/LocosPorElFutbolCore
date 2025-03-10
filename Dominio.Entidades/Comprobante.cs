@@ -9,13 +9,11 @@ namespace Dominio.Entidades
     [Table("Comprobantes")]
     public partial class Comprobante : MasterEntityModel
     {
-        [Required(AllowEmptyStrings = false, ErrorMessage = "El campo {0} es obligatorio.")]
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
-        public DateTime Fecha { get; set; }
+        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
+        public DateOnly Fecha { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "El campo {0} es obligatorio.")]
-        [Column(TypeName = "decimal(18,4)")]
+        [Column(TypeName = "decimal(18,2)")]
         public decimal Total { get; set; }
 
 

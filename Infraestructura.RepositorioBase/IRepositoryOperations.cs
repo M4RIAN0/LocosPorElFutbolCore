@@ -5,7 +5,7 @@ namespace Infraestructura.RepositorioBase
     public interface IRepositoryOperations<T> where T : MasterEntityModel
     {
         void Add(T entity);
-        void Edit(T entity);
+        void Attach(T entity);
         void SoftDelete(int id);
         void Save();
         void BeginTransaction();

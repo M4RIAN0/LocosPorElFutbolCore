@@ -4,6 +4,6 @@ namespace IServicio.Email
 {
     public interface IEmailSender
     {
-        void SendEmail(Message email);
+        bool SendEmail(Message email);
     }
 }

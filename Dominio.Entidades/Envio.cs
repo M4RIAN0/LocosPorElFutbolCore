@@ -11,7 +11,7 @@ namespace Dominio.Entidades
         public string Tipo { get; set; }
 
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
-        [Column(TypeName = "decimal(18,4)")]
+        [Column(TypeName = "decimal(18,2)")]
         public decimal Monto { get; set; }
 
 

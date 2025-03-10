@@ -21,5 +21,7 @@ namespace Infraestructura.RepositorioBase
 
         IList<T> GetByFilter2(Expression<Func<T, bool>> predicate, string includeProperties);
         IList<T> GetByFilter2(Expression<Func<T, bool>> predicate, params Expression<Func<T, Object>>[] includeProperties);
+
+        IEnumerable<T> OrderByDescending(Expression<Func<T, Object>> predicate);
     }
 }

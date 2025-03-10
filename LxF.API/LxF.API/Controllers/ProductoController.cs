@@ -1,6 +1,6 @@
 ﻿using Infraestructura;
-using IServicio.Producto;
-using IServicio.Producto.Dto;
+using IServicio;
+using IServicio.Dtos;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 

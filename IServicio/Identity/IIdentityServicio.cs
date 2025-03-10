@@ -7,10 +7,10 @@ namespace IServicio.Identity
 {
     public interface IIdentityServicio
     {
-        Task<string> Register(RegistrationRequestDto registrationRequestDto);
-        Task<LoginResponseDto> Login (LoginRequestDto loginRequestDto);
-        Task<bool> AssignRole(string email, string roleName);
-        Task<UserToken> ForgotPassword(string email);
+        Task<UsuarioDto> Register(RegisterDto registerDto);
+        Task<LoginResponseDto> Login (LoginDto loginDto);
+        Task<IdentityResult> AssignRole(string email, string roleName);
+        Task<UserToken> TokenPassword(string email);
         Task<IdentityResult> ResetPassword(string email, string token, string password);
         bool SendMail(UserToken userToken, Message message);
     }

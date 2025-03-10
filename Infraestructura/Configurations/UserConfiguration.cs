@@ -12,7 +12,6 @@ namespace Infraestructura.Configurations
 
             builder.Property(x => x.UserName).HasColumnName("NombreUsuario");
             builder.Property(x => x.PhoneNumber).HasColumnName("Celular");
-
         }
     }
 }
