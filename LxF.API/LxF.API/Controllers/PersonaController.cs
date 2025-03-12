@@ -11,9 +11,9 @@ namespace LxF.API.Controllers
     public class PersonaController : ControllerBase
     {
         private readonly LxfContext _db;
-        private readonly IPersonaClienteServicio _service;
+        private readonly IPersonaClienteService _service;
 
-        public PersonaController(LxfContext db, IPersonaClienteServicio servicio)
+        public PersonaController(LxfContext db, IPersonaClienteService servicio)
         {
             _db = db;
             _service = servicio;

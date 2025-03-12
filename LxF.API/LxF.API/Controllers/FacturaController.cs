@@ -11,9 +11,9 @@ namespace LxF.API.Controllers
     public class FacturaController : ControllerBase
     {
         private readonly LxfContext _db;
-        private readonly IFacturaServicio _service;
+        private readonly IFacturaService _service;
 
-        public FacturaController(LxfContext db, IFacturaServicio service)
+        public FacturaController(LxfContext db, IFacturaService service)
         {
             _db = db;
             _service = service;

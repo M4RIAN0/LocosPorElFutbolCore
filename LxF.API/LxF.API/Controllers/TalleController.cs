@@ -12,9 +12,9 @@ namespace LxF.API.Controllers
     public class TalleController : ControllerBase
     {
         private readonly LxfContext _db;
-        private readonly ITalleServicio _service;
+        private readonly ITalleService _service;
 
-        public TalleController(LxfContext db, ITalleServicio service)
+        public TalleController(LxfContext db, ITalleService service)
         {
             _db = db;
             _service = service;

@@ -11,9 +11,9 @@ namespace LxF.API.Controllers
     public class CategoriaController : ControllerBase
     {
         private readonly LxfContext _db;
-        private readonly ICategoriaServicio _service;
+        private readonly ICategoriaService _service;
 
-        public CategoriaController(LxfContext db, ICategoriaServicio service)
+        public CategoriaController(LxfContext db, ICategoriaService service)
         {
             _db = db;
             _service = service;
