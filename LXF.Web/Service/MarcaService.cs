@@ -1,0 +1,73 @@
+﻿using IServicio.Dtos;
+using LXF.Web.Models.Dto;
+using LXF.Web.Service.IService;
+using LXF.Web.Utility;
+
+namespace LXF.Web.Service
+{
+    public class MarcaService : IMarcaService
+    {
+        private readonly IServiceBase _baseService;
+
+        public MarcaService(IServiceBase serviceBase)
+        {
+            _baseService = serviceBase;
+        }
+
+        public async Task<ResponseDto?> Add(MarcaDto dto)
+        {
+            return await _baseService.SendAsync(new RequestDto
+            {
+                ApiType = SD.ApiType.POST,
+                Data = dto,
+                Url = $"{SD.LXFApiBase}/api/Marca"
+            });
+        }
+
+        public async Task<ResponseDto?> GetAll()
+        {
+            return await _baseService.SendAsync(new RequestDto
+            {
+                ApiType = SD.ApiType.GET,
+                Url = $"{SD.LXFApiBase}/api/Marca"
+            });
+        }
+
+        public async Task<ResponseDto?> GetByFilter(string cadenaBuscar)
+        {
+            return await _baseService.SendAsync(new RequestDto
+            {
+                ApiType = SD.ApiType.GET, 
+                Url = $"{SD.LXFApiBase}/api/Marca/GetByFilter{cadenaBuscar}" 
+            });
+        }
+
+        public async Task<ResponseDto?> GetById(int? id)
+        {
+            return await _baseService.SendAsync(new RequestDto
+            {
+                ApiType = SD.ApiType.GET,
+                Url = $"{SD.LXFApiBase}/api/Marca/{id}"
+            });
+        }
+
+        public async Task<ResponseDto?> SoftDelete(int id)
+        {
+            return await _baseService.SendAsync(new RequestDto
+            {
+                ApiType = SD.ApiType.PUT,
+                Url = $"{SD.LXFApiBase}/api/Marca/{id}/delete"
+            });
+        }
+
+        public async Task<ResponseDto?> Update(MarcaPutDto dto)
+        {
+            return await _baseService.SendAsync(new RequestDto
+            {
+                ApiType = SD.ApiType.PUT,
+                Data = dto,
+                Url = $"{SD.LXFApiBase}/api/Marca/"
+            });
+        }
+    }
+}

@@ -11,9 +11,9 @@ namespace LxF.API.Controllers
     public class ProductoController : ControllerBase
     {
         private readonly LxfContext _db;
-        private readonly IProductoServicio _service;
+        private readonly IProductoService _service;
 
-        public ProductoController(LxfContext db, IProductoServicio service)
+        public ProductoController(LxfContext db, IProductoService service)
         {
             _db = db;
             _service = service;

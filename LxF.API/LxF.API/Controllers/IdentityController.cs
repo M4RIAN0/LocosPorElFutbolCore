@@ -11,10 +11,10 @@ namespace LxF.API.Controllers
     [ApiController]
     public class IdentityController : ControllerBase
     {
-        private readonly IIdentityServicio _identityServicio;
+        private readonly IIdentityService _identityServicio;
         protected ResponseDto _response;
 
-        public IdentityController(IIdentityServicio identityServicio)
+        public IdentityController(IIdentityService identityServicio)
         {
             _identityServicio = identityServicio;
             _response = new();

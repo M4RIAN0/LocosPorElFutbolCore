@@ -62,28 +62,28 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Servicios
-builder.Services.AddScoped<IIdentityServicio, IndentityServicio>();
+builder.Services.AddScoped<IIdentityService, IndentityService>();
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 builder.Services.AddSingleton(emailConfig);
-builder.Services.AddScoped<IPersonaClienteServicio, PersonaClienteServicio>();
+builder.Services.AddScoped<IPersonaClienteService, PersonaClienteService>();
 builder.Services.AddScoped<IPersonaClienteRepository, PersonaClienteRepository>();
-builder.Services.AddScoped<ITalleServicio, TalleServicio>();
+builder.Services.AddScoped<ITalleService, TalleService>();
 builder.Services.AddScoped<ITalleRepository, TalleRepository>();
-builder.Services.AddScoped<ICategoriaServicio, CategoriaServicio>();
+builder.Services.AddScoped<ICategoriaService, CategoriaService>();
 builder.Services.AddScoped<ICategoriaRepository, CategoriaRepository>();
-builder.Services.AddScoped<IMarcaServicio, MarcaServicio>();
+builder.Services.AddScoped<IMarcaService, MarcaService>();
 builder.Services.AddScoped<IMarcaRepository, MarcaRepository>();
-builder.Services.AddScoped<IProductoServicio, ProductoServicio>();
+builder.Services.AddScoped<IProductoService, ProductoService>();
 builder.Services.AddScoped<IProductoRepository, ProductoRepository>();
-builder.Services.AddScoped<IFacturaServicio, FacturaServicio>();
+builder.Services.AddScoped<IFacturaService, FacturaService>();
 builder.Services.AddScoped<IFacturaRepository, FacturaRepository>();
-builder.Services.AddScoped<IComprobanteServicio, ComprobanteServicio>();
+builder.Services.AddScoped<IComprobanteService, ComprobanteService>();
 builder.Services.AddScoped<IComprobanteRepository, ComprobanteRepository>();
-builder.Services.AddScoped<IDetalleComprobanteServicio, DetalleComprobanteServicio>();
+builder.Services.AddScoped<IDetalleComprobanteService, DetalleComprobanteService>();
 builder.Services.AddScoped<IDetalleComprobanteRepository, DetalleComprobanteRepository>();
-builder.Services.AddScoped<IMovimientoServicio, MovimientoServicio>();
+builder.Services.AddScoped<IMovimientoService, MovimientoService>();
 builder.Services.AddScoped<IMovimientoRepository, MovimientoRepository>();
-builder.Services.AddScoped<ITarjetaServicio, TarjetaServicio>();
+builder.Services.AddScoped<ITarjetaService, TarjetaService>();
 builder.Services.AddScoped<ITarjetaRepository, TarjetaRepository>();
 
 

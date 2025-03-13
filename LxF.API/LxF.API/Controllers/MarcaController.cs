@@ -11,9 +11,9 @@ namespace LxF.API.Controllers
     public class MarcaController : ControllerBase
     {
         private readonly LxfContext _db;
-        private readonly IMarcaServicio _service;
+        private readonly IMarcaService _service;
 
-        public MarcaController(LxfContext db, IMarcaServicio service)
+        public MarcaController(LxfContext db, IMarcaService service)
         {
             _db = db;
             _service = service;
