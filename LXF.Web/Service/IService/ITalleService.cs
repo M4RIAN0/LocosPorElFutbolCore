@@ -1,11 +1,11 @@
-﻿using LXF.Web.Models.Dto;
+﻿using LXF.Web.Models.ViewModels;
 
 namespace LXF.Web.Service.IService
 {
     public interface ITalleService
     {
-        Task<ResponseDto?> GetByFilter(string cadenaBuscar);
-        Task<ResponseDto?> GetAll();
-        Task<ResponseDto?> GetById(int? id);
+        Task<ResponseViewModel?> GetAll();
+        Task<ResponseViewModel?> GetById(int id);
+        Task<ResponseViewModel?> GetByFilter(string cadena);
     }
 }

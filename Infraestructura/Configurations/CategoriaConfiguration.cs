@@ -8,6 +8,10 @@ namespace Infraestructura.Configurations
     {
         public void Configure(EntityTypeBuilder<Categoria> builder)
         {
+            builder.HasIndex(m => m.Descripcion)
+          .IsUnique()
+          .HasDatabaseName("IX_Categoria_Descripcion"); // Nombre del índice en la base de datos
+
             builder.HasData(
            new Categoria
            {

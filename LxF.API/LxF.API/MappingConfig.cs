@@ -15,12 +15,14 @@ namespace LxF.API
                 .ForMember(vm => vm.Celular, m => m.MapFrom(u => u.PhoneNumber));
 
                 config.CreateMap<RegisterDto, Usuario>()
+                .ForMember(vm => vm.Nombre, m => m.MapFrom(u => u.Nombre))
                 .ForMember(vm => vm.UserName, m => m.MapFrom(u => u.Email))
+                .ForMember(vm => vm.NormalizedUserName, m => m.MapFrom(u => u.Email.ToUpper()))
                 .ForMember(vm => vm.NormalizedEmail, m => m.MapFrom(u => u.Email.ToUpper()))
                 .ForMember(vm => vm.PhoneNumber, m => m.MapFrom(u => u.Celular));
 
                 config.CreateMap<UsuarioDto, Usuario>()
-               .ForMember(vm => vm.NormalizedEmail, m => m.MapFrom(u => u.EMAIL.ToLower()));
+               .ForMember(vm => vm.NormalizedEmail, m => m.MapFrom(u => u.Email.ToLower()));
 
                 config.CreateMap<PersonaClienteDto, PersonaCliente>()
                 .ForMember(vm => vm.FechaNacimiento, m => m.MapFrom(u => DateOnly.Parse(u.FechaNacimiento)));

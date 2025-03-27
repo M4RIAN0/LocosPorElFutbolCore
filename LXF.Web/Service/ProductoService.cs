@@ -1,72 +1,81 @@
-﻿using IServicio.Dtos;
-using LXF.Web.Models.Dto;
+﻿using AutoMapper;
+using LXF.Web.Models.ViewModels;
 using LXF.Web.Service.IService;
-using LXF.Web.Utility;
+using LXF.Web.ServiceApiClient.IServiceApiClient;
 
 namespace LXF.Web.Service
 {
-    public class ProductoService : IProductoService
+    public class ProductoService : ServiceBase, IProductoService
     {
-        private readonly IServiceBase _baseService;
+        private readonly IProductoServiceApiClient _serviceApiClient;
+        private readonly ICategoriaService _categoriaService;
+        private readonly ITalleService _talleService;
+        private readonly IMarcaService _marcaService;
+        private readonly IMapper _mapper;
 
-        public ProductoService(IServiceBase serviceBase)
+        public ProductoService(IProductoServiceApiClient serviceApiClient, ICategoriaService categoriaService,
+                               ITalleService talleService, IMarcaService marcaService, IMapper mapper)
         {
-            _baseService = serviceBase;
-        }
-        public async Task<ResponseDto?> Add(ProductoDto dto)
-        {
-            return await _baseService.SendAsync(new RequestDto
-            {
-                ApiType = SD.ApiType.POST,
-                Data = dto,
-                Url = $"{SD.LXFApiBase}/api/Producto"
-            });
-        }
-
-        public async Task<ResponseDto?> GetAll()
-        {
-            return await _baseService.SendAsync(new RequestDto
-            {
-                ApiType = SD.ApiType.GET,
-                Url = $"{SD.LXFApiBase}/api/Producto"
-            });
+            _serviceApiClient = serviceApiClient;
+            _categoriaService = categoriaService;
+            _talleService = talleService;
+            _marcaService = marcaService;
+            _mapper = mapper;
         }
 
-        public async Task<ResponseDto?> GetByFilter(string cadenaBuscar)
+        public async Task<ResponseViewModel?> Create(ProductoViewModel ViewModel)
         {
-            return await _baseService.SendAsync(new RequestDto
-            {
-                ApiType = SD.ApiType.GET,
-                Url = $"{SD.LXFApiBase}/api/Producto/GetByFilter{cadenaBuscar}"
-            });
+            return await _serviceApiClient.Add(ViewModel);
         }
 
-        public async Task<ResponseDto?> GetById(int? id)
+        public async Task<ResponseViewModel?> Update(ProductoPutViewModel ViewModel)
         {
-            return await _baseService.SendAsync(new RequestDto
-            {
-                ApiType = SD.ApiType.GET,
-                Url = $"{SD.LXFApiBase}/api/Producto/{id}"
-            });
+            return await _serviceApiClient.Update(ViewModel);
         }
 
-        public async Task<ResponseDto?> SoftDelete(int id)
+        public async Task<ResponseViewModel?> SoftDelete(int id)
         {
-            return await _baseService.SendAsync(new RequestDto
-            {
-                ApiType = SD.ApiType.PUT,
-                Url = $"{SD.LXFApiBase}/api/Producto/{id}/delete"
-            });
+            return await _serviceApiClient.SoftDelete(id);
         }
 
-        public async Task<ResponseDto?> Update(ProductoPutDto dto)
+        public async Task<ResponseViewModel?> GetAll()
         {
-            return await _baseService.SendAsync(new RequestDto
-            {
-                ApiType = SD.ApiType.PUT,
-                Data = dto,
-                Url = $"{SD.LXFApiBase}/api/Producto/"
-            });
+            var response = await _serviceApiClient.GetAll();
+
+            if (response.IsSuccess)
+                response.Result = DesearilizeList<ProductoGetViewModel>(response);
+
+            return response;
+        }
+
+        public async Task<ResponseViewModel?> GetById(int id)
+        {
+            var response = await _serviceApiClient.GetById(id);
+
+            if (response.IsSuccess)
+                response.Result = Desearilize<ProductoGetViewModel>(response);
+
+            return response;
+        }
+
+        public async Task<ResponseViewModel?> GetByFilter(string cadena)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<ResponseViewModel?> GetMarcas()
+        {
+            return await _marcaService.GetAll();
+        }
+
+        public async Task<ResponseViewModel?> GetTalles()
+        {
+            return await _talleService.GetAll();
+        }
+
+        public async Task<ResponseViewModel?> GetCategorias()
+        {
+            return await _categoriaService.GetAll();
         }
     }
 }

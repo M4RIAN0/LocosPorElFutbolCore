@@ -1,73 +1,56 @@
-﻿using IServicio.Dtos;
-using LXF.Web.Models.Dto;
+﻿using LXF.Web.Models.ViewModels;
 using LXF.Web.Service.IService;
-using LXF.Web.Utility;
+using LXF.Web.ServiceApiClient.IServiceApiClient;
 
 namespace LXF.Web.Service
 {
-    public class MarcaService : IMarcaService
+    public class MarcaService : ServiceBase, IMarcaService
     {
-        private readonly IServiceBase _baseService;
+        private readonly IMarcaServiceApiClient _serviceApiClient;
 
-        public MarcaService(IServiceBase serviceBase)
+        public MarcaService(IMarcaServiceApiClient serviceApiClient)
         {
-            _baseService = serviceBase;
+            _serviceApiClient = serviceApiClient;
         }
 
-        public async Task<ResponseDto?> Add(MarcaDto dto)
+        public async Task<ResponseViewModel?> Create(MarcaViewModel ViewModel)
         {
-            return await _baseService.SendAsync(new RequestDto
-            {
-                ApiType = SD.ApiType.POST,
-                Data = dto,
-                Url = $"{SD.LXFApiBase}/api/Marca"
-            });
+            return await _serviceApiClient.Add(ViewModel);
         }
 
-        public async Task<ResponseDto?> GetAll()
+        public async Task<ResponseViewModel?> GetAll()
         {
-            return await _baseService.SendAsync(new RequestDto
-            {
-                ApiType = SD.ApiType.GET,
-                Url = $"{SD.LXFApiBase}/api/Marca"
-            });
+            var response = await _serviceApiClient.GetAll();
+
+            if (response.IsSuccess)
+                response.Result = DesearilizeList<MarcaGetViewModel>(response);
+
+            return response;
         }
 
-        public async Task<ResponseDto?> GetByFilter(string cadenaBuscar)
+        public Task<ResponseViewModel?> GetByFilter(string cadena)
         {
-            return await _baseService.SendAsync(new RequestDto
-            {
-                ApiType = SD.ApiType.GET, 
-                Url = $"{SD.LXFApiBase}/api/Marca/GetByFilter{cadenaBuscar}" 
-            });
+            throw new NotImplementedException();
         }
 
-        public async Task<ResponseDto?> GetById(int? id)
+        public async Task<ResponseViewModel?> GetById(int id)
         {
-            return await _baseService.SendAsync(new RequestDto
-            {
-                ApiType = SD.ApiType.GET,
-                Url = $"{SD.LXFApiBase}/api/Marca/{id}"
-            });
+            var response = await _serviceApiClient.GetById(id);
+
+            if (response.IsSuccess)
+                response.Result = Desearilize<MarcaGetViewModel>(response);
+
+            return response;
         }
 
-        public async Task<ResponseDto?> SoftDelete(int id)
+        public async Task<ResponseViewModel?> SoftDelete(int id)
         {
-            return await _baseService.SendAsync(new RequestDto
-            {
-                ApiType = SD.ApiType.PUT,
-                Url = $"{SD.LXFApiBase}/api/Marca/{id}/delete"
-            });
+            return await _serviceApiClient.SoftDelete(id);
         }
 
-        public async Task<ResponseDto?> Update(MarcaPutDto dto)
+        public async Task<ResponseViewModel?> Update(MarcaPutViewModel ViewModel)
         {
-            return await _baseService.SendAsync(new RequestDto
-            {
-                ApiType = SD.ApiType.PUT,
-                Data = dto,
-                Url = $"{SD.LXFApiBase}/api/Marca/"
-            });
+            return await _serviceApiClient.Update(ViewModel);
         }
     }
 }

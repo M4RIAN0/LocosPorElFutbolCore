@@ -50,9 +50,14 @@ namespace Servicio
 
         public ProductoGetDto GetById(int? id)
         {
-            var model = _repository.GetById(id);
+            var model = _repository.GetById(id, "Talle,Marca,Categoria");
 
             return ToGetDto(model);
+        }
+
+        public Producto GetByIdModel(int? id)
+        {
+            return _repository.GetById(id, "Talle,Marca,Categoria");
         }
 
         public void Update(ProductoPutDto dto)

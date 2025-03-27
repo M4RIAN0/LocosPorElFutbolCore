@@ -1,74 +1,56 @@
-﻿using IServicio.Dtos;
-using LXF.Web.Models.Dto;
+﻿using LXF.Web.Models.ViewModels;
 using LXF.Web.Service.IService;
-using LXF.Web.Utility;
+using LXF.Web.ServiceApiClient.IServiceApiClient;
 
-namespace LXF.Web.Service;
-
-public class CategoriaService : ICategoriaService
+namespace LXF.Web.Service
 {
-    private readonly IServiceBase _baseService;
-
-    public CategoriaService(IServiceBase serviceBase)
+    public class CategoriaService : ServiceBase, ICategoriaService
     {
-        _baseService = serviceBase;
-    }
+        private readonly ICategoriaServiceApiClient _serviceApiClient;
 
-    public async Task<ResponseDto?> Add(CategoriaDto dto)
-    {
-        // llamamos a SendAsync que es donde se genera la peticion http y toda sus configuraciones pertinentes
-        return await _baseService.SendAsync(new RequestDto
+        public CategoriaService(ICategoriaServiceApiClient serviceApiClient)
         {
-            ApiType = SD.ApiType.POST, // el tipo de peticion HTTP es POST
-            Data = dto, // los datos del objeto que vamos a dar de alta
-            Url = $"{SD.LXFApiBase}/api/Categoria" // generamos el endpoint del APi que vamos a consumir
-        });
-    }
+            _serviceApiClient = serviceApiClient;
+        }
 
-    public async Task<ResponseDto?> Update(CategoriaPutDto dto)
-    {
-        return await _baseService.SendAsync(new RequestDto
+        public async Task<ResponseViewModel?> Create(CategoriaViewModel ViewModel)
         {
-            ApiType = SD.ApiType.PUT, // el tipo de peticion HTTP es PUT
-            Data = dto, // los datos del objeto que vamos a dar de alta
-            Url = $"{SD.LXFApiBase}/api/Categoria/" // generamos el endpoint del APi que vamos a consumir
-        });
+            return await _serviceApiClient.Add(ViewModel);
+        }
 
-    }
-
-    public async Task<ResponseDto?> SoftDelete(int id)
-    {
-        return await _baseService.SendAsync(new RequestDto
+        public async Task<ResponseViewModel?> GetAll()
         {
-            ApiType = SD.ApiType.PUT, // el tipo de peticion HTTP es PUT
-            Url = $"{SD.LXFApiBase}/api/Categoria/{id}/delete" // generamos el endpoint del APi que vamos a consumir
-        });
-    }
+            var response = await _serviceApiClient.GetAll();
 
-    public async Task<ResponseDto?> GetAll()
-    {
-        return await _baseService.SendAsync(new RequestDto
-        {
-            ApiType = SD.ApiType.GET, // el tipo de peticion HTTP es GET
-            Url = $"{SD.LXFApiBase}/api/Categoria" // generamos el endpoint del APi que vamos a consumir
-        });
-    }
+            if (response.IsSuccess)
+                response.Result = DesearilizeList<CategoriaGetViewModel>(response);
 
-    public async Task<ResponseDto?> GetByFilter(string cadenaBuscar)
-    {
-        return await _baseService.SendAsync(new RequestDto
-        {
-            ApiType = SD.ApiType.GET, // el tipo de peticion HTTP es GET
-            Url = $"{SD.LXFApiBase}/api/Categoria/GetByFilter{cadenaBuscar}" // generamos el endpoint del APi que vamos a consumir
-        });
-    }
+            return response;
+        }
 
-    public async Task<ResponseDto?> GetById(int? id)
-    {
-        return await _baseService.SendAsync(new RequestDto
+        public Task<ResponseViewModel?> GetByFilter(string cadena)
         {
-            ApiType = SD.ApiType.GET, // el tipo de peticion HTTP es GET
-            Url = $"{SD.LXFApiBase}/api/Categoria/{id}" // generamos el endpoint del APi que vamos a consumir
-        });
+            throw new NotImplementedException();
+        }
+
+        public async Task<ResponseViewModel?> GetById(int id)
+        {
+            var response = await _serviceApiClient.GetById(id);
+
+            if (response.IsSuccess)
+                response.Result = Desearilize<CategoriaGetViewModel>(response);
+
+            return response;
+        }
+
+        public async Task<ResponseViewModel?> SoftDelete(int id)
+        {
+            return await _serviceApiClient.SoftDelete(id);
+        }
+
+        public async Task<ResponseViewModel?> Update(CategoriaPutViewModel ViewModel)
+        {
+            return await _serviceApiClient.Update(ViewModel);
+        }
     }
 }

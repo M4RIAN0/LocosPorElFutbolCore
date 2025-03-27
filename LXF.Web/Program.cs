@@ -1,5 +1,9 @@
+using AutoMapper;
+using LXF.Web;
 using LXF.Web.Service;
 using LXF.Web.Service.IService;
+using LXF.Web.ServiceApiClient;
+using LXF.Web.ServiceApiClient.IServiceApiClient;
 using LXF.Web.Utility;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,40 +11,54 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+#region Automapping
+IMapper mapper = MappingConfig.RegisterMps().CreateMapper();
+builder.Services.AddSingleton(mapper);
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+#endregion
+
+
 #region HttpClient
 // Configuration HttpClient for Dependence Injection
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddHttpClient();
-builder.Services.AddHttpClient<ICategoriaService, CategoriaService>();
-builder.Services.AddHttpClient<IComprobanteService, ComprobanteService>();
-builder.Services.AddHttpClient<IDetalleComprobanteService, DetalleComprobanteService>();
-builder.Services.AddHttpClient<IEnvioService, EnvioService>();
-builder.Services.AddHttpClient<IFacturaService, FacturaService>();
-builder.Services.AddHttpClient<IMarcaService, MarcaService>();
-builder.Services.AddHttpClient<IMovimientoService, MovimientoService>();
-builder.Services.AddHttpClient<IPersonaClienteService, PersonaClienteService>();
-builder.Services.AddHttpClient<IProductoService, ProductoService>();
-builder.Services.AddHttpClient<ITalleService, TalleService>();
-builder.Services.AddHttpClient<ITarjetaService, TarjetaService>();
+builder.Services.AddHttpClient<ICategoriaServiceApiClient, CategoriaServiceApiClient>();
+builder.Services.AddHttpClient<IComprobanteServiceApiClient, ComprobanteServiceApiClient>();
+builder.Services.AddHttpClient<IDetalleComprobanteServiceApiClient, DetalleComprobanteServiceApiClient>();
+builder.Services.AddHttpClient<IEnvioServiceApiClient, EnvioServiceApiClient>();
+builder.Services.AddHttpClient<IFacturaServiceApiClient, FacturaServiceApiClient>();
+builder.Services.AddHttpClient<IIdentityServiceApiClient, IdentityServiceApiClient>();
+builder.Services.AddHttpClient<IMarcaServiceApiClient, MarcaServiceApiClient>();
+builder.Services.AddHttpClient<IMovimientoServiceApiClient, MovimientoServiceApiClient>();
+builder.Services.AddHttpClient<IPersonaClienteServiceApiClient, PersonaClienteServiceApiClient>();
+builder.Services.AddHttpClient<IProductoServiceApiClient, ProductoServiceApiClient>();
+builder.Services.AddHttpClient<ITalleServiceApiClient, TalleServiceApiClient>();
+builder.Services.AddHttpClient<ITarjetaServiceApiClient, TarjetaServiceApiClient>();
 
 // populated value of endpoint url to LXFApiBase
 SD.LXFApiBase = builder.Configuration["ServicesUrl:LXFApi"];
 #endregion
 
-#region #Dependence Injection
+#region Dependence Injection
 //Dependece Injection configuracion
-builder.Services.AddScoped<IServiceBase, ServiceBase>();
-builder.Services.AddScoped<ICategoriaService, CategoriaService>();
-builder.Services.AddScoped<IComprobanteService, ComprobanteService>();
-builder.Services.AddScoped<IDetalleComprobanteService, DetalleComprobanteService>();
-builder.Services.AddScoped<IEnvioService, EnvioService>();
-builder.Services.AddScoped<IFacturaService, FacturaService>();
-builder.Services.AddScoped<IMarcaService, MarcaService>();
-builder.Services.AddScoped<IMovimientoService, MovimientoService>();
-builder.Services.AddScoped<IPersonaClienteService, PersonaClienteService>();
+builder.Services.AddScoped<IServiceBaseApiClient, ServiceBaseApiClient>();
+builder.Services.AddScoped<ICategoriaServiceApiClient, CategoriaServiceApiClient>();
+builder.Services.AddScoped<IComprobanteServiceApiClient, ComprobanteServiceApiClient>();
+builder.Services.AddScoped<IDetalleComprobanteServiceApiClient, DetalleComprobanteServiceApiClient>();
+builder.Services.AddScoped<IEnvioServiceApiClient, EnvioServiceApiClient>();
+builder.Services.AddScoped<IFacturaServiceApiClient, FacturaServiceApiClient>();
+builder.Services.AddScoped<IIdentityServiceApiClient, IdentityServiceApiClient>();
+builder.Services.AddScoped<IMarcaServiceApiClient, MarcaServiceApiClient>();
+builder.Services.AddScoped<IMovimientoServiceApiClient, MovimientoServiceApiClient>();
+builder.Services.AddScoped<IPersonaClienteServiceApiClient, PersonaClienteServiceApiClient>();
+builder.Services.AddScoped<IProductoServiceApiClient, ProductoServiceApiClient>();
+builder.Services.AddScoped<ITalleServiceApiClient, TalleServiceApiClient>();
+builder.Services.AddScoped<ITarjetaServiceApiClient, TarjetaServiceApiClient>();
+
 builder.Services.AddScoped<IProductoService, ProductoService>();
+builder.Services.AddScoped<ICategoriaService, CategoriaService>();
 builder.Services.AddScoped<ITalleService, TalleService>();
-builder.Services.AddScoped<ITarjetaService, TarjetaService>();
+builder.Services.AddScoped<IMarcaService, MarcaService>();
 #endregion
 
 var app = builder.Build();

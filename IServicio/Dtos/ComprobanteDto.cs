@@ -17,9 +17,9 @@ namespace IServicio.Dtos
     public class ComprobanteGetDto : DtoBase
     {
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
-        public string Fecha { get; set; }
+        public string Fecha { get; init; }
 
         [Column(TypeName = "decimal(18,2)")]
-        public decimal Total { get; set; }
+        public decimal Total { get; init; }
     }
 }

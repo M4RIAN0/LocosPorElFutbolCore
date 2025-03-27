@@ -71,9 +71,9 @@ namespace Servicio
                 throw new BadRequestException(errors);
             }
 
-            UsuarioDto dto = _mapper.Map<UsuarioDto>(user);
+            var dto = UsuarioToUsuarioDto(user);
 
-            LoginResponseDto loginResponseDto = new LoginResponseDto()
+            var loginResponseDto = new LoginResponseDto()
             {
                 Usuario = dto
             };
@@ -93,10 +93,10 @@ namespace Servicio
 
                 return new()
                 {
-                    EMAIL = registerDto.Email,
-                    ID = userToReturn.Id,
-                    Nombre = userToReturn.Nombre,
-                    Celular = userToReturn.PhoneNumber
+                    Email = registerDto.Email,
+                    Id = userToReturn.Id,
+                    Nombre = registerDto.Nombre,
+                    Celular = registerDto.Celular
                 };
             }
 
@@ -154,6 +154,11 @@ namespace Servicio
         private Usuario RegisterDtoToUsuario(RegisterDto dto)
         {
             return _mapper.Map<Usuario>(dto);
+        }
+
+        private UsuarioDto UsuarioToUsuarioDto(Usuario model)
+        {
+            return _mapper.Map<UsuarioDto>(model);
         }
         #endregion
     }

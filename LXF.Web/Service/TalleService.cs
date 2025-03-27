@@ -1,44 +1,39 @@
-﻿using LXF.Web.Models.Dto;
+﻿using AutoMapper;
+using LXF.Web.Models.ViewModels;
 using LXF.Web.Service.IService;
-using LXF.Web.Utility;
+using LXF.Web.ServiceApiClient.IServiceApiClient;
 
 namespace LXF.Web.Service
 {
-    public class TalleService : ITalleService
+    public class TalleService : ServiceBase, ITalleService
     {
-        private readonly IServiceBase _baseService;
+        private readonly ITalleServiceApiClient _service;
+        private readonly IMapper _mapper;
 
-        public TalleService(IServiceBase serviceBase)
+        public TalleService(ITalleServiceApiClient service, IMapper mapper)
         {
-            _baseService = serviceBase;
+            _service = service;
+            _mapper = mapper;
         }
 
-        public async Task<ResponseDto?> GetAll()
+        public async Task<ResponseViewModel?> GetAll()
         {
-            return await _baseService.SendAsync(new RequestDto
-            {
-                ApiType = SD.ApiType.GET,
-                Url = $"{SD.LXFApiBase}/api/Talle"
-            });
+            var response = await _service.GetAll();
+
+            if (response.IsSuccess)
+                response.Result = DesearilizeList<TalleViewModel>(response);
+
+            return response;
         }
 
-        public async Task<ResponseDto?> GetByFilter(string cadenaBuscar)
+        public async Task<ResponseViewModel?> GetByFilter(string cadena)
         {
-            return await _baseService.SendAsync(new RequestDto
-            {
-                ApiType = SD.ApiType.GET,
-                Url = $"{SD.LXFApiBase}/api/Talle/GetByFilter{cadenaBuscar}"
-            });
+            throw new NotImplementedException();
         }
 
-        public async Task<ResponseDto?> GetById(int? id)
+        public async Task<ResponseViewModel?> GetById(int id)
         {
-            return await _baseService.SendAsync(new RequestDto
-            {
-                ApiType = SD.ApiType.GET,
-                Url = $"{SD.LXFApiBase}/api/Talle/{id}"
-            });
+            throw new NotImplementedException();
         }
     }
-
 }

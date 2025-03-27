@@ -38,11 +38,17 @@ namespace IServicio.Dtos
         [Column(TypeName = "decimal(18,2)")]
         public decimal Total { get; init; }
 
+        public string TipoPago { get; init; }
+
+        public int ClienteId { get; init; }
+
         public string Cliente { get; init; }
 
-        public string TipoPago { get; set; }
+        public int? ComprobanteId { get; init; }
 
-        public string Tarjeta { get; set; }
+        public int? TarjetaId { get; init; }
+
+        public string Tarjeta { get; init; }
 
     }
 }

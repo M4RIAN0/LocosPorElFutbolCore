@@ -1,6 +1,7 @@
 ﻿using Dominio.Entidades;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System.Reflection.Emit;
 
 namespace Infraestructura.Configurations
 {
@@ -8,6 +9,10 @@ namespace Infraestructura.Configurations
     {
         public void Configure(EntityTypeBuilder<Marca> builder)
         {
+            builder.HasIndex(m => m.Descripcion)  
+           .IsUnique()                   
+           .HasDatabaseName("IX_Marca_Descripcion"); // Nombre del índice en la base de datos
+
             builder.HasData(
             new Marca
             {

@@ -23,6 +23,8 @@ namespace IServicio.Dtos
         public string Tipo { get; init; }
 
         public decimal Monto { get; init; }
+
+        public int FacturaId { get; init; }
     }
 }
 

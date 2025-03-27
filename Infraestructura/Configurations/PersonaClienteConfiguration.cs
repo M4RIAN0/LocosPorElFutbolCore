@@ -9,6 +9,10 @@ namespace Infraestructura.Configurations
     {
         public void Configure(EntityTypeBuilder<PersonaCliente> builder)
         {
+            builder.HasIndex(m => new { m.Nombre, m.Apellido, m.Dni})
+            .IsUnique()
+            .HasDatabaseName("IX_PersonaCliente_Nombre_Apellido_Dni"); // Nombre del índice en la base de datos
+
             builder.HasMany(x => x.Facturas)
                    .WithOne(x => x.PersonaCliente)
                    .HasForeignKey(x => x.ClienteId)

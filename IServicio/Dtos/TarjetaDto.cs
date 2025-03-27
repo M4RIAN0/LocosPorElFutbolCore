@@ -42,7 +42,11 @@ namespace IServicio.Dtos
 
         public string Cuotas { get; init; }
 
+        public int BancoId { get; init; }
+
         public string Banco { get; init; }
+
+        public int TipoTarjetaId { get; init; }
 
         public string TipoTarjeta { get; init; }
     }

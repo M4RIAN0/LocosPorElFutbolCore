@@ -9,7 +9,7 @@ namespace Dominio.Entidades
     public partial class Producto : MasterEntityModel
     {
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
-        [StringLength(6, ErrorMessage = "El campo {0} no debe superar los {1} caracteres.")]
+        [Range(100000, 999999, ErrorMessage = "El campo {0} debe tener 6 dígitos.")]
         public int CodigoBarra { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "El campo {0} es obligatorio.")]

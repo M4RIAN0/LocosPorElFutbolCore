@@ -1,0 +1,50 @@
+﻿@using LXF.Web.Models.ViewModels
+@model IEnumerable<CategoriaGetViewModel>
+
+<div class="card shadow border-0 mt-4">
+	<div class="card-header bg-secondary bg-gradient ml-0 py-3">
+		<div class="row">
+			<div class="col-12 text-center">
+				<h1 class="text-white">Categorias</h1>
+			</div>
+		</div>
+	</div>
+	<div class="card-body p-4">
+		<div class="row pb-3">
+			<div class="col-6">
+			</div>
+			<div class="col-6 text-end">
+				<a asp-action="CategoriaCreate" class="btn btn-outline-primary"><i class="bi bi-plus-square"></i> Crear Categoria</a>
+
+			</div>
+		</div>
+		<table class="table">
+			<thead>
+				<tr>
+					<th>
+						Descripcion
+					</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				@foreach (var item in Model)
+				{
+					<tr>
+						<td>
+							@item.Descripcion
+						</td>
+						<td>
+							<a asp-action="CategoriaUpdate" asp-route-Id="@item.Id" class="btn btn-success">
+								<i class="bi bi-pencil-square"></i>
+							</a>
+							<a asp-action="CategoriaDelete" asp-route-Id="@item.Id" class="btn btn-danger">
+								<i class="bi bi-trash"></i>
+							</a>
+						</td>
+					</tr>
+				}
+			</tbody>
+		</table>
+	</div>
+</div>

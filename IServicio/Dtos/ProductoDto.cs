@@ -33,14 +33,20 @@ namespace IServicio.Dtos
         public string Descripcion { get; init; }
 
         [Column(TypeName = "decimal(18,2)")]
-        public decimal Precio { get; set; }
+        public decimal Precio { get; init; }
 
         public int Stock { get; init; }
 
+        public int CategoriaId { get; init; }
+
         public string Categoria { get; init; }
 
-        public string Marca { get; set; }
+        public int MarcaId { get; init; }
 
-        public string Talle { get; set; }
+        public string Marca { get; init; }
+
+        public int TalleId { get; init; }
+
+        public string Talle { get; init; }
     }
 }

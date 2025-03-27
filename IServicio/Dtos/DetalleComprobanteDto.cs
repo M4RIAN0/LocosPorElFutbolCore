@@ -34,6 +34,8 @@ namespace IServicio.Dtos
         [Column(TypeName = "decimal(18,2)")]
         public decimal Precio { get; init; }
 
+        public int ProductoId { get; init; }
+
         public string Producto { get; init; }
 
         public int ComprobanteId { get; init; }

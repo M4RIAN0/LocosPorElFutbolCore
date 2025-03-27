@@ -26,7 +26,7 @@ namespace LxF.API.Controllers
         public async Task<IActionResult> Register([FromBody] RegisterDto model)
         {
             _response.Result = await _identityServicio.Register(model);
-            _response.Message = "Usuario creado con éxito.";
+            _response.Message = "Usuario creado correctamente.";
             return Ok(_response);
         }
 
@@ -36,12 +36,12 @@ namespace LxF.API.Controllers
         public async Task<IActionResult> Login([FromBody] LoginDto model)
         {
             _response.Result = await _identityServicio.Login(model);
-            _response.Message = "Login correcto.";
+            _response.Message = "";
             return Ok(_response);
         }
 
-        [HttpPost("AssingRole")]
-        public async Task<IActionResult> AssingRole([FromBody] AssignRoleDto model)
+        [HttpPost("AssignRole")]
+        public async Task<IActionResult> AssignRole([FromBody] AssignRoleDto model)
         {
             _response.Result = await _identityServicio.AssignRole(model.Email, model.Role);
             _response.Message = "Rol asignado correctamente.";
