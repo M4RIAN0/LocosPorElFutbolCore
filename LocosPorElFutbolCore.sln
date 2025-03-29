@@ -4,41 +4,53 @@ VisualStudioVersion = 17.1.32228.430
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LxF.Dominio", "LxF.Dominio", "{0DFA1BA5-8347-4E99-B85C-F62AE42B32D9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dominio.Entidades", "Dominio.Entidades\Dominio.Entidades.csproj", "{4E106044-4114-4583-AE7D-A70C739DD43D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dominio.Entidades", "src\Dominio.Entidades\Dominio.Entidades.csproj", "{4E106044-4114-4583-AE7D-A70C739DD43D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dominio.Repositorio", "Dominio.Repositorio\Dominio.Repositorio.csproj", "{E93FE91B-9BBD-4D2F-A331-C89F71C42D47}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dominio.Repositorio", "src\Dominio.Repositorio\Dominio.Repositorio.csproj", "{E93FE91B-9BBD-4D2F-A331-C89F71C42D47}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DominioBase", "DominioBase\DominioBase.csproj", "{2D8AEA22-4E05-4E25-860D-73FC2E784826}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DominioBase", "src\DominioBase\DominioBase.csproj", "{2D8AEA22-4E05-4E25-860D-73FC2E784826}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LxF.Infraestructura", "LxF.Infraestructura", "{E5F38EFF-DA84-4966-ACF9-DFB9D8E24A3D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infraestructura.Repositorio", "Infraestructura.Repositorio\Infraestructura.Repositorio.csproj", "{D899246E-853B-40D0-AB00-195DB42569E2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infraestructura.Repositorio", "src\Infraestructura.Repositorio\Infraestructura.Repositorio.csproj", "{D899246E-853B-40D0-AB00-195DB42569E2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infraestructura.RepositorioBase", "Infraestructura.RepositorioBase\Infraestructura.RepositorioBase.csproj", "{BD772838-5ACC-422A-B59B-56238C354B50}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infraestructura.RepositorioBase", "src\Infraestructura.RepositorioBase\Infraestructura.RepositorioBase.csproj", "{BD772838-5ACC-422A-B59B-56238C354B50}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LxF.Servicio", "LxF.Servicio", "{AD553375-6589-435F-A772-12386B0FA245}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IServicio", "IServicio\IServicio.csproj", "{402193DE-A5CB-4719-8C15-A450EF80AE51}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IServicio", "src\IServicio\IServicio.csproj", "{402193DE-A5CB-4719-8C15-A450EF80AE51}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Servicio", "Servicio\Servicio.csproj", "{0663A18F-E913-43A3-9864-70304348166E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Servicio", "src\Servicio\Servicio.csproj", "{0663A18F-E913-43A3-9864-70304348166E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Servicio.Base", "Servicio.Base\Servicio.Base.csproj", "{98D38975-11D4-4954-A0FD-DBE93CF86329}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Servicio.Base", "src\Servicio.Base\Servicio.Base.csproj", "{98D38975-11D4-4954-A0FD-DBE93CF86329}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infraestructura", "Infraestructura\Infraestructura.csproj", "{79CD2CB5-681B-429C-A3F2-989DAF2FABFE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infraestructura", "src\Infraestructura\Infraestructura.csproj", "{79CD2CB5-681B-429C-A3F2-989DAF2FABFE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LxF.Api", "LxF.Api", "{0D84A71B-30D0-4341-89D1-32EF7B8858B7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LxF.API", "LxF.API\LxF.API\LxF.API.csproj", "{108EDCED-C1DF-4E9E-A4EF-7F9F9D320843}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LxF.API", "src\LxF.API\LxF.API\LxF.API.csproj", "{108EDCED-C1DF-4E9E-A4EF-7F9F9D320843}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LxF.Support", "LxF.Support", "{D967EBE8-9B25-41E9-8E40-36C1F38471D5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LxF.Support", "LxF.Support\LxF.Support.csproj", "{ECD3E260-7571-4B80-9DC2-B1E6BBE199BA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LxF.Support", "src\LxF.Support\LxF.Support.csproj", "{ECD3E260-7571-4B80-9DC2-B1E6BBE199BA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lxf.Support.BuildingBlocks", "Lxf.Support.BuildingBlocks\Lxf.Support.BuildingBlocks.csproj", "{19D4D3C2-F02C-4892-8C56-88B6B687599E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lxf.Support.BuildingBlocks", "src\Lxf.Support.BuildingBlocks\Lxf.Support.BuildingBlocks.csproj", "{19D4D3C2-F02C-4892-8C56-88B6B687599E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LXF.Web", "LXF.Web", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LXF.Web", "LXF.Web\LXF.Web.csproj", "{5CD11860-B2E9-41D8-9FBE-9979C224755D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LXF.Web", "src\LXF.Web\LXF.Web.csproj", "{5CD11860-B2E9-41D8-9FBE-9979C224755D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{D434149B-FBAD-443D-9314-D7EA19A42BD0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{CB03DB30-2102-4906-8BD6-F76FB939C87E}"
+	ProjectSection(SolutionItems) = preProject
+		scripts\config.json = scripts\config.json
+		scripts\RunMigrations.ps1 = scripts\RunMigrations.ps1
+	EndProjectSection
+	ProjectSection(FolderGlobals) = preProject
+		C_5_4Users_4marcos_1martinez_4source_4repos_4LocosPorElFutbolCore_4scripts_4config_1json__JsonSchema = https://json.schemastore.org/appsettings.json
+		C_5_4Users_4marcos_1martinez_4source_4repos_4LocosPorElFutbolCore_4script_4config_1json__JsonSchema = https://json.schemastore.org/appsettings.json
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -103,18 +115,24 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{0DFA1BA5-8347-4E99-B85C-F62AE42B32D9} = {D434149B-FBAD-443D-9314-D7EA19A42BD0}
 		{4E106044-4114-4583-AE7D-A70C739DD43D} = {0DFA1BA5-8347-4E99-B85C-F62AE42B32D9}
 		{E93FE91B-9BBD-4D2F-A331-C89F71C42D47} = {0DFA1BA5-8347-4E99-B85C-F62AE42B32D9}
 		{2D8AEA22-4E05-4E25-860D-73FC2E784826} = {0DFA1BA5-8347-4E99-B85C-F62AE42B32D9}
+		{E5F38EFF-DA84-4966-ACF9-DFB9D8E24A3D} = {D434149B-FBAD-443D-9314-D7EA19A42BD0}
 		{D899246E-853B-40D0-AB00-195DB42569E2} = {E5F38EFF-DA84-4966-ACF9-DFB9D8E24A3D}
 		{BD772838-5ACC-422A-B59B-56238C354B50} = {E5F38EFF-DA84-4966-ACF9-DFB9D8E24A3D}
+		{AD553375-6589-435F-A772-12386B0FA245} = {D434149B-FBAD-443D-9314-D7EA19A42BD0}
 		{402193DE-A5CB-4719-8C15-A450EF80AE51} = {AD553375-6589-435F-A772-12386B0FA245}
 		{0663A18F-E913-43A3-9864-70304348166E} = {AD553375-6589-435F-A772-12386B0FA245}
 		{98D38975-11D4-4954-A0FD-DBE93CF86329} = {AD553375-6589-435F-A772-12386B0FA245}
 		{79CD2CB5-681B-429C-A3F2-989DAF2FABFE} = {E5F38EFF-DA84-4966-ACF9-DFB9D8E24A3D}
+		{0D84A71B-30D0-4341-89D1-32EF7B8858B7} = {D434149B-FBAD-443D-9314-D7EA19A42BD0}
 		{108EDCED-C1DF-4E9E-A4EF-7F9F9D320843} = {0D84A71B-30D0-4341-89D1-32EF7B8858B7}
+		{D967EBE8-9B25-41E9-8E40-36C1F38471D5} = {D434149B-FBAD-443D-9314-D7EA19A42BD0}
 		{ECD3E260-7571-4B80-9DC2-B1E6BBE199BA} = {D967EBE8-9B25-41E9-8E40-36C1F38471D5}
 		{19D4D3C2-F02C-4892-8C56-88B6B687599E} = {D967EBE8-9B25-41E9-8E40-36C1F38471D5}
+		{02EA681E-C7D8-13C7-8484-4AC65E1B71E8} = {D434149B-FBAD-443D-9314-D7EA19A42BD0}
 		{5CD11860-B2E9-41D8-9FBE-9979C224755D} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
