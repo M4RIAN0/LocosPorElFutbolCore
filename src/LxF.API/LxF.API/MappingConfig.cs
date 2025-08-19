@@ -75,6 +75,18 @@ namespace LxF.API
                 .ForMember(vm => vm.Cliente, m => m.MapFrom(u => u.PersonaCliente.Nombre + " " + u.PersonaCliente.Apellido))
                 .ForMember(vm => vm.Tarjeta, m => m.MapFrom(u => u.Tarjeta.Nombre))
                 .ForMember(vm => vm.Fecha, m => m.MapFrom(u => u.Fecha.ToString()));
+
+                config.CreateMap<CarroCompras, CarroComprasGetDto>();
+                //.ForMember(vm => vm.UserId, m => m.MapFrom(u => u.UserId))
+                //.ForMember(vm => vm.Total, m => m.MapFrom(u => u.Total));
+                config.CreateMap<CarroComprasDto, CarroCompras>();
+                //.ForMember(vm => vm.UserId, m => m.MapFrom(u => u.UserId))
+                //.ForMember(vm => vm.Total, m => m.MapFrom(u => u.Total));
+                config.CreateMap<CarroComprasPutDto, CarroCompras>();
+
+                config.CreateMap<DetalleCarroCompras, DetalleCarroComprasGetDto>();
+                config.CreateMap<DetalleCarroComprasDto, DetalleCarroCompras>();
+                config.CreateMap<DetalleCarroComprasPutDto, DetalleCarroCompras>();
             });
 
             return mappingConfig;

@@ -85,7 +85,10 @@ builder.Services.AddScoped<IMovimientoService, MovimientoService>();
 builder.Services.AddScoped<IMovimientoRepository, MovimientoRepository>();
 builder.Services.AddScoped<ITarjetaService, TarjetaService>();
 builder.Services.AddScoped<ITarjetaRepository, TarjetaRepository>();
-
+builder.Services.AddScoped<ICarroComprasService, CarroComprasService>();
+builder.Services.AddScoped<ICarroComprasRepository, CarroComprasRepository>();
+builder.Services.AddScoped<IDetalleCarroComprasService, DetalleCarroComprasService>();
+builder.Services.AddScoped<IDetalleCarroComprasRepository, DetalleCarroComprasRepository>();
 
 var app = builder.Build();
 

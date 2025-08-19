@@ -535,8 +535,8 @@ namespace Infraestructura.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Nombre", "NombreNormalizado" },
                 values: new object[,]
                 {
-                    { "39b76252-5d01-4f82-b196-c19992f9c408", null, "Administrador", "ADMINISTRADOR" },
-                    { "97455939-a8d7-482e-b468-e10b43d35387", null, "Cliente", "CLIENTE" }
+                    { "4684a5c2-8c13-4334-94a6-50cead1fd616", null, "Cliente", "CLIENTE" },
+                    { "fbfc575d-b68b-41db-9dcc-296611492e58", null, "Administrador", "ADMINISTRADOR" }
                 });
 
             migrationBuilder.InsertData(

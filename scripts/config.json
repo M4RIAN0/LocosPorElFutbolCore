@@ -1,5 +1,5 @@
 {
-  "ProjectPath": "C:\\Users\\marcos.martinez\\source\\repos\\LocosPorElFutbolCore\\src\\Infraestructura\\Infraestructura.csproj",
+  "ProjectPath": "C:\\Users\\source\\repos\\LocosPorElFutbolCore\\src\\Infraestructura\\Infraestructura.csproj",
   "ConnectionStrings": {
     "DefaultConnection": "server=AR-IT20116\\SQLEXPRESS; Database=LXFDB; Integrated Security=true; Trusted_Connection=TRUE; TrustServerCertificate=True"
   }

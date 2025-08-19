@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infraestructura.Migrations
 {
     [DbContext(typeof(LxfContext))]
-    [Migration("20250329031601_Initial")]
+    [Migration("20250407191110_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -1265,13 +1265,13 @@ namespace Infraestructura.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "39b76252-5d01-4f82-b196-c19992f9c408",
+                            Id = "fbfc575d-b68b-41db-9dcc-296611492e58",
                             Name = "Administrador",
                             NormalizedName = "ADMINISTRADOR"
                         },
                         new
                         {
-                            Id = "97455939-a8d7-482e-b468-e10b43d35387",
+                            Id = "4684a5c2-8c13-4334-94a6-50cead1fd616",
                             Name = "Cliente",
                             NormalizedName = "CLIENTE"
                         });

@@ -15,8 +15,10 @@ namespace Infraestructura
         { }
 
         public DbSet<Banco> Banco { get; set; }
+        public DbSet<CarroCompras> CarroCompras { get; set; }
         public DbSet<Categoria> Categoria { get; set; }
         public DbSet<Comprobante> Comprobante { get; set; }
+        public DbSet<DetalleCarroCompras> DetalleCarroCompras { get; set; }
         public DbSet<DetalleComprobante> DetalleComprobantes { get; set; }
         public DbSet<Envio> Envio { get; set; }
         public DbSet<Factura> Factura { get; set; }

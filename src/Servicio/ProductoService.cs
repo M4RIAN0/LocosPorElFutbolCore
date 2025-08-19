@@ -49,7 +49,6 @@ namespace Servicio
         public ProductoGetDto GetById(int? id)
         {
             var model = _repository.GetById(id, "Talle,Marca,Categoria");
-
             return ToGetDto(model);
         }
 
@@ -61,7 +60,6 @@ namespace Servicio
         public void Update(ProductoPutDto dto)
         {
             var model = ToPutEntity(dto);
-
             _repository.Attach(model);
             _repository.Save();
         }

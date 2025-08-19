@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LXF.Web.Models.ViewModels
 {
@@ -53,8 +54,9 @@ namespace LXF.Web.Models.ViewModels
 
         public string Categoria { get; init; }
 
-        public string ImagenUrl { get; set; }
-
+        public string ImagenUrl { get; init; }
+        [Range(1, 100)]
+        public  int Cantidad { get; init; } = 1;
     }
        
 }

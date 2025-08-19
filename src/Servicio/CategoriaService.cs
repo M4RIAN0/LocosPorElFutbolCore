@@ -21,8 +21,8 @@ public class CategoriaService : ServicioBase, ICategoriaService
     }
     public void Add(CategoriaDto dto)
     {
-        var categoria = ToEntityPost(dto);
-        _repository.Add(categoria);
+        var model = ToEntityPost(dto);
+        _repository.Add(model);
         _repository.Save();
     }
 

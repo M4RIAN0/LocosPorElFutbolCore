@@ -17,7 +17,6 @@ builder.Services.AddSingleton(mapper);
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 #endregion
 
-
 #region HttpClient
 // Configuration HttpClient for Dependence Injection
 builder.Services.AddHttpContextAccessor();
@@ -43,6 +42,7 @@ SD.LXFApiBase = builder.Configuration["ServicesUrl:LXFApi"];
 //Dependece Injection configuracion
 builder.Services.AddScoped<IServiceBaseApiClient, ServiceBaseApiClient>();
 builder.Services.AddScoped<ICategoriaServiceApiClient, CategoriaServiceApiClient>();
+builder.Services.AddScoped<ICarroComprasServiceApiClient, CarroComprasServiceApiClient>();
 builder.Services.AddScoped<IComprobanteServiceApiClient, ComprobanteServiceApiClient>();
 builder.Services.AddScoped<IDetalleComprobanteServiceApiClient, DetalleComprobanteServiceApiClient>();
 builder.Services.AddScoped<IEnvioServiceApiClient, EnvioServiceApiClient>();
@@ -57,6 +57,7 @@ builder.Services.AddScoped<ITarjetaServiceApiClient, TarjetaServiceApiClient>();
 
 builder.Services.AddScoped<IProductoService, ProductoService>();
 builder.Services.AddScoped<ICategoriaService, CategoriaService>();
+builder.Services.AddScoped<ICarroComprasService, CarroComprasService>();
 builder.Services.AddScoped<ITalleService, TalleService>();
 builder.Services.AddScoped<IMarcaService, MarcaService>();
 #endregion
