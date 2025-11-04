@@ -6,7 +6,7 @@ namespace LXF.Web.Service.IService
     {
         Task<ResponseViewModel?> Create(CarroComprasViewModel vm);
         Task<ResponseViewModel?> Update(CarroComprasPutViewModel vm);
-        Task<ResponseViewModel?> SoftDelete(int id);
+        Task<ResponseViewModel?> RemoveItem(int id);
         Task<ResponseViewModel?> GetByUserId(string id);
     }
 }

@@ -5,6 +5,7 @@ using LXF.Web.Service.IService;
 using LXF.Web.ServiceApiClient;
 using LXF.Web.ServiceApiClient.IServiceApiClient;
 using LXF.Web.Utility;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +22,7 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 // Configuration HttpClient for Dependence Injection
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddHttpClient();
+builder.Services.AddHttpClient<IDetalleCarroComprasServiceApiClient, DetalleCarroComprasServiceApiClient>();
 builder.Services.AddHttpClient<ICategoriaServiceApiClient, CategoriaServiceApiClient>();
 builder.Services.AddHttpClient<IComprobanteServiceApiClient, ComprobanteServiceApiClient>();
 builder.Services.AddHttpClient<IDetalleComprobanteServiceApiClient, DetalleComprobanteServiceApiClient>();
@@ -39,11 +41,12 @@ SD.LXFApiBase = builder.Configuration["ServicesUrl:LXFApi"];
 #endregion
 
 #region Dependence Injection
-//Dependece Injection configuracion
+//Dependece Injection configuration in Services Api Clients
 builder.Services.AddScoped<IServiceBaseApiClient, ServiceBaseApiClient>();
 builder.Services.AddScoped<ICategoriaServiceApiClient, CategoriaServiceApiClient>();
 builder.Services.AddScoped<ICarroComprasServiceApiClient, CarroComprasServiceApiClient>();
 builder.Services.AddScoped<IComprobanteServiceApiClient, ComprobanteServiceApiClient>();
+builder.Services.AddScoped<IDetalleCarroComprasServiceApiClient, DetalleCarroComprasServiceApiClient>();
 builder.Services.AddScoped<IDetalleComprobanteServiceApiClient, DetalleComprobanteServiceApiClient>();
 builder.Services.AddScoped<IEnvioServiceApiClient, EnvioServiceApiClient>();
 builder.Services.AddScoped<IFacturaServiceApiClient, FacturaServiceApiClient>();
@@ -55,11 +58,21 @@ builder.Services.AddScoped<IProductoServiceApiClient, ProductoServiceApiClient>(
 builder.Services.AddScoped<ITalleServiceApiClient, TalleServiceApiClient>();
 builder.Services.AddScoped<ITarjetaServiceApiClient, TarjetaServiceApiClient>();
 
-builder.Services.AddScoped<IProductoService, ProductoService>();
+//Dependece Injection configuration in Services
 builder.Services.AddScoped<ICategoriaService, CategoriaService>();
 builder.Services.AddScoped<ICarroComprasService, CarroComprasService>();
-builder.Services.AddScoped<ITalleService, TalleService>();
+builder.Services.AddScoped<IDetalleCarroComprasService, DetalleCarroComprasService>();
 builder.Services.AddScoped<IMarcaService, MarcaService>();
+builder.Services.AddScoped<IProductoService, ProductoService>();
+builder.Services.AddScoped<ITalleService, TalleService>();
+builder.Services.AddScoped<ITokenProvider, TokenProvider>();
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.ExpireTimeSpan = TimeSpan.FromHours(10);
+        options.LoginPath = "/Identity/Login";
+        options.AccessDeniedPath = "/Identity/AccessDenied";
+    });
 #endregion
 
 var app = builder.Build();
@@ -76,6 +89,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(

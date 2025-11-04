@@ -18,7 +18,7 @@ namespace LXF.Web.Controllers
             _mapper = mapper;
         }
 
-        public async Task<IActionResult> ProductoIndex()
+        public async Task<IActionResult> ProductoIndex() 
         {
             ResponseViewModel? response = await _service.GetAll();
 

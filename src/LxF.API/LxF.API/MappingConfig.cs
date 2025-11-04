@@ -76,17 +76,31 @@ namespace LxF.API
                 .ForMember(vm => vm.Tarjeta, m => m.MapFrom(u => u.Tarjeta.Nombre))
                 .ForMember(vm => vm.Fecha, m => m.MapFrom(u => u.Fecha.ToString()));
 
-                config.CreateMap<CarroCompras, CarroComprasGetDto>();
-                //.ForMember(vm => vm.UserId, m => m.MapFrom(u => u.UserId))
-                //.ForMember(vm => vm.Total, m => m.MapFrom(u => u.Total));
-                config.CreateMap<CarroComprasDto, CarroCompras>();
-                //.ForMember(vm => vm.UserId, m => m.MapFrom(u => u.UserId))
-                //.ForMember(vm => vm.Total, m => m.MapFrom(u => u.Total));
-                config.CreateMap<CarroComprasPutDto, CarroCompras>();
+                config.CreateMap<CarroCompra, CarroCompraDto>();
+                config.CreateMap<CarroCompra, CarroCompraPutDto>();
+                config.CreateMap<CarroCompra, CarroCompraGetDto>();
+                config.CreateMap<CarroCompraDto, CarroCompra>();
+                config.CreateMap<CarroCompraPutDto, CarroCompra>();
 
-                config.CreateMap<DetalleCarroCompras, DetalleCarroComprasGetDto>();
-                config.CreateMap<DetalleCarroComprasDto, DetalleCarroCompras>();
-                config.CreateMap<DetalleCarroComprasPutDto, DetalleCarroCompras>();
+                config.CreateMap<DetalleCarroCompra, DetalleCarroCompraDto>();
+                config.CreateMap<DetalleCarroCompra, DetalleCarroCompraPutDto>();
+                config.CreateMap<DetalleCarroCompra, DetalleCarroCompraGetDto>().
+                ForMember(vm => vm.Producto, opt => opt.MapFrom(u => u.Producto));
+                config.CreateMap<DetalleCarroCompraDto, DetalleCarroCompra>();
+                config.CreateMap<DetalleCarroCompraPutDto, DetalleCarroCompra>();
+
+                config.CreateMap<OrdenCompra, OrdenCompraDto>();
+                config.CreateMap<OrdenCompra, OrdenCompraPutDto>();
+                config.CreateMap<OrdenCompra, OrdenCompraGetDto>();
+                config.CreateMap<OrdenCompraDto, OrdenCompra>();
+                config.CreateMap<OrdenCompraPutDto, OrdenCompra>();
+
+                config.CreateMap<DetalleOrdenCompra, DetalleOrdenCompraDto>();
+                config.CreateMap<DetalleOrdenCompra, DetalleOrdenCompraPutDto>();
+                config.CreateMap<DetalleOrdenCompra, DetalleOrdenCompraGetDto>().
+                ForMember(vm => vm.Producto, opt => opt.MapFrom(u => u.Producto));
+                config.CreateMap<DetalleOrdenCompraDto, DetalleOrdenCompra>();
+                config.CreateMap<DetalleOrdenCompraPutDto, DetalleOrdenCompra>();
             });
 
             return mappingConfig;

@@ -46,5 +46,7 @@ namespace Dominio.Entidades
         public virtual Talle Talle { get; set; }
 
         public virtual IEnumerable<DetalleComprobante> DetalleComprobantes { get; set; }
+
+        public virtual IEnumerable<DetalleCarroCompra> DetalleCarroCompras { get; set; }
     }
 }

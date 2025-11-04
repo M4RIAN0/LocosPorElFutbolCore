@@ -28,9 +28,9 @@ namespace LXF.Web.Service
             return response;
         }
 
-        public async Task<ResponseViewModel?> SoftDelete(int id)
+        public async Task<ResponseViewModel?> RemoveItem(int id)
         {
-            return await _serviceApiClient.SoftDelete(id);
+            return await _serviceApiClient.RemoveItem(id);
         }
 
         public async Task<ResponseViewModel?> Update(CarroComprasPutViewModel vm)

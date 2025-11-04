@@ -18,39 +18,39 @@ namespace LXF.Web.Service
             return await _serviceApiClient.Add(vm);
         }
 
-        public async Task<ResponseViewModel?> GetAll()
-        {
-            var response = await _serviceApiClient.GetAll();
+        //public async Task<ResponseViewModel?> GetAll()
+        //{
+        //    var response = await _serviceApiClient.GetAll();
 
-            if (response.IsSuccess)
-                response.Result = DesearilizeList<DetalleCarroComprasGetViewModel>(response);
+        //    if (response.IsSuccess)
+        //        response.Result = DesearilizeList<DetalleCarroComprasGetViewModel>(response);
 
-            return response;
-        }
+        //    return response;
+        //}
 
-        public Task<ResponseViewModel?> GetByFilter(string cadena)
-        {
-            throw new NotImplementedException();
-        }
+        //public Task<ResponseViewModel?> GetByFilter(string cadena)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        public async Task<ResponseViewModel?> GetById(int id)
-        {
-            var response = await _serviceApiClient.GetById(id);
+        //public async Task<ResponseViewModel?> GetById(int id)
+        //{
+        //    var response = await _serviceApiClient.GetById(id);
 
-            if (response.IsSuccess)
-                response.Result = Desearilize<DetalleCarroComprasGetViewModel>(response);
+        //    if (response.IsSuccess)
+        //        response.Result = Desearilize<DetalleCarroComprasGetViewModel>(response);
 
-            return response;
-        }
+        //    return response;
+        //}
 
-        public async Task<ResponseViewModel?> SoftDelete(int id)
-        {
-            return await _serviceApiClient.SoftDelete(id);
-        }
+        //public async Task<ResponseViewModel?> SoftDelete(int id)
+        //{
+        //    return await _serviceApiClient.SoftDelete(id);
+        //}
 
-        public async Task<ResponseViewModel?> Update(DetalleCarroComprasPutViewModel vm)
-        {
-            return await _serviceApiClient.Update(vm);
-        }
+        //public async Task<ResponseViewModel?> Update(DetalleCarroComprasPutViewModel vm)
+        //{
+        //    return await _serviceApiClient.Update(vm);
+        //}
     }
 }

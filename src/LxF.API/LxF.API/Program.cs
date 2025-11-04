@@ -7,12 +7,16 @@ using Infraestructura.Repositorio;
 using IServicio;
 using IServicio.Email;
 using IServicio.Identity;
+using IServicio.JwToken;
 using IServicio.Mail;
 using LxF.API;
+using LxF.API.Extensions;
 using LxF.Support;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using Servicio;
 using System.Globalization;
 
@@ -27,6 +31,11 @@ builder.Services.AddDbContext<LxfContext>(option =>
 {
     option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+#endregion
+
+#region JWT
+//configuracion para popular JwtOptions con los valores del appsettings
+builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("ApiSettings:JwtOptions"));
 #endregion
 
 #region Identity
@@ -54,14 +63,48 @@ var emailConfig = builder.Configuration.GetSection("EmailConfiguration").Get<Ema
 builder.Services.Configure<DataProtectionTokenProviderOptions>(opts => opts.TokenLifespan = TimeSpan.FromHours(10));
 #endregion
 
+#region Swagger
+// configuracion para anadir autenticacion y autorizacion a Swagger 
+builder.Services.AddSwaggerGen(option =>
+{   // anadimos AddSecurityDefinition donde el name es 'Bearer' y 'securityScheme' tiene varios valores
+    option.AddSecurityDefinition(name: JwtBearerDefaults.AuthenticationScheme, securityScheme: new OpenApiSecurityScheme
+    {
+        Name = "Authorization", // nombre que le damos a 'OpenApiSecurityScheme'
+        // ponemos la descripcion que quieramos
+        Description = "Enter the Bearer Authorization string as following: 'Bearer Generated-JWT-Token'",
+        // 'In' representa la localizacion del token bearer
+        In = ParameterLocation.Header,
+        // el tipo es 'ApiKey'
+        Type = SecuritySchemeType.ApiKey,
+        // Scheme es bearer
+        Scheme = "Bearer"
+    });
+
+    // anadimos secuiriryRequirement
+    option.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = JwtBearerDefaults.AuthenticationScheme
+                }
+            }, new string[]{} // lista de valores
+        }
+    });
+});
+#endregion
+
 builder.Services.AddControllers();
 builder.Services.AddRazorPages();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 
-// Servicios
+#region Dependency Injection
+// Services
 builder.Services.AddScoped<IIdentityService, IndentityService>();
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 builder.Services.AddSingleton(emailConfig);
@@ -85,10 +128,18 @@ builder.Services.AddScoped<IMovimientoService, MovimientoService>();
 builder.Services.AddScoped<IMovimientoRepository, MovimientoRepository>();
 builder.Services.AddScoped<ITarjetaService, TarjetaService>();
 builder.Services.AddScoped<ITarjetaRepository, TarjetaRepository>();
-builder.Services.AddScoped<ICarroComprasService, CarroComprasService>();
-builder.Services.AddScoped<ICarroComprasRepository, CarroComprasRepository>();
-builder.Services.AddScoped<IDetalleCarroComprasService, DetalleCarroComprasService>();
-builder.Services.AddScoped<IDetalleCarroComprasRepository, DetalleCarroComprasRepository>();
+builder.Services.AddScoped<ICarroCompraService, CarroCompraService>();
+builder.Services.AddScoped<ICarroCompraRepository, CarroCompraRepository>();
+builder.Services.AddScoped<IDetalleCarroCompraService, DetalleCarroCompraService>();
+builder.Services.AddScoped<IDetalleCarroCompraRepository, DetalleCarroCompraRepository>();
+builder.Services.AddScoped<IOrdenCompraService, OrdenCompraService>();
+builder.Services.AddScoped<IOrdenCompraRepository, OrdenCompraRepository>();
+builder.Services.AddScoped<IDetalleOrdenCompraService, DetallOrdenCompraService>();
+builder.Services.AddScoped<IDetalleOrdenCompraRepository, DetalleOrdenCompraRepository>();
+builder.Services.AddScoped<IJwTokenGenerator, JwTokenGenerator>(); // inyeccion service IJwTokenGenerator
+#endregion
+
+builder.AddAppAuthentication();
 
 var app = builder.Build();
 
@@ -104,6 +155,8 @@ app.UseRequestLocalization();
 app.MapRazorPages();
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

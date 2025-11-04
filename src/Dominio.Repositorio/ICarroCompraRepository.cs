@@ -3,7 +3,7 @@ using Infraestructura.RepositorioBase;
 
 namespace Dominio.Repositorio
 {
-    public interface IDetalleCarroComprasRepository: IRepository<DetalleCarroCompras>
+    public interface ICarroCompraRepository : IRepository<CarroCompra>
     {
     }
 }

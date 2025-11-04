@@ -10,11 +10,18 @@ namespace LXF.Web
         {
             var mappingConfig = new MapperConfiguration(config =>
             {
+                config.CreateMap<ProductoGetViewModel, ProductoViewModel>();
                 config.CreateMap<ProductoGetViewModel, ProductoPutViewModel>();
 
                 config.CreateMap<MarcaGetViewModel, MarcaPutViewModel>();
 
                 config.CreateMap<CategoriaGetViewModel, CategoriaPutViewModel>();
+
+                config.CreateMap<CarroComprasGetViewModel, CarroComprasViewModel>();
+                config.CreateMap<CarroComprasGetViewModel, CarroComprasPutViewModel>();
+
+                config.CreateMap<DetalleCarroComprasGetViewModel, DetalleCarroComprasViewModel>();
+                config.CreateMap<DetalleCarroComprasGetViewModel, DetalleCarroComprasPutViewModel>();
             });
 
             return mappingConfig;

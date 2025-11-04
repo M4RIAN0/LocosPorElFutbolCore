@@ -1,4 +1,5 @@
 ﻿using LXF.Web.Models.ViewModels;
+using LXF.Web.Service.IService;
 using LXF.Web.ServiceApiClient.IServiceApiClient;
 using Newtonsoft.Json;
 using System.Net;
@@ -11,9 +12,11 @@ namespace LXF.Web.ServiceApiClient
     {
         // usamos cliente Factory para las consultas a la api 
         private readonly IHttpClientFactory _httpClientFactory;
-        public ServiceBaseApiClient(IHttpClientFactory httpClientFactory)
+        private readonly ITokenProvider _tokenProvider;
+        public ServiceBaseApiClient(IHttpClientFactory httpClientFactory, ITokenProvider tokenProvider)
         {
             _httpClientFactory = httpClientFactory;
+            _tokenProvider = tokenProvider;
         }
         public async Task<ResponseViewModel?> SendAsync(RequestViewModel requestViewModel, bool withBearer = true)
         {
@@ -23,6 +26,14 @@ namespace LXF.Web.ServiceApiClient
                 HttpRequestMessage message = new(); // usamos HttpRequestMessage para hacer las llamadas
                 message.Headers.Add("Accept", "application/json"); // se puede aplicar configuraciones sobre message
                                                                    // aplicamos que acepte llamadas de tipo Json
+
+                //Token
+                if (withBearer)
+                {
+                    var token = _tokenProvider.GetToken();
+                    // agregamos un nuevo header con el nuevo token
+                    message.Headers.Add("Authorization", $"Bearer {token}");
+                }
 
                 message.RequestUri = new Uri(requestViewModel.Url); // uri de la llamada
 

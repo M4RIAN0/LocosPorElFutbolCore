@@ -29,6 +29,22 @@ namespace Infraestructura.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "CarroCompras",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Total = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    IsEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CarroCompras", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Categorias",
                 columns: table => new
                 {
@@ -354,6 +370,37 @@ namespace Infraestructura.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "DetalleCarroCompras",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Cantidad = table.Column<int>(type: "int", nullable: false),
+                    Precio = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    Subtotal = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    CarroComprasId = table.Column<int>(type: "int", nullable: false),
+                    ProductoId = table.Column<int>(type: "int", nullable: false),
+                    IsEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DetalleCarroCompras", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_DetalleCarroCompras_CarroCompras_CarroComprasId",
+                        column: x => x.CarroComprasId,
+                        principalTable: "CarroCompras",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_DetalleCarroCompras_Productos_ProductoId",
+                        column: x => x.ProductoId,
+                        principalTable: "Productos",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "DetalleComprobantes",
                 columns: table => new
                 {
@@ -535,8 +582,8 @@ namespace Infraestructura.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Nombre", "NombreNormalizado" },
                 values: new object[,]
                 {
-                    { "4684a5c2-8c13-4334-94a6-50cead1fd616", null, "Cliente", "CLIENTE" },
-                    { "fbfc575d-b68b-41db-9dcc-296611492e58", null, "Administrador", "ADMINISTRADOR" }
+                    { "0dcbacf9-c27d-4d94-949e-5c9760ceaa54", null, "Cliente", "CLIENTE" },
+                    { "7417eecb-bf93-4fcc-bb89-0d1377e50d29", null, "Administrador", "ADMINISTRADOR" }
                 });
 
             migrationBuilder.InsertData(
@@ -637,6 +684,16 @@ namespace Infraestructura.Migrations
                 table: "Categorias",
                 column: "Descripcion",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DetalleCarroCompras_CarroComprasId",
+                table: "DetalleCarroCompras",
+                column: "CarroComprasId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DetalleCarroCompras_ProductoId",
+                table: "DetalleCarroCompras",
+                column: "ProductoId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_DetalleComprobantes_ComprobanteId",
@@ -755,6 +812,9 @@ namespace Infraestructura.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "DetalleCarroCompras");
+
+            migrationBuilder.DropTable(
                 name: "DetalleComprobantes");
 
             migrationBuilder.DropTable(
@@ -765,6 +825,9 @@ namespace Infraestructura.Migrations
 
             migrationBuilder.DropTable(
                 name: "UsuarioRoles");
+
+            migrationBuilder.DropTable(
+                name: "CarroCompras");
 
             migrationBuilder.DropTable(
                 name: "Productos");

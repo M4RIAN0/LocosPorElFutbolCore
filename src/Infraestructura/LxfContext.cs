@@ -15,16 +15,18 @@ namespace Infraestructura
         { }
 
         public DbSet<Banco> Banco { get; set; }
-        public DbSet<CarroCompras> CarroCompras { get; set; }
+        public DbSet<CarroCompra> CarroCompra { get; set; }
         public DbSet<Categoria> Categoria { get; set; }
         public DbSet<Comprobante> Comprobante { get; set; }
-        public DbSet<DetalleCarroCompras> DetalleCarroCompras { get; set; }
-        public DbSet<DetalleComprobante> DetalleComprobantes { get; set; }
+        public DbSet<DetalleCarroCompra> DetalleCarroCompra { get; set; }
+        public DbSet<DetalleComprobante> DetalleComprobante { get; set; }
+        public DbSet<DetalleOrdenCompra> DetalleOrdenCompra { get; set; }
         public DbSet<Envio> Envio { get; set; }
         public DbSet<Factura> Factura { get; set; }
         public DbSet<Localidad> Localidad { get; set; }
         public DbSet<Marca> Marca { get; set; }
         public DbSet<Movimiento> Movimiento { get; set; }
+        public DbSet<OrdenCompra> OrdenCompra { get; set; }
         public DbSet<Persona> Persona { get; set; }
         public DbSet<PersonaCliente> Persona_Cliente { get; set; }
         public DbSet<Producto> Producto { get; set; }
@@ -51,6 +53,7 @@ namespace Infraestructura
             builder.ApplyConfiguration(new ProductoConfiguration());
             builder.ApplyConfiguration(new UserConfiguration());
             builder.ApplyConfiguration(new RoleConfiguration());
+            builder.ApplyConfiguration(new DetalleCarroComprasConfiguration());
             builder.Entity<IdentityUserRole<string>>().ToTable("UsuarioRoles");
 
             builder.Ignore<IdentityUserClaim<string>>();

@@ -6,7 +6,7 @@ namespace LXF.Web.ServiceApiClient.IServiceApiClient
     {
         Task<ResponseViewModel?> Add(CarroComprasViewModel vm);
         Task<ResponseViewModel?> Update(CarroComprasPutViewModel vm);
-        Task<ResponseViewModel?> SoftDelete(int id);
+        Task<ResponseViewModel?> RemoveItem(int id);
         Task<ResponseViewModel?> GetByUserId(string userId);
     }
 }

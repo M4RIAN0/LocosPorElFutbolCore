@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infraestructura.Migrations
 {
     [DbContext(typeof(LxfContext))]
-    [Migration("20250407191110_Initial")]
+    [Migration("20251022065143_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -105,6 +105,31 @@ namespace Infraestructura.Migrations
                             IsEnabled = false,
                             Nombre = "Comafi"
                         });
+                });
+
+            modelBuilder.Entity("Dominio.Entidades.CarroCompras", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<decimal>("Total")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("CarroCompras");
                 });
 
             modelBuilder.Entity("Dominio.Entidades.Categoria", b =>
@@ -209,6 +234,44 @@ namespace Infraestructura.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Comprobantes");
+                });
+
+            modelBuilder.Entity("Dominio.Entidades.DetalleCarroCompras", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<int>("Cantidad")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CarroComprasId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<decimal>("Precio")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("ProductoId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Subtotal")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("CarroComprasId");
+
+                    b.HasIndex("ProductoId");
+
+                    b.ToTable("DetalleCarroCompras");
                 });
 
             modelBuilder.Entity("Dominio.Entidades.DetalleComprobante", b =>
@@ -1265,13 +1328,13 @@ namespace Infraestructura.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "fbfc575d-b68b-41db-9dcc-296611492e58",
+                            Id = "7417eecb-bf93-4fcc-bb89-0d1377e50d29",
                             Name = "Administrador",
                             NormalizedName = "ADMINISTRADOR"
                         },
                         new
                         {
-                            Id = "4684a5c2-8c13-4334-94a6-50cead1fd616",
+                            Id = "0dcbacf9-c27d-4d94-949e-5c9760ceaa54",
                             Name = "Cliente",
                             NormalizedName = "CLIENTE"
                         });
@@ -1591,6 +1654,25 @@ namespace Infraestructura.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Dominio.Entidades.DetalleCarroCompras", b =>
+                {
+                    b.HasOne("Dominio.Entidades.CarroCompras", "CarroCompras")
+                        .WithMany("DetalleCarroCompras")
+                        .HasForeignKey("CarroComprasId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Dominio.Entidades.Producto", "Producto")
+                        .WithMany("DetalleCarroCompras")
+                        .HasForeignKey("ProductoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CarroCompras");
+
+                    b.Navigation("Producto");
+                });
+
             modelBuilder.Entity("Dominio.Entidades.DetalleComprobante", b =>
                 {
                     b.HasOne("Dominio.Entidades.Comprobante", "Comprobante")
@@ -1751,6 +1833,11 @@ namespace Infraestructura.Migrations
                     b.Navigation("Tarjetas");
                 });
 
+            modelBuilder.Entity("Dominio.Entidades.CarroCompras", b =>
+                {
+                    b.Navigation("DetalleCarroCompras");
+                });
+
             modelBuilder.Entity("Dominio.Entidades.Categoria", b =>
                 {
                     b.Navigation("Productos");
@@ -1782,6 +1869,8 @@ namespace Infraestructura.Migrations
 
             modelBuilder.Entity("Dominio.Entidades.Producto", b =>
                 {
+                    b.Navigation("DetalleCarroCompras");
+
                     b.Navigation("DetalleComprobantes");
                 });
 

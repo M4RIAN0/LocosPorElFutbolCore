@@ -20,7 +20,7 @@ namespace LXF.Web.ServiceApiClient
                 ApiType = SD.ApiType.POST,
                 Data = vm,
                 Url = $"{SD.LXFApiBase}/api/Identity/AssignRole"
-            });
+            }, withBearer: false); // no pasa el token porque no es necesario en esta instancia y ademas no esta siendo generado (no se esta loggeando)
         }
 
         public async Task<ResponseViewModel?> LoginAsync(LoginRequestViewModel vm)
@@ -30,7 +30,7 @@ namespace LXF.Web.ServiceApiClient
                 ApiType = SD.ApiType.POST,
                 Data = vm,
                 Url = $"{SD.LXFApiBase}/api/Identity/Login"
-            });
+            }, withBearer: false);
         }
 
         public async Task<ResponseViewModel?> RegsiterAsync(RegisterRequestViewModel vm)
@@ -40,7 +40,7 @@ namespace LXF.Web.ServiceApiClient
                 ApiType = SD.ApiType.POST,
                 Data = vm,
                 Url = $"{SD.LXFApiBase}/api/Identity/Register"
-            });
+            }, withBearer: false);
         }
     }
 }

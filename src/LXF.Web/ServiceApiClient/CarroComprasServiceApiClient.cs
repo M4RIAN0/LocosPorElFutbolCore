@@ -35,11 +35,11 @@ public class CarroComprasServiceApiClient : ICarroComprasServiceApiClient
 
     }
 
-    public async Task<ResponseViewModel?> SoftDelete(int id)
+    public async Task<ResponseViewModel?> RemoveItem(int id)
     {
         return await _baseServiceApiClient.SendAsync(new RequestViewModel
         {
-            ApiType = SD.ApiType.PUT, // el tipo de peticion HTTP es PUT
+            ApiType = SD.ApiType.DELETE, // el tipo de peticion HTTP es DELETE
             Url = $"{SD.LXFApiBase}/api/Carro/{id}/delete" // generamos el endpoint del APi que vamos a consumir
         });
     }
