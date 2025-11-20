@@ -32,7 +32,7 @@ namespace Servicio
             return [.. _repository.GetByFilter(x => x.Letra.Contains(cadenaBuscar)).Select(x => ToDto(x))];
         }
 
-        public TalleDto GetById(int? id)
+        public TalleDto GetById(int id)
         {
             var model = _repository.GetById(id);
             return ToDto(model);

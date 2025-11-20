@@ -135,7 +135,7 @@ public class HomeController : Controller
                          ProductoId = productoVm.Id,
                          Precio = productoVm.Precio,
                          Cantidad = productoVm.Cantidad,
-                         Subtotal = productoVm.Cantidad * productoVm.Precio
+                         SubTotal = productoVm.Cantidad * productoVm.Precio
                      }
                 ]
             };

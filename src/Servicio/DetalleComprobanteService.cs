@@ -26,7 +26,7 @@ namespace Servicio
             _repository.Save();
         }
 
-        public DetalleComprobanteGetDto GetById(int? id)
+        public DetalleComprobanteGetDto GetById(int id)
         {
             var model = _repository.GetById(id);
             return ToGetDto(model);

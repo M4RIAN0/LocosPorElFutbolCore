@@ -4,8 +4,7 @@ namespace LXF.Web.ServiceApiClient.IServiceApiClient
 {
     public interface IFacturaServiceApiClient
     {
-        Task<ResponseViewModel?> Add(FacturaViewModel vm);
         Task<ResponseViewModel?> GetAll();
-        Task<ResponseViewModel?> GetById(int? id);
+        Task<ResponseViewModel?> GetById(int id);
     }
 }

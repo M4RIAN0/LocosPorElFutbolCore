@@ -43,13 +43,21 @@
                             <div style="font-size:11px;">@Html.Raw(cartObj.Producto.Descripcion)</div>
                         </div>
                         <div class="col-3 col-md-2 pt-md-4" style="font-size:11px;">
-                            <span style="font-size:17px;">@string.Format("{0:c}",cartObj.Producto.Precio) </span>
+                            <span style="font-size:17px;">@string.Format("{0:c}", cartObj.Producto.Precio) </span>
                         </div>
-                        <div class="col-3 col-md-2 pt-md-4" style="font-size:11px;">
-                            <span style="font-size:17px;"> @cartObj.Cantidad</span>
+                        <div class="col-6 col-md-2 pt-md-4 text-center">
+                            <div class="input-group input-group-sm justify-content-center" style="max-width: 120px; margin: auto;">
+                                <a asp-action="CarroSubtractItem" asp-route-detalleCarroComprasId="@cartObj.Id" class="btn btn-outline-danger">
+                                    <i class="bi bi-dash"></i>
+                                </a>
+                                <input type="text" class="form-control text-center bg-dark text-light" value="@cartObj.Cantidad" readonly style="width: 40px; flex-grow: 0; padding: 0; font-size: 17px; border-color: #343a40;">
+                                <a asp-action="CarroAddItem" asp-route-id="@cartObj.Id" class="btn btn-outline-success">
+                                    <i class="bi bi-plus"></i>
+                                </a>
+                            </div>
                         </div>
                         <div class="col-2 col-lg-1 p-0 pt-lg-4 text-center">
-                            <a asp-action="CarroRemoveItem" asp-route-detalleCarroComprasId="@cartObj.Id" class="btn btn-sm btn-danger">
+                            <a asp-action="CarroRemoveItem" asp-route-id="@cartObj.Id" class="btn btn-sm btn-danger">
                                 <i class="bi bi-trash-fill"></i>
                             </a>
                         </div>
@@ -67,7 +75,7 @@
                     <button type="submit" class="btn btn-outline-danger form-control">Email Cart</button>
                 </div>
                 <div class="col-6 col-md-3 offset-md-6">
-                    <a asp-action="Checkout" class="btn btn-success form-control">"Checkout" </a>
+                    <a asp-controller="Venta" asp-action="Checkout" class="btn btn-success form-control">Ir a Pagar</a>
                 </div>
             </div>
         </div>

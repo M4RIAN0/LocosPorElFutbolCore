@@ -1,0 +1,52 @@
+﻿@using LXF.Web.Models.ViewModels
+@model OrdenComprasGetViewModel
+@{
+    ViewData["Title"] = "Pago Rechazado";
+}
+
+<div class="container mt-4">
+    <div class="card border border-danger bg-dark text-light">
+
+        <div class="card-header bg-dark text-light border-bottom border-secondary">
+            <h3 class="text-danger text-center pt-2">
+                <i class="bi bi-x-circle-fill"></i> &nbsp; Fallo de Transacción
+            </h3>
+        </div>
+
+        <div class="card-body">
+            <div class="row text-center">
+
+                <div class="col-12 p-5">
+
+                    <h2 class="text-danger mb-4">
+                        ¡Algo salió mal con tu pago!
+                    </h2>
+
+                    <p class="text-warning" style="font-size: 1.2rem;">
+                        @* Puedes usar ViewData["CausaFallo"] si el Controller lo establece *@
+                        La transacción ha sido rechazada. Por favor, verifica los datos de tu Tarjeta.
+                    </p>
+
+                    <div class="mt-4 border-top border-bottom border-secondary py-3">
+                        <p class="text-light m-0">
+                            Total a Pagar: <strong class="text-warning">@Model.Total.ToString("C")</strong>
+                        </p>
+                        <p class="text-muted m-0" style="font-size: 0.9rem;">
+                            Referencia de Compra: @ViewBag.ExternalReferenceId
+                        </p>
+                    </div>
+
+                    <p class="text-info mt-4" style="font-size: 1.1rem;">
+                        Haz clic abajo para regresar a la orden y reintentar el pago.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-footer bg-dark border-top border-secondary text-center">
+            <a asp-action="Checkout" class="btn btn-warning form-control w-50">
+                Volver a la orden
+            </a>
+        </div>
+    </div>
+</div>

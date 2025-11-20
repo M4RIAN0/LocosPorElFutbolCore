@@ -28,6 +28,11 @@ namespace LXF.Web.Service
             return response;
         }
 
+        public async Task<ResponseViewModel?> Remove(int id)
+        {
+            return await _serviceApiClient.Remove(id);
+        }
+
         public async Task<ResponseViewModel?> RemoveItem(int id)
         {
             return await _serviceApiClient.RemoveItem(id);
@@ -37,5 +42,17 @@ namespace LXF.Web.Service
         {
           return await _serviceApiClient.Update(vm);
         }
+
+        public async Task<ResponseViewModel?> AddItem(int id)
+        {
+           return await _serviceApiClient.AddItem(id);
+        }
+
+        public async Task<ResponseViewModel?> SubtractItem(int vm)
+        {
+            return await _serviceApiClient.SubtractItem(vm);
+        }
+
+
     }
 }

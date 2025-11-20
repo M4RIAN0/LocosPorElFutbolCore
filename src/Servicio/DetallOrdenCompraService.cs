@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Dominio.Entidades;
 using Dominio.Repositorio;
+using Dominio.Repositorio.Dtos;
 using IServicio;
 using IServicio.Dtos;
 
@@ -9,13 +10,11 @@ namespace Servicio
     public class DetallOrdenCompraService : IDetalleOrdenCompraService
     {
         private readonly IDetalleOrdenCompraRepository _detalleOrdenRepository;
-        private readonly IOrdenCompraRepository _ordenRepository;
         private readonly IMapper _mapper;
 
-        public DetallOrdenCompraService(IDetalleOrdenCompraRepository detalleOrdenRepository, IOrdenCompraRepository ordenRepository, IMapper mapper)
+        public DetallOrdenCompraService(IDetalleOrdenCompraRepository detalleOrdenRepository, IMapper mapper)
         {
             _detalleOrdenRepository = detalleOrdenRepository;
-            _ordenRepository = ordenRepository;
             _mapper = mapper;
         }
 
@@ -25,7 +24,7 @@ namespace Servicio
 
             //_detalleOrdenRepository.BeginTransaction();
 
-            //var modelCarro = EditTotalCarro(dto.Subtotal, dto.CarroCompraId);
+            //var modelCarro = EditTotalCarro(dto.SubTotal, dto.CarroComprasId);
             //_ordenRepository.Attach(modelCarro);
             //_ordenRepository.Save();
 
@@ -36,14 +35,7 @@ namespace Servicio
             //_detalleOrdenRepository.Commit();
         }
 
-        public void Update(DetalleOrdenCompraPutDto dto)
-        {
-            var model = ToEntity(dto);
-            _detalleOrdenRepository.Attach(model);
-            _detalleOrdenRepository.Save();
-        }
-
-        public DetalleOrdenCompraGetDto GetById(int? id)
+        public DetalleOrdenCompraGetDto GetById(int id)
         {
             return ToGetDto(_detalleOrdenRepository.GetById(id));
         }

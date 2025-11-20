@@ -1,4 +1,9 @@
 using AutoMapper;
+using Dominio.Repositorio.Gateways;
+using Infraestructura.Configurations;
+using Infraestructura.Gateways;
+using IServicio.MercadoPago;
+using IServicio.TemporalObject;
 using LXF.Web;
 using LXF.Web.Service;
 using LXF.Web.Service.IService;
@@ -24,7 +29,6 @@ builder.Services.AddHttpContextAccessor();
 builder.Services.AddHttpClient();
 builder.Services.AddHttpClient<IDetalleCarroComprasServiceApiClient, DetalleCarroComprasServiceApiClient>();
 builder.Services.AddHttpClient<ICategoriaServiceApiClient, CategoriaServiceApiClient>();
-builder.Services.AddHttpClient<IComprobanteServiceApiClient, ComprobanteServiceApiClient>();
 builder.Services.AddHttpClient<IDetalleComprobanteServiceApiClient, DetalleComprobanteServiceApiClient>();
 builder.Services.AddHttpClient<IEnvioServiceApiClient, EnvioServiceApiClient>();
 builder.Services.AddHttpClient<IFacturaServiceApiClient, FacturaServiceApiClient>();
@@ -34,10 +38,17 @@ builder.Services.AddHttpClient<IMovimientoServiceApiClient, MovimientoServiceApi
 builder.Services.AddHttpClient<IPersonaClienteServiceApiClient, PersonaClienteServiceApiClient>();
 builder.Services.AddHttpClient<IProductoServiceApiClient, ProductoServiceApiClient>();
 builder.Services.AddHttpClient<ITalleServiceApiClient, TalleServiceApiClient>();
-builder.Services.AddHttpClient<ITarjetaServiceApiClient, TarjetaServiceApiClient>();
-
+builder.Services.AddHttpClient<IVentaServiceApiClient, VentaServiceApiClient>();
 // populated value of endpoint url to LXFApiBase
 SD.LXFApiBase = builder.Configuration["ServicesUrl:LXFApi"];
+#endregion
+
+#region MercadoPago
+builder.Services.Configure<MercadoPagoConfiguration>(builder.Configuration.GetSection("MercadoPagoConfiguration"));
+#endregion
+
+#region MemoryCache
+builder.Services.AddMemoryCache();
 #endregion
 
 #region Dependence Injection
@@ -45,7 +56,6 @@ SD.LXFApiBase = builder.Configuration["ServicesUrl:LXFApi"];
 builder.Services.AddScoped<IServiceBaseApiClient, ServiceBaseApiClient>();
 builder.Services.AddScoped<ICategoriaServiceApiClient, CategoriaServiceApiClient>();
 builder.Services.AddScoped<ICarroComprasServiceApiClient, CarroComprasServiceApiClient>();
-builder.Services.AddScoped<IComprobanteServiceApiClient, ComprobanteServiceApiClient>();
 builder.Services.AddScoped<IDetalleCarroComprasServiceApiClient, DetalleCarroComprasServiceApiClient>();
 builder.Services.AddScoped<IDetalleComprobanteServiceApiClient, DetalleComprobanteServiceApiClient>();
 builder.Services.AddScoped<IEnvioServiceApiClient, EnvioServiceApiClient>();
@@ -56,7 +66,7 @@ builder.Services.AddScoped<IMovimientoServiceApiClient, MovimientoServiceApiClie
 builder.Services.AddScoped<IPersonaClienteServiceApiClient, PersonaClienteServiceApiClient>();
 builder.Services.AddScoped<IProductoServiceApiClient, ProductoServiceApiClient>();
 builder.Services.AddScoped<ITalleServiceApiClient, TalleServiceApiClient>();
-builder.Services.AddScoped<ITarjetaServiceApiClient, TarjetaServiceApiClient>();
+builder.Services.AddScoped<IVentaServiceApiClient, VentaServiceApiClient>();
 
 //Dependece Injection configuration in Services
 builder.Services.AddScoped<ICategoriaService, CategoriaService>();
@@ -65,6 +75,9 @@ builder.Services.AddScoped<IDetalleCarroComprasService, DetalleCarroComprasServi
 builder.Services.AddScoped<IMarcaService, MarcaService>();
 builder.Services.AddScoped<IProductoService, ProductoService>();
 builder.Services.AddScoped<ITalleService, TalleService>();
+builder.Services.AddScoped<IVentaService, VentaService>();
+builder.Services.AddScoped<IMercadoPagoService, MercadoPagoService>();
+builder.Services.AddScoped<IMercadoPagoGateway, MercadoPagoGateway>();
 builder.Services.AddScoped<ITokenProvider, TokenProvider>();
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
@@ -73,6 +86,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.LoginPath = "/Identity/Login";
         options.AccessDeniedPath = "/Identity/AccessDenied";
     });
+builder.Services.AddScoped<ITemporalObjectService, TemporalObjectService>();
 #endregion
 
 var app = builder.Build();

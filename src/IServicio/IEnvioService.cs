@@ -10,6 +10,6 @@ namespace IServicio
         void SoftDelete(int Id);
         IEnumerable<EnvioDto> GetByFilter(string cadenaBuscar);
         IEnumerable<EnvioDto> GetAll();
-        EnvioDto GetById(int? Id);
+        EnvioDto GetById(int id);
     }
 }

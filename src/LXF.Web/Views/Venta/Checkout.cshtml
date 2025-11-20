@@ -1,0 +1,107 @@
+﻿@using LXF.Web.Models.ViewModels
+@model CarroComprasGetViewModel
+<form method="post" id="checkoutForm" asp-controller="Venta" asp-action="Pay">
+    <input asp-for="UserId" hidden />
+    <input asp-for="Id" hidden />
+    <input asp-for="Total" hidden />
+    @for (int i = 0; i < Model.DetalleCarroCompras.Count(); i++)
+    {
+        <input type="hidden" name="DetalleOrdenCompras[@i].Cantidad" value="@Model.DetalleCarroCompras.ElementAt(i).Cantidad" />
+        <input type="hidden" name="DetalleOrdenCompras[@i].Precio" value="@Model.DetalleCarroCompras.ElementAt(i).Precio" />
+        <input type="hidden" name="DetalleOrdenCompras[@i].SubTotal" value="@Model.DetalleCarroCompras.ElementAt(i).SubTotal" />
+        <input type="hidden" name="DetalleOrdenCompras[@i].ProductoId" value="@Model.DetalleCarroCompras.ElementAt(i).ProductoId" />
+        <input type="hidden" name="DetalleOrdenCompras[@i].CarroComprasId" value="@Model.DetalleCarroCompras.ElementAt(i).CarroComprasId" />
+    }
+
+    <div class="border mt-2 p-4 rounded">
+        <div class="container row">
+            <div class="col-md-7 col-12">
+                <span style="font-size:25px;" class="text-warning mb-2">Order Summary</span>
+            </div>
+            <div class="col-md-5 col-12">
+                <a asp-controller="Carro" asp-action="CarroIndex" class="btn btn-outline-warning form-control">Volver al Carrito </a>
+            </div>
+            <br /><br /><br />
+            <hr />
+            <div class="col-7">
+                <div class="row pt-2">
+                    <div class="col-12 py-2">
+                        <input asp-for="Nombre" placeholder="nombre completo..." class="form-control" />
+                        <span asp-validation-for="Nombre" class="text-danger"></span>
+                    </div>
+                    <div class="col-12 py-2">
+                        <input asp-for="Email" placeholder="email..." class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="col-12 py-2">
+                        <input asp-for="Celular" class="form-control" placeholder="celular..." />
+                        <span asp-validation-for="Celular" class="text-danger"></span>
+                    </div>
+                    <div class="col-12 pt-2">
+                        <label class="col-form-label">Order will be ready in 30minutes after placing order. If you place order when restaurant is closed it will be ready next day.</label>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-5">
+                <div class="card mt-2">
+                    <div class="card-body">
+                        <div class=" d-none d-lg-block">
+                            <div class="row text-danger">
+                                <div class="col-6">
+                                    Product Details
+                                </div>
+
+                                <div class="col-3">
+                                    Price
+                                </div>
+                                <div class="col-3">
+                                    Count
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+                        @foreach (var cartObj in Model.DetalleCarroCompras)
+                        {
+                            <div class="row h-100">
+                                <div class="col-6">
+                                    <span style="font-size:20px">@cartObj.Producto.Nombre</span>
+                                </div>
+
+                                <div class="col-3" style="font-size:11px;">
+                                    <span style="font-size:17px;"> @cartObj.Precio.ToString("c")</span>
+
+                                </div>
+                                <div class="col-3" style="font-size:11px;">
+                                    <span style="font-size:17px;"> @cartObj.Cantidad</span>
+                                </div>
+                            </div>
+                            <hr />
+                        }
+                        <div class="row">
+                            <div class="col-12 text-center pr-4 text-danger">
+                                Order Total : @Model.Total.ToString("c") <br />
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="card-footer">
+                        <div class="col-12 text-center">
+                            <button type="submit" class="btn-mp-final-image">
+                                <img src="~/images/Icono_MP.png"
+                                     alt="Pagar con Mercado Pago"
+                                     class="mp-button-image" />
+                            </button>
+                            <p class="mp-safe-text">Paga de forma segura</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    <script src="https://sdk.mercadopago.com/js/v2"></script>
+    <partial name="_ValidationScriptsPartial" />
+}

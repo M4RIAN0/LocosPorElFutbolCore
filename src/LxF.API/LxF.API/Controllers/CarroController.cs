@@ -10,12 +10,10 @@ namespace LxF.API.Controllers
     [ApiController]
     public class CarroController : ControllerBase
     {
-        private readonly LxfContext _db;
-        private readonly ICarroCompraService _service;
+        private readonly ICarroComprasService _service;
 
-        public CarroController(LxfContext db, ICarroCompraService service)
+        public CarroController(ICarroComprasService service)
         {
-            _db = db;
             _service = service;
         }
 
@@ -46,7 +44,36 @@ namespace LxF.API.Controllers
             return Ok();
         }
 
+        [HttpPut("{id:int}/AddItem")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        public IActionResult AddItemCart(int id)
+        {
+            _service.AddItem(id);
+            return Ok();
+        }
+
+        [HttpPut("{id:int}/SubstractItem")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        public IActionResult SubtractItemCart(int id)
+        {
+            _service.SubtractItem(id);
+            return Ok();
+        }
+
         [HttpDelete("{id:int}/delete")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        public IActionResult RemoveCart(int id)
+        {
+            _service.Remove(id);
+            return Ok();
+        }
+
+        [HttpDelete("{id:int}/deleteItem")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         public IActionResult RemoveItemeCart(int id)

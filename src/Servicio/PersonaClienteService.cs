@@ -55,7 +55,7 @@ namespace Servicio
             return [.. _repository.GetByFilter(x => x.Apellido.Contains(cadenaBuscar) || x.Dni == codigo.ToString()).Select(x => ToGetDto(x))];
         }
 
-        public PersonaClienteGetDto GetById(int? id)
+        public PersonaClienteGetDto GetById(int id)
         {
             var model = _repository.GetById(id);
             return ToGetDto(model);

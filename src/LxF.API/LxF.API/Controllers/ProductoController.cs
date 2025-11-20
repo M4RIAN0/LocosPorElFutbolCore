@@ -1,7 +1,6 @@
-﻿using Infraestructura;
+﻿using Dominio.Repositorio.Dtos;
+using Infraestructura;
 using IServicio;
-using IServicio.Dtos;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 

@@ -3,6 +3,7 @@
     <TargetFramework>net8.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Dominio.Repositorio\Dominio.Repositorio.csproj" />
     <ProjectReference Include="..\Servicio.Base\Servicio.Base.csproj" />
   </ItemGroup>
 </Project>

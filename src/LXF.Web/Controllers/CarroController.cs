@@ -29,9 +29,9 @@ namespace LXF.Web.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public async Task<IActionResult> CarroRemoveItem(int detalleCarroComprasId)
+        public async Task<IActionResult> CarroRemoveItem(int id)
         {
-            ResponseViewModel? responseRemove = await _service.RemoveItem(detalleCarroComprasId);
+            ResponseViewModel? responseRemove = await _service.RemoveItem(id);
 
             if (responseRemove.IsSuccess)
             {
@@ -53,16 +53,39 @@ namespace LXF.Web.Controllers
             return View();
         }
 
-        [Authorize]
-        public async Task<IActionResult> Checkout()
+        public async Task<IActionResult> CarroAddItem(int id)
         {
-            var carro = await LoadCarroVmBasedOnLoggedInUser();
+            ResponseViewModel? responseAdd = await _service.AddItem(id);
 
-            if (carro.DetalleCarroCompras != null)
-                return View(carro);
+            if (responseAdd.IsSuccess)
+            {
+                var userId = User.FindFirstValue("Sub");
+                ResponseViewModel? response = await _service.GetByUserId(userId);
 
-            TempData["info"] = "Debe Añadir Items al Carrito Para Crearlo.";
-            return RedirectToAction("Index", "Home");
+                if (response.IsSuccess && response.Result != null)
+                    return RedirectToAction(nameof(CarroIndex));
+            }
+
+            return View();
+        }
+
+        public async Task<IActionResult> CarroSubtractItem(int detalleCarroComprasId)
+        {
+            ResponseViewModel? responseSubtract = await _service.SubtractItem(detalleCarroComprasId);
+
+            if (responseSubtract.IsSuccess)
+            {
+                var userId = User.FindFirstValue("Sub");
+                ResponseViewModel? response = await _service.GetByUserId(userId);
+
+                if (response.IsSuccess && response.Result != null)
+                    return RedirectToAction(nameof(CarroIndex));
+         
+                TempData["success"] = "Carro Eliminado Correctamente.";
+                return RedirectToAction("Index", "Home");
+            }
+
+            return View();
         }
 
         #region private methods

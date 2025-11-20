@@ -1,4 +1,4 @@
-﻿using IServicio.Dtos;
+﻿using Dominio.Repositorio.Dtos;
 using System.Collections.Generic;
 
 namespace IServicio
@@ -10,6 +10,6 @@ namespace IServicio
         void SoftDelete(int id);
         IEnumerable<ProductoGetDto> GetByFilter(string cadenaBuscar);
         IEnumerable<ProductoGetDto> GetAll();
-        ProductoGetDto GetById(int? id);
+        ProductoGetDto GetById(int id);
     }
 }

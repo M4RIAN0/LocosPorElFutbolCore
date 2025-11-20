@@ -11,9 +11,9 @@ namespace Infraestructura.RepositorioBase
         IEnumerable<T> GetAll(params Expression<Func<T, Object>>[] includeProperties);
         IEnumerable<T> GetAll(string includeProperties);
 
-        T GetById(int? Id);
-        T GetById(int? Id, params Expression<Func<T, Object>>[] includeProperties);
-        T GetById(int? Id, string includeProperties);
+        T GetById(int Id);
+        T GetById(int Id, params Expression<Func<T, Object>>[] includeProperties);
+        T GetById(int Id, string includeProperties);
 
         IEnumerable<T> GetByFilter(Expression<Func<T, bool>> predicate);
         IEnumerable<T> GetByFilter(Expression<Func<T, bool>> predicate, params Expression<Func<T, Object>>[] includeProperties);
@@ -23,5 +23,6 @@ namespace Infraestructura.RepositorioBase
         IList<T> GetByFilter2(Expression<Func<T, bool>> predicate, params Expression<Func<T, Object>>[] includeProperties);
 
         IEnumerable<T> OrderByDescending(Expression<Func<T, Object>> predicate);
+        IEnumerable<T> OrderByDescending(Expression<Func<T, Object>> predicate, string includeProperties);
     }
 }

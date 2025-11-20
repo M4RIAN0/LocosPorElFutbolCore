@@ -8,12 +8,12 @@ namespace Dominio.Entidades
     {
         public int Cantidad { get; set; }
         public decimal Precio { get; set; }
-        public decimal Subtotal { get; set; }
+        public decimal SubTotal { get; set; }
 
         //propiedades de navegacion
-        public int CarroCompraId { get; set; }
+        public int CarroComprasId { get; set; }
         public int ProductoId { get; set; }
-        public virtual CarroCompra CarroCompra { get; set; }
+        public virtual CarroCompra CarroCompras { get; set; }
         public virtual Producto Producto { get; set; }
 
     }

@@ -9,12 +9,12 @@ namespace Dominio.Entidades
     {
         public int Cantidad { get; set; }
         public decimal Precio { get; set; }
-        public decimal Subtotal { get; set; }
+        public decimal SubTotal { get; set; }
 
         //propiedades de navegacion
-        public int OrdenCompraId { get; set; }
+        public int OrdenComprasId { get; set; }
         public int ProductoId { get; set; }
-        public virtual OrdenCompra OrdenCompra { get; set; }
+        public virtual OrdenCompra OrdenCompras { get; set; }
         public virtual Producto Producto { get; set; }
     }
 }

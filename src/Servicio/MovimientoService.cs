@@ -26,9 +26,9 @@ namespace Servicio
             _movimientoRepositorio.Save();
         }
 
-        public MovimientoGetDto GetById(int? Id)
+        public MovimientoGetDto GetById(int id)
         {
-            var model = _movimientoRepositorio.GetById(Id);
+            var model = _movimientoRepositorio.GetById(id);
 
             return ToGetDto(model);
         }

@@ -35,12 +35,41 @@ public class CarroComprasServiceApiClient : ICarroComprasServiceApiClient
 
     }
 
-    public async Task<ResponseViewModel?> RemoveItem(int id)
+    public async Task<ResponseViewModel?> AddItem(int id)
+    {
+        return await _baseServiceApiClient.SendAsync(new RequestViewModel
+        {
+            ApiType = SD.ApiType.PUT, // el tipo de peticion HTTP es PUT
+            Url = $"{SD.LXFApiBase}/api/Carro/{id}/AddItem" // generamos el endpoint del APi que vamos a consumir
+        });
+
+    }
+
+    public async Task<ResponseViewModel?> SubtractItem(int id)
+    {
+        return await _baseServiceApiClient.SendAsync(new RequestViewModel
+        {
+            ApiType = SD.ApiType.PUT, // el tipo de peticion HTTP es PUT
+            Url = $"{SD.LXFApiBase}/api/Carro/{id}/SubstractItem" // generamos el endpoint del APi que vamos a consumir
+        });
+
+    }
+
+    public async Task<ResponseViewModel?> Remove(int id)
     {
         return await _baseServiceApiClient.SendAsync(new RequestViewModel
         {
             ApiType = SD.ApiType.DELETE, // el tipo de peticion HTTP es DELETE
             Url = $"{SD.LXFApiBase}/api/Carro/{id}/delete" // generamos el endpoint del APi que vamos a consumir
+        });
+    }
+
+    public async Task<ResponseViewModel?> RemoveItem(int id)
+    {
+        return await _baseServiceApiClient.SendAsync(new RequestViewModel
+        {
+            ApiType = SD.ApiType.DELETE, // el tipo de peticion HTTP es DELETE
+            Url = $"{SD.LXFApiBase}/api/Carro/{id}/deleteItem" // generamos el endpoint del APi que vamos a consumir
         });
     }
 

@@ -3,7 +3,7 @@
 public class EntityNotFoundException : Exception
 {
     public EntityNotFoundException(Type entityType, object entityKey)
-        : base($"Entity '{entityType}' with key '{entityKey}' not found.")
+        : base($"La entidad '{entityType}' con clave '{entityKey}' no se econtro.")
     {
         EntityType = entityType;
         EntityKey = entityKey;

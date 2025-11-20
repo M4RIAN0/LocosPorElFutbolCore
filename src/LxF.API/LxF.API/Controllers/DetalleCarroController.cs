@@ -1,5 +1,4 @@
-﻿using Infraestructura;
-using IServicio;
+﻿using IServicio;
 using IServicio.Dtos;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
@@ -10,45 +9,20 @@ namespace LxF.API.Controllers
     [ApiController]
     public class DetalleCarroController : ControllerBase
     {
-        private readonly LxfContext _db;
         private readonly IDetalleCarroCompraService _detalleCarroComprasService;
-        private readonly ICarroCompraService _carroComprasService;
 
-        public DetalleCarroController(IDetalleCarroCompraService detalleCarroComprasService, ICarroCompraService carroComprasService)
+        public DetalleCarroController(IDetalleCarroCompraService detalleCarroComprasService)
         {
             _detalleCarroComprasService = detalleCarroComprasService;
-            _carroComprasService = carroComprasService;
         }
 
-        //[HttpPost]
-        //[ProducesResponseType((int)HttpStatusCode.OK)]
-        //[ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        //public IActionResult CreateDetailsCart([FromBody] DetalleCarroComprasDto request)
-        //{
-        //    request.CarroComprasId = _carroComprasService.GetLast().ID;
-        //    _detalleCarroComprasService.Add(request);
-        //    return Ok();
-        //}
-
-
-        //[HttpPut]
-        //[ProducesResponseType((int)HttpStatusCode.OK)]
-        //[ProducesResponseType((int)HttpStatusCode.NotFound)]
-        //[ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        //public IActionResult EditDetailsCart([FromBody] DetalleCarroComprasPutDto request)
-        //{
-        //    _detalleCarroComprasService.Update(request);
-        //    return Ok();
-        //}
-
-
-        //[HttpGet("{id:int}")]
-        //[ProducesResponseType((int)HttpStatusCode.OK)]
-        //[ProducesResponseType((int)HttpStatusCode.NotFound)]
-        //public IActionResult GetProductoById(int id)
-        //{
-        //    var result = _detalleCarroComprasService.GetById(id);
-        //    return Ok(result);
-        //}
+        [HttpPost]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        public IActionResult CreateDetailsCart([FromBody] DetalleCarroCompraDto request)
+        {
+            _detalleCarroComprasService.Add(request);
+            return Ok();
+        }
     }
 }

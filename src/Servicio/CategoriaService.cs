@@ -50,7 +50,7 @@ public class CategoriaService : ServicioBase, ICategoriaService
         return [.. _repository.GetByFilter(x => x.Descripcion.Contains(cadenaBuscar)).Select(x => ToGetDto(x))];
     }
 
-    public CategoriaGetDto GetById(int? id)
+    public CategoriaGetDto GetById(int id)
     {
         var model = _repository.GetById(id);
         return ToGetDto(model);

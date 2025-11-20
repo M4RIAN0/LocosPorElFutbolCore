@@ -3,6 +3,7 @@ using Dominio.Entidades;
 using Dominio.Repositorio;
 using IServicio;
 using IServicio.Dtos;
+using System.Linq;
 
 namespace Servicio
 {
@@ -23,7 +24,9 @@ namespace Servicio
         {
             _detalleCarroRepository.BeginTransaction();
 
-            var modelCarro = EditTotalCarro(dto.Subtotal, dto.CarroCompraId);
+            dto.CarroComprasId = _carroRepository.OrderByDescending(x => x.ID).FirstOrDefault().ID;
+
+            var modelCarro = EditTotalCarro(dto.SubTotal, dto.CarroComprasId);
             _carroRepository.Attach(modelCarro);
             _carroRepository.Save();
 
@@ -41,7 +44,7 @@ namespace Servicio
             _detalleCarroRepository.Save();
         }
 
-        public DetalleCarroCompraGetDto GetById(int? id)
+        public DetalleCarroCompraGetDto GetById(int id)
         {
             return ToGetDto(_detalleCarroRepository.GetById(id));
         }
@@ -60,10 +63,10 @@ namespace Servicio
         {
             return _carroRepository.GetById(id);
         }
-        private CarroCompra EditTotalCarro(decimal subtotal, int id)
+        private CarroCompra EditTotalCarro(decimal SubTotal, int id)
         {
             var carro = GetCarroById(id);
-            carro.Total += subtotal;
+            carro.Total += SubTotal;
             carro.DetalleCarroCompras = null;
             return carro;
         }

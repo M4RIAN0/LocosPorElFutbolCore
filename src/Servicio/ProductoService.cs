@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Dominio.Entidades;
 using Dominio.Repositorio;
+using Dominio.Repositorio.Dtos;
 using IServicio;
-using IServicio.Dtos;
 using Servicio.Base;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,13 +46,13 @@ namespace Servicio
             return [.. _repository.GetByFilter(x => x.Descripcion.Contains(cadenaBuscar) || x.CodigoBarra == codigo).Select(x => ToGetDto(x))];
         }
 
-        public ProductoGetDto GetById(int? id)
+        public ProductoGetDto GetById(int id)
         {
             var model = _repository.GetById(id, "Talle,Marca,Categoria");
             return ToGetDto(model);
         }
 
-        public Producto GetByIdModel(int? id)
+        public Producto GetByIdModel(int id)
         {
             return _repository.GetById(id, "Talle,Marca,Categoria");
         }

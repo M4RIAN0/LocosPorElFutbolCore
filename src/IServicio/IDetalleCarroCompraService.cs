@@ -6,6 +6,6 @@ namespace IServicio
     {
         void Add(DetalleCarroCompraDto dto);
         void Update(DetalleCarroCompraPutDto dto);
-        DetalleCarroCompraGetDto GetById(int? id);
+        DetalleCarroCompraGetDto GetById(int id);
     }
 }

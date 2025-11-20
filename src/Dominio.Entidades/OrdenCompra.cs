@@ -18,6 +18,6 @@ namespace Dominio.Entidades
         public string Status { get; set; }
 
         //propiedades de navegacion
-        public virtual IEnumerable<DetalleOrdenCompra> DetalleOrdenCompra { get; set; }
+        public virtual IEnumerable<DetalleOrdenCompra> DetalleOrdenCompras { get; set; }
     }
 }

@@ -5,6 +5,6 @@ namespace IServicio
     public interface IDetalleComprobanteService
     {
         void Add(DetalleComprobanteDto dto);
-        DetalleComprobanteGetDto GetById(int? Id);
+        DetalleComprobanteGetDto GetById(int id);
     }
 }

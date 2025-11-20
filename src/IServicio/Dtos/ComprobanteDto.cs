@@ -19,6 +19,8 @@ namespace IServicio.Dtos
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public string Fecha { get; init; }
 
+        public IEnumerable<DetalleComprobanteGetDto> DetalleComprobantes { get; init; }
+
         [Column(TypeName = "decimal(18,2)")]
         public decimal Total { get; init; }
     }

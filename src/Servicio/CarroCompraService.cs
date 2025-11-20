@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace Servicio
 {
-    public class CarroCompraService : ICarroCompraService
+    public class CarroCompraService : ICarroComprasService
     {
         private readonly ICarroCompraRepository _carroRepository;
         private readonly IDetalleCarroCompraRepository _detalleCarroRepository;
@@ -29,18 +29,69 @@ namespace Servicio
 
         public CarroCompraGetDto GetByUserId(string userId)
         {
-            return _carroRepository.GetByFilter(x => x.UserId.Equals(userId), "DetalleCarroCompra.Producto").Select(x => ToCarroCompraGetDto(x)).FirstOrDefault();
+            return _carroRepository.GetByFilter(x => x.UserId.Equals(userId), "DetalleCarroCompras.Producto").Select(x => ToCarroCompraGetDto(x)).FirstOrDefault();
         }
 
-        public CarroCompra GetLast()
+        public void AddItem(int id)
         {
-            return _carroRepository.OrderByDescending(x => x.ID).FirstOrDefault();
+            var detalleCarroModel = _detalleCarroRepository.GetById(id);
+            detalleCarroModel.Cantidad += 1;
+            detalleCarroModel.SubTotal = detalleCarroModel.Cantidad * detalleCarroModel.Precio;
+
+            var carroModel = _carroRepository.GetById(detalleCarroModel.CarroComprasId);
+            carroModel.Total += detalleCarroModel.Precio; // sumamos el valor del nuevo item al total del carro
+
+            _detalleCarroRepository.BeginTransaction();
+
+            _detalleCarroRepository.Attach(detalleCarroModel);
+            _detalleCarroRepository.Save();
+
+            _carroRepository.Attach(carroModel);
+            _carroRepository.Save();
+
+            _detalleCarroRepository.Commit();
+
         }
 
-        public CarroCompraGetDto GetById(int? id)
+        public void SubtractItem(int id)
         {
-            var model = _carroRepository.GetById(id);
-            return ToCarroCompraGetDto(model);
+
+            var detalleCarroModel = _detalleCarroRepository.GetById(id);
+            var carroModel = _carroRepository.GetById(detalleCarroModel.CarroComprasId);
+            carroModel.Total -= detalleCarroModel.SubTotal; // restamos el subtotal del item al total del carro
+
+            detalleCarroModel.Cantidad -= 1;
+            detalleCarroModel.SubTotal = detalleCarroModel.Cantidad * detalleCarroModel.Precio;
+            carroModel.Total += detalleCarroModel.SubTotal; // sumamos el nuevo subtotal del item al total del carro
+
+            _detalleCarroRepository.BeginTransaction();
+
+            _carroRepository.Attach(carroModel);
+
+            if (detalleCarroModel.Cantidad >= 1)
+            {
+                _detalleCarroRepository.Attach(detalleCarroModel);
+            }
+            else
+            {
+                _detalleCarroRepository.Delete(detalleCarroModel.ID);
+
+                if (carroModel.Total == 0m)
+                    _carroRepository.Delete(carroModel.ID);
+               
+            }
+
+            _detalleCarroRepository.Save();
+            _carroRepository.Save();
+
+            _detalleCarroRepository.Commit();
+
+        }
+
+        public void Remove(int id)
+        {
+            _carroRepository.Delete(id);
+            _carroRepository.Save();
         }
 
         public void Removeitem(int id)
@@ -52,11 +103,11 @@ namespace Servicio
             _detalleCarroRepository.Delete(id);
             _detalleCarroRepository.Save();
 
-            var carroModel = _carroRepository.GetById(item.CarroCompraId, "DetalleCarroCompra");
+            var carroModel = _carroRepository.GetById(item.CarroComprasId, "DetalleCarroCompras");
 
             if (carroModel.DetalleCarroCompras.Any())
             {
-                carroModel.Total -= item.Subtotal;
+                carroModel.Total -= item.SubTotal;
                 _carroRepository.Attach(carroModel);
             }
             else
@@ -112,8 +163,8 @@ namespace Servicio
                         item.Cantidad += existingItem.Cantidad;
                         // Actualizamos su precio por si cambio
                         item.Precio = dto.DetalleCarroCompras.First().Precio;
-                        // Actualizamos subtotal
-                        item.Subtotal = item.Cantidad * item.Precio;
+                        // Actualizamos SubTotal
+                        item.SubTotal = item.Cantidad * item.Precio;
                     }
                 });
             }

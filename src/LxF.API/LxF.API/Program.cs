@@ -2,13 +2,17 @@ using AutoMapper;
 using Dominio;
 using Dominio.Entidades;
 using Dominio.Repositorio;
+using Dominio.Repositorio.Gateways;
 using Infraestructura;
+using Infraestructura.Configurations;
+using Infraestructura.Gateways;
 using Infraestructura.Repositorio;
 using IServicio;
 using IServicio.Email;
 using IServicio.Identity;
 using IServicio.JwToken;
 using IServicio.Mail;
+using IServicio.MercadoPago;
 using LxF.API;
 using LxF.API.Extensions;
 using LxF.Support;
@@ -97,11 +101,9 @@ builder.Services.AddSwaggerGen(option =>
 });
 #endregion
 
-builder.Services.AddControllers();
-builder.Services.AddRazorPages();
-
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
+#region MercadoPago
+builder.Services.Configure<MercadoPagoConfiguration>(builder.Configuration.GetSection("MercadoPagoConfiguration"));
+#endregion
 
 #region Dependency Injection
 // Services
@@ -120,24 +122,28 @@ builder.Services.AddScoped<IProductoService, ProductoService>();
 builder.Services.AddScoped<IProductoRepository, ProductoRepository>();
 builder.Services.AddScoped<IFacturaService, FacturaService>();
 builder.Services.AddScoped<IFacturaRepository, FacturaRepository>();
-builder.Services.AddScoped<IComprobanteService, ComprobanteService>();
 builder.Services.AddScoped<IComprobanteRepository, ComprobanteRepository>();
 builder.Services.AddScoped<IDetalleComprobanteService, DetalleComprobanteService>();
 builder.Services.AddScoped<IDetalleComprobanteRepository, DetalleComprobanteRepository>();
 builder.Services.AddScoped<IMovimientoService, MovimientoService>();
 builder.Services.AddScoped<IMovimientoRepository, MovimientoRepository>();
-builder.Services.AddScoped<ITarjetaService, TarjetaService>();
-builder.Services.AddScoped<ITarjetaRepository, TarjetaRepository>();
-builder.Services.AddScoped<ICarroCompraService, CarroCompraService>();
+builder.Services.AddScoped<IOrdenCompraService, OrdenCompraService>();
+builder.Services.AddScoped<IOrdenCompraRepository, OrdenCompraRepository>();
+builder.Services.AddScoped<ICarroComprasService, CarroCompraService>();
 builder.Services.AddScoped<ICarroCompraRepository, CarroCompraRepository>();
 builder.Services.AddScoped<IDetalleCarroCompraService, DetalleCarroCompraService>();
 builder.Services.AddScoped<IDetalleCarroCompraRepository, DetalleCarroCompraRepository>();
-builder.Services.AddScoped<IOrdenCompraService, OrdenCompraService>();
-builder.Services.AddScoped<IOrdenCompraRepository, OrdenCompraRepository>();
 builder.Services.AddScoped<IDetalleOrdenCompraService, DetallOrdenCompraService>();
 builder.Services.AddScoped<IDetalleOrdenCompraRepository, DetalleOrdenCompraRepository>();
+builder.Services.AddScoped<IVentaService, VentaService>();
 builder.Services.AddScoped<IJwTokenGenerator, JwTokenGenerator>(); // inyeccion service IJwTokenGenerator
+builder.Services.AddSingleton<IMercadoPagoGateway, MercadoPagoGateway>(); // Gateay MercadoPago
+builder.Services.AddSingleton<IMercadoPagoService, MercadoPagoService>();
 #endregion
+
+builder.Services.AddControllers();
+builder.Services.AddRazorPages();
+builder.Services.AddEndpointsApiExplorer();
 
 builder.AddAppAuthentication();
 
@@ -155,6 +161,8 @@ app.UseRequestLocalization();
 app.MapRazorPages();
 
 app.UseHttpsRedirection();
+
+app.UseRouting();
 
 app.UseAuthentication();
 

@@ -14,7 +14,6 @@ namespace Infraestructura
         public LxfContext()
         { }
 
-        public DbSet<Banco> Banco { get; set; }
         public DbSet<CarroCompra> CarroCompra { get; set; }
         public DbSet<Categoria> Categoria { get; set; }
         public DbSet<Comprobante> Comprobante { get; set; }
@@ -32,8 +31,6 @@ namespace Infraestructura
         public DbSet<Producto> Producto { get; set; }
         public DbSet<Provincia> Provincia { get; set; }
         public DbSet<Talle> Talle { get; set; }
-        public DbSet<Tarjeta> Tarjeta { get; set; }
-        public DbSet<TipoTarjeta> TipoTarjeta { get; set; }
         public DbSet<Usuario> Usuario { get; set; }
         public DbSet<Role> Role { get; set; }
 
@@ -41,11 +38,8 @@ namespace Infraestructura
         {
             base.OnModelCreating(builder);
 
-            builder.ApplyConfiguration(new TarjetaConfiguration());
-            builder.ApplyConfiguration(new TipoTarjetaConfiguration());
             builder.ApplyConfiguration(new ProvinciaConfiguration());
             builder.ApplyConfiguration(new LocalidadConfiguration());
-            builder.ApplyConfiguration(new BancoConfiguration());
             builder.ApplyConfiguration(new PersonaClienteConfiguration());
             builder.ApplyConfiguration(new MarcaConfiguration());
             builder.ApplyConfiguration(new CategoriaConfiguration());

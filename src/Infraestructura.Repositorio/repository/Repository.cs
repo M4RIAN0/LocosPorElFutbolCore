@@ -110,7 +110,7 @@ namespace Infraestructura.Repositorio.repository
             return [.. query.AsNoTracking().Where(x => !x.IsDeleted)];
         }
 
-        public T GetById(int? id)
+        public T GetById(int id)
         {
             var model = _context.Set<T>().AsNoTracking().Where(x => x.ID == id && !x.IsDeleted).FirstOrDefault();
 
@@ -120,7 +120,7 @@ namespace Infraestructura.Repositorio.repository
             return model;
         }
 
-        public T GetById(int? id, params Expression<Func<T, object>>[] includeProperties)
+        public T GetById(int id, params Expression<Func<T, object>>[] includeProperties)
         {
             IQueryable<T> query = _context.Set<T>();
 
@@ -134,11 +134,11 @@ namespace Infraestructura.Repositorio.repository
             return model;
         }
 
-        public T GetById(int? id, string includeProperties)
+        public T GetById(int id, string includeProperties)
         {
             IQueryable<T> query = _context.Set<T>();
 
-            foreach (var includeProperty in includeProperties.Split(','))
+            foreach (var includeProperty in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
             {
                 query = query.Include(includeProperty);
             }
@@ -167,7 +167,7 @@ namespace Infraestructura.Repositorio.repository
         {
             IQueryable<T> query = _context.Set<T>();
 
-            foreach (var includeProperty in includeProperties.Split(','))
+            foreach (var includeProperty in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
             {
                 query = query.Include(includeProperty);
             }
@@ -178,6 +178,18 @@ namespace Infraestructura.Repositorio.repository
         public IEnumerable<T> OrderByDescending(Expression<Func<T, Object>> predicate)
         {
             return [.. _context.Set<T>().AsNoTracking().Where(x => !x.IsDeleted).OrderByDescending(predicate)];
+        }
+
+        public IEnumerable<T> OrderByDescending(Expression<Func<T, Object>> predicate, string includeProperties)
+        {
+            IQueryable<T> query = _context.Set<T>();
+
+            foreach (var includeProperty in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                query = query.Include(includeProperty);
+            }
+
+            return [.. query.AsNoTracking().Where(x => !x.IsDeleted).OrderByDescending(predicate)];
         }
 
         public void Save()

@@ -16,13 +16,7 @@ namespace IServicio.Dtos
 
         public int ClienteId { get; set; }
 
-        public int? ComprobanteId { get; set; }
-
-        public int? TarjetaId { get; set; }
-
-        public TarjetaDto Tarjeta { get; set; }
-
-        public ComprobanteDto Comprobante { get; set; }
+        public int ComprobanteId { get; set; }
 
 
     }
@@ -44,11 +38,6 @@ namespace IServicio.Dtos
 
         public string Cliente { get; init; }
 
-        public int? ComprobanteId { get; init; }
-
-        public int? TarjetaId { get; init; }
-
-        public string Tarjeta { get; init; }
-
+        public int ComprobanteId { get; init; }
     }
 }

@@ -21,19 +21,10 @@ namespace LxF.API.Controllers
 
         [HttpGet]
         [ProducesResponseType((int)HttpStatusCode.OK)]
-        public IActionResult GetProductos()
+        public IActionResult GetFacturas()
         {
             var result = _service.GetAll();
             return Ok(result);
-        }
-
-        [HttpPost]
-        [ProducesResponseType((int)HttpStatusCode.OK)]
-        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public IActionResult CreateFactura([FromBody] FacturaDto request)
-        {
-            _service.Add(request);
-            return Ok();
         }
 
         [HttpGet("{id:int}")]

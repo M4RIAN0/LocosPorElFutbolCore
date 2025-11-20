@@ -10,6 +10,6 @@ namespace IServicio
         void SoftDelete(int Id);
         IEnumerable<PersonaClienteGetDto> GetByFilter(string cadenaBuscar);
         IEnumerable<PersonaClienteGetDto> GetAll();
-        PersonaClienteGetDto GetById(int? id);
+        PersonaClienteGetDto GetById(int id);
     }
 }
