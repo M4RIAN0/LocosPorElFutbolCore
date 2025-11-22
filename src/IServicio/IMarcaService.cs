@@ -10,7 +10,7 @@ namespace IServicio
         void SoftDelete(int id);
         IEnumerable<MarcaGetDto> GetByFilter(string cadenaBuscar);
         IEnumerable<MarcaGetDto> GetAll();
-        MarcaGetDto GetById(int? Id);
+        MarcaGetDto GetById(int id);
 
     }
 }

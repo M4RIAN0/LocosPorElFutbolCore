@@ -1,0 +1,49 @@
+﻿@using LXF.Web.Models.ViewModels
+@model OrdenComprasGetViewModel
+@{
+    ViewData["Title"] = "¡Pago Aprobado!";
+}
+
+<div class="container mt-4">
+    <div class="card border border-primary bg-dark text-light">
+
+        <div class="card-header bg-dark text-light border-bottom border-secondary">
+            <h3 class="text-success text-center pt-2">
+                <i class="bi bi-check-circle-fill"></i> &nbsp; Confirmación de Compra
+            </h3>
+        </div>
+
+        <div class="card-body">
+            <div class="row text-center">
+
+                <div class="col-12 p-5">
+
+                    <h2 class="text-success mb-4">
+                        ¡La venta se realizó exitosamente!
+                    </h2>
+
+                    <p class="text-warning" style="font-size: 1.2rem;">
+                        Tu número de referencia de compra es: <strong>#@ViewBag.ExternalReferenceId</strong>
+                    </p>
+
+                    <p class="text-light mt-3">
+                        Total Pagado: <strong class="text-success">@Model.Total.ToString("C")</strong>
+                    </p>
+                    <p class="text-light">
+                        Fecha: @Model.Fecha
+                    </p>
+
+                    <p class="text-info mt-4" style="font-size: 1.1rem;">
+                        Los detalles completos de tu compra y el recibo de pago se enviaron al correo electrónico <strong>@Model.Email</strong>.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-footer bg-dark border-top border-secondary text-center">
+            <a asp-action="Index" asp-controller="Home" class="btn btn-primary form-control w-50">
+                Volver al inicio
+            </a>
+        </div>
+    </div>
+</div>

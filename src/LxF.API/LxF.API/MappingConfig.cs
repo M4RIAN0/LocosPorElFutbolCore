@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using Dominio.Entidades;
+using Dominio.Repositorio.Dtos;
 using IServicio.Dtos;
 using IServicio.Identity.Dto;
+using System.Globalization;
 
 namespace LxF.API
 {
@@ -9,7 +11,7 @@ namespace LxF.API
     {
         public static MapperConfiguration RegisterMps()
         {
-            var mappingConfig = new MapperConfiguration(config =>
+            var mappingConfig = new MapperConfiguration(static config =>
             {
                 config.CreateMap<Usuario, UsuarioDto>()
                 .ForMember(vm => vm.Celular, m => m.MapFrom(u => u.PhoneNumber));
@@ -48,13 +50,6 @@ namespace LxF.API
                 .ForMember(vm => vm.Talle, m => m.MapFrom(u => u.Talle.Letra))
                 .ForMember(vm => vm.Marca, m => m.MapFrom(u => u.Marca.Descripcion));
 
-                config.CreateMap<TarjetaDto, Tarjeta>()
-                .ForMember(vm => vm.FechaExpiracion, m => m.MapFrom(u => DateOnly.Parse(u.FechaExpiracion)));
-                config.CreateMap<Tarjeta, TarjetaGetDto>()
-                .ForMember(vm => vm.Banco, m => m.MapFrom(u => u.Banco.Nombre))
-                .ForMember(vm => vm.TipoTarjeta, m => m.MapFrom(u => u.TipoTarjeta.Tipo))
-                .ForMember(vm => vm.FechaExpiracion, m => m.MapFrom(u => u.FechaExpiracion.ToString()));
-
                 config.CreateMap<MovimientoDto, Movimiento>()
                 .ForMember(vm => vm.Fecha, m => m.MapFrom(u => DateOnly.Parse(u.Fecha)));
                 config.CreateMap<Movimiento, MovimientoGetDto>()
@@ -65,16 +60,42 @@ namespace LxF.API
                 .ForMember(vm => vm.Producto, m => m.MapFrom(u => u.Producto.Descripcion));
 
                 config.CreateMap<ComprobanteDto, Comprobante>()
-                .ForMember(vm => vm.Fecha, m => m.MapFrom(u => DateOnly.Parse(u.Fecha)));
+               .ForMember(vm => vm.Fecha, opt => opt.MapFrom(u => DateOnly.ParseExact(u.Fecha, "MM/dd/yyyy")));
                 config.CreateMap<Comprobante, ComprobanteGetDto>()
                 .ForMember(vm => vm.Fecha, m => m.MapFrom(u => u.Fecha.ToString()));
 
                 config.CreateMap<FacturaDto, Factura>()
-                .ForMember(vm => vm.Fecha, m => m.MapFrom(u => DateOnly.Parse(u.Fecha)));
+                .ForMember(vm => vm.Fecha, opt => opt.MapFrom(u => DateOnly.ParseExact(u.Fecha, "MM/dd/yyyy")));
                 config.CreateMap<Factura, FacturaGetDto>()
                 .ForMember(vm => vm.Cliente, m => m.MapFrom(u => u.PersonaCliente.Nombre + " " + u.PersonaCliente.Apellido))
-                .ForMember(vm => vm.Tarjeta, m => m.MapFrom(u => u.Tarjeta.Nombre))
                 .ForMember(vm => vm.Fecha, m => m.MapFrom(u => u.Fecha.ToString()));
+
+                config.CreateMap<CarroCompra, CarroCompraDto>();
+                config.CreateMap<CarroCompra, CarroCompraPutDto>();
+                config.CreateMap<CarroCompra, CarroCompraGetDto>();
+                config.CreateMap<CarroCompraDto, CarroCompra>();
+                config.CreateMap<CarroCompraPutDto, CarroCompra>();
+
+                config.CreateMap<DetalleCarroCompra, DetalleCarroCompraDto>();
+                config.CreateMap<DetalleCarroCompra, DetalleCarroCompraPutDto>();
+                config.CreateMap<DetalleCarroCompra, DetalleCarroCompraGetDto>().
+                ForMember(vm => vm.Producto, opt => opt.MapFrom(u => u.Producto));
+                config.CreateMap<DetalleCarroCompraDto, DetalleCarroCompra>();
+                config.CreateMap<DetalleCarroCompraPutDto, DetalleCarroCompra>();
+
+                config.CreateMap<OrdenCompra, OrdenCompraDto>();
+                config.CreateMap<OrdenCompra, OrdenCompraPutDto>();
+                config.CreateMap<OrdenCompra, OrdenCompraGetDto>();
+                config.CreateMap<OrdenCompraDto, OrdenCompra>()
+                .ForMember(vm => vm.Fecha, opt => opt.MapFrom(u => DateOnly.ParseExact(u.Fecha, "MM/dd/yyyy")));
+                config.CreateMap<OrdenCompraPutDto, OrdenCompra>();
+
+                config.CreateMap<DetalleOrdenCompra, DetalleOrdenCompraDto>();
+                config.CreateMap<DetalleOrdenCompra, DetalleOrdenCompraPutDto>();
+                config.CreateMap<DetalleOrdenCompra, DetalleOrdenCompraGetDto>().
+                ForMember(vm => vm.Producto, opt => opt.MapFrom(u => u.Producto));
+                config.CreateMap<DetalleOrdenCompraDto, DetalleOrdenCompra>();
+                config.CreateMap<DetalleOrdenCompraPutDto, DetalleOrdenCompra>();
             });
 
             return mappingConfig;

@@ -13,16 +13,6 @@ namespace LXF.Web.ServiceApiClient
             _baseServiceApiClient = ServiceApiClientBase;
         }
 
-        public async Task<ResponseViewModel?> Add(FacturaViewModel vm)
-        {
-            return await _baseServiceApiClient.SendAsync(new RequestViewModel
-            {
-                ApiType = SD.ApiType.POST,
-                Data = vm,
-                Url = $"{SD.LXFApiBase}/api/Factura"
-            });
-        }
-
         public async Task<ResponseViewModel?> GetAll()
         {
             return await _baseServiceApiClient.SendAsync(new RequestViewModel
@@ -32,7 +22,7 @@ namespace LXF.Web.ServiceApiClient
             });
         }
 
-        public async Task<ResponseViewModel?> GetById(int? id)
+        public async Task<ResponseViewModel?> GetById(int id)
         {
             return await _baseServiceApiClient.SendAsync(new RequestViewModel
             {

@@ -6,6 +6,6 @@ namespace LXF.Web.ServiceApiClient.IServiceApiClient
     {
         Task<ResponseViewModel?> GetByFilter(string cadenaBuscar);
         Task<ResponseViewModel?> GetAll();
-        Task<ResponseViewModel?> GetById(int? id);
+        Task<ResponseViewModel?> GetById(int id);
     }
 }

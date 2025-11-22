@@ -1,4 +1,4 @@
-html {
+﻿html {
   font-size: 14px;
 }
 
@@ -19,4 +19,40 @@ html {
 
 body {
   margin-bottom: 60px;
+}
+
+/* --- 1. Estilos del Botón Contenedor (Transparente) --- */
+.btn-mp-final-image {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    /* Ajustes mínimos para el botón */
+}
+
+/* --- 2. Estilos de la Imagen (Aquí se aplica el estilo Wallet Brick) --- */
+.mp-button-image {
+    /* La imagen ya tiene el color amarillo integrado */
+    /* Aplicar la forma y sombra del Wallet Brick */
+    border-radius: 6px; /* Esquinas redondeadas */
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); /* Sombra sutil */
+    /* Dimensionamiento */
+    width: 100%;
+    max-width: 300px;
+    height: 48px;
+    display: block;
+    /* Efecto hover si es necesario */
+    transition: box-shadow 0.2s ease;
+}
+
+.btn-mp-final-image:hover .mp-button-image {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Sombra más pronunciada al pasar el ratón */
+}
+
+/* --- Estilos del Texto de Seguridad NARANJA (Existente) --- */
+.mp-safe-text {
+    color: #F89406;
+    font-size: 12px;
+    margin-top: 4px;
+    font-family: 'Arial', sans-serif;
 }

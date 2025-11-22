@@ -21,8 +21,8 @@ public class CategoriaService : ServicioBase, ICategoriaService
     }
     public void Add(CategoriaDto dto)
     {
-        var categoria = ToEntityPost(dto);
-        _repository.Add(categoria);
+        var model = ToEntityPost(dto);
+        _repository.Add(model);
         _repository.Save();
     }
 
@@ -50,7 +50,7 @@ public class CategoriaService : ServicioBase, ICategoriaService
         return [.. _repository.GetByFilter(x => x.Descripcion.Contains(cadenaBuscar)).Select(x => ToGetDto(x))];
     }
 
-    public CategoriaGetDto GetById(int? id)
+    public CategoriaGetDto GetById(int id)
     {
         var model = _repository.GetById(id);
         return ToGetDto(model);

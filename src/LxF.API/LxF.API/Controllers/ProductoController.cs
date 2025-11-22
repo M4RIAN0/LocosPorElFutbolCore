@@ -1,6 +1,6 @@
-﻿using Infraestructura;
+﻿using Dominio.Repositorio.Dtos;
+using Infraestructura;
 using IServicio;
-using IServicio.Dtos;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
@@ -8,6 +8,7 @@ namespace LxF.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    //[Authorize]
     public class ProductoController : ControllerBase
     {
         private readonly LxfContext _db;

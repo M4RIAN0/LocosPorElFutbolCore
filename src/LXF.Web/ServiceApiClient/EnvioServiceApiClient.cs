@@ -27,7 +27,7 @@ namespace LXF.Web.ServiceApiClient
             throw new NotImplementedException();
         }
 
-        public async Task<ResponseViewModel?> GetById(int? Id)
+        public async Task<ResponseViewModel?> GetById(int id)
         {
             throw new NotImplementedException();
         }

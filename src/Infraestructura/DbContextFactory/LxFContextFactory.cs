@@ -84,9 +84,6 @@ namespace Infraestructura.DbContextFactory
             return scriptsDirectory;
         }
 
-
-
-
         // Obtener la cadena de conexión desde la configuración
         private string GetConnectionString(IConfiguration configuration)
         {

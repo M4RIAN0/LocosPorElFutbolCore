@@ -41,7 +41,7 @@ namespace LXF.Web.ServiceApiClient
             });
         }
 
-        public async Task<ResponseViewModel?> GetById(int? id)
+        public async Task<ResponseViewModel?> GetById(int id)
         {
             return await _baseServiceApiClient.SendAsync(new RequestViewModel
             {

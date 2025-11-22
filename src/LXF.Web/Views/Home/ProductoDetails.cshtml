@@ -1,6 +1,7 @@
 ﻿@using LXF.Web.Models.ViewModels
 @model ProductoGetViewModel
 <form method="post">
+    <input asp-for="Id" hidden />
     <div class=" pt-4">
         <div class="card container" style="border:1px solid #808080;">
             <div class="card-header bg-dark text-light row" style="border-radius: 0px;">
@@ -8,6 +9,7 @@
                     <h1 class="text-white">@Model.Nombre</h1>
                 </div>
                 <div class="col-12 col-md-6 text-end">
+                    <input asp-for="Precio" hidden />
                     <h1 class="text-warning"> @string.Format("{0:c}", Model.Precio)</h1>
                 </div>
             </div>
@@ -26,7 +28,8 @@
                                 </div>
                             </div>
                             <div class="row mx-0">
-                                <input class="form-control" />
+                                <input asp-for="Cantidad" class="form-control" />
+                                <span asp-validation-for="Cantidad" class="text-bg-danger"></span>
                             </div>
                         </div>
                     </div>
@@ -43,3 +46,7 @@
         </div>
     </div>
 </form>
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+}

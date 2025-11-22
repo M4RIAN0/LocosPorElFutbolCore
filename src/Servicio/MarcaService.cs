@@ -43,7 +43,7 @@ namespace Servicio
             return [.. _repository.GetByFilter(x => x.Descripcion.Contains(cadenaBuscar)).Select(x => ToGetDto(x))];
         }
 
-        public MarcaGetDto GetById(int? id)
+        public MarcaGetDto GetById(int id)
         {
             var model = _repository.GetById(id);
             return ToGetDto(model);

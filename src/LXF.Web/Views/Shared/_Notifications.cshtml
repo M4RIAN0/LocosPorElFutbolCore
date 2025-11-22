@@ -1,17 +1,46 @@
-﻿@if (TempData["error"] != null)
-{
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js" integrity="sha512-lbwH47l/tPXJYG9AcFNoJaTMhGvYWhVM9YI43CT+uteTRRaiLCui8snIgyAN8XWgNjNhCqlAUdzZptso6OCoFQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script type="text/javascript">
-        toastr.error('@TempData["error"]')
-        </script>
-}
+﻿@* Contenido de _Notifications.cshtml *@
 
-@if (TempData["success"] != null)
-{
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js" integrity="sha512-lbwH47l/tPXJYG9AcFNoJaTMhGvYWhVM9YI43CT+uteTRRaiLCui8snIgyAN8XWgNjNhCqlAUdzZptso6OCoFQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <script type="text/javascript">
-        toastr.success('@TempData["success"]')
-    </script>
-}
+<script>
+    toastr.options = {
+        "positionClass": "toast-top-right",
+        "closeButton": true,
+        "progressBar": true,
+        "timeOut": "5000"
+    };
+
+    // 1. Mensaje de ÉXITO
+    @if (TempData["success"] != null)
+    {
+            var message = Html.Raw(Json.Serialize(TempData["success"]));
+            <text>
+                toastr.success(@message);
+            </text>
+    }
+
+    // 2. Mensaje de ERROR
+    @if (TempData["error"] != null)
+    {
+            var message = Html.Raw(Json.Serialize(TempData["error"]));
+            <text>
+                toastr.error(@message);
+            </text>
+    }
+
+    // 3. Mensaje de ADVERTENCIA (WARNING)
+    @if (TempData["warning"] != null)
+    {
+            var message = Html.Raw(Json.Serialize(TempData["warning"]));
+            <text>
+                toastr.warning(@message);
+            </text>
+    }
+
+    // 4. Mensaje de INFORMACIÓN (INFO)
+    @if (TempData["info"] != null)
+    {
+            var message = Html.Raw(Json.Serialize(TempData["info"]));
+            <text>
+                toastr.info(@message);
+            </text>
+    }
+</script>

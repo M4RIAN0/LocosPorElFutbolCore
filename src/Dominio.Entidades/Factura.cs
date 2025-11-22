@@ -27,14 +27,8 @@ namespace Dominio.Entidades
 
         public int ComprobanteId { get; set; }
 
-        public int? TarjetaId { get; set; }
-
         public virtual Comprobante Comprobante { get; set; }
 
         public virtual PersonaCliente PersonaCliente { get; set; }
-
-        public virtual Tarjeta Tarjeta { get; set; }
-
-        public virtual IEnumerable<Movimiento> Movimientos { get; set; }
     }
 }

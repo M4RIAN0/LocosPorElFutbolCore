@@ -33,11 +33,11 @@ function Run-Command {
     param (
         [string]$Command
     )
-    Write-Host "Ejecutando: $Command"
+    Write-Host "Executing: $Command"
     try {
         Invoke-Expression $Command
     } catch {
-        Write-Error "Error al ejecutar el comando: $Command"
+        Write-Error "Error at execute the Command: $Command"
         exit 1
     }
 }
@@ -71,14 +71,14 @@ function Update-Database {
 
 # Función principal que ejecuta todo el flujo de migraciones
 function Run-Migrations {
-    Write-Host "Iniciando proceso de migración..."
+    Write-Host "Startig process of migrations..."
 
     Clean-Database
     Remove-LastMigration
     Add-Migration
     Update-Database
 
-    Write-Host "Migraciones completadas con éxito."
+    Write-Host "Migrations completed with éxit."
 }
 
 # Ejecutar las migraciones

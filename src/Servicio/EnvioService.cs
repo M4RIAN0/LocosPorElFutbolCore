@@ -67,9 +67,9 @@ namespace Servicio
             throw new System.NotImplementedException();//ver si se va a usar mas adelante
         }
 
-        public EnvioDto GetById(int? Id)
+        public EnvioDto GetById(int id)
         {
-            var envio = _envioRepositorio.GetById(Id, "Envio");
+            var envio = _envioRepositorio.GetById(id, "Envio");
 
             return new EnvioDto()
             {

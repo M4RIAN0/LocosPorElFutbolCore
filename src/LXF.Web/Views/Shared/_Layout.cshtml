@@ -39,6 +39,11 @@
                                 <li><a class="dropdown-item" asp-controller="Categoria" asp-action="CategoriaIndex">Categorias</a></li>
                             </ul>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Carro" asp-action="CarroIndex">Carrito
+                                &nbsp; <i class="bi bi-cart"></i>&nbsp;
+                            </a>
+                        </li>
                     </ul>
                     <ul class="navbar-nav">
                         @if (!User.Identity.IsAuthenticated)
@@ -53,6 +58,9 @@
                         else
                         {
                             <li class="nav-item">
+                                <a class="nav-link" href="#">Hola @User.Identity.Name</a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link" asp-controller="Identity" asp-action="Logout">Logout</a>
                             </li>
                         }
@@ -64,7 +72,6 @@
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
-            <partial name="_Notifications" />
         </main>
     </div>
 
@@ -74,9 +81,12 @@
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <partial name="_Notifications" />
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

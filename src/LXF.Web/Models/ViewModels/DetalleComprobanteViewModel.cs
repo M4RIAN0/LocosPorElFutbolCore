@@ -4,19 +4,19 @@ namespace LXF.Web.Models.ViewModels
 {
     public class DetalleComprobanteViewModel
     {
-        public required int Cantidad { get; set; }
+        public int Cantidad { get; set; }
 
-        public required decimal SubTotal { get; set; }
+        public decimal SubTotal { get; set; }
 
-        public required int CodigoBarra { get; set; }
+        public int CodigoBarra { get; set; }
 
-        public required string Descripcion { get; set; }
+        public  string Descripcion { get; set; }
 
-        public required decimal Precio { get; set; }
+        public  decimal Precio { get; set; }
 
-        public required int ProductoId { get; set; }
+        public  int ProductoId { get; set; }
 
-        public required int ComprobanteId { get; set; }
+        public int ComprobanteId { get; set; }
     }
 
     public class DetalleComprobanteGetViewModel : ViewModelBase

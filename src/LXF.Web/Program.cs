@@ -1,10 +1,16 @@
 using AutoMapper;
+using Dominio.Repositorio.Gateways;
+using Infraestructura.Configurations;
+using Infraestructura.Gateways;
+using IServicio.MercadoPago;
+using IServicio.TemporalObject;
 using LXF.Web;
 using LXF.Web.Service;
 using LXF.Web.Service.IService;
 using LXF.Web.ServiceApiClient;
 using LXF.Web.ServiceApiClient.IServiceApiClient;
 using LXF.Web.Utility;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,13 +23,12 @@ builder.Services.AddSingleton(mapper);
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 #endregion
 
-
 #region HttpClient
 // Configuration HttpClient for Dependence Injection
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddHttpClient();
+builder.Services.AddHttpClient<IDetalleCarroComprasServiceApiClient, DetalleCarroComprasServiceApiClient>();
 builder.Services.AddHttpClient<ICategoriaServiceApiClient, CategoriaServiceApiClient>();
-builder.Services.AddHttpClient<IComprobanteServiceApiClient, ComprobanteServiceApiClient>();
 builder.Services.AddHttpClient<IDetalleComprobanteServiceApiClient, DetalleComprobanteServiceApiClient>();
 builder.Services.AddHttpClient<IEnvioServiceApiClient, EnvioServiceApiClient>();
 builder.Services.AddHttpClient<IFacturaServiceApiClient, FacturaServiceApiClient>();
@@ -33,17 +38,25 @@ builder.Services.AddHttpClient<IMovimientoServiceApiClient, MovimientoServiceApi
 builder.Services.AddHttpClient<IPersonaClienteServiceApiClient, PersonaClienteServiceApiClient>();
 builder.Services.AddHttpClient<IProductoServiceApiClient, ProductoServiceApiClient>();
 builder.Services.AddHttpClient<ITalleServiceApiClient, TalleServiceApiClient>();
-builder.Services.AddHttpClient<ITarjetaServiceApiClient, TarjetaServiceApiClient>();
-
+builder.Services.AddHttpClient<IVentaServiceApiClient, VentaServiceApiClient>();
 // populated value of endpoint url to LXFApiBase
 SD.LXFApiBase = builder.Configuration["ServicesUrl:LXFApi"];
 #endregion
 
+#region MercadoPago
+builder.Services.Configure<MercadoPagoConfiguration>(builder.Configuration.GetSection("MercadoPagoConfiguration"));
+#endregion
+
+#region MemoryCache
+builder.Services.AddMemoryCache();
+#endregion
+
 #region Dependence Injection
-//Dependece Injection configuracion
+//Dependece Injection configuration in Services Api Clients
 builder.Services.AddScoped<IServiceBaseApiClient, ServiceBaseApiClient>();
 builder.Services.AddScoped<ICategoriaServiceApiClient, CategoriaServiceApiClient>();
-builder.Services.AddScoped<IComprobanteServiceApiClient, ComprobanteServiceApiClient>();
+builder.Services.AddScoped<ICarroComprasServiceApiClient, CarroComprasServiceApiClient>();
+builder.Services.AddScoped<IDetalleCarroComprasServiceApiClient, DetalleCarroComprasServiceApiClient>();
 builder.Services.AddScoped<IDetalleComprobanteServiceApiClient, DetalleComprobanteServiceApiClient>();
 builder.Services.AddScoped<IEnvioServiceApiClient, EnvioServiceApiClient>();
 builder.Services.AddScoped<IFacturaServiceApiClient, FacturaServiceApiClient>();
@@ -53,12 +66,27 @@ builder.Services.AddScoped<IMovimientoServiceApiClient, MovimientoServiceApiClie
 builder.Services.AddScoped<IPersonaClienteServiceApiClient, PersonaClienteServiceApiClient>();
 builder.Services.AddScoped<IProductoServiceApiClient, ProductoServiceApiClient>();
 builder.Services.AddScoped<ITalleServiceApiClient, TalleServiceApiClient>();
-builder.Services.AddScoped<ITarjetaServiceApiClient, TarjetaServiceApiClient>();
+builder.Services.AddScoped<IVentaServiceApiClient, VentaServiceApiClient>();
 
-builder.Services.AddScoped<IProductoService, ProductoService>();
+//Dependece Injection configuration in Services
 builder.Services.AddScoped<ICategoriaService, CategoriaService>();
-builder.Services.AddScoped<ITalleService, TalleService>();
+builder.Services.AddScoped<ICarroComprasService, CarroComprasService>();
+builder.Services.AddScoped<IDetalleCarroComprasService, DetalleCarroComprasService>();
 builder.Services.AddScoped<IMarcaService, MarcaService>();
+builder.Services.AddScoped<IProductoService, ProductoService>();
+builder.Services.AddScoped<ITalleService, TalleService>();
+builder.Services.AddScoped<IVentaService, VentaService>();
+builder.Services.AddScoped<IMercadoPagoService, MercadoPagoService>();
+builder.Services.AddScoped<IMercadoPagoGateway, MercadoPagoGateway>();
+builder.Services.AddScoped<ITokenProvider, TokenProvider>();
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.ExpireTimeSpan = TimeSpan.FromHours(10);
+        options.LoginPath = "/Identity/Login";
+        options.AccessDeniedPath = "/Identity/AccessDenied";
+    });
+builder.Services.AddScoped<ITemporalObjectService, TemporalObjectService>();
 #endregion
 
 var app = builder.Build();
@@ -75,6 +103,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(

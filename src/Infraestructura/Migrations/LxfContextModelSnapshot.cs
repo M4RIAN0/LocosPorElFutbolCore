@@ -22,7 +22,7 @@ namespace Infraestructura.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Dominio.Entidades.Banco", b =>
+            modelBuilder.Entity("Dominio.Entidades.CarroCompra", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -36,72 +36,15 @@ namespace Infraestructura.Migrations
                     b.Property<bool>("IsEnabled")
                         .HasColumnType("bit");
 
-                    b.Property<string>("Nombre")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                    b.Property<decimal>("Total")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
 
-                    b.ToTable("Bancos");
-
-                    b.HasData(
-                        new
-                        {
-                            ID = 1,
-                            IsDeleted = false,
-                            IsEnabled = false,
-                            Nombre = "Nacion"
-                        },
-                        new
-                        {
-                            ID = 2,
-                            IsDeleted = false,
-                            IsEnabled = false,
-                            Nombre = "Macro"
-                        },
-                        new
-                        {
-                            ID = 3,
-                            IsDeleted = false,
-                            IsEnabled = false,
-                            Nombre = "BBVA Frances"
-                        },
-                        new
-                        {
-                            ID = 4,
-                            IsDeleted = false,
-                            IsEnabled = false,
-                            Nombre = "Santander"
-                        },
-                        new
-                        {
-                            ID = 5,
-                            IsDeleted = false,
-                            IsEnabled = false,
-                            Nombre = "Galicia"
-                        },
-                        new
-                        {
-                            ID = 6,
-                            IsDeleted = false,
-                            IsEnabled = false,
-                            Nombre = "Santiago Del Estero"
-                        },
-                        new
-                        {
-                            ID = 7,
-                            IsDeleted = false,
-                            IsEnabled = false,
-                            Nombre = "Galicia Mas"
-                        },
-                        new
-                        {
-                            ID = 8,
-                            IsDeleted = false,
-                            IsEnabled = false,
-                            Nombre = "Comafi"
-                        });
+                    b.ToTable("CarroCompras");
                 });
 
             modelBuilder.Entity("Dominio.Entidades.Categoria", b =>
@@ -208,6 +151,44 @@ namespace Infraestructura.Migrations
                     b.ToTable("Comprobantes");
                 });
 
+            modelBuilder.Entity("Dominio.Entidades.DetalleCarroCompra", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<int>("Cantidad")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CarroComprasId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<decimal>("Precio")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("ProductoId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("SubTotal")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("CarroComprasId");
+
+                    b.HasIndex("ProductoId");
+
+                    b.ToTable("DetalleCarroCompras");
+                });
+
             modelBuilder.Entity("Dominio.Entidades.DetalleComprobante", b =>
                 {
                     b.Property<int>("ID")
@@ -251,6 +232,44 @@ namespace Infraestructura.Migrations
                     b.HasIndex("ProductoId");
 
                     b.ToTable("DetalleComprobantes");
+                });
+
+            modelBuilder.Entity("Dominio.Entidades.DetalleOrdenCompra", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<int>("Cantidad")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("OrdenComprasId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Precio")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("ProductoId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("SubTotal")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("OrdenComprasId");
+
+                    b.HasIndex("ProductoId");
+
+                    b.ToTable("DetalleOrdenCompras");
                 });
 
             modelBuilder.Entity("Dominio.Entidades.Envio", b =>
@@ -316,9 +335,6 @@ namespace Infraestructura.Migrations
                     b.Property<bool>("IsEnabled")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("TarjetaId")
-                        .HasColumnType("int");
-
                     b.Property<string>("TipoPago")
                         .HasColumnType("nvarchar(max)");
 
@@ -330,8 +346,6 @@ namespace Infraestructura.Migrations
                     b.HasIndex("ClienteId");
 
                     b.HasIndex("ComprobanteId");
-
-                    b.HasIndex("TarjetaId");
 
                     b.ToTable("Facturas");
                 });
@@ -896,6 +910,46 @@ namespace Infraestructura.Migrations
                     b.ToTable("Movimientos");
                 });
 
+            modelBuilder.Entity("Dominio.Entidades.OrdenCompra", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<string>("Celular")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateOnly>("Fecha")
+                        .HasColumnType("date");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Nombre")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Total")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("OrdenCompras");
+                });
+
             modelBuilder.Entity("Dominio.Entidades.Persona", b =>
                 {
                     b.Property<int>("ID")
@@ -1262,13 +1316,13 @@ namespace Infraestructura.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "39b76252-5d01-4f82-b196-c19992f9c408",
+                            Id = "37aedadf-363f-48cf-b210-0968219a0b13",
                             Name = "Administrador",
                             NormalizedName = "ADMINISTRADOR"
                         },
                         new
                         {
-                            Id = "97455939-a8d7-482e-b468-e10b43d35387",
+                            Id = "6c92ad22-f0e0-4d9d-b3c8-bfc2b6377be1",
                             Name = "Cliente",
                             NormalizedName = "CLIENTE"
                         });
@@ -1347,109 +1401,6 @@ namespace Infraestructura.Migrations
                             IsEnabled = false,
                             Letra = "XXL",
                             Numero = 46
-                        });
-                });
-
-            modelBuilder.Entity("Dominio.Entidades.Tarjeta", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
-
-                    b.Property<int>("BancoId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("CodigoSeguridad")
-                        .IsRequired()
-                        .HasMaxLength(3)
-                        .HasColumnType("nvarchar(3)");
-
-                    b.Property<int>("Cuotas")
-                        .HasColumnType("int");
-
-                    b.Property<string>("DniTitular")
-                        .IsRequired()
-                        .HasMaxLength(8)
-                        .HasColumnType("nvarchar(8)");
-
-                    b.Property<DateOnly>("FechaExpiracion")
-                        .HasColumnType("date");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Nombre")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
-
-                    b.Property<string>("NombreTitular")
-                        .IsRequired()
-                        .HasMaxLength(250)
-                        .HasColumnType("nvarchar(250)");
-
-                    b.Property<string>("Numero")
-                        .IsRequired()
-                        .HasMaxLength(16)
-                        .HasColumnType("nvarchar(16)");
-
-                    b.Property<int>("TipoTarjetaId")
-                        .HasColumnType("int");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("BancoId");
-
-                    b.HasIndex("TipoTarjetaId");
-
-                    b.HasIndex("Nombre", "BancoId")
-                        .IsUnique()
-                        .HasDatabaseName("IX_Tarjeta_Nombre_BancoId");
-
-                    b.ToTable("Tarjetas");
-                });
-
-            modelBuilder.Entity("Dominio.Entidades.TipoTarjeta", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Tipo")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("TipoTarjetas");
-
-                    b.HasData(
-                        new
-                        {
-                            ID = 1,
-                            IsDeleted = false,
-                            IsEnabled = false,
-                            Tipo = "Credito"
-                        },
-                        new
-                        {
-                            ID = 2,
-                            IsDeleted = false,
-                            IsEnabled = false,
-                            Tipo = "Debito"
                         });
                 });
 
@@ -1588,6 +1539,25 @@ namespace Infraestructura.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Dominio.Entidades.DetalleCarroCompra", b =>
+                {
+                    b.HasOne("Dominio.Entidades.CarroCompra", "CarroCompras")
+                        .WithMany("DetalleCarroCompras")
+                        .HasForeignKey("CarroComprasId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Dominio.Entidades.Producto", "Producto")
+                        .WithMany("DetalleCarroCompras")
+                        .HasForeignKey("ProductoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CarroCompras");
+
+                    b.Navigation("Producto");
+                });
+
             modelBuilder.Entity("Dominio.Entidades.DetalleComprobante", b =>
                 {
                     b.HasOne("Dominio.Entidades.Comprobante", "Comprobante")
@@ -1603,6 +1573,25 @@ namespace Infraestructura.Migrations
                         .IsRequired();
 
                     b.Navigation("Comprobante");
+
+                    b.Navigation("Producto");
+                });
+
+            modelBuilder.Entity("Dominio.Entidades.DetalleOrdenCompra", b =>
+                {
+                    b.HasOne("Dominio.Entidades.OrdenCompra", "OrdenCompras")
+                        .WithMany("DetalleOrdenCompras")
+                        .HasForeignKey("OrdenComprasId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Dominio.Entidades.Producto", "Producto")
+                        .WithMany()
+                        .HasForeignKey("ProductoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("OrdenCompras");
 
                     b.Navigation("Producto");
                 });
@@ -1640,15 +1629,9 @@ namespace Infraestructura.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Dominio.Entidades.Tarjeta", "Tarjeta")
-                        .WithMany()
-                        .HasForeignKey("TarjetaId");
-
                     b.Navigation("Comprobante");
 
                     b.Navigation("PersonaCliente");
-
-                    b.Navigation("Tarjeta");
                 });
 
             modelBuilder.Entity("Dominio.Entidades.Localidad", b =>
@@ -1665,7 +1648,7 @@ namespace Infraestructura.Migrations
             modelBuilder.Entity("Dominio.Entidades.Movimiento", b =>
                 {
                     b.HasOne("Dominio.Entidades.Factura", "Factura")
-                        .WithMany("Movimientos")
+                        .WithMany()
                         .HasForeignKey("FacturaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1700,25 +1683,6 @@ namespace Infraestructura.Migrations
                     b.Navigation("Talle");
                 });
 
-            modelBuilder.Entity("Dominio.Entidades.Tarjeta", b =>
-                {
-                    b.HasOne("Dominio.Entidades.Banco", "Banco")
-                        .WithMany("Tarjetas")
-                        .HasForeignKey("BancoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Dominio.Entidades.TipoTarjeta", "TipoTarjeta")
-                        .WithMany("Tarjetas")
-                        .HasForeignKey("TipoTarjetaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Banco");
-
-                    b.Navigation("TipoTarjeta");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
                     b.HasOne("Dominio.Entidades.Role", null)
@@ -1743,9 +1707,9 @@ namespace Infraestructura.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Dominio.Entidades.Banco", b =>
+            modelBuilder.Entity("Dominio.Entidades.CarroCompra", b =>
                 {
-                    b.Navigation("Tarjetas");
+                    b.Navigation("DetalleCarroCompras");
                 });
 
             modelBuilder.Entity("Dominio.Entidades.Categoria", b =>
@@ -1762,11 +1726,6 @@ namespace Infraestructura.Migrations
                     b.Navigation("Facturas");
                 });
 
-            modelBuilder.Entity("Dominio.Entidades.Factura", b =>
-                {
-                    b.Navigation("Movimientos");
-                });
-
             modelBuilder.Entity("Dominio.Entidades.Localidad", b =>
                 {
                     b.Navigation("Envios");
@@ -1777,8 +1736,15 @@ namespace Infraestructura.Migrations
                     b.Navigation("Productos");
                 });
 
+            modelBuilder.Entity("Dominio.Entidades.OrdenCompra", b =>
+                {
+                    b.Navigation("DetalleOrdenCompras");
+                });
+
             modelBuilder.Entity("Dominio.Entidades.Producto", b =>
                 {
+                    b.Navigation("DetalleCarroCompras");
+
                     b.Navigation("DetalleComprobantes");
                 });
 
@@ -1790,11 +1756,6 @@ namespace Infraestructura.Migrations
             modelBuilder.Entity("Dominio.Entidades.Talle", b =>
                 {
                     b.Navigation("Productos");
-                });
-
-            modelBuilder.Entity("Dominio.Entidades.TipoTarjeta", b =>
-                {
-                    b.Navigation("Tarjetas");
                 });
 
             modelBuilder.Entity("Dominio.Entidades.PersonaCliente", b =>

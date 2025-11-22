@@ -4,6 +4,7 @@ using Infraestructura;
 using IServicio.Email;
 using IServicio.Identity;
 using IServicio.Identity.Dto;
+using IServicio.JwToken;
 using Lxf.Support.BuildingBlocks;
 using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
@@ -18,14 +19,16 @@ namespace Servicio
         private readonly UserManager<Usuario> _userManager;
         private readonly RoleManager<Role> _roleManager;
         private readonly IEmailSender _emailSender;
+        private readonly IJwTokenGenerator _jwTokenGenerator;
         private readonly IMapper _mapper;
 
-        public IndentityService(LxfContext db, UserManager<Usuario> userManager, RoleManager<Role> roleManager, IEmailSender emailSender, IMapper mapper)
+        public IndentityService(LxfContext db, UserManager<Usuario> userManager, RoleManager<Role> roleManager, IJwTokenGenerator jwTokenGenerator, IEmailSender emailSender, IMapper mapper)
         {
             _db = db;
             _userManager = userManager;
             _roleManager = roleManager;
             _emailSender = emailSender;
+            _jwTokenGenerator = jwTokenGenerator;
             _mapper = mapper;
         }
 
@@ -71,11 +74,16 @@ namespace Servicio
                 throw new BadRequestException(errors);
             }
 
+            //if user was found, Generate JWT
+            var roles = await _userManager.GetRolesAsync(user); // traemos los roles del user
+            var token = _jwTokenGenerator.GenerateToken(user, roles); // genera el token
+
             var dto = UsuarioToUsuarioDto(user);
 
             var loginResponseDto = new LoginResponseDto()
             {
-                Usuario = dto
+                Usuario = dto,
+                Token = token
             };
 
             return loginResponseDto;

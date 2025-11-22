@@ -6,6 +6,6 @@ namespace LXF.Web.ServiceApiClient.IServiceApiClient
     {
         Task<ResponseViewModel?> Add(DetalleComprobanteViewModel vm);
 
-        Task<ResponseViewModel?> GetById(int? id);
+        Task<ResponseViewModel?> GetById(int id);
     }
 }

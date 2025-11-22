@@ -9,6 +9,6 @@ namespace LXF.Web.ServiceApiClient.IServiceApiClient
         Task<ResponseViewModel?> SoftDelete(int Id);
         Task<ResponseViewModel?> GetByFilter(string cadenaBuscar); // obtener por filtro
         Task<ResponseViewModel?> GetAll();
-        Task<ResponseViewModel?> GetById(int? Id);
+        Task<ResponseViewModel?> GetById(int id);
     }
 }

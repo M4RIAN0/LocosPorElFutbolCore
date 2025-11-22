@@ -57,6 +57,16 @@ namespace Infraestructura.Repositorio.repository
             model.IsDeleted = true;
         }
 
+        public void Delete(int id)
+        {
+            var model = _context.Set<T>().Where(x => x.ID == id && !x.IsDeleted).FirstOrDefault();
+
+            if (model == null)
+                throw new ElementNotFoundException($"No se encontro {typeof(T).Name} con el Id: {id}.");
+
+            _context.Set<T>().Remove(model);
+        }
+
         public IEnumerable<T> GetByFilter(Expression<Func<T, bool>> predicate)
         {
             return [.. _context.Set<T>().AsNoTracking().Where(predicate).Where(x => !x.IsDeleted)];
@@ -73,7 +83,7 @@ namespace Infraestructura.Repositorio.repository
         {
             IQueryable<T> query = _context.Set<T>();
 
-            foreach (var includeProperty in includeProperties.Split(','))
+            foreach (var includeProperty in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
             {
                 query = query.Include(includeProperty);
             }
@@ -100,9 +110,9 @@ namespace Infraestructura.Repositorio.repository
             return [.. query.AsNoTracking().Where(x => !x.IsDeleted)];
         }
 
-        public T GetById(int? id)
+        public T GetById(int id)
         {
-            var model = _context.Set<T>().Where(x => x.ID == id && !x.IsDeleted).FirstOrDefault();
+            var model = _context.Set<T>().AsNoTracking().Where(x => x.ID == id && !x.IsDeleted).FirstOrDefault();
 
             if (model == null)
                 throw new ElementNotFoundException($"No se encontro {typeof(T).Name} con el Id: {id}.");
@@ -110,13 +120,13 @@ namespace Infraestructura.Repositorio.repository
             return model;
         }
 
-        public T GetById(int? id, params Expression<Func<T, object>>[] includeProperties)
+        public T GetById(int id, params Expression<Func<T, object>>[] includeProperties)
         {
             IQueryable<T> query = _context.Set<T>();
 
             query = includeProperties.Aggregate(query, (Current, includeProperty) => Current.Include(includeProperty));
 
-            var model = query.FirstOrDefault(x => x.ID == id && !x.IsDeleted);
+            var model = query.AsNoTracking().FirstOrDefault(x => x.ID == id && !x.IsDeleted);
 
             if (model == null)
                 throw new ElementNotFoundException($"No se encontro {typeof(T).Name} con el Id: {id}.");
@@ -124,16 +134,16 @@ namespace Infraestructura.Repositorio.repository
             return model;
         }
 
-        public T GetById(int? id, string includeProperties)
+        public T GetById(int id, string includeProperties)
         {
             IQueryable<T> query = _context.Set<T>();
 
-            foreach (var includeProperty in includeProperties.Split(','))
+            foreach (var includeProperty in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
             {
                 query = query.Include(includeProperty);
             }
 
-            var model = query.FirstOrDefault(x => x.ID == id && !x.IsDeleted);
+            var model = query.AsNoTracking().FirstOrDefault(x => x.ID == id && !x.IsDeleted);
 
             if (model == null)
                 throw new ElementNotFoundException($"No se encontro {typeof(T).Name} con el Id: {id}.");
@@ -157,7 +167,7 @@ namespace Infraestructura.Repositorio.repository
         {
             IQueryable<T> query = _context.Set<T>();
 
-            foreach (var includeProperty in includeProperties.Split(','))
+            foreach (var includeProperty in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
             {
                 query = query.Include(includeProperty);
             }
@@ -168,6 +178,18 @@ namespace Infraestructura.Repositorio.repository
         public IEnumerable<T> OrderByDescending(Expression<Func<T, Object>> predicate)
         {
             return [.. _context.Set<T>().AsNoTracking().Where(x => !x.IsDeleted).OrderByDescending(predicate)];
+        }
+
+        public IEnumerable<T> OrderByDescending(Expression<Func<T, Object>> predicate, string includeProperties)
+        {
+            IQueryable<T> query = _context.Set<T>();
+
+            foreach (var includeProperty in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                query = query.Include(includeProperty);
+            }
+
+            return [.. query.AsNoTracking().Where(x => !x.IsDeleted).OrderByDescending(predicate)];
         }
 
         public void Save()
@@ -187,7 +209,7 @@ namespace Infraestructura.Repositorio.repository
 
             if (obj == null)
             {
-                props.Add(typeof(T).Name, "Cannot add a null element");
+                props.Add(typeof(T).Name, "No se puede añadir un elemento nulo.");
             }
             else
             {
