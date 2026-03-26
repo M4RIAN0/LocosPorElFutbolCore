@@ -1,9 +1,9 @@
 ﻿namespace LXF.Web.Models.ViewModels
 {
-    public class LocalidadViewModel : ViewModelBase
+    public class LocalidadGetViewModel : ViewModelBase
     {
+        public string Nombre { get; set; }
+        public string CP { get; set; }
         public int ProvinciaId { get; set; }
-
-        public string ProvinciaStr { get; set; }
     }
 }

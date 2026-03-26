@@ -13,5 +13,15 @@ namespace LXF.Web.Models.ViewModels
         [Required]
         public string Password { get; set; }
         public string? Role { get; set; }
+
+        // Seccion  Persona
+        [Required]
+        public string Dni { get; set; }
+        [Required]
+        public string Direccion { get; set; }
+        [Required]
+        public string Sexo { get; set; }
+        [Required]
+        public string FechaNacimiento { get; set; }
     }
 }

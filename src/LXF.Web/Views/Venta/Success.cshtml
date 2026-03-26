@@ -1,5 +1,5 @@
 ﻿@using LXF.Web.Models.ViewModels
-@model OrdenComprasGetViewModel
+@model OrdenCompraGetViewModel
 @{
     ViewData["Title"] = "¡Pago Aprobado!";
 }
@@ -34,7 +34,7 @@
                     </p>
 
                     <p class="text-info mt-4" style="font-size: 1.1rem;">
-                        Los detalles completos de tu compra y el recibo de pago se enviaron al correo electrónico <strong>@Model.Email</strong>.
+                        Los detalles completos de tu compra y el recibo de pago se enviaron al correo electrónico <strong>@Model.Factura.Email</strong>.
                     </p>
                 </div>
             </div>

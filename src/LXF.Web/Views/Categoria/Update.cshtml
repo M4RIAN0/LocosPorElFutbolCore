@@ -1,10 +1,10 @@
-﻿@using LXF.Web.Models.ViewModels;
-@model MarcaPutViewModel
+﻿@using LXF.Web.Models.ViewModels
+@model CategoriaPutViewModel
 
-<form asp-action="MarcaUpdate">
+<form asp-action="Update">
     <br />
     <div class="container border p-3">
-        <h1 class="text-white text-center">Editar Marca</h1>
+        <h1 class="text-white text-center">Editar Categoria</h1>
         <input asp-for="Id" hidden />
         <hr />
         <div class="row">
@@ -16,7 +16,7 @@
                 <span asp-validation-for="Descripcion" class="text-danger"></span>
             </div>
             <div class="col-5 offset-2">
-                <a asp-action="MarcaIndex" class="btn-primary btn form-control ">Volver a la Lista</a>
+                <a asp-action="Index" class="btn-primary btn form-control ">Volver a la Lista</a>
             </div>
             <div class="col-5">
                 <input type="submit" value="Editar" class="btn btn-success form-control" />

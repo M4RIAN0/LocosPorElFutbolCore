@@ -5,7 +5,6 @@ namespace IServicio.Dtos
 {
     public class PersonaClienteDto
     {
-        public int Codigo { get; set; }
 
         public string Apellido { get; set; }
 
@@ -31,7 +30,6 @@ namespace IServicio.Dtos
 
     public class PersonaClienteGetDto : DtoBase
     {
-        public int Codigo { get; init; }
 
         public string Apellido { get; init; }
 

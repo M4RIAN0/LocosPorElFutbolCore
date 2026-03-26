@@ -9,7 +9,8 @@ namespace Dominio.Repositorio.Dtos
         public decimal SubTotal { get; set; }
         public int ProductoId { get; set; }
         public int OrdenComprasId { get; set; }
-       
+        public ProductoDto? Producto { get; init; }
+
     }
 
     public class DetalleOrdenCompraPutDto : DetalleOrdenCompraDto

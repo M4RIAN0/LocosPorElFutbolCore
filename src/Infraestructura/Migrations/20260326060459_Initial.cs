@@ -45,22 +45,6 @@ namespace Infraestructura.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Comprobantes",
-                columns: table => new
-                {
-                    ID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Fecha = table.Column<DateOnly>(type: "date", nullable: false),
-                    Total = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    IsEnabled = table.Column<bool>(type: "bit", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Comprobantes", x => x.ID);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Marcas",
                 columns: table => new
                 {
@@ -193,8 +177,7 @@ namespace Infraestructura.Migrations
                 name: "PersonasClientes",
                 columns: table => new
                 {
-                    ID = table.Column<int>(type: "int", nullable: false),
-                    Codigo = table.Column<int>(type: "int", nullable: false)
+                    ID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -296,63 +279,24 @@ namespace Infraestructura.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Facturas",
+                name: "Comprobantes",
                 columns: table => new
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Fecha = table.Column<DateOnly>(type: "date", nullable: false),
-                    Estado = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Total = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    TipoPago = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ClienteId = table.Column<int>(type: "int", nullable: false),
-                    ComprobanteId = table.Column<int>(type: "int", nullable: false),
                     IsEnabled = table.Column<bool>(type: "bit", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Facturas", x => x.ID);
+                    table.PrimaryKey("PK_Comprobantes", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_Facturas_Comprobantes_ComprobanteId",
-                        column: x => x.ComprobanteId,
-                        principalTable: "Comprobantes",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Facturas_PersonasClientes_ClienteId",
+                        name: "FK_Comprobantes_PersonasClientes_ClienteId",
                         column: x => x.ClienteId,
                         principalTable: "PersonasClientes",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Envios",
-                columns: table => new
-                {
-                    ID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Tipo = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Monto = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    LocalidadId = table.Column<int>(type: "int", nullable: false),
-                    ComprobanteId = table.Column<int>(type: "int", nullable: false),
-                    IsEnabled = table.Column<bool>(type: "bit", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Envios", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_Envios_Comprobantes_ComprobanteId",
-                        column: x => x.ComprobanteId,
-                        principalTable: "Comprobantes",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Envios_Localidades_LocalidadId",
-                        column: x => x.LocalidadId,
-                        principalTable: "Localidades",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -382,39 +326,6 @@ namespace Infraestructura.Migrations
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_DetalleCarroCompras_Productos_ProductoId",
-                        column: x => x.ProductoId,
-                        principalTable: "Productos",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "DetalleComprobantes",
-                columns: table => new
-                {
-                    ID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Cantidad = table.Column<int>(type: "int", nullable: false),
-                    SubTotal = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    CodigoBarra = table.Column<int>(type: "int", nullable: false),
-                    Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Precio = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    ProductoId = table.Column<int>(type: "int", nullable: false),
-                    ComprobanteId = table.Column<int>(type: "int", nullable: false),
-                    IsEnabled = table.Column<bool>(type: "bit", nullable: false),
-                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_DetalleComprobantes", x => x.ID);
-                    table.ForeignKey(
-                        name: "FK_DetalleComprobantes_Comprobantes_ComprobanteId",
-                        column: x => x.ComprobanteId,
-                        principalTable: "Comprobantes",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_DetalleComprobantes_Productos_ProductoId",
                         column: x => x.ProductoId,
                         principalTable: "Productos",
                         principalColumn: "ID",
@@ -453,6 +364,102 @@ namespace Infraestructura.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "DetalleComprobantes",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Cantidad = table.Column<int>(type: "int", nullable: false),
+                    SubTotal = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    CodigoBarra = table.Column<int>(type: "int", nullable: false),
+                    ProductoNombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Precio = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    ProductoId = table.Column<int>(type: "int", nullable: false),
+                    ComprobanteId = table.Column<int>(type: "int", nullable: false),
+                    IsEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DetalleComprobantes", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_DetalleComprobantes_Comprobantes_ComprobanteId",
+                        column: x => x.ComprobanteId,
+                        principalTable: "Comprobantes",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_DetalleComprobantes_Productos_ProductoId",
+                        column: x => x.ProductoId,
+                        principalTable: "Productos",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Envios",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Persona = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Celular = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
+                    Direccion = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Dni = table.Column<string>(type: "nvarchar(8)", maxLength: 8, nullable: false),
+                    Monto = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    ComprobanteId = table.Column<int>(type: "int", nullable: false),
+                    IsEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Envios", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_Envios_Comprobantes_ComprobanteId",
+                        column: x => x.ComprobanteId,
+                        principalTable: "Comprobantes",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Facturas",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Nombre = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Dni = table.Column<string>(type: "nvarchar(8)", maxLength: 8, nullable: false),
+                    Direccion = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Celular = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Fecha = table.Column<DateOnly>(type: "date", nullable: false),
+                    Estado = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Total = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    TipoPago = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ComprobanteId = table.Column<int>(type: "int", nullable: false),
+                    PersonaClienteID = table.Column<int>(type: "int", nullable: true),
+                    IsEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Facturas", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_Facturas_Comprobantes_ComprobanteId",
+                        column: x => x.ComprobanteId,
+                        principalTable: "Comprobantes",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Facturas_PersonasClientes_PersonaClienteID",
+                        column: x => x.PersonaClienteID,
+                        principalTable: "PersonasClientes",
+                        principalColumn: "ID");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Movimientos",
                 columns: table => new
                 {
@@ -487,7 +494,8 @@ namespace Infraestructura.Migrations
                     { 4, "Musculosas", false, false },
                     { 5, "Shorts", false, false },
                     { 6, "Medias", false, false },
-                    { 7, "Pantalones", false, false }
+                    { 7, "Pantalones", false, false },
+                    { 8, "Camperas", false, false }
                 });
 
             migrationBuilder.InsertData(
@@ -548,8 +556,8 @@ namespace Infraestructura.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Nombre", "NombreNormalizado" },
                 values: new object[,]
                 {
-                    { "37aedadf-363f-48cf-b210-0968219a0b13", null, "Administrador", "ADMINISTRADOR" },
-                    { "6c92ad22-f0e0-4d9d-b3c8-bfc2b6377be1", null, "Cliente", "CLIENTE" }
+                    { "9f1dbdd5-6c6a-4438-975c-d8b0819f152a", null, "Cliente", "CLIENTE" },
+                    { "eb4008ef-1a78-4662-a1b1-06c1a7a7df2d", null, "Administrador", "ADMINISTRADOR" }
                 });
 
             migrationBuilder.InsertData(
@@ -620,11 +628,11 @@ namespace Infraestructura.Migrations
 
             migrationBuilder.InsertData(
                 table: "PersonasClientes",
-                columns: new[] { "ID", "Codigo" },
-                values: new object[,]
+                column: "ID",
+                values: new object[]
                 {
-                    { 1, 123 },
-                    { 2, 456 }
+                    1,
+                    2
                 });
 
             migrationBuilder.InsertData(
@@ -633,7 +641,8 @@ namespace Infraestructura.Migrations
                 values: new object[,]
                 {
                     { 1, 1, 123123, "Camiseta 100 % Poliester, con tecnologia AdiFreeIce, ideal para cual epoca de el año", "https://placehold.co/603x403", false, false, 1, "Camiseta Titular Manchester United 24/25", 150000.00m, 10, 1 },
-                    { 2, 1, 323232, "Camiseta 100 % Poliester, con tecnologia AdiFreeIce, ideal para cual epoca de el año", "https://placehold.co/603x403", false, false, 1, "Camiseta Titular Mancheste City 24/25", 175000.00m, 10, 1 }
+                    { 2, 1, 323232, "Camiseta 100 % Poliester, con tecnologia AdiFreeIce, ideal para cual epoca de el año", "https://placehold.co/603x403", false, false, 1, "Camiseta Titular Mancheste City 24/25", 175000.00m, 10, 1 },
+                    { 3, 8, 976898, "Campera 100 % Algodon, con tecnologia AdiFreeIce, ideal para cualquier epoca de el año", "https://placehold.co/603x403", false, false, 2, "Campera River Plate Retro", 300000.00m, 15, 5 }
                 });
 
             migrationBuilder.CreateIndex(
@@ -641,6 +650,11 @@ namespace Infraestructura.Migrations
                 table: "Categorias",
                 column: "Descripcion",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comprobantes_ClienteId",
+                table: "Comprobantes",
+                column: "ClienteId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_DetalleCarroCompras_CarroComprasId",
@@ -678,19 +692,14 @@ namespace Infraestructura.Migrations
                 column: "ComprobanteId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Envios_LocalidadId",
-                table: "Envios",
-                column: "LocalidadId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Facturas_ClienteId",
-                table: "Facturas",
-                column: "ClienteId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Facturas_ComprobanteId",
                 table: "Facturas",
                 column: "ComprobanteId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Facturas_PersonaClienteID",
+                table: "Facturas",
+                column: "PersonaClienteID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Localidades_ProvinciaId",
@@ -770,6 +779,9 @@ namespace Infraestructura.Migrations
                 name: "Envios");
 
             migrationBuilder.DropTable(
+                name: "Localidades");
+
+            migrationBuilder.DropTable(
                 name: "Movimientos");
 
             migrationBuilder.DropTable(
@@ -785,7 +797,7 @@ namespace Infraestructura.Migrations
                 name: "Productos");
 
             migrationBuilder.DropTable(
-                name: "Localidades");
+                name: "Provincias");
 
             migrationBuilder.DropTable(
                 name: "Facturas");
@@ -804,9 +816,6 @@ namespace Infraestructura.Migrations
 
             migrationBuilder.DropTable(
                 name: "Talles");
-
-            migrationBuilder.DropTable(
-                name: "Provincias");
 
             migrationBuilder.DropTable(
                 name: "Comprobantes");

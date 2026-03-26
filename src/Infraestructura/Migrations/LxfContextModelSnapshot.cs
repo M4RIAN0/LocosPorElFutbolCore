@@ -123,6 +123,13 @@ namespace Infraestructura.Migrations
                             Descripcion = "Pantalones",
                             IsDeleted = false,
                             IsEnabled = false
+                        },
+                        new
+                        {
+                            ID = 8,
+                            Descripcion = "Camperas",
+                            IsDeleted = false,
+                            IsEnabled = false
                         });
                 });
 
@@ -133,6 +140,9 @@ namespace Infraestructura.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<int>("ClienteId")
+                        .HasColumnType("int");
 
                     b.Property<DateOnly>("Fecha")
                         .HasColumnType("date");
@@ -147,6 +157,8 @@ namespace Infraestructura.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("ID");
+
+                    b.HasIndex("ClienteId");
 
                     b.ToTable("Comprobantes");
                 });
@@ -206,10 +218,6 @@ namespace Infraestructura.Migrations
                     b.Property<int>("ComprobanteId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Descripcion")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
@@ -221,6 +229,10 @@ namespace Infraestructura.Migrations
 
                     b.Property<int>("ProductoId")
                         .HasColumnType("int");
+
+                    b.Property<string>("ProductoNombre")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("SubTotal")
                         .HasColumnType("decimal(18,2)");
@@ -280,8 +292,26 @@ namespace Infraestructura.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
+                    b.Property<string>("Celular")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
                     b.Property<int>("ComprobanteId")
                         .HasColumnType("int");
+
+                    b.Property<string>("Direccion")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Dni")
+                        .IsRequired()
+                        .HasMaxLength(8)
+                        .HasColumnType("nvarchar(8)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -289,21 +319,17 @@ namespace Infraestructura.Migrations
                     b.Property<bool>("IsEnabled")
                         .HasColumnType("bit");
 
-                    b.Property<int>("LocalidadId")
-                        .HasColumnType("int");
-
                     b.Property<decimal>("Monto")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<string>("Tipo")
+                    b.Property<string>("Persona")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("ID");
 
                     b.HasIndex("ComprobanteId");
-
-                    b.HasIndex("LocalidadId");
 
                     b.ToTable("Envios");
                 });
@@ -316,11 +342,26 @@ namespace Infraestructura.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
-                    b.Property<int>("ClienteId")
-                        .HasColumnType("int");
+                    b.Property<string>("Celular")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.Property<int>("ComprobanteId")
                         .HasColumnType("int");
+
+                    b.Property<string>("Direccion")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Dni")
+                        .IsRequired()
+                        .HasMaxLength(8)
+                        .HasColumnType("nvarchar(8)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Estado")
                         .IsRequired()
@@ -335,6 +376,14 @@ namespace Infraestructura.Migrations
                     b.Property<bool>("IsEnabled")
                         .HasColumnType("bit");
 
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int?>("PersonaClienteID")
+                        .HasColumnType("int");
+
                     b.Property<string>("TipoPago")
                         .HasColumnType("nvarchar(max)");
 
@@ -343,9 +392,9 @@ namespace Infraestructura.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("ClienteId");
-
                     b.HasIndex("ComprobanteId");
+
+                    b.HasIndex("PersonaClienteID");
 
                     b.ToTable("Facturas");
                 });
@@ -1096,6 +1145,21 @@ namespace Infraestructura.Migrations
                             Precio = 175000.00m,
                             Stock = 10,
                             TalleId = 1
+                        },
+                        new
+                        {
+                            ID = 3,
+                            CategoriaId = 8,
+                            CodigoBarra = 976898,
+                            Descripcion = "Campera 100 % Algodon, con tecnologia AdiFreeIce, ideal para cualquier epoca de el año",
+                            ImagenUrl = "https://placehold.co/603x403",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 2,
+                            Nombre = "Campera River Plate Retro",
+                            Precio = 300000.00m,
+                            Stock = 15,
+                            TalleId = 5
                         });
                 });
 
@@ -1316,13 +1380,13 @@ namespace Infraestructura.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "37aedadf-363f-48cf-b210-0968219a0b13",
+                            Id = "eb4008ef-1a78-4662-a1b1-06c1a7a7df2d",
                             Name = "Administrador",
                             NormalizedName = "ADMINISTRADOR"
                         },
                         new
                         {
-                            Id = "6c92ad22-f0e0-4d9d-b3c8-bfc2b6377be1",
+                            Id = "9f1dbdd5-6c6a-4438-975c-d8b0819f152a",
                             Name = "Cliente",
                             NormalizedName = "CLIENTE"
                         });
@@ -1497,9 +1561,6 @@ namespace Infraestructura.Migrations
                 {
                     b.HasBaseType("Dominio.Entidades.Persona");
 
-                    b.Property<int>("Codigo")
-                        .HasColumnType("int");
-
                     b.HasIndex("Nombre", "Apellido", "Dni")
                         .IsUnique()
                         .HasDatabaseName("IX_PersonaCliente_Nombre_Apellido_Dni");
@@ -1519,8 +1580,7 @@ namespace Infraestructura.Migrations
                             IsDeleted = false,
                             IsEnabled = false,
                             Nombre = "Marcos",
-                            Sexo = "Masculino",
-                            Codigo = 123
+                            Sexo = "Masculino"
                         },
                         new
                         {
@@ -1534,9 +1594,19 @@ namespace Infraestructura.Migrations
                             IsDeleted = false,
                             IsEnabled = false,
                             Nombre = "Juan Carlos",
-                            Sexo = "Masculino",
-                            Codigo = 456
+                            Sexo = "Masculino"
                         });
+                });
+
+            modelBuilder.Entity("Dominio.Entidades.Comprobante", b =>
+                {
+                    b.HasOne("Dominio.Entidades.PersonaCliente", "Cliente")
+                        .WithMany()
+                        .HasForeignKey("ClienteId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Cliente");
                 });
 
             modelBuilder.Entity("Dominio.Entidades.DetalleCarroCompra", b =>
@@ -1604,34 +1674,22 @@ namespace Infraestructura.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Dominio.Entidades.Localidad", "Localidad")
-                        .WithMany("Envios")
-                        .HasForeignKey("LocalidadId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Comprobante");
-
-                    b.Navigation("Localidad");
                 });
 
             modelBuilder.Entity("Dominio.Entidades.Factura", b =>
                 {
-                    b.HasOne("Dominio.Entidades.PersonaCliente", "PersonaCliente")
-                        .WithMany("Facturas")
-                        .HasForeignKey("ClienteId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Dominio.Entidades.Comprobante", "Comprobante")
                         .WithMany("Facturas")
                         .HasForeignKey("ComprobanteId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Comprobante");
+                    b.HasOne("Dominio.Entidades.PersonaCliente", null)
+                        .WithMany("Facturas")
+                        .HasForeignKey("PersonaClienteID");
 
-                    b.Navigation("PersonaCliente");
+                    b.Navigation("Comprobante");
                 });
 
             modelBuilder.Entity("Dominio.Entidades.Localidad", b =>
@@ -1724,11 +1782,6 @@ namespace Infraestructura.Migrations
                     b.Navigation("Envios");
 
                     b.Navigation("Facturas");
-                });
-
-            modelBuilder.Entity("Dominio.Entidades.Localidad", b =>
-                {
-                    b.Navigation("Envios");
                 });
 
             modelBuilder.Entity("Dominio.Entidades.Marca", b =>

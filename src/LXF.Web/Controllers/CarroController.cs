@@ -18,7 +18,7 @@ namespace LXF.Web.Controllers
         }
 
         [Authorize]
-        public async Task<IActionResult> CarroIndex()
+        public async Task<IActionResult> Index()
         {
             var carro = await LoadCarroVmBasedOnLoggedInUser();
 
@@ -29,7 +29,7 @@ namespace LXF.Web.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        public async Task<IActionResult> CarroRemoveItem(int id)
+        public async Task<IActionResult> RemoveItem(int id)
         {
             ResponseViewModel? responseRemove = await _service.RemoveItem(id);
 
@@ -42,7 +42,7 @@ namespace LXF.Web.Controllers
                 {
                     TempData["success"] = "Carro Actualizado Correctamente.";
 
-                    return RedirectToAction(nameof(CarroIndex));
+                    return RedirectToAction(nameof(Index));
                 }
 
                 TempData["success"] = "Carro Eliminado Correctamente.";
@@ -53,7 +53,7 @@ namespace LXF.Web.Controllers
             return View();
         }
 
-        public async Task<IActionResult> CarroAddItem(int id)
+        public async Task<IActionResult> AddItem(int id)
         {
             ResponseViewModel? responseAdd = await _service.AddItem(id);
 
@@ -63,13 +63,13 @@ namespace LXF.Web.Controllers
                 ResponseViewModel? response = await _service.GetByUserId(userId);
 
                 if (response.IsSuccess && response.Result != null)
-                    return RedirectToAction(nameof(CarroIndex));
+                    return RedirectToAction(nameof(Index));
             }
 
             return View();
         }
 
-        public async Task<IActionResult> CarroSubtractItem(int detalleCarroComprasId)
+        public async Task<IActionResult> SubtractItem(int detalleCarroComprasId)
         {
             ResponseViewModel? responseSubtract = await _service.SubtractItem(detalleCarroComprasId);
 
@@ -79,7 +79,7 @@ namespace LXF.Web.Controllers
                 ResponseViewModel? response = await _service.GetByUserId(userId);
 
                 if (response.IsSuccess && response.Result != null)
-                    return RedirectToAction(nameof(CarroIndex));
+                    return RedirectToAction(nameof(Index));
          
                 TempData["success"] = "Carro Eliminado Correctamente.";
                 return RedirectToAction("Index", "Home");

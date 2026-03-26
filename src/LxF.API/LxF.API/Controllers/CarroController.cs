@@ -1,5 +1,4 @@
-﻿using Infraestructura;
-using IServicio;
+﻿using IServicio;
 using IServicio.Dtos;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
@@ -17,7 +16,7 @@ namespace LxF.API.Controllers
             _service = service;
         }
 
-        [HttpGet ("{userId}")]
+        [HttpGet("{userId}")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         public IActionResult GetCartByUserId(string userId)
         {
@@ -44,7 +43,7 @@ namespace LxF.API.Controllers
             return Ok();
         }
 
-        [HttpPut("{id:int}/AddItem")]
+        [HttpPut("{id:int}/addItem")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
@@ -54,7 +53,7 @@ namespace LxF.API.Controllers
             return Ok();
         }
 
-        [HttpPut("{id:int}/SubstractItem")]
+        [HttpPut("{id:int}/substractItem")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]

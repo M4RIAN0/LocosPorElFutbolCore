@@ -6,9 +6,8 @@ using LXF.Web.Models.ViewModels;
 using LXF.Web.Service.IService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Security.Claims;
-using System.Threading.Tasks;
 
 namespace LXF.Web.Controllers
 {
@@ -17,16 +16,21 @@ namespace LXF.Web.Controllers
         private readonly IVentaService _ventaService;
         private readonly ICarroComprasService _carroCompraService;
         private readonly IProductoService _productoService;
+        private readonly IPersonaClienteService _personaClienteService;
+        private readonly IProvinciaService _provinciaService;
         private readonly IMercadoPagoService _mercadoPagoService;
         private readonly ITemporalObjectService _temporalObjectService;
         private readonly IMapper _mapper;
-        public VentaController(IVentaService ventaService, ICarroComprasService carroCompraService, 
-                               IProductoService productoService, IMercadoPagoService mercadoPagoService,
+        public VentaController(IVentaService ventaService, ICarroComprasService carroCompraService,
+                               IProductoService productoService, IPersonaClienteService personaClienteService,
+                               IProvinciaService provinciaService, IMercadoPagoService mercadoPagoService,
                                ITemporalObjectService temporalObjectService, IMapper mapper)
         {
             _ventaService = ventaService;
             _carroCompraService = carroCompraService;
             _productoService = productoService;
+            _personaClienteService = personaClienteService;
+            _provinciaService = provinciaService;
             _mercadoPagoService = mercadoPagoService;
             _temporalObjectService = temporalObjectService;
             _mapper = mapper;
@@ -35,34 +39,39 @@ namespace LXF.Web.Controllers
         [Authorize]
         public async Task<IActionResult> Checkout()
         {
+            var persona = await GetPersona();
+            ViewBag.Direccion = persona.Direccion;
+            await GetFormPopulated();
             var carro = await LoadCarroVmBasedOnLoggedInUser();
             return View(carro);
         }
 
         [Authorize]
-        public async Task<IActionResult> Pay(OrdenComprasViewModel vm)
+        public async Task<IActionResult> Pay(OrdenCompraViewModel vm)
         {
             if (ModelState.IsValid)
             {
-                vm.Fecha = DateOnly.FromDateTime(DateTime.Now).ToString();
-                vm.Status = "Pagada";
-
-                var ordenDto = await GetOrdenDto(vm);
-                var facturaVm = GetFactura(vm.Total);
+                await AddProductoVm(vm);
+                UpdateValues(vm);
+                var odenVm = GetOrden(vm);
                 var comprobanteVm = GetComprobante(vm);
-
-                var objects = new List<object>{ordenDto, comprobanteVm, facturaVm};
-
+                
+                var objects = new List<object> { odenVm, comprobanteVm };
                 var externalReferenceId = _temporalObjectService.GetUniqueReference();
                 await _temporalObjectService.StoreObjectsCollectionAsync(externalReferenceId, objects);
 
-                var initPointUrl = await _mercadoPagoService.CreatePaymentPreference(externalReferenceId, ordenDto);
+                var initPointUrl = await _mercadoPagoService.CreatePaymentPreference(externalReferenceId, OrdenToGetDto(vm));
 
                 return Redirect(initPointUrl);
             }
             else
             {
-                return View("Checkout", vm);
+                var persona = await GetPersona();
+                ViewBag.Direccion = persona.Direccion;
+                await GetFormPopulated();
+                var Carrovm = await LoadCarroVmBasedOnLoggedInUser();
+                TempData["error"] = "Por favor, corrija los errores en el formulario.";
+                return View("Checkout", Carrovm);
             }
         }
 
@@ -72,6 +81,8 @@ namespace LXF.Web.Controllers
                 return RedirectToAction("Failure", "Venta", mpData);
 
             var list = await _temporalObjectService.RetrieveObjectsCollectionAsync<object>(mpData.external_reference);
+
+            _temporalObjectService.RemoveObjectsCollectionTemporal(mpData.external_reference);
 
             var response = await PersistObjects(list);
             if (response == null || !response.IsSuccess)
@@ -92,10 +103,30 @@ namespace LXF.Web.Controllers
         }
 
         #region private methods
+
+        private async Task<ResponseViewModel?> PersistObjects(IEnumerable<object> list)
+        {
+            var transaction = new TransactionObjectsViewModel();
+
+            var ordenVm = list.OfType<OrdenCompraViewModel>().FirstOrDefault();
+            var comprobanteVm = list.OfType<ComprobanteViewModel>().FirstOrDefault();
+            var facturaVm = list.OfType<FacturaViewModel>().FirstOrDefault();
+            var envioVm = list.OfType<EnvioViewModel>().FirstOrDefault();
+            var carroId = LoadCarroVmBasedOnLoggedInUser().Result.Id;
+
+            transaction.Orden = ordenVm;
+            transaction.Comprobante = comprobanteVm;
+            transaction.Factura = facturaVm;
+            transaction.Envio = envioVm;
+            transaction.CarroId = carroId;
+
+            return await _ventaService.PersistObjects(transaction);
+        }
+
         private async Task<CarroComprasGetViewModel> LoadCarroVmBasedOnLoggedInUser()
         {
             var userId = User.FindFirstValue("Sub");
-            ResponseViewModel? response = await _carroCompraService.GetByUserId(userId);
+            var response = await _carroCompraService.GetByUserId(userId);
 
             if (response.IsSuccess && response.Result != null)
                 return CarroToGetViewModel(response.Result);
@@ -103,111 +134,194 @@ namespace LXF.Web.Controllers
             return new CarroComprasGetViewModel();
         }
 
-        private async Task<OrdenCompraGetDto> GetOrdenDto(OrdenComprasViewModel vm)
+        private async Task<PersonaClienteGetViewModel> GetPersona()
         {
-            var obj = OrdenToGetViewMdel(vm);
+            var email = User.FindFirstValue("Email");
+            var response = await _personaClienteService.GetByFilter(email);
 
-            foreach (var item in obj.DetalleOrdenCompras)
+            if (response.IsSuccess)
+            {
+                var persona = ((IEnumerable<object>)response.Result).Select(p => PersonaToGetViewMdel(p)).FirstOrDefault();
+                ViewBag.PersonaClienteId = persona.Id;
+                return persona;
+            }
+
+            return new PersonaClienteGetViewModel();
+        }
+
+        private async Task GetFormPopulated()
+        {
+            var response = await _provinciaService.GetAll();
+
+            if (!response.IsSuccess && response.Result == null)
+                TempData["error"] = "No se pudieron cargar las provincias.";
+
+            var provincias = ((IEnumerable<object>)response.Result).Select(p => ProvinciaToGetViewModel(p)).ToList();
+            
+            var localidades = provincias.SelectMany(p => p.Localidades).ToList();
+
+            ViewData["Provincias"] = new SelectList(provincias, "Id", "Nombre");
+
+            ViewData["Localidades"] = new SelectList(localidades, "Id", "Nombre");
+
+            ViewBag.LocalidadesData = localidades.Select(l => new
+            {
+                Id = l.Id,
+                Nombre = l.Nombre,
+                ProvinciaId = l.ProvinciaId.ToString() // Incluimos el ID de Provincia
+            }).ToList();
+        }
+
+        private OrdenCompraGetViewModel GetOrdenComprasGetViewModel(IEnumerable<object> list)
+        {
+            var ordenVm = list.OfType<OrdenCompraViewModel>().FirstOrDefault();
+            ordenVm.Factura = list.OfType<ComprobanteViewModel>().FirstOrDefault().Factura;
+            ordenVm.Envio = list.OfType<ComprobanteViewModel>().FirstOrDefault().Envio;
+
+            return OrdenToGetViewModel(ordenVm);
+        }
+
+        private async Task AddProductoVm(OrdenCompraViewModel vm)
+        {
+            foreach (var item in vm.DetalleOrdenCompras)
             {
                 ResponseViewModel? response = await _productoService.GetById(item.ProductoId);
 
                 if (response.IsSuccess && response.Result != null)
                 {
-                    var prod = ProductoToGetViewMdel(response.Result);
+                    var prod = ProductoToViewMdel(response.Result);
                     item.Producto = prod;
                 }
             }
-
-            return OrdenToGetDto(obj);
         }
 
-        private ComprobanteViewModel GetComprobante(OrdenComprasViewModel vm)
+        private OrdenCompraViewModel GetOrden(OrdenCompraViewModel vm)
+        {
+            List<DetalleOrdenCompraViewModel> detalleOrdenCompras = [];
+
+            vm.DetalleOrdenCompras.ToList().ForEach(item =>
+            {
+                var obj = new DetalleOrdenCompraViewModel
+                {
+                    Cantidad = item.Cantidad,
+                    SubTotal = item.SubTotal,
+                    Precio = item.Precio,
+                    ProductoId = item.ProductoId
+                };
+                detalleOrdenCompras.Add(obj);
+            });
+
+            return new OrdenCompraViewModel
+            {
+                UserId = vm.UserId,
+                Nombre = vm.Nombre,
+                Email = vm.Email,
+                Celular = vm.Celular,
+                Fecha = vm.Fecha,
+                Status = "Pagada",
+                DetalleOrdenCompras = detalleOrdenCompras,
+                Total = vm.Total,
+                PersonaClienteId = vm.PersonaClienteId
+            };
+        }
+
+        private ComprobanteViewModel GetComprobante(OrdenCompraViewModel vm)
         {
             List<DetalleComprobanteViewModel> detalleComprobantes = [];
+
             vm.DetalleOrdenCompras.ToList().ForEach(item =>
             {
                 var obj = new DetalleComprobanteViewModel
                 {
                     Cantidad = item.Cantidad,
                     SubTotal = item.SubTotal,
-                    CodigoBarra = 1, // se completa post persistencia de Orden
-                    Descripcion = "empty", // se completa post persistencia de Orden
+                    CodigoBarra = item.Producto.CodigoBarra, 
+                    ProductoNombre = item.Producto.Nombre,
                     Precio = item.Precio,
                     ProductoId = item.ProductoId
                 };
                 detalleComprobantes.Add(obj);
             });
+
             return new ComprobanteViewModel
             {
-                Fecha = DateTime.Now.ToShortDateString(),
+                Fecha = vm.Fecha,
                 DetalleComprobantes = detalleComprobantes,
-                Total = vm.Total
+                Total = vm.Total,
+                ClienteId = vm.PersonaClienteId,
+                Factura = vm.Factura,
+                Envio = vm.Envio
+
             };
         }
 
-        private FacturaViewModel GetFactura(decimal total)
+        private void UpdateValues(OrdenCompraViewModel vm)
         {
-            return new FacturaViewModel
+            vm.Nombre = vm.Factura.Nombre;
+            vm.Email = vm.Factura.Email;
+            vm.Celular = vm.Factura.Celular;
+            vm.Fecha = DateTime.Today.ToString("MM/dd/yyyy");
+
+            vm.Factura.Fecha = vm.Fecha;
+            vm.Factura.Total = vm.Total;
+            vm.Factura.Estado = "Pagada";
+            vm.Factura.TipoPago = "Tarjeta";
+
+            vm.Envio.Monto = vm.Total;
+        }
+
+        private EnvioViewModel GetEnvio(OrdenCompraViewModel vm)
+        {
+            return new EnvioViewModel
             {
-                Fecha = DateTime.Now.ToShortDateString(),
-                Estado = "Pagada",
-                Total = total,
-                TipoPago = "Tarjeta",
-                ClienteId = 1,
-                ComprobanteId = 1 // se completa post persistencia de Comprobante
+                Direccion = vm.Envio.Direccion,
+                Celular = vm.Envio.Celular,
+                Dni = vm.Envio.Dni,
+                Email = vm.Envio.Email,
+                Persona = vm.Envio.Persona,
+                Monto = vm.Total,
+                ComprobanteId = 0 // se completa post persistencia de Comprobante
             };
         }
 
-        private async Task<ResponseViewModel?> PersistObjects(IEnumerable<object> list)
+        private CarroComprasGetViewModel CarroToGetViewModel(object? obj)
         {
-            var transaction = new TransactionObjectsViewModel();
-
-            var ordenVm = OrdenToViewModel(list.OfType<OrdenCompraGetDto>().FirstOrDefault());
-            var comprobanteVm = list.OfType<ComprobanteViewModel>().FirstOrDefault();
-            var facturaVm = list.OfType<FacturaViewModel>().FirstOrDefault();
-            var carroId = LoadCarroVmBasedOnLoggedInUser().Result.Id;
-           
-            transaction.Orden = ordenVm;
-            transaction.Comprobante = comprobanteVm;
-            transaction.Factura = facturaVm;
-            transaction.CarroId = carroId;
-
-            return await _ventaService.PersistObjects(transaction);
+            return _mapper.Map<CarroComprasGetViewModel>(obj);
         }
 
-        private OrdenComprasGetViewModel GetOrdenComprasGetViewModel (IEnumerable<object> list)
+        private OrdenCompraGetViewModel OrdenToGetViewModel(object? obj)
         {
-            return OrdenToGetViewMdel(list.OfType<OrdenCompraGetDto>().FirstOrDefault());
+            return _mapper.Map<OrdenCompraGetViewModel>(obj);
         }
 
-        private CarroComprasGetViewModel CarroToGetViewModel(object? vm)
+        private OrdenCompraViewModel OrdenToViewModel(object? obj)
         {
-            return _mapper.Map<CarroComprasGetViewModel>(vm);
+            return _mapper.Map<OrdenCompraViewModel>(obj);
         }
 
-        private OrdenComprasGetViewModel OrdenToGetViewMdel(object? vm)
+        private OrdenCompraGetDto OrdenToGetDto(object? obj)
         {
-            return _mapper.Map<OrdenComprasGetViewModel>(vm);
+            return _mapper.Map<OrdenCompraGetDto>(obj);
         }
 
-        private OrdenComprasViewModel OrdenToViewModel(object? vm)
+        private DetalleOrdenCompraDto DetalleOrdenToDto(object? obj)
         {
-            return _mapper.Map<OrdenComprasViewModel>(vm);
+            return _mapper.Map<DetalleOrdenCompraDto>(obj);
         }
 
-        private OrdenCompraGetDto OrdenToGetDto(object? dto)
+        private ProductoViewModel ProductoToViewMdel(object? obj)
         {
-            return _mapper.Map<OrdenCompraGetDto>(dto);
+            return _mapper.Map<ProductoViewModel>(obj);
         }
 
-        private ComprobanteGetViewModel ComprobanteToGetViewMdel(object? vm)
+        private PersonaClienteGetViewModel PersonaToGetViewMdel(object? obj)
         {
-            return _mapper.Map<ComprobanteGetViewModel>(vm);
+            return _mapper.Map<PersonaClienteGetViewModel>(obj);
         }
 
-        private ProductoGetViewModel ProductoToGetViewMdel(object? vm)
+        private ProvinciaGetViewModel ProvinciaToGetViewModel(object? obj)
         {
-            return _mapper.Map<ProductoGetViewModel>(vm);
+            return _mapper.Map<ProvinciaGetViewModel>(obj);
         }
 
         #endregion

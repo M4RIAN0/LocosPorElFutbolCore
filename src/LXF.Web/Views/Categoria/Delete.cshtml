@@ -1,10 +1,10 @@
-﻿@using LXF.Web.Models.ViewModels;
-@model MarcaGetViewModel
+﻿@using LXF.Web.Models.ViewModels
+@model CategoriaGetViewModel
 
-<form asp-action="MarcaDelete">
+<form asp-action="Delete">
     <br />
     <div class="container border p-3">
-        <h1 class="text-white text-center">Eliminar Marca</h1>
+        <h1 class="text-white text-center">Eliminar Categoria</h1>
         <input asp-for="Id" hidden />
         <hr />
         <div class="row">
@@ -15,7 +15,7 @@
                 <input asp-for="Descripcion" disabled class="form-control" />
             </div>
             <div class="col-5 offset-2">
-                <a asp-action="MarcaIndex" class="btn-primary btn form-control ">Volver a la Lista</a>
+                <a asp-action="Index" class="btn-primary btn form-control ">Volver a la Lista</a>
             </div>
             <div class="col-5">
                 <input type="submit" value="Eliminar" class="btn btn-danger form-control" />

@@ -6,6 +6,16 @@ namespace IServicio.Dtos
 {
     public class FacturaDto
     {
+        public string Nombre { get; set; }
+
+        public string Dni { get; set; }
+
+        public string Direccion { get; set; }
+
+        public string Celular { get; set; }
+
+        public string Email { get; set; }
+
         public string Fecha { get; set; }
 
         public string Estado { get; set; }
@@ -14,8 +24,6 @@ namespace IServicio.Dtos
 
         public string TipoPago { get; set; }
 
-        public int ClienteId { get; set; }
-
         public int ComprobanteId { get; set; }
 
 
@@ -23,6 +31,16 @@ namespace IServicio.Dtos
 
     public class FacturaGetDto : DtoBase
     {
+        public string Nombre { get; init; }
+
+        public string Dni { get; init; }
+
+        public string Direccion { get; init; }
+
+        public string Celular { get; init; }
+
+        public string Email { get; init; }
+
 
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public string Fecha { get; init; }
@@ -33,10 +51,6 @@ namespace IServicio.Dtos
         public decimal Total { get; init; }
 
         public string TipoPago { get; init; }
-
-        public int ClienteId { get; init; }
-
-        public string Cliente { get; init; }
 
         public int ComprobanteId { get; init; }
     }

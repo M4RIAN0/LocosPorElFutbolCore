@@ -4,11 +4,7 @@ namespace LXF.Web.ServiceApiClient.IServiceApiClient
 {
     public interface IEnvioServiceApiClient
     {
-        Task<ResponseViewModel?> Add(EnvioViewModel vm);
-        Task<ResponseViewModel?> Update(EnvioViewModel vm);
-        Task<ResponseViewModel?> SoftDelete(int Id);
-        Task<ResponseViewModel?> GetByFilter(string cadenaBuscar); // obtener por filtro
-        Task<ResponseViewModel?> GetAll();
+        Task<ResponseViewModel?> GetByFilter(string cadenaBuscar);
         Task<ResponseViewModel?> GetById(int id);
     }
 }

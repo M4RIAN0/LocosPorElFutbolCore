@@ -15,7 +15,7 @@
 			<div class="col-6">
 			</div>
 			<div class="col-6 text-end">
-				<a asp-action="ProductoCreate" class="btn btn-outline-primary"><i class="bi bi-plus-square"></i> Crear Producto</a>
+				<a asp-action="Create" class="btn btn-outline-primary"><i class="bi bi-plus-square"></i> Crear Producto</a>
 
 			</div>
 		</div>
@@ -78,10 +78,10 @@
 							@item.Categoria
 						</td>
 						<td>
-							<a asp-action="ProductoUpdate" asp-route-Id="@item.Id" class="btn btn-success">
+							<a asp-action="Update" asp-route-Id="@item.Id" class="btn btn-success">
 								<i class="bi bi-pencil-square"></i>
 							</a>
-							<a asp-action="ProductoDelete" asp-route-Id="@item.Id" class="btn btn-danger">
+							<a asp-action="Delete" asp-route-Id="@item.Id" class="btn btn-danger">
 								<i class="bi bi-trash"></i>
 							</a>
 						</td>

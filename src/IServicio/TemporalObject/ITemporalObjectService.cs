@@ -16,6 +16,6 @@ namespace IServicio.TemporalObject
         Task<IEnumerable<T>?> RetrieveObjectsCollectionAsync<T>(string reference);
 
         // Elimina el registro temporal después de la finalización
-        void RemoveObjectsCollectionTemporal(string referencia);
+        void RemoveObjectsCollectionTemporal(string reference);
     }
 }

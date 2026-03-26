@@ -1,11 +1,12 @@
 ﻿using Servicio.Base;
+using System.Collections.Generic;
 
 namespace IServicio.Dtos
 {
-    public class ProvinciaDto : DtoBase
+    public class ProvinciaGetDto : DtoBase
     {
-        public string Nombre { get; set; }
+        public string Nombre { get; init; }
 
-        public string CP { get; set; }
+        public IEnumerable<LocalidadGetDto> Localidades { get; init; }
     }
 }

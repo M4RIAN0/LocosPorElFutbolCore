@@ -52,7 +52,7 @@ namespace Servicio
             var codigo = -1;
             _ = int.TryParse(cadenaBuscar, out codigo);
 
-            return [.. _repository.GetByFilter(x => x.Apellido.Contains(cadenaBuscar) || x.Dni == codigo.ToString()).Select(x => ToGetDto(x))];
+            return [.. _repository.GetByFilter(x => x.Apellido.Contains(cadenaBuscar) || x.Email.Contains(cadenaBuscar) || x.Dni == codigo.ToString()).Select(x => ToGetDto(x))];
         }
 
         public PersonaClienteGetDto GetById(int id)

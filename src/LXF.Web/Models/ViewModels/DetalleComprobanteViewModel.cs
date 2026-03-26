@@ -5,17 +5,11 @@ namespace LXF.Web.Models.ViewModels
     public class DetalleComprobanteViewModel
     {
         public int Cantidad { get; set; }
-
         public decimal SubTotal { get; set; }
-
         public int CodigoBarra { get; set; }
-
-        public  string Descripcion { get; set; }
-
+        public  string ProductoNombre { get; set; }
         public  decimal Precio { get; set; }
-
         public  int ProductoId { get; set; }
-
         public int ComprobanteId { get; set; }
     }
 
@@ -25,16 +19,13 @@ namespace LXF.Web.Models.ViewModels
 
         [Column(TypeName = "decimal(18,2)")]
         public decimal SubTotal { get; init; }
-
         public int CodigoBarra { get; init; }
-
-        public string Descripcion { get; init; }
+        public string ProductoNombre { get; init; }
 
         [Column(TypeName = "decimal(18,2)")]
         public decimal Precio { get; init; }
-
-        public string Producto { get; init; }
-
+        public int ProductoId { get; init; }
+        public ProductoGetViewModel Producto { get; init; }
         public int ComprobanteId { get; init; }
     }
 }

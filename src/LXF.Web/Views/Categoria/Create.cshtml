@@ -1,11 +1,11 @@
 ﻿@using LXF.Web.Models.ViewModels
-@model CategoriaPutViewModel
+@model CategoriaViewModel
 
-<form asp-action="CategoriaUpdate">
+<form asp-action="Create">
     <br />
     <div class="container border p-3">
-        <h1 class="text-white text-center">Editar Categoria</h1>
-        <input asp-for="Id" hidden />
+        <h1 class="text-white text-center">Crear Categoria</h1>
+
         <hr />
         <div class="row">
             <div class="col-2">
@@ -16,10 +16,11 @@
                 <span asp-validation-for="Descripcion" class="text-danger"></span>
             </div>
             <div class="col-5 offset-2">
-                <a asp-action="CategoriaIndex" class="btn-primary btn form-control ">Volver a la Lista</a>
+
+                <a asp-action="Index" class="btn-primary btn form-control ">Volver a la Lista</a>
             </div>
             <div class="col-5">
-                <input type="submit" value="Editar" class="btn btn-success form-control" />
+                <input type="submit" value="Crear" class="btn btn-success form-control" />
             </div>
         </div>
     </div>

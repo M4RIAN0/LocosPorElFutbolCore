@@ -34,15 +34,25 @@
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li><a class="dropdown-item" href="#">Usuarios</a></li>
                                 <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" asp-controller="Producto" asp-action="ProductoIndex">Productos</a></li>
-                                <li><a class="dropdown-item" asp-controller="Marca" asp-action="MarcaIndex">Marcas</a></li>
-                                <li><a class="dropdown-item" asp-controller="Categoria" asp-action="CategoriaIndex">Categorias</a></li>
+                                <li><a class="dropdown-item" asp-controller="Producto" asp-action="Index">Productos</a></li>
+                                <li><a class="dropdown-item" asp-controller="Marca" asp-action="Index">Marcas</a></li>
+                                <li><a class="dropdown-item" asp-controller="Categoria" asp-action="Index">Categorias</a></li>
                             </ul>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Carro" asp-action="CarroIndex">Carrito
+                            <a class="nav-link" asp-area="" asp-controller="Carro" asp-action="Index">Carrito
                                 &nbsp; <i class="bi bi-cart"></i>&nbsp;
                             </a>
+                        </li>
+                        <li class="nav-item">
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <a class="nav-link" asp-area="" asp-controller="Compra" asp-action="MisCompras">
+                                    Mis Compras
+                                    &nbsp; <i class="bi bi-cart"></i>&nbsp;
+                                </a>
+                            }
+                            
                         </li>
                     </ul>
                     <ul class="navbar-nav">

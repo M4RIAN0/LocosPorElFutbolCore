@@ -3,7 +3,7 @@ $ConfigFilePath = Join-Path $PSScriptRoot 'config.json'
 
 # Verificar si el archivo de configuración existe
 if (-Not (Test-Path $ConfigFilePath)) {
-    Write-Error "El archivo de configuración no se encuentra en la ruta: $ConfigFilePath"
+    Write-Error "The configuration file is not located in the path: $ConfigFilePath"
     exit 1
 }
 
@@ -12,12 +12,12 @@ $Config = Get-Content -Raw -Path $ConfigFilePath | ConvertFrom-Json
 
 # Verificar si las configuraciones necesarias están presentes
 if (-Not $Config.ProjectPath) {
-    Write-Error "La ruta del proyecto no está definida en el archivo de configuración."
+    Write-Error "The project path is not defined in the configuration file."
     exit 1
 }
 
 if (-Not $Config.ConnectionStrings.DefaultConnection) {
-    Write-Error "La cadena de conexión no está definida en el archivo de configuración."
+    Write-Error "The connection string is not defined in the configuration file."
     exit 1
 }
 
@@ -25,8 +25,8 @@ if (-Not $Config.ConnectionStrings.DefaultConnection) {
 $ConnectionString = $Config.ConnectionStrings.DefaultConnection
 $ProjectPath = $Config.ProjectPath
 
-Write-Host "Cadena de conexión: $ConnectionString"
-Write-Host "Ruta del proyecto: $ProjectPath"
+Write-Host "Sring conexión: $ConnectionString"
+Write-Host "Project path: $ProjectPath"
 
 # Función para ejecutar comandos en el directorio adecuado
 function Run-Command {
@@ -37,7 +37,7 @@ function Run-Command {
     try {
         Invoke-Expression $Command
     } catch {
-        Write-Error "Error at execute the Command: $Command"
+        Write-Error "Error executing the command: $Command"
         exit 1
     }
 }
@@ -78,7 +78,7 @@ function Run-Migrations {
     Add-Migration
     Update-Database
 
-    Write-Host "Migrations completed with éxit."
+    Write-Host "Migrations completed succesfully."
 }
 
 # Ejecutar las migraciones

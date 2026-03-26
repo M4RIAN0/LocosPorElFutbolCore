@@ -22,12 +22,11 @@ namespace LXF.Web.Models.ViewModels
         public string? UserId { get; init; }
         public IEnumerable<DetalleCarroComprasGetViewModel> DetalleCarroCompras { get; init; }
         public decimal Total { get; init; }
-        [Required]
-        public string? Nombre { get; set; }
-        [Required]
-        public string? Celular { get; set; }
-        [Required]
-        public string?  Email { get; set; }
+
+        //Seccion Facturacion
+
+        public FacturaGetViewModel Factura { get; set; }
+        public EnvioGetViewModel Envio { get; set; }
     }
 }
 

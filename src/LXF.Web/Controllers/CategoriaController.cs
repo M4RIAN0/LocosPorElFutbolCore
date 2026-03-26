@@ -16,7 +16,7 @@ namespace LXF.Web.Controllers
             _mapper = mapper;
         }
 
-        public async Task<IActionResult> CategoriaIndex()
+        public async Task<IActionResult> Index()
         {
             ResponseViewModel? response = await _service.GetAll();
 
@@ -28,27 +28,27 @@ namespace LXF.Web.Controllers
             return View(list);
         }
 
-        public IActionResult CategoriaCreate()
+        public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> CategoriaCreate(CategoriaViewModel vm)
+        public async Task<IActionResult> Create(CategoriaViewModel vm)
         {
             ResponseViewModel? response = await _service.Create(vm);
 
             if (response != null && response.IsSuccess)
             {
                 TempData["success"] = "Categoria Creada Correctamente";
-                return RedirectToAction(nameof(CategoriaIndex));
+                return RedirectToAction(nameof(Index));
             }
             else TempData["error"] = response?.Message;
 
             return View(vm);
         }
 
-        public async Task<IActionResult> CategoriaUpdate(int id)
+        public async Task<IActionResult> Update(int id)
         {
             ResponseViewModel? response = await _service.GetById(id);
 
@@ -63,14 +63,14 @@ namespace LXF.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CategoriaUpdate(CategoriaPutViewModel vm)
+        public async Task<IActionResult> Update(CategoriaPutViewModel vm)
         {
             ResponseViewModel? response = await _service.Update(vm);
 
             if (response != null && response.IsSuccess)
             {
                 TempData["success"] = "Categoria Modificada Correctamente";
-                return RedirectToAction(nameof(CategoriaIndex));
+                return RedirectToAction(nameof(Index));
 
             }
             else TempData["error"] = response?.Message;
@@ -78,7 +78,7 @@ namespace LXF.Web.Controllers
             return View(vm);
         }
 
-        public async Task<IActionResult> CategoriaDelete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             ResponseViewModel? response = await _service.GetById(id);
 
@@ -89,14 +89,14 @@ namespace LXF.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CategoriaDelete(MarcaGetViewModel vm)
+        public async Task<IActionResult> Delete(MarcaGetViewModel vm)
         {
             ResponseViewModel? response = await _service.SoftDelete(vm.Id);
 
             if (response != null && response.IsSuccess)
             {
                 TempData["success"] = "Categoria Eliminada Correctamente";
-                return RedirectToAction(nameof(CategoriaIndex));
+                return RedirectToAction(nameof(Index));
             }
             else TempData["error"] = response?.Message;
 

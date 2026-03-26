@@ -1,12 +1,12 @@
 ﻿@using LXF.Web.Models.ViewModels
 
-@model ProductoViewModel
+@model ProductoPutViewModel
 
-<form asp-action="ProductoCreate">
+<form asp-action="Update">
     <br />
     <div class="container border p-3">
-        <h1 class="text-white text-center">Crear Producto</h1>
-
+        <h1 class="text-white text-center">Editar Producto</h1>
+        <input asp-for="Id" hidden />
         <hr />
         <div class="row">
             <div class="col-2">
@@ -34,7 +34,7 @@
             <div class="col-2">
                 <label class="control-label pt-2" style="font-size:20px;">Talle</label>
             </div>
-           <div class="col-10 pb-3">
+            <div class="col-10 pb-3">
                 <select asp-for="TalleId" class="form-select" asp-items="@ViewBag.Talles">
                     <option disabled selected>--Seleccionar Talle--</option>
                 </select>
@@ -75,12 +75,11 @@
                 <input asp-for="ImagenUrl" class="form-control" />
                 <span asp-validation-for="ImagenUrl" class="text-danger"></span>
             </div>
-
             <div class="col-5 offset-2">
-                <a asp-action="ProductoIndex" class="btn-primary btn form-control ">Volver a la Lista</a>
+                <a asp-action="Index" class="btn-primary btn form-control ">Volver a la Lista</a>
             </div>
             <div class="col-5">
-                <input type="submit" value="Crear" class="btn btn-success form-control" />
+                <input type="submit" value="Editar" class="btn btn-success form-control" />
             </div>
         </div>
     </div>

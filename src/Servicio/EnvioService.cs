@@ -1,4 +1,6 @@
-﻿using Dominio.Repositorio;
+﻿using AutoMapper;
+using Dominio.Entidades;
+using Dominio.Repositorio;
 using IServicio;
 using IServicio.Dtos;
 using Servicio.Base;
@@ -9,37 +11,20 @@ namespace Servicio
 {
     public class EnvioService : ServicioBase, IEnvioService
     {
-        private readonly IEnvioRepositorio _envioRepositorio;
 
-        public EnvioService(IEnvioRepositorio envioRepositorio)
+        private readonly IEnvioRepository _envioRepositorio;
+        private readonly IMapper _mapper;
+
+        public EnvioService(IEnvioRepository envioRepositorio, IMapper mapper)
         {
-            _envioRepositorio = envioRepositorio;
+            envioRepositorio = _envioRepositorio;
+            _mapper = mapper;
         }
 
-        public void Add(EnvioDto Dto)
+        public void Add(EnvioDto dto)
         {
-            var envio = new Dominio.Entidades.Envio()
-            {
-                Tipo = Dto.Tipo,
-                Monto = Dto.Monto,
-                LocalidadId = Dto.LocalidadId,
-
-            };
-
-            _envioRepositorio.Add(envio);
-            _envioRepositorio.Save();
-        }
-
-
-        public void Update(EnvioDto Dto)
-        {
-            var envio = _envioRepositorio.GetById(Dto.Id, "Envio");
-
-            envio.Tipo = Dto.Tipo;
-            envio.Monto = Dto.Monto;
-            envio.LocalidadId = Dto.LocalidadId;
-
-            _envioRepositorio.Attach(envio);
+            var modelEnvio = ToEnvioEntity(dto);
+            _envioRepositorio.Add(modelEnvio);
             _envioRepositorio.Save();
         }
 
@@ -50,36 +35,34 @@ namespace Servicio
         }
 
 
-        public IEnumerable<EnvioDto> GetAll()
+        public IEnumerable<EnvioGetDto> GetAll()
         {
-            return _envioRepositorio.GetAll("Envios").Select(x => new EnvioDto()
-            {
-                Id = x.ID,
-                Tipo = x.Tipo,
-                Monto = x.Monto,
-                LocalidadId = x.LocalidadId,
-                //LocalidadeStr = x.Localidades.Nombre, //ver entidad Localidad
-            }).ToList();
+            return [.. _envioRepositorio.GetAll().Select(x => ToEnvioGetDto(x))];
         }
 
-        public IEnumerable<EnvioDto> GetByFilter(string cadenaBuscar)
+        public IEnumerable<EnvioGetDto> GetByFilter(string persona)
         {
-            throw new System.NotImplementedException();//ver si se va a usar mas adelante
+            return [.. _envioRepositorio.GetByFilter(x => x.Persona.Equals(persona)).Select(x => ToEnvioGetDto(x))];
         }
 
-        public EnvioDto GetById(int id)
+        public EnvioGetDto GetById(int id)
         {
-            var envio = _envioRepositorio.GetById(id, "Envio");
-
-            return new EnvioDto()
-            {
-                Id = envio.ID,
-                Tipo = envio.Tipo,
-                Monto = envio.Monto,
-                LocalidadId = envio.LocalidadId,
-                //LocalidadeStr = envio.Localidade.Nombre,
-            };
+            return _envioRepositorio.GetByFilter(x => x.ID.Equals(id)).Select(x => ToEnvioGetDto(x)).FirstOrDefault();
         }
+
+
+        #region Private Methods
+
+        private Envio ToEnvioEntity(object? dto)
+        {
+            return _mapper.Map<Envio>(dto);
+        }
+
+        private EnvioGetDto ToEnvioGetDto(object? model)
+        {
+            return _mapper.Map<EnvioGetDto>(model);
+        }
+        #endregion
 
 
     }
