@@ -37,6 +37,7 @@ builder.Services.AddHttpClient<IMarcaServiceApiClient, MarcaServiceApiClient>();
 builder.Services.AddHttpClient<IMovimientoServiceApiClient, MovimientoServiceApiClient>();
 builder.Services.AddHttpClient<IPersonaClienteServiceApiClient, PersonaClienteServiceApiClient>();
 builder.Services.AddHttpClient<IProductoServiceApiClient, ProductoServiceApiClient>();
+builder.Services.AddHttpClient<IProvinciaServiceApiClient, ProvinciaServiceApiClient>();
 builder.Services.AddHttpClient<ITalleServiceApiClient, TalleServiceApiClient>();
 builder.Services.AddHttpClient<IVentaServiceApiClient, VentaServiceApiClient>();
 // populated value of endpoint url to LXFApiBase
@@ -55,6 +56,7 @@ builder.Services.AddMemoryCache();
 //Dependece Injection configuration in Services Api Clients
 builder.Services.AddScoped<IServiceBaseApiClient, ServiceBaseApiClient>();
 builder.Services.AddScoped<ICategoriaServiceApiClient, CategoriaServiceApiClient>();
+builder.Services.AddScoped<IEnvioServiceApiClient, EnvioServiceApiClient>();
 builder.Services.AddScoped<ICarroComprasServiceApiClient, CarroComprasServiceApiClient>();
 builder.Services.AddScoped<IDetalleCarroComprasServiceApiClient, DetalleCarroComprasServiceApiClient>();
 builder.Services.AddScoped<IDetalleComprobanteServiceApiClient, DetalleComprobanteServiceApiClient>();
@@ -65,15 +67,19 @@ builder.Services.AddScoped<IMarcaServiceApiClient, MarcaServiceApiClient>();
 builder.Services.AddScoped<IMovimientoServiceApiClient, MovimientoServiceApiClient>();
 builder.Services.AddScoped<IPersonaClienteServiceApiClient, PersonaClienteServiceApiClient>();
 builder.Services.AddScoped<IProductoServiceApiClient, ProductoServiceApiClient>();
+builder.Services.AddScoped<IProvinciaServiceApiClient, ProvinciaServiceApiClient>();
 builder.Services.AddScoped<ITalleServiceApiClient, TalleServiceApiClient>();
 builder.Services.AddScoped<IVentaServiceApiClient, VentaServiceApiClient>();
 
 //Dependece Injection configuration in Services
 builder.Services.AddScoped<ICategoriaService, CategoriaService>();
 builder.Services.AddScoped<ICarroComprasService, CarroComprasService>();
+builder.Services.AddScoped<EnvioService, EnvioService>();
 builder.Services.AddScoped<IDetalleCarroComprasService, DetalleCarroComprasService>();
 builder.Services.AddScoped<IMarcaService, MarcaService>();
+builder.Services.AddScoped<IPersonaClienteService, PersonaClienteService>();
 builder.Services.AddScoped<IProductoService, ProductoService>();
+builder.Services.AddScoped<IProvinciaService, ProvinciaService>();
 builder.Services.AddScoped<ITalleService, TalleService>();
 builder.Services.AddScoped<IVentaService, VentaService>();
 builder.Services.AddScoped<IMercadoPagoService, MercadoPagoService>();

@@ -1,10 +1,14 @@
 ﻿using IServicio.Dtos;
-using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace IServicio
 {
     public interface IVentaService
     {
         void PersistObjects(TransactionObjectsDto dto);
+        IEnumerable<ComprobanteGetDto> GetComprobantesByClienteId(int clienteId);
+        ComprobanteGetDto GetComprobantebyId(int id);
+
+
     }
 }

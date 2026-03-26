@@ -4,7 +4,6 @@ namespace LXF.Web.Models.ViewModels
 {
     public class PersonaClienteViewModel
     {
-        public required int Codigo { get; set; }
 
         public required string Apellido { get; set; }
 
@@ -30,8 +29,6 @@ namespace LXF.Web.Models.ViewModels
 
     public class PersonaClienteGetViewModel : ViewModelBase
     {
-        public int Codigo { get; init; }
-
         public string Apellido { get; init; }
 
         public string Nombre { get; init; }
@@ -48,7 +45,5 @@ namespace LXF.Web.Models.ViewModels
         public string Celular { get; init; }
 
         public string Email { get; init; }
-
-        public string PersonaStr => Apellido + " " + Nombre;
     }
 }

@@ -18,7 +18,7 @@ namespace LXF.Web.Controllers
             _mapper = mapper;
         }
 
-        public async Task<IActionResult> ProductoIndex() 
+        public async Task<IActionResult> Index() 
         {
             ResponseViewModel? response = await _service.GetAll();
 
@@ -30,27 +30,27 @@ namespace LXF.Web.Controllers
             return View(list);
         }
 
-        public async Task<IActionResult> ProductoCreate()
+        public async Task<IActionResult> Create()
         {
             return await HandleErrorOnCreateOrUpdate(null, true);
         }
 
         [HttpPost]
-        public async Task<IActionResult> ProductoCreate(ProductoViewModel vm)
+        public async Task<IActionResult> Create(ProductoViewModel vm)
         {
             ResponseViewModel? response = await _service.Create(vm);
 
             if (response != null && response.IsSuccess)
             {
                 TempData["success"] = "Producto Creado Correctamente";
-                return RedirectToAction(nameof(ProductoIndex));
+                return RedirectToAction(nameof(Index));
             }
             else TempData["error"] = response?.Message;
 
             return await HandleErrorOnCreateOrUpdate(vm, false);
         }
 
-        public async Task<IActionResult> ProductoUpdate(int id)
+        public async Task<IActionResult> Update(int id)
         {
             ResponseViewModel? response = await _service.GetById(id);
 
@@ -63,14 +63,14 @@ namespace LXF.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> ProductoUpdate(ProductoPutViewModel vm)
+        public async Task<IActionResult> Update(ProductoPutViewModel vm)
         {
             ResponseViewModel? response = await _service.Update(vm);
 
             if (response != null && response.IsSuccess)
             {
                 TempData["success"] = "Producto Modificado Correctamente";
-                return RedirectToAction(nameof(ProductoIndex));
+                return RedirectToAction(nameof(Index));
 
             }
             else TempData["error"] = response?.Message;
@@ -78,7 +78,7 @@ namespace LXF.Web.Controllers
             return await HandleErrorOnCreateOrUpdate(vm, false);
         }
 
-        public async Task<IActionResult> ProductoDelete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             ResponseViewModel? response = await _service.GetById(id);
 
@@ -89,14 +89,14 @@ namespace LXF.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> ProductoDelete(ProductoGetViewModel vm)
+        public async Task<IActionResult> Delete(ProductoGetViewModel vm)
         {
             ResponseViewModel? response = await _service.SoftDelete(vm.Id);
 
             if (response != null && response.IsSuccess)
             {
                 TempData["success"] = "Producto Eliminado Correctamente";
-                return RedirectToAction(nameof(ProductoIndex));
+                return RedirectToAction(nameof(Index));
             }
             else TempData["error"] = response?.Message;
 

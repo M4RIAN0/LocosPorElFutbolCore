@@ -1,4 +1,5 @@
-﻿using Servicio.Base;
+﻿using Dominio.Repositorio.Dtos;
+using Servicio.Base;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace IServicio.Dtos
@@ -11,7 +12,7 @@ namespace IServicio.Dtos
 
         public int CodigoBarra { get; set; }
 
-        public string Descripcion { get; set; }
+        public string ProductoNombre { get; set; }
 
         public decimal Precio { get; set; }
 
@@ -29,14 +30,14 @@ namespace IServicio.Dtos
 
         public int CodigoBarra { get; init; }
 
-        public string Descripcion { get; init; }
+        public string ProductoNombre { get; init; }
 
         [Column(TypeName = "decimal(18,2)")]
         public decimal Precio { get; init; }
 
         public int ProductoId { get; init; }
 
-        public string Producto { get; init; }
+        public ProductoGetDto Producto { get; init; }
 
         public int ComprobanteId { get; init; }
     }

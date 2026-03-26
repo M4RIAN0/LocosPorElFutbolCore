@@ -20,7 +20,6 @@ namespace Dominio.Entidades
         //propiedades de navegacion
         public int ProvinciaId { get; set; }
         public virtual Provincia Provincia { get; set; }
-        public virtual IEnumerable<Envio> Envios { get; set; }
 
     }
 }

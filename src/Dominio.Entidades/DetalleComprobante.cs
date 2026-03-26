@@ -19,7 +19,7 @@ namespace Dominio.Entidades
         public int CodigoBarra { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "El campo {0} es obligatorio.")]
-        public string Descripcion { get; set; }
+        public string ProductoNombre { get; set; }
 
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         [Column(TypeName = "decimal(18,2)")]

@@ -9,11 +9,11 @@ namespace Dominio.Entidades
 
     public partial class OrdenCompra : MasterEntityModel
     {
-        public string? UserId { get; set; }
+        public string UserId { get; set; }
         public decimal Total { get; set; }
-        public string? Nombre { get; set; }
-        public string? Celular { get; set; }
-        public string? Email { get; set; }
+        public string Nombre { get; set; }
+        public string Celular { get; set; }
+        public string Email { get; set; }
         public DateOnly Fecha { get; set; }
         public string Status { get; set; }
 

@@ -25,5 +25,22 @@ namespace LxF.API.Controllers
             return Ok();
         }
 
+        [HttpGet("{clienteId:int}/getComprobanteByCliente")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        public IActionResult GetComprobanteByClienteId(int clienteId)
+        {
+            var result = _service.GetComprobantesByClienteId (clienteId);
+            return Ok(result);
+        }
+
+        [HttpGet("{id:int}/getComprobanteById")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        public IActionResult GetComprobanteById(int id)
+        {
+            var result = _service.GetComprobantebyId(id);
+            return Ok(result);
+        }
     }
 }

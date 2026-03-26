@@ -3,7 +3,7 @@ using Infraestructura.RepositorioBase;
 
 namespace Dominio.Repositorio
 {
-    public interface IEnvioRepositorio : IRepository<Envio>
+    public interface IProvinciaRepository : IRepository<Provincia>
     {
 
     }

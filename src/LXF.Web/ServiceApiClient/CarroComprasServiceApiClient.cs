@@ -40,7 +40,7 @@ public class CarroComprasServiceApiClient : ICarroComprasServiceApiClient
         return await _baseServiceApiClient.SendAsync(new RequestViewModel
         {
             ApiType = SD.ApiType.PUT, // el tipo de peticion HTTP es PUT
-            Url = $"{SD.LXFApiBase}/api/Carro/{id}/AddItem" // generamos el endpoint del APi que vamos a consumir
+            Url = $"{SD.LXFApiBase}/api/Carro/{id}/addItem" // generamos el endpoint del APi que vamos a consumir
         });
 
     }
@@ -50,7 +50,7 @@ public class CarroComprasServiceApiClient : ICarroComprasServiceApiClient
         return await _baseServiceApiClient.SendAsync(new RequestViewModel
         {
             ApiType = SD.ApiType.PUT, // el tipo de peticion HTTP es PUT
-            Url = $"{SD.LXFApiBase}/api/Carro/{id}/SubstractItem" // generamos el endpoint del APi que vamos a consumir
+            Url = $"{SD.LXFApiBase}/api/Carro/{id}/substractItem" // generamos el endpoint del APi que vamos a consumir
         });
 
     }

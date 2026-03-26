@@ -54,10 +54,10 @@ namespace IServicio.TemporalObject
         }
     
         // ⭐ 3. Eliminar la Colección Temporal ⭐
-        public void RemoveObjectsCollectionTemporal(string referencia)
+        public void RemoveObjectsCollectionTemporal(string reference)
         {
             // Remove elimina la clave y el valor asociado de la caché.
-            _cache.Remove(referencia);
+            _cache.Remove(reference);
         }
     }
 }

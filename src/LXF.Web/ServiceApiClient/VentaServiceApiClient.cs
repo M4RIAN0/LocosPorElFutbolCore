@@ -24,4 +24,21 @@ public class VentaServiceApiClient : IVentaServiceApiClient
         });
     }
 
+    public async Task<ResponseViewModel?> GetComprobantesByClienteId(int clienteId)
+    {
+        return await _baseServiceApiClient.SendAsync(new RequestViewModel
+        {
+            ApiType = SD.ApiType.GET, // el tipo de peticion HTTP es GET
+            Url = $"{SD.LXFApiBase}/api/Venta/{clienteId}/getComprobanteByCliente" // generamos el endpoint del APi que vamos a consumir
+        });
+    }
+
+    public async Task<ResponseViewModel?> GetComprobanteById(int id)
+    {
+        return await _baseServiceApiClient.SendAsync(new RequestViewModel
+        {
+            ApiType = SD.ApiType.GET, // el tipo de peticion HTTP es GET
+            Url = $"{SD.LXFApiBase}/api/Venta/{id}/getComprobanteById" // generamos el endpoint del APi que vamos a consumir
+        });
+    }
 }

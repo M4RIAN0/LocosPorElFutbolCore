@@ -22,8 +22,7 @@ namespace Servicio
 
         public IEnumerable<FacturaGetDto> GetAll()
         {
-            return _facturaRepository.GetAll("PersonaCliente")
-                  .Select(p => ToGetFacturaDto(p));
+            return _facturaRepository.GetAll("PersonaCliente").Select(p => ToGetFacturaDto(p));
         }
 
         public FacturaGetDto GetById(int id)
@@ -32,9 +31,8 @@ namespace Servicio
                    .GetById(id, "PersonaCliente"));
         }
 
-
         #region Private Mhetods
-        private FacturaGetDto ToGetFacturaDto(Factura model)
+        private FacturaGetDto ToGetFacturaDto(object? model)
         {
             return _mapper.Map<FacturaGetDto>(model);
         }

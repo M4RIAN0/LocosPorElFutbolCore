@@ -110,6 +110,8 @@ builder.Services.Configure<MercadoPagoConfiguration>(builder.Configuration.GetSe
 builder.Services.AddScoped<IIdentityService, IndentityService>();
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 builder.Services.AddSingleton(emailConfig);
+builder.Services.AddScoped<IEnvioService, EnvioService>();
+builder.Services.AddScoped<IEnvioRepository, EnvioRepository>();
 builder.Services.AddScoped<IPersonaClienteService, PersonaClienteService>();
 builder.Services.AddScoped<IPersonaClienteRepository, PersonaClienteRepository>();
 builder.Services.AddScoped<ITalleService, TalleService>();
@@ -118,6 +120,8 @@ builder.Services.AddScoped<ICategoriaService, CategoriaService>();
 builder.Services.AddScoped<ICategoriaRepository, CategoriaRepository>();
 builder.Services.AddScoped<IMarcaService, MarcaService>();
 builder.Services.AddScoped<IMarcaRepository, MarcaRepository>();
+builder.Services.AddScoped<IPersonaClienteService, PersonaClienteService>();
+builder.Services.AddScoped<IPersonaClienteRepository, PersonaClienteRepository>();
 builder.Services.AddScoped<IProductoService, ProductoService>();
 builder.Services.AddScoped<IProductoRepository, ProductoRepository>();
 builder.Services.AddScoped<IFacturaService, FacturaService>();
@@ -135,6 +139,8 @@ builder.Services.AddScoped<IDetalleCarroCompraService, DetalleCarroCompraService
 builder.Services.AddScoped<IDetalleCarroCompraRepository, DetalleCarroCompraRepository>();
 builder.Services.AddScoped<IDetalleOrdenCompraService, DetallOrdenCompraService>();
 builder.Services.AddScoped<IDetalleOrdenCompraRepository, DetalleOrdenCompraRepository>();
+builder.Services.AddScoped<IProvinciaService, ProvinciaService>();
+builder.Services.AddScoped<IProvinciaRepository, ProvinciaRepository>();
 builder.Services.AddScoped<IVentaService, VentaService>();
 builder.Services.AddScoped<IJwTokenGenerator, JwTokenGenerator>(); // inyeccion service IJwTokenGenerator
 builder.Services.AddSingleton<IMercadoPagoGateway, MercadoPagoGateway>(); // Gateay MercadoPago

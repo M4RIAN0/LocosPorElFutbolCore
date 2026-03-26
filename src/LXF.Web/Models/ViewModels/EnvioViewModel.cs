@@ -1,12 +1,26 @@
-﻿namespace LXF.Web.Models.ViewModels
+﻿using Servicio.Base;
+
+namespace LXF.Web.Models.ViewModels
 {
-    public class EnvioViewModel : ViewModelBase
+    public class EnvioViewModel 
     {
-        public string Tipo { get; set; }
+        public string Persona { get; set; }
+        public string Email { get; set; }
+        public string Celular { get; set; }
+        public string Direccion { get; set; }
+        public string Dni { get; set; }
         public decimal Monto { get; set; }
-        public int LocalidadId { get; set; }
-        public int Comprobante_Id { get; set; }
-        public string ComprobanteStr { get; set; }
-        public string LocalidadeStr { get; set; }
+        public int ComprobanteId { get; set; }
+    }
+
+    public class EnvioGetViewModel : ViewModelBase
+    {
+        public string Persona { get; init; }
+        public string Email { get; init; }
+        public string Celular { get; init; }
+        public string Direccion { get; init; }
+        public string Dni { get; init; }
+        public decimal Monto { get; init; }
+        public int ComprobanteId { get; init; }
     }
 }

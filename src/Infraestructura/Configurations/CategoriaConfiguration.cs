@@ -47,7 +47,12 @@ namespace Infraestructura.Configurations
            {
                ID = 7,
                Descripcion = "Pantalones"
-           });
+           },
+            new Categoria
+            {
+                ID = 8,
+                Descripcion = "Camperas"
+            });
 
         }
     }

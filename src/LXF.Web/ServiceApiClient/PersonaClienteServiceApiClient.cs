@@ -18,7 +18,7 @@ namespace LXF.Web.ServiceApiClient
             {
                 ApiType = SD.ApiType.POST,
                 Data = vm,
-                Url = $"{SD.LXFApiBase}/api/PersonaCliente"
+                Url = $"{SD.LXFApiBase}/api/Persona"
             });
         }
 
@@ -27,16 +27,16 @@ namespace LXF.Web.ServiceApiClient
             return await _baseServiceApiClient.SendAsync(new RequestViewModel
             {
                 ApiType = SD.ApiType.GET,
-                Url = $"{SD.LXFApiBase}/api/PersonaCliente"
+                Url = $"{SD.LXFApiBase}/api/Persona"
             });
         }
 
-        public async Task<ResponseViewModel?> GetByFilter(string cadenaBuscar)
+        public async Task<ResponseViewModel?> GetByFilter(string word)
         {
             return await _baseServiceApiClient.SendAsync(new RequestViewModel
             {
                 ApiType = SD.ApiType.GET,
-                Url = $"{SD.LXFApiBase}/api/PersonaCliente/GetByFilter{cadenaBuscar}"
+                Url = $"{SD.LXFApiBase}/api/Persona/GetByFilter?word={word}"
             });
         }
 
@@ -45,7 +45,7 @@ namespace LXF.Web.ServiceApiClient
             return await _baseServiceApiClient.SendAsync(new RequestViewModel
             {
                 ApiType = SD.ApiType.GET,
-                Url = $"{SD.LXFApiBase}/api/PersonaCliente/{id}"
+                Url = $"{SD.LXFApiBase}/api/Persona/{id}"
             });
         }
 
@@ -54,7 +54,7 @@ namespace LXF.Web.ServiceApiClient
             return await _baseServiceApiClient.SendAsync(new RequestViewModel
             {
                 ApiType = SD.ApiType.PUT,
-                Url = $"{SD.LXFApiBase}/api/PersonaCliente/{id}/delete"
+                Url = $"{SD.LXFApiBase}/api/Persona/{id}/delete"
             });
         }
 
@@ -64,7 +64,7 @@ namespace LXF.Web.ServiceApiClient
             {
                 ApiType = SD.ApiType.PUT,
                 Data = vm,
-                Url = $"{SD.LXFApiBase}/api/PersonaCliente/"
+                Url = $"{SD.LXFApiBase}/api/Persona/"
             });
         }
     }

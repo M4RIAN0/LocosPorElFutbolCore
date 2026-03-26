@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using LXF.Web.Models.ViewModels;
 using LXF.Web.Service.IService;
+using LXF.Web.ServiceApiClient;
 using LXF.Web.ServiceApiClient.IServiceApiClient;
 using LXF.Web.Utility;
 using Microsoft.AspNetCore.Authentication;
@@ -15,13 +16,18 @@ namespace LXF.Web.Controllers
 {
     public class IdentityController : Controller
     {
-        private readonly IIdentityServiceApiClient _serviceApiClient;
+        private readonly IIdentityServiceApiClient _IdentityserviceApiClient;
+        private readonly IPersonaClienteServiceApiClient _personaClienteServiceApiClient;
+        private readonly IProvinciaService _provinciaService;
         private readonly ITokenProvider _tokenProvider;
         private readonly IMapper _mapper;
 
-        public IdentityController(IIdentityServiceApiClient serviceApiClient, ITokenProvider tokenProvider, IMapper mapper)
+        public IdentityController(IIdentityServiceApiClient identityserviceApiClient, IPersonaClienteServiceApiClient personaClienteServiceApiClient,
+                                  IProvinciaService provinciaService, ITokenProvider tokenProvider, IMapper mapper)
         {
-            _serviceApiClient = serviceApiClient;
+            _IdentityserviceApiClient = identityserviceApiClient;
+            _personaClienteServiceApiClient = personaClienteServiceApiClient;
+            _provinciaService = provinciaService;
             _tokenProvider = tokenProvider;
             _mapper = mapper;
         }
@@ -36,7 +42,7 @@ namespace LXF.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginRequestViewModel vm)
         {
-            ResponseViewModel response = await _serviceApiClient.LoginAsync(vm);
+            ResponseViewModel response = await _IdentityserviceApiClient.LoginAsync(vm);
 
             if (response != null && response.IsSuccess)
             {
@@ -56,15 +62,7 @@ namespace LXF.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Register()
         {
-            var roleList = new List<SelectListItem>()
-            {
-                new (SD.RoleAdmin, SD.RoleAdmin),
-                new (SD.RoleCustomer, SD.RoleCustomer)
-            };
-
-            ViewBag.RoleList = roleList;
-
-            return View();
+            return await GetFormPopulated(null);
         }
 
         [HttpPost]
@@ -72,37 +70,37 @@ namespace LXF.Web.Controllers
         {
             if (ModelState.IsValid)
             {
-                ResponseViewModel response = await _serviceApiClient.RegsiterAsync(vm);
 
-                if (response != null && response.IsSuccess)
+                var identityResponse = await _IdentityserviceApiClient.RegsiterAsync(vm);
+
+                if (identityResponse != null && identityResponse.IsSuccess)
                 {
-                    if (string.IsNullOrWhiteSpace(vm.Role))
-                        vm.Role = SD.RoleCustomer;
+                    vm.Role = SD.RoleCustomer;
 
-                    ResponseViewModel assignRole = await _serviceApiClient.AssignRoleAsync(vm);
+                    var assignRole = await _IdentityserviceApiClient.AssignRoleAsync(vm);
 
 
                     if (assignRole != null && assignRole.IsSuccess)
                     {
-                        TempData["success"] = response.Message;
+                        TempData["success"] = identityResponse?.Message;
+                    }
+                    
+                    var personaVM = GetPersonaVm(vm);
+                    var personaResponse = await _personaClienteServiceApiClient.Add(personaVM);
+
+                    if (personaResponse.IsSuccess)
+                    {
+                        TempData["success"] = identityResponse.Message;
                         return RedirectToAction(nameof(Login));
                     }
                 }
                 else
                 {
-                    TempData["error"] = response?.Message;
+                    TempData["error"] = identityResponse?.Message;
                 }
             }
 
-            var roleList = new List<SelectListItem>()
-            {
-                new (SD.RoleAdmin, SD.RoleAdmin),
-                new (SD.RoleCustomer, SD.RoleCustomer)
-            };
-
-            ViewBag.RoleList = roleList;
-
-            return View(vm);
+            return await GetFormPopulated(vm);
         }
 
         public async Task<IActionResult> Logout()
@@ -112,7 +110,7 @@ namespace LXF.Web.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        #region Private Events
+        #region Private Events 
         private async Task SignInUser(LoginResponseViewModel model)
         {
             var handler = new JwtSecurityTokenHandler(); // manipulador de JWT
@@ -137,6 +135,63 @@ namespace LXF.Web.Controllers
 
             var principal = new ClaimsPrincipal(identity);
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+        }
+
+        private PersonaClienteViewModel GetPersonaVm(RegisterRequestViewModel vm)
+        {
+            string[] partesNombre = vm.Nombre.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+
+            return new  PersonaClienteViewModel {
+                
+                Apellido = string.Join(" ", partesNombre.Skip(1)),
+                Nombre = partesNombre[0],
+                Dni = vm.Dni,
+                Direccion = vm.Direccion,
+                Sexo = vm.Sexo,
+                FechaNacimiento = vm.FechaNacimiento,
+                Celular = vm.Celular,
+                Email = vm.Email
+
+            };
+        }
+
+        private async Task<IActionResult> GetFormPopulated(RegisterRequestViewModel? vm)
+        {
+           var response = await _provinciaService.GetAll();
+
+           if (response.IsSuccess && response.Result != null)
+            {
+                var provincias = ((IEnumerable<object>)response.Result).Select(p => ToGetViewModelProvincias(p)).ToList();
+                var localidades = provincias.SelectMany(p => p.Localidades).ToList();
+
+                ViewData["Provincias"] = new SelectList(provincias, "Id", "Nombre");
+
+                ViewData["Localidades"] = new SelectList(localidades, "Id", "Nombre");
+
+                ViewBag.LocalidadesData = localidades.Select(l => new
+                {
+                    Id = l.Id,
+                    Nombre = l.Nombre,
+                    ProvinciaId = l.ProvinciaId.ToString() // ⬅️ Incluimos el ID de Provincia
+                }).ToList();
+
+                if (vm == null)
+                    return View();
+
+                return View(vm);
+            }
+
+           TempData["error"] = "No se pudieron cargar las provincias.";
+
+            if (vm == null)
+                return View();
+
+            return View(vm);
+        }
+
+        private ProvinciaGetViewModel ToGetViewModelProvincias(object? obj)
+        {       
+            return _mapper.Map<ProvinciaGetViewModel>(obj);
         }
         #endregion
     }

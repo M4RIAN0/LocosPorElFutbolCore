@@ -13,16 +13,10 @@ namespace Infraestructura.Configurations
             .IsUnique()
             .HasDatabaseName("IX_PersonaCliente_Nombre_Apellido_Dni"); // Nombre del índice en la base de datos
 
-            builder.HasMany(x => x.Facturas)
-                   .WithOne(x => x.PersonaCliente)
-                   .HasForeignKey(x => x.ClienteId)
-                   .IsRequired();
-
             builder.HasData(
                new PersonaCliente
                {
                    ID = 1,
-                   Codigo = 123,
                    Apellido = "Martinez",
                    Nombre = "Marcos",
                    Dni = "38060619",
@@ -35,7 +29,6 @@ namespace Infraestructura.Configurations
                new PersonaCliente
                {
                    ID = 2,
-                   Codigo = 456,
                    Apellido = "Garcia",
                    Nombre = "Juan Carlos",
                    Dni = "45607656",

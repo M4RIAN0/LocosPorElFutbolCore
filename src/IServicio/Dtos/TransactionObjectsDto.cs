@@ -6,7 +6,6 @@ namespace IServicio.Dtos
     {
         public OrdenCompraDto Orden { get; set; }
         public ComprobanteDto Comprobante { get; set; }
-        public FacturaDto Factura { get; set; }
         public int CarroId { get; set; } 
     }
 }
