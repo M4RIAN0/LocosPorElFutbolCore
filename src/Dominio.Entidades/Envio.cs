@@ -1,6 +1,7 @@
 namespace Dominio.Entidades
 {
     using DominioBase;
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
@@ -28,11 +29,9 @@ namespace Dominio.Entidades
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         [Column(TypeName = "decimal(18,2)")]
         public decimal Monto { get; set; }
-        
+        public string Estado { get; set; }
+
         //propiedades de navegacion
-
-        public int ComprobanteId { get; set; }
-
-        public virtual Comprobante Comprobante { get; set; }
+        public virtual IEnumerable<Comprobante> Comprobantes { get; set; }
     }
 }

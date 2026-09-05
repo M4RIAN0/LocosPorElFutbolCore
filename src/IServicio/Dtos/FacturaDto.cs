@@ -24,8 +24,6 @@ namespace IServicio.Dtos
 
         public string TipoPago { get; set; }
 
-        public int ComprobanteId { get; set; }
-
 
     }
 
@@ -51,7 +49,5 @@ namespace IServicio.Dtos
         public decimal Total { get; init; }
 
         public string TipoPago { get; init; }
-
-        public int ComprobanteId { get; init; }
     }
 }

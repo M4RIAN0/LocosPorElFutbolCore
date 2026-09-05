@@ -3,6 +3,7 @@ using Dominio.Entidades;
 using Dominio.Repositorio;
 using IServicio;
 using IServicio.Dtos;
+using Microsoft.EntityFrameworkCore.Update.Internal;
 using Servicio.Base;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,6 +36,7 @@ namespace Servicio
             _ordenCompraRepository.Save();
 
             //Comprobante
+            UpdateComprobante(dto);
             var comprobanteModel = ToComprobanteEntity(dto.Comprobante);
             _comprobanteRepository.Add(comprobanteModel);
             _comprobanteRepository.Save();
@@ -48,16 +50,21 @@ namespace Servicio
 
         public IEnumerable<ComprobanteGetDto> GetComprobantesByClienteId(int clienteId)
         {
-            return [.. _comprobanteRepository.GetByFilter(x => x.ClienteId == clienteId, "DetalleComprobantes.Producto").Select(x => ToComprobanteGetDto(x))];
+            return [.. _comprobanteRepository.GetByFilter(x => x.ClienteId == clienteId, "DetalleComprobantes.Producto,Envio").Select(x => ToComprobanteGetDto(x))];
         }
 
         public ComprobanteGetDto GetComprobantebyId(int id)
         {
-           return ToComprobanteGetDto(_comprobanteRepository.GetById(id, "Factura,Envio"));
+            return ToComprobanteGetDto(_comprobanteRepository.GetById(id, "DetalleComprobantes.Producto,Factura,Envio"));
         }
 
         #region Private Mhetods
 
+        private void UpdateComprobante(TransactionObjectsDto dto)
+        {
+            dto.Comprobante.Factura = dto.Factura;
+            dto.Comprobante.Envio = dto.Envio;
+        }
         private OrdenCompra ToOrdenCompraEntity(object? obj)
         {
             return _mapper.Map<OrdenCompra>(obj);
@@ -72,7 +79,7 @@ namespace Servicio
         {
             return _mapper.Map<ComprobanteGetDto>(obj);
         }
+
         #endregion
     }
-
 }

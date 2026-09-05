@@ -1,0 +1,212 @@
+﻿@using LXF.Web.Models.ViewModels
+@using LXF.Web.Utility
+@model ComprobanteGetViewModel
+
+@{
+    ViewData["Title"] = "Detalle de la compra";
+    decimal subtotalProductos = Model.DetalleComprobantes.Sum(d => d.SubTotal);
+
+    // Definimos los colores oficiales
+    string colorEntregado = "#00a650";   // Verde ML
+    string colorEnCamino = "#00b4d8";    // Azul Celeste
+    string colorPreparacion = "#ff9f1c"; // Naranja / Ámbar
+    string colorConfirmado = "#2ec4b6";  // Turquesa
+
+    // Obtenemos el estado dinámico desde el Envio
+    string estadoActual = Model.Envio?.Estado ?? EnvioUtility.CompraConfirmada;
+}
+
+<div class="container mt-4" style="max-width: 1100px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+    <div class="row">
+
+        <!-- COLUMNA PRINCIPAL -->
+        <div class="col-md-8">
+
+            <!-- Estado del Paquete (Dinámico según la DB) -->
+            <div class="card card-custom mb-3">
+                <div class="card-body">
+                    @switch (estadoActual)
+                    {
+                        case EnvioUtility.Entregado:
+                            <h5 style="color: @colorEntregado; font-weight: 600; font-size: 0.9rem;" class="mb-1">
+                                Entregado
+                            </h5>
+                            <p class="mb-1 fs-5 fw-bold text-white">
+                                Llegó el @Model.Fecha
+                                <span style="color: @colorEntregado; margin-left: 5px;">
+                                    <i class="bi bi-lightning-fill"></i>
+                                </span>
+                            </p>
+                            <p class="text-secondary mb-0 small">
+                                Entregamos tu paquete a <strong class="text-white">@Model.Envio.Persona</strong> (DNI @Model.Envio.Dni)
+                            </p>
+                            break;
+
+                        case EnvioUtility.EnCamino:
+                            <h5 style="color: @colorEnCamino; font-weight: 600; font-size: 0.9rem;" class="mb-1">
+                                En camino
+                            </h5>
+                            <p class="mb-0 fs-5 fw-bold text-white">
+                                Tu paquete está en viaje
+                                <span style="color: @colorEnCamino; margin-left: 5px;">
+                                    <i class="bi bi-truck"></i>
+                                </span>
+                            </p>
+                            break;
+
+                        case EnvioUtility.EnPreparacion:
+                            <h5 style="color: @colorPreparacion; font-weight: 600; font-size: 0.9rem;" class="mb-1">
+                                En preparación
+                            </h5>
+                            <p class="mb-0 fs-5 fw-bold text-white">
+                                El vendedor está preparando tu paquete
+                                <span style="color: @colorPreparacion; margin-left: 5px;">
+                                    <i class="bi bi-box-seam"></i>
+                                </span>
+                            </p>
+                            break;
+
+                        default: // Compra Confirmada
+                            <h5 style="color: @colorConfirmado; font-weight: 600; font-size: 0.9rem;" class="mb-1">
+                                Pago aprobado
+                            </h5>
+                            <p class="mb-0 fs-5 fw-bold text-white">
+                                Estamos procesando tu compra
+                                <span style="color: @colorConfirmado; margin-left: 5px;">
+                                    <i class="bi bi-check-circle-fill"></i>
+                                </span>
+                            </p>
+                            break;
+                    }
+                </div>
+            </div>
+
+            <!-- Paquete -->
+            <div class="card card-custom mb-3">
+                <div class="card-header border-secondary bg-transparent py-3">
+                    <span class="fw-bold text-white">Paquete</span>
+                </div>
+                <div class="card-body">
+                    @foreach (var item in Model.DetalleComprobantes)
+                    {
+                        <div class="d-flex align-items-center mb-4">
+                            <div class="bg-white rounded p-1 d-flex align-items-center justify-content-center" style="width: 64px; height: 64px; overflow: hidden;">
+                                <img src="@item.Producto.ImagenUrl" class="img-fluid" alt="@item.ProductoNombre">
+                            </div>
+                            <div class="ms-3 flex-grow-1">
+                                <h6 class="mb-0 text-white fw-normal">@item.ProductoNombre</h6>
+                                <small class="text-secondary">
+                                    @item.Cantidad @(item.Cantidad > 1 ? "unidades" : "unidad")
+                                </small>
+                            </div>
+                            <div class="text-end text-white">
+                                <span>$ @item.Precio.ToString("N2")</span>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <!-- Información de la compra -->
+            <div class="card card-custom mb-3">
+                <div class="card-body">
+                    <h6 class="fw-bold text-white mb-3">Información de la compra</h6>
+                    <div class="d-flex align-items-center">
+                        <div class="text-secondary me-3">
+                            <i class="bi bi-file-earmark-text fs-4"></i>
+                        </div>
+                        <div>
+                            <p class="mb-0 text-white small">1 Factura disponible</p>
+                            <a asp-controller="Compra" asp-action="GenerarFacturaPDF" asp-route-id="@Model.Id" target="_blank" style="color: #3483fa; text-decoration: none;" class="small">Mostrar factura</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Datos de Entrega y Facturación -->
+            <div class="card card-custom mb-3">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6 border-end border-secondary">
+                            <h6 class="fw-bold text-white mb-3">Información de envío</h6>
+                            <div class="d-flex">
+                                <i class="bi bi-geo-alt me-2 text-secondary"></i>
+                                <div>
+                                    <p class="mb-0 text-white small">@Model.Envio.Direccion</p>
+                                    <p class="mb-0 text-secondary small">@Model.Envio.Persona - @Model.Envio.Dni</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 ps-4">
+                            <h6 class="fw-bold text-white mb-3">Datos de facturación</h6>
+                            <p class="mb-0 text-white small">@Model.Factura.Nombre</p>
+                            <p class="mb-0 text-secondary small">DNI: @Model.Factura.Dni</p>
+                            <p class="mb-0 text-secondary small">@Model.Factura.Email</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SIDEBAR -->
+        <div class="col-md-4">
+            <div class="card card-custom p-2">
+                <div class="card-body">
+                    <h6 class="fw-bold text-white mb-4">Detalle de la compra</h6>
+
+                    <div class="d-flex justify-content-between mb-2">
+                        <span class="text-secondary small">Productos (@Model.DetalleComprobantes.Sum(x => x.Cantidad))</span>
+                        <span class="text-white small">$ @subtotalProductos.ToString("N2")</span>
+                    </div>
+
+                    <div class="d-flex justify-content-between mb-2">
+                        <span class="text-secondary small">Envío</span>
+                        <span style="color: #00a650;" class="small">$ @Model.Envio.Monto.ToString("N2")</span>
+                    </div>
+
+                    <hr class="border-secondary">
+
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <span class="fw-bold text-white">Total</span>
+                        <h4 class="mb-0 fw-bold text-white">$ @Model.Total.ToString("N2")</h4>
+                    </div>
+
+                    <div class="border-top border-secondary pt-3 mt-3">
+                        <h6 class="small fw-bold text-secondary text-uppercase mb-3" style="font-size: 0.7rem;">Pago</h6>
+                        <div class="d-flex align-items-center">
+                            <div class="text-secondary fs-4">
+                                <i class="bi bi-credit-card-2-back"></i>
+                            </div>
+                            <div class="ms-3">
+                                <p class="mb-0 text-white small">@Model.Factura.TipoPago</p>
+                                <p style="color: #00a650; font-size: 0.75rem;" class="mb-0">Pago aprobado</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="card-footer bg-transparent border-0 pb-3">
+                    <a href="/Compra/MisCompras" class="btn btn-outline-secondary w-100 btn-sm py-2" style="border-color: rgba(255,255,255,0.2); color: #fff; font-weight: 500;">
+                        Volver a mis compras
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .card-custom {
+        background-color: rgba(255, 255, 255, 0.03) !important;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 8px;
+    }
+
+    .text-secondary {
+        color: #b0b0b0 !important;
+    }
+
+    .small {
+        font-size: 0.85rem;
+    }
+</style>

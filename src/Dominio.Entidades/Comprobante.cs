@@ -15,13 +15,15 @@ namespace Dominio.Entidades
         [Required(AllowEmptyStrings = false, ErrorMessage = "El campo {0} es obligatorio.")]
         [Column(TypeName = "decimal(18,2)")]
         public decimal Total { get; set; }
-        public int ClienteId { get; set; }
 
 
         //propiedades de navegacion
-        public virtual PersonaCliente Cliente { get; set; }
         public virtual IEnumerable<DetalleComprobante> DetalleComprobantes { get; set; }
-        public virtual IEnumerable<Envio> Envios { get; set; }
-        public virtual IEnumerable<Factura> Facturas { get; set; }
+        public int ClienteId { get; set; }
+        public virtual PersonaCliente Cliente { get; set; }
+        public int FacturaId { get; set; }
+        public virtual Factura Factura { get; set; }
+        public int EnvioId { get; set; }
+        public virtual Envio Envio { get; set; }
     }
 }

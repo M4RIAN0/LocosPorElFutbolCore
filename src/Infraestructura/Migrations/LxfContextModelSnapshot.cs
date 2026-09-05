@@ -130,6 +130,13 @@ namespace Infraestructura.Migrations
                             Descripcion = "Camperas",
                             IsDeleted = false,
                             IsEnabled = false
+                        },
+                        new
+                        {
+                            ID = 9,
+                            Descripcion = "Zapatillas",
+                            IsDeleted = false,
+                            IsEnabled = false
                         });
                 });
 
@@ -142,6 +149,12 @@ namespace Infraestructura.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<int>("ClienteId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("EnvioId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("FacturaId")
                         .HasColumnType("int");
 
                     b.Property<DateOnly>("Fecha")
@@ -159,6 +172,10 @@ namespace Infraestructura.Migrations
                     b.HasKey("ID");
 
                     b.HasIndex("ClienteId");
+
+                    b.HasIndex("EnvioId");
+
+                    b.HasIndex("FacturaId");
 
                     b.ToTable("Comprobantes");
                 });
@@ -297,9 +314,6 @@ namespace Infraestructura.Migrations
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
-                    b.Property<int>("ComprobanteId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Direccion")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -311,6 +325,9 @@ namespace Infraestructura.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Estado")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDeleted")
@@ -329,8 +346,6 @@ namespace Infraestructura.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("ComprobanteId");
-
                     b.ToTable("Envios");
                 });
 
@@ -346,9 +361,6 @@ namespace Infraestructura.Migrations
                         .IsRequired()
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
-
-                    b.Property<int>("ComprobanteId")
-                        .HasColumnType("int");
 
                     b.Property<string>("Direccion")
                         .IsRequired()
@@ -391,8 +403,6 @@ namespace Infraestructura.Migrations
                         .HasColumnType("decimal(18,2)");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("ComprobanteId");
 
                     b.HasIndex("PersonaClienteID");
 
@@ -1098,8 +1108,9 @@ namespace Infraestructura.Migrations
                     b.Property<int>("Stock")
                         .HasColumnType("int");
 
-                    b.Property<int>("TalleId")
-                        .HasColumnType("int");
+                    b.Property<string>("Talle")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
 
@@ -1109,9 +1120,8 @@ namespace Infraestructura.Migrations
 
                     b.HasIndex("Nombre")
                         .IsUnique()
-                        .HasDatabaseName("IX_Producto_Nombre");
-
-                    b.HasIndex("TalleId");
+                        .HasDatabaseName("IX_Producto_Nombre")
+                        .HasFilter("[IsDeleted] = 0");
 
                     b.ToTable("Productos");
 
@@ -1129,7 +1139,7 @@ namespace Infraestructura.Migrations
                             Nombre = "Camiseta Titular Manchester United 24/25",
                             Precio = 150000.00m,
                             Stock = 10,
-                            TalleId = 1
+                            Talle = "M"
                         },
                         new
                         {
@@ -1144,7 +1154,7 @@ namespace Infraestructura.Migrations
                             Nombre = "Camiseta Titular Mancheste City 24/25",
                             Precio = 175000.00m,
                             Stock = 10,
-                            TalleId = 1
+                            Talle = "L"
                         },
                         new
                         {
@@ -1159,7 +1169,7 @@ namespace Infraestructura.Migrations
                             Nombre = "Campera River Plate Retro",
                             Precio = 300000.00m,
                             Stock = 15,
-                            TalleId = 5
+                            Talle = "XL"
                         });
                 });
 
@@ -1380,91 +1390,15 @@ namespace Infraestructura.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "eb4008ef-1a78-4662-a1b1-06c1a7a7df2d",
+                            Id = "0e26126a-5cfd-4e2a-bd2d-3ef42c84e590",
                             Name = "Administrador",
                             NormalizedName = "ADMINISTRADOR"
                         },
                         new
                         {
-                            Id = "9f1dbdd5-6c6a-4438-975c-d8b0819f152a",
+                            Id = "f81bd96c-5f01-48e3-8554-68e08f9f9428",
                             Name = "Cliente",
                             NormalizedName = "CLIENTE"
-                        });
-                });
-
-            modelBuilder.Entity("Dominio.Entidades.Talle", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Letra")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Numero")
-                        .HasColumnType("int");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Talles");
-
-                    b.HasData(
-                        new
-                        {
-                            ID = 1,
-                            IsDeleted = false,
-                            IsEnabled = false,
-                            Letra = "XS",
-                            Numero = 36
-                        },
-                        new
-                        {
-                            ID = 2,
-                            IsDeleted = false,
-                            IsEnabled = false,
-                            Letra = "S",
-                            Numero = 38
-                        },
-                        new
-                        {
-                            ID = 3,
-                            IsDeleted = false,
-                            IsEnabled = false,
-                            Letra = "M",
-                            Numero = 40
-                        },
-                        new
-                        {
-                            ID = 4,
-                            IsDeleted = false,
-                            IsEnabled = false,
-                            Letra = "L",
-                            Numero = 42
-                        },
-                        new
-                        {
-                            ID = 5,
-                            IsDeleted = false,
-                            IsEnabled = false,
-                            Letra = "XL",
-                            Numero = 44
-                        },
-                        new
-                        {
-                            ID = 6,
-                            IsDeleted = false,
-                            IsEnabled = false,
-                            Letra = "XXL",
-                            Numero = 46
                         });
                 });
 
@@ -1606,7 +1540,23 @@ namespace Infraestructura.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Dominio.Entidades.Envio", "Envio")
+                        .WithMany("Comprobantes")
+                        .HasForeignKey("EnvioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Dominio.Entidades.Factura", "Factura")
+                        .WithMany("Comprobantes")
+                        .HasForeignKey("FacturaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Cliente");
+
+                    b.Navigation("Envio");
+
+                    b.Navigation("Factura");
                 });
 
             modelBuilder.Entity("Dominio.Entidades.DetalleCarroCompra", b =>
@@ -1666,30 +1616,11 @@ namespace Infraestructura.Migrations
                     b.Navigation("Producto");
                 });
 
-            modelBuilder.Entity("Dominio.Entidades.Envio", b =>
-                {
-                    b.HasOne("Dominio.Entidades.Comprobante", "Comprobante")
-                        .WithMany("Envios")
-                        .HasForeignKey("ComprobanteId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Comprobante");
-                });
-
             modelBuilder.Entity("Dominio.Entidades.Factura", b =>
                 {
-                    b.HasOne("Dominio.Entidades.Comprobante", "Comprobante")
-                        .WithMany("Facturas")
-                        .HasForeignKey("ComprobanteId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Dominio.Entidades.PersonaCliente", null)
                         .WithMany("Facturas")
                         .HasForeignKey("PersonaClienteID");
-
-                    b.Navigation("Comprobante");
                 });
 
             modelBuilder.Entity("Dominio.Entidades.Localidad", b =>
@@ -1728,17 +1659,9 @@ namespace Infraestructura.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Dominio.Entidades.Talle", "Talle")
-                        .WithMany("Productos")
-                        .HasForeignKey("TalleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Categoria");
 
                     b.Navigation("Marca");
-
-                    b.Navigation("Talle");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
@@ -1778,10 +1701,16 @@ namespace Infraestructura.Migrations
             modelBuilder.Entity("Dominio.Entidades.Comprobante", b =>
                 {
                     b.Navigation("DetalleComprobantes");
+                });
 
-                    b.Navigation("Envios");
+            modelBuilder.Entity("Dominio.Entidades.Envio", b =>
+                {
+                    b.Navigation("Comprobantes");
+                });
 
-                    b.Navigation("Facturas");
+            modelBuilder.Entity("Dominio.Entidades.Factura", b =>
+                {
+                    b.Navigation("Comprobantes");
                 });
 
             modelBuilder.Entity("Dominio.Entidades.Marca", b =>
@@ -1804,11 +1733,6 @@ namespace Infraestructura.Migrations
             modelBuilder.Entity("Dominio.Entidades.Provincia", b =>
                 {
                     b.Navigation("Localidades");
-                });
-
-            modelBuilder.Entity("Dominio.Entidades.Talle", b =>
-                {
-                    b.Navigation("Productos");
                 });
 
             modelBuilder.Entity("Dominio.Entidades.PersonaCliente", b =>

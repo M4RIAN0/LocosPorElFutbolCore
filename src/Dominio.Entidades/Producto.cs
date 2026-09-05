@@ -8,45 +8,38 @@ namespace Dominio.Entidades
     [Table("Productos")]
     public partial class Producto : MasterEntityModel
     {
-        [Required(AllowEmptyStrings = false, ErrorMessage = "El campo {0} es obligatorio.")]
-        [StringLength(150, ErrorMessage = "El campo {0} no debe superar los {1} caracteres.")]
+        [Required]
+        [StringLength(150)]
         public string Nombre { get; set; }
 
-        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
-        [Range(100000, 999999, ErrorMessage = "El campo {0} debe tener 6 dígitos.")]
+        [Required]
         public int CodigoBarra { get; set; }
 
-        [Required(AllowEmptyStrings = false, ErrorMessage = "El campo {0} es obligatorio.")]
-        [StringLength(250, ErrorMessage = "El campo {0} no debe superar los {1} caracteres.")]
+        [Required]
+        [StringLength(250)]
         public string Descripcion { get; set; }
 
-        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
+
+        [Required]
+        public string Talle { get; set; }
+
+        [Required]
         [Column(TypeName = "decimal(18,2)")]
         public decimal Precio { get; set; }
 
-        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
+        [Required]
         public int Stock { get; set; }
 
-        [Required(AllowEmptyStrings = false, ErrorMessage = "El campo {0} es obligatorio.")]
+        [Required]
         public string ImagenUrl { get; set; }
 
-
-        //PROPIEDADES DE NAVEGACION
-
+        // PROPIEDADES DE NAVEGACION
         public int MarcaId { get; set; }
-
-        public int TalleId { get; set; }
-
         public int CategoriaId { get; set; }
 
         public virtual Categoria Categoria { get; set; }
-
         public virtual Marca Marca { get; set; }
-
-        public virtual Talle Talle { get; set; }
-
         public virtual IEnumerable<DetalleComprobante> DetalleComprobantes { get; set; }
-
         public virtual IEnumerable<DetalleCarroCompra> DetalleCarroCompras { get; set; }
     }
 }

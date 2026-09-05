@@ -114,8 +114,6 @@ builder.Services.AddScoped<IEnvioService, EnvioService>();
 builder.Services.AddScoped<IEnvioRepository, EnvioRepository>();
 builder.Services.AddScoped<IPersonaClienteService, PersonaClienteService>();
 builder.Services.AddScoped<IPersonaClienteRepository, PersonaClienteRepository>();
-builder.Services.AddScoped<ITalleService, TalleService>();
-builder.Services.AddScoped<ITalleRepository, TalleRepository>();
 builder.Services.AddScoped<ICategoriaService, CategoriaService>();
 builder.Services.AddScoped<ICategoriaRepository, CategoriaRepository>();
 builder.Services.AddScoped<IMarcaService, MarcaService>();

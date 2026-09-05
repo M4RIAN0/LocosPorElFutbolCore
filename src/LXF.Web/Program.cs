@@ -38,7 +38,6 @@ builder.Services.AddHttpClient<IMovimientoServiceApiClient, MovimientoServiceApi
 builder.Services.AddHttpClient<IPersonaClienteServiceApiClient, PersonaClienteServiceApiClient>();
 builder.Services.AddHttpClient<IProductoServiceApiClient, ProductoServiceApiClient>();
 builder.Services.AddHttpClient<IProvinciaServiceApiClient, ProvinciaServiceApiClient>();
-builder.Services.AddHttpClient<ITalleServiceApiClient, TalleServiceApiClient>();
 builder.Services.AddHttpClient<IVentaServiceApiClient, VentaServiceApiClient>();
 // populated value of endpoint url to LXFApiBase
 SD.LXFApiBase = builder.Configuration["ServicesUrl:LXFApi"];
@@ -68,7 +67,6 @@ builder.Services.AddScoped<IMovimientoServiceApiClient, MovimientoServiceApiClie
 builder.Services.AddScoped<IPersonaClienteServiceApiClient, PersonaClienteServiceApiClient>();
 builder.Services.AddScoped<IProductoServiceApiClient, ProductoServiceApiClient>();
 builder.Services.AddScoped<IProvinciaServiceApiClient, ProvinciaServiceApiClient>();
-builder.Services.AddScoped<ITalleServiceApiClient, TalleServiceApiClient>();
 builder.Services.AddScoped<IVentaServiceApiClient, VentaServiceApiClient>();
 
 //Dependece Injection configuration in Services
@@ -80,7 +78,6 @@ builder.Services.AddScoped<IMarcaService, MarcaService>();
 builder.Services.AddScoped<IPersonaClienteService, PersonaClienteService>();
 builder.Services.AddScoped<IProductoService, ProductoService>();
 builder.Services.AddScoped<IProvinciaService, ProvinciaService>();
-builder.Services.AddScoped<ITalleService, TalleService>();
 builder.Services.AddScoped<IVentaService, VentaService>();
 builder.Services.AddScoped<IMercadoPagoService, MercadoPagoService>();
 builder.Services.AddScoped<IMercadoPagoGateway, MercadoPagoGateway>();

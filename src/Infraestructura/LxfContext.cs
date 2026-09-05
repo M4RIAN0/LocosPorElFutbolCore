@@ -30,7 +30,6 @@ namespace Infraestructura
         public DbSet<PersonaCliente> Persona_Cliente { get; set; }
         public DbSet<Producto> Producto { get; set; }
         public DbSet<Provincia> Provincia { get; set; }
-        public DbSet<Talle> Talle { get; set; }
         public DbSet<Usuario> Usuario { get; set; }
         public DbSet<Role> Role { get; set; }
 
@@ -43,7 +42,6 @@ namespace Infraestructura
             builder.ApplyConfiguration(new PersonaClienteConfiguration());
             builder.ApplyConfiguration(new MarcaConfiguration());
             builder.ApplyConfiguration(new CategoriaConfiguration());
-            builder.ApplyConfiguration(new TalleConfiguration());
             builder.ApplyConfiguration(new ProductoConfiguration());
             builder.ApplyConfiguration(new UserConfiguration());
             builder.ApplyConfiguration(new RoleConfiguration());

@@ -1,28 +1,421 @@
 ﻿@using LXF.Web.Models.ViewModels
+@using System.Globalization
 @model IEnumerable<ProductoGetViewModel>
-<form>
-    <div class="container row">
-        @foreach (var producto in Model){
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="p-0 my-3 border rounded">
-                <div class="card">
-                    <h3 class="card-title text-white-50 text-center py-2">@producto.Nombre</h3>
-                    <img src="https://placehold.co/600x400" class="card-img-top">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between py-2">
-                                <span class="text-danger" style="font-size:20px;">@string.Format("{0:c}", producto.Precio)</span>
-                                <span class="badge bg-warning text-white p-2">@producto.Categoria</span>
-                        </div>
-                        <p class="card-text">@producto.Descripcion</p>
-                        <div class="row">
-                            <div class="col">
-                                <a asp-action="ProductoDetails" asp-route-id="@producto.Id" class="btn btn-success form-control">Detalles</a>
-                            </div>
-                        </div>
+
+@{
+    ViewData["Title"] = "Inicio";
+    var culturaArg = new CultureInfo("es-AR");
+
+    var productosTotales = Model?.ToList() ?? new List<ProductoGetViewModel>();
+    var newInProducts = productosTotales.Take(5).ToList();
+    var saleProducts = productosTotales.Skip(5).Take(5).ToList();
+}
+
+    <div class="full-width-breakout">
+    
+        <!-- SUB-BARRA DE CATEGORÍAS (Exclusiva del Home) -->
+        <div class="w-100 d-none d-lg-block bg-transparent" style="border-bottom: 1px solid rgba(255, 255, 255, 0.1);">
+            <div class="container-fluid px-4">
+                <div class="d-flex justify-content-center align-items-center py-2 gap-4">
+                    <a href="#" class="subnav-link"><span class="badge-newin fw-bold">NEW IN</span></a>
+                    <a href="#" class="subnav-link">HOMBRE</a>
+                    <a href="#" class="subnav-link">MUJER</a>
+                    <a href="#" class="subnav-link">NIÑOS</a>
+                    <a href="#" class="subnav-link">ACCESORIOS</a>
+                    <a href="#" class="subnav-link marcas">MARCAS</a>
+                    <a href="#" class="subnav-link">SALE</a>
+    
+                    <!-- Logos de marcas a la derecha -->
+                    <div class="d-flex align-items-center gap-3 ms-4">
+                        <span class="text-white fs-6" style="font-family: 'Brush Script MT', cursive, serif;">Mitchell & Ness</span>
+                        <i class="bi bi-triangle-half text-white fs-5" style="transform: rotate(180deg);"></i>
+                        <i class="bi bi-twitter text-white fs-5" style="transform: rotate(45deg);"></i>
                     </div>
                 </div>
             </div>
         </div>
-        }
+    
+        <!-- CARRUSEL PRINCIPAL (HERO BANNER) -->
+        <!-- Agregado position:relative para asegurar que los controles se ubiquen sobre la imagen -->
+        <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-pause="false" style="position: relative;">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="3" aria-label="Slide 4"></button>
+                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="4" aria-label="Slide 5"></button>
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active" data-bs-interval="4000">
+                    <img src="~/images/Banners/Hero-1.webp" class="d-block w-100 object-fit-cover" style="height: 65vh;" alt="Banner principal">
+                    <div class="carousel-caption d-none d-md-block text-start mb-5" style="left: 5%;">
+                        <a href="#" class="btn btn-grid-primary rounded-0 px-4 py-2 fw-bold text-uppercase">Comprar</a>
+                    </div>
+                </div>
+                <div class="carousel-item" data-bs-interval="4000">
+                    <img src="~/images/Banners/Hero-2.webp" class="d-block w-100 object-fit-cover" style="height: 65vh;" alt="Banner 2">
+                    <div class="carousel-caption d-none d-md-block text-start mb-5" style="left: 5%;">
+                        <a href="#" class="btn btn-grid-primary rounded-0 px-4 py-2 fw-bold text-uppercase">Comprar</a>
+                    </div>
+                </div>
+                <div class="carousel-item" data-bs-interval="4000">
+                    <img src="~/images/Banners/Hero-3.webp" class="d-block w-100 object-fit-cover" style="height: 65vh;" alt="Banner 3">
+                    <div class="carousel-caption d-none d-md-block text-start mb-5" style="left: 5%;">
+                        <a href="#" class="btn btn-grid-primary rounded-0 px-4 py-2 fw-bold text-uppercase">Comprar</a>
+                    </div>
+                </div>
+                <div class="carousel-item" data-bs-interval="4000">
+                    <img src="~/images/Banners/Hero-4.webp" class="d-block w-100 object-fit-cover" style="height: 65vh;" alt="Banner 4">
+                    <div class="carousel-caption d-none d-md-block text-start mb-5" style="left: 5%;">
+                        <a href="#" class="btn btn-grid-primary rounded-0 px-4 py-2 fw-bold text-uppercase">Comprar</a>
+                    </div>
+                </div>
+                <div class="carousel-item" data-bs-interval="4000">
+                    <img src="~/images/Banners/Hero-5.webp" class="d-block w-100 object-fit-cover" style="height: 65vh;" alt="Banner 5">
+                    <div class="carousel-caption d-none d-md-block text-start mb-5" style="left: 5%;">
+                        <a href="#" class="btn btn-grid-primary rounded-0 px-4 py-2 fw-bold text-uppercase">Comprar</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Los botones ahora están correctamente dentro de #heroCarousel -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    
     </div>
-</form>
+
+    <div class="container-fluid px-4 px-lg-5 pt-2" style="font-family: 'Arial', sans-serif;">
+
+        <!-- TIRA DE BENEFICIOS -->
+        <div class="row row-cols-2 row-cols-md-4 g-3 my-4 d-flex justify-content-center">
+            <div class="col">
+                <div class="benefit-box shadow-sm">
+                    <i class="bi bi-shop display-6 text-white mb-2"></i>
+                    <h5 class="fw-bold text-white text-uppercase m-0">RETIRO GRATIS</h5>
+                    <p class="text-secondary small m-0">EN SUCURSALES</p>
+                </div>
+            </div>
+            <div class="col">
+                <div class="benefit-box shadow-sm">
+                    <i class="bi bi-truck display-6 text-white mb-2"></i>
+                    <h5 class="fw-bold text-white text-uppercase m-0">ENVÍOS A TODO</h5>
+                    <p class="text-secondary small m-0">EL PAÍS</p>
+                </div>
+            </div>
+            <div class="col">
+                <div class="benefit-box shadow-sm">
+                    <i class="bi bi-shield-check display-6 text-white mb-2"></i>
+                    <h5 class="fw-bold text-white text-uppercase m-0">PAGO SEGURO</h5>
+                    <p class="text-secondary small m-0">CON MERCADO PAGO</p>
+                </div>
+            </div>
+            <div class="col">
+                <div class="benefit-box shadow-sm">
+                    <i class="bi bi-arrow-repeat display-6 text-white mb-2"></i>
+                    <h5 class="fw-bold text-white text-uppercase m-0">DEVOLUCIONES</h5>
+                    <p class="text-secondary small m-0">RÁPIDAS Y SIMPLES</p>
+                </div>
+            </div>
+        </div>
+
+    <!-- SECCIÓN: NEW IN -->
+    @if (newInProducts.Any())
+    {
+        <div class="d-flex justify-content-between align-items-end mb-3 mt-5">
+            <h3 class="text-white fw-bold text-uppercase mb-0 tracking-wide">New In</h3>
+            <a href="#" class="btn-ver-todo">Ver todo</a>
+        </div>
+
+        <div class="row row-cols-2 row-cols-md-3 row-cols-lg-5 g-3 mb-5">
+            @foreach (var producto in newInProducts)
+            {
+                <div class="col">
+                    <a asp-action="ProductoDetails" asp-route-id="@producto.Id" class="text-decoration-none">
+                        <div class="card grid-product-card h-100 shadow-sm">
+                            <div class="position-relative bg-white" style="aspect-ratio: 1/1;">
+                                <span class="badge-nuevo">NUEVO</span>
+                                <img src="@(string.IsNullOrEmpty(producto.ImagenUrl) ? "https://placehold.co/600x600/ffffff/333333?text=NO+IMAGE" : producto.ImagenUrl)" class="card-img-top w-100 h-100 object-fit-cover p-3" alt="@producto.Nombre">
+                                <div class="brand-logo-container">
+                                    <i class="bi bi-tag-fill text-dark"></i>
+                                </div>
+                            </div>
+                            <div class="card-body px-2 py-3 bg-transparent">
+                                <p class="product-title mb-2">@producto.Nombre</p>
+                                <p class="product-price mb-1">$ @producto.Precio.ToString("N0", culturaArg)</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            }
+        </div>
+    }
+
+    <!-- SECCIÓN: CATEGORÍAS GRANDES -->
+    <div class="row row-cols-1 row-cols-md-3 g-3 mb-5 mt-3">
+        <div class="col">
+            <a href="#" class="text-decoration-none">
+                <div class="category-banner-card shadow-sm">
+                    <img src="~/images/Categorias/Cat-Hombre.webp" alt="HOMBRE">
+                </div>
+            </a>
+        </div>
+        <div class="col">
+            <a href="#" class="text-decoration-none">
+                <div class="category-banner-card shadow-sm">
+                    <img src="~/images/Categorias/Cat-Mujer.webp" alt="MUJER">
+                </div>
+            </a>
+        </div>
+        <div class="col">
+            <a href="#" class="text-decoration-none">
+                <div class="category-banner-card shadow-sm">
+                    <img src="~/images/Categorias/Cat-Ninos.webp" alt="NIÑOS">
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <!-- SECCIÓN: TUS MODELOS FAVORITOS -->
+    <div class="my-5 pt-4 pb-2">
+        <h3 class="text-white fw-bold text-uppercase text-center mb-4 tracking-wide fs-4" style="color: #d1c8b8 !important;">Tus Modelos Favoritos</h3>
+        <div class="row row-cols-2 row-cols-md-3 row-cols-lg-6 g-3">
+            @{
+                string[] modelos = { "AIR FORCE", "JORDAN 1", "SAMBA", "CAMPUS", "SUEDE", "SUPERSTAR" };
+                for (int i = 0; i < modelos.Length; i++)
+                {
+                    <div class="col">
+                        <a href="#" class="text-decoration-none">
+                            <div class="model-card shadow-sm">
+                                <img src="~/images/Modelos-Fav/Mod-@(i + 1).jpg" class="w-100 object-fit-cover" alt="@modelos[i]" style="aspect-ratio: 1/1;">
+                                <div class="model-name">@modelos[i]</div>
+                            </div>
+                        </a>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+
+    <!-- SECCIÓN: MARCAS DESTACADAS -->
+    <div class="my-5 pt-4 pb-2">
+        <h3 class="text-white fw-bold text-uppercase text-center mb-4 tracking-wide fs-4" style="color: #d1c8b8 !important;">Marcas Destacadas</h3>
+        <div class="row row-cols-2 row-cols-md-3 row-cols-lg-6 g-3">
+            @{
+                string[] marcas = { "JORDAN", "NIKE", "FILA", "ADIDAS", "PUMA", "MITCHELL & NESS" };
+                for (int i = 0; i < marcas.Length; i++)
+                {
+                    <div class="col">
+                        <a href="#" class="text-decoration-none">
+                            <div class="model-card shadow-sm">
+                                <img src="~/images/Marcas-Destacadas/Marca-Des-@(i + 1).webp" class="w-100 object-fit-cover" alt="@marcas[i]" style="aspect-ratio: 1/1;">
+                                <div class="model-name">@marcas[i]</div>
+                            </div>
+                        </a>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+
+    <!-- SECCIÓN: SALE -->
+    @if (saleProducts.Any())
+    {
+        <div class="d-flex justify-content-between align-items-end mb-3 mt-5 pt-3">
+            <h3 class="text-white fw-bold text-uppercase mb-0 tracking-wide">Sale</h3>
+            <a href="#" class="btn-ver-todo">Ver todo</a>
+        </div>
+
+        <div class="row row-cols-2 row-cols-md-3 row-cols-lg-5 g-3 mb-5 pb-5">
+            @foreach (var producto in saleProducts)
+            {
+                <div class="col">
+                    <a asp-action="ProductoDetails" asp-route-id="@producto.Id" class="text-decoration-none">
+                        <div class="card grid-product-card h-100 shadow-sm">
+                            <div class="position-relative bg-white" style="aspect-ratio: 1/1;">
+                                <span class="badge-sale">-20%</span>
+                                <img src="@(string.IsNullOrEmpty(producto.ImagenUrl) ? "https://placehold.co/600x600/ffffff/333333?text=NO+IMAGE" : producto.ImagenUrl)" class="card-img-top w-100 h-100 object-fit-cover p-3" alt="@producto.Nombre">
+                                <div class="brand-logo-container">
+                                    <i class="bi bi-tag-fill text-dark"></i>
+                                </div>
+                            </div>
+                            <div class="card-body px-2 py-3 bg-transparent">
+                                <p class="product-title mb-2">@producto.Nombre</p>
+                                <div class="d-flex align-items-center gap-2 mb-1">
+                                    <p class="product-price text-danger mb-0">$ @producto.Precio.ToString("N0", culturaArg)</p>
+                                    <p class="text-decoration-line-through text-secondary mb-0" style="font-size: 0.75rem;">$ @((producto.Precio * 1.2m).ToString("N0", culturaArg))</p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            }
+        </div>
+    }
+</div>
+
+<style>
+     /* Ocultamos el scroll horizontal que puede generar el 100vw */
+     body {
+         overflow-x: hidden;
+     }
+
+     /* NUEVO TRUCO PARA ROMPER EL CONTENEDOR DE _LAYOUT */
+     .full-width-breakout {
+         width: 100vw !important;
+         margin-left: calc(50% - 50vw) !important;
+         max-width: 100vw !important;
+     }
+
+    /* LINKS DE LA SUB-BARRA */
+    .subnav-link {
+        color: #ffffff;
+        font-size: 0.95rem;
+        font-weight: 500;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        text-decoration: none;
+        transition: color 0.2s;
+    }
+
+        .subnav-link:hover {
+            color: #cccccc;
+        }
+
+    /* ESTILOS GENERALES RESTANTES */
+    .tracking-wide {
+        letter-spacing: 1.5px;
+    }
+
+    /* BENEFICIOS */
+    .benefit-box {
+        background-color: #000;
+        border-radius: 0;
+        padding: 20px 10px;
+        text-align: center;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        border: 1px solid #1a1a1a;
+    }
+
+    /* CATEGORÍAS GRANDES */
+    .category-banner-card {
+        position: relative;
+        overflow: hidden;
+        border-radius: 0;
+        aspect-ratio: 2/3; /* Fija la proporción de póster vertical */
+    }
+
+        .category-banner-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        /* Mantenemos el zoom suave al pasar el mouse */
+        .category-banner-card:hover img {
+            transform: scale(1.05);
+        }
+
+    /* TARJETAS DE PRODUCTO (New In y Sale originales) */
+    .grid-product-card {
+        background-color: transparent !important;
+        border: none !important;
+        cursor: pointer;
+        border-radius: 0;
+    }
+
+    .product-title {
+        color: #a0a0a0;
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        line-height: 1.2;
+        margin-bottom: 0;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        transition: color 0.2s;
+    }
+
+    .grid-product-card:hover .product-title {
+        color: #ffffff;
+    }
+
+    .product-price {
+        color: #ffffff;
+        font-size: 1.1rem;
+        font-weight: 800;
+    }
+
+    /* TARJETAS MODELOS/MARCAS */
+    .model-card {
+        position: relative;
+        background-color: #1a1a1a;
+        border: 1px solid #333;
+        border-radius: 0;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .model-name {
+        background-color: #1a1a1a;
+        color: #a0a0a0;
+        text-align: center;
+        padding: 12px 0;
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+    }
+
+    .btn-ver-todo {
+        color: #ff6600;
+        border: 1px solid #ff6600;
+        border-radius: 20px;
+        padding: 2px 12px;
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        text-decoration: none;
+        font-weight: bold;
+        transition: all 0.2s;
+    }
+
+        .btn-ver-todo:hover {
+            background-color: #ff6600;
+            color: #fff;
+        }
+
+    .badge-nuevo, .badge-sale {
+        position: absolute;
+        top: 0;
+        right: 0;
+        background-color: #121212;
+        color: white;
+        padding: 4px 8px;
+        font-size: 0.65rem;
+        font-weight: bold;
+        z-index: 2;
+    }
+
+    .badge-sale {
+        background-color: #cc0000;
+    }
+
+    .brand-logo-container {
+        position: absolute;
+        bottom: 5px;
+        left: 5px;
+        background-color: transparent;
+        padding: 2px;
+    }
+</style>

@@ -2,6 +2,7 @@ namespace Dominio.Entidades
 {
     using DominioBase;
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
@@ -36,8 +37,6 @@ namespace Dominio.Entidades
 
 
         //propiedades de navegacion
-        public int ComprobanteId { get; set; }
-
-        public virtual Comprobante Comprobante { get; set; }
+        public virtual IEnumerable<Comprobante> Comprobantes { get; set; }
     }
 }

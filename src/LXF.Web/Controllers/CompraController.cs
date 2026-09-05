@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Azure;
 using LXF.Web.Models.ViewModels;
 using LXF.Web.Service.IService;
 using Microsoft.AspNetCore.Mvc;
@@ -12,11 +13,14 @@ namespace LXF.Web.Controllers
         private readonly IPersonaClienteService _personaClienteService;
         private readonly IMapper _mapper;
 
-        public CompraController(IVentaService ventaService, IPersonaClienteService personaClienteService, IMapper mapper)
+        private readonly IWebHostEnvironment _webHostEnvironment;
+
+        public CompraController(IVentaService ventaService, IPersonaClienteService personaClienteService, IMapper mapper, IWebHostEnvironment webHostEnvironment)
         {
             _ventaService = ventaService;
             _personaClienteService = personaClienteService;
             _mapper = mapper;
+            _webHostEnvironment = webHostEnvironment;
         }
         public async Task<IActionResult> MisCompras()
         {
@@ -30,9 +34,50 @@ namespace LXF.Web.Controllers
 
             return View(response.Result);
         }
-        //public async Task<IActionResult> 
 
-        #region pricate mhetods
+        public async Task<IActionResult> Detalles(int id)
+        {
+            var response = await _ventaService.GetComprobantebyId(id);
+
+            if (!response.IsSuccess)
+                TempData["error"] = response?.Message;
+
+            return View(response.Result);
+        }
+
+        public async Task<IActionResult> Seguimiento(int id)
+        {
+            var response = await _ventaService.GetComprobantebyId(id);
+            if (response == null) return NotFound();
+
+            if (!response.IsSuccess)
+                TempData["error"] = response?.Message;
+
+            return View(response.Result);
+        }
+
+        public async Task<IActionResult> GenerarFacturaPDF(int id)
+        {
+            var response = await _ventaService.GetComprobantebyId(id);
+
+            if (!response.IsSuccess)
+                TempData["error"] = response?.Message;
+
+            var comprobanteGetVM = ComprobanteToGetViewModel(response.Result);
+
+            string logoPath = Path.Combine(_webHostEnvironment.WebRootPath, "images", "LXF_Logo_Factura.png");
+
+            byte[] pdfBytes = await _ventaService.GeneratePDF(comprobanteGetVM, logoPath);
+
+            if (pdfBytes == null || pdfBytes.Length == 0)
+            {
+                return NotFound("No se encontró el comprobante o no se pudo generar la factura.");
+            }
+
+            return File(pdfBytes, "application/pdf");
+        }
+
+        #region private mhetods
         private async Task<PersonaClienteGetViewModel> GetPersona()
         {
             var email = User.FindFirstValue("Email");
@@ -47,6 +92,11 @@ namespace LXF.Web.Controllers
         private PersonaClienteGetViewModel PersonaToGetViewMdel(object? vm)
         {
             return _mapper.Map<PersonaClienteGetViewModel>(vm);
+        }
+
+        private ComprobanteGetViewModel ComprobanteToGetViewModel(object? vm)
+        {
+            return _mapper.Map<ComprobanteGetViewModel>(vm);
         }
         #endregion
     }

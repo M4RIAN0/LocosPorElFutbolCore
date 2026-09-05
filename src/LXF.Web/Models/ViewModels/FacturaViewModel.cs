@@ -14,7 +14,6 @@ namespace LXF.Web.Models.ViewModels
         public  string? Estado { get; set; }
         public  decimal Total { get; set; }
         public  string? TipoPago { get; set; }
-        public int ComprobanteId { get; set; }
     }
 
     public class FacturaGetViewModel : ViewModelBase
@@ -32,7 +31,6 @@ namespace LXF.Web.Models.ViewModels
         [Column(TypeName = "decimal(18,2)")]
         public decimal Total { get; init; }
         public string TipoPago { get; init; }
-        public int ComprobanteId { get; init; }
 
     }
 }
