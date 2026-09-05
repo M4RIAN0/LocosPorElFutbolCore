@@ -32,8 +32,6 @@ namespace LxF.API
                 config.CreateMap<PersonaCliente, PersonaClienteGetDto>()
                 .ForMember(vm => vm.FechaNacimiento, m => m.MapFrom(u => u.FechaNacimiento.ToString()));
 
-                config.CreateMap<Talle, TalleDto>();
-
                 config.CreateMap<CategoriaDto, Categoria>();
                 config.CreateMap<CategoriaPutDto, Categoria>();
                 config.CreateMap<Categoria, CategoriaGetDto>();
@@ -46,7 +44,6 @@ namespace LxF.API
                 config.CreateMap<ProductoDto, Producto>();
                 config.CreateMap<Producto, ProductoGetDto>()
                 .ForMember(vm => vm.Categoria, m => m.MapFrom(u => u.Categoria.Descripcion))
-                .ForMember(vm => vm.Talle, m => m.MapFrom(u => u.Talle.Letra))
                 .ForMember(vm => vm.Marca, m => m.MapFrom(u => u.Marca.Descripcion));
 
                 config.CreateMap<Provincia, ProvinciaGetDto>();
@@ -61,8 +58,6 @@ namespace LxF.API
                 .ForMember(vm => vm.Fecha, m => m.MapFrom(u => u.Fecha.ToString()));
 
                 config.CreateMap<ComprobanteDto, Comprobante>()
-                .ForMember(dest => dest.Facturas, opt => opt.MapFrom(src => new List<FacturaDto> { src.Factura }))
-                .ForMember(dest => dest.Envios, opt => opt.MapFrom(src => new List<EnvioDto> { src.Envio }))
                 .ForMember(vm => vm.Fecha, opt => opt.MapFrom(u => DateOnly.ParseExact(u.Fecha, "MM/dd/yyyy")));
                 config.CreateMap<Comprobante, ComprobanteGetDto>()
                 .ForMember(vm => vm.Fecha, m => m.MapFrom(u => u.Fecha.ToString("MM/dd/yyyy")));

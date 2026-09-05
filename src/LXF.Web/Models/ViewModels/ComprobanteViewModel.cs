@@ -8,10 +8,8 @@ namespace LXF.Web.Models.ViewModels
         public IEnumerable<DetalleComprobanteViewModel> DetalleComprobantes { get; set; }
         public required decimal Total { get; set; }
         public int ClienteId { get; set; }
-
-        //Seccion Facturacion y Envio
-        public FacturaViewModel Factura { get; set; }
-        public EnvioViewModel Envio { get; set; }
+        public int FacturaId { get; set; }
+        public int EnvioId { get; set; }
     }
 
     public class ComprobanteGetViewModel : ViewModelBase
@@ -22,9 +20,7 @@ namespace LXF.Web.Models.ViewModels
         [Column(TypeName = "decimal(18,2)")]
         public decimal Total { get; init; }
         public int ClienteId { get; init; }
-
-        //Seccion Facturacion y Envio
-        public FacturaViewModel? Factura { get; init; }
-        public EnvioViewModel? Envio { get; init; }
+        public FacturaGetViewModel Factura { get; set; }
+        public EnvioGetViewModel Envio { get; set; }
     }
 }

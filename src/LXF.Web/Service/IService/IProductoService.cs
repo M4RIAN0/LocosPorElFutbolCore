@@ -11,7 +11,6 @@ namespace LXF.Web.Service.IService
         Task<ResponseViewModel?> GetById(int id);
         Task<ResponseViewModel?> GetByFilter(string cadena);
         Task<ResponseViewModel?> GetMarcas();
-        Task<ResponseViewModel?> GetTalles();
         Task<ResponseViewModel?> GetCategorias();
     }
 }

@@ -4,6 +4,7 @@ using IServicio.MercadoPago;
 using IServicio.TemporalObject;
 using LXF.Web.Models.ViewModels;
 using LXF.Web.Service.IService;
+using LXF.Web.Utility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -54,9 +55,11 @@ namespace LXF.Web.Controllers
                 await AddProductoVm(vm);
                 UpdateValues(vm);
                 var odenVm = GetOrden(vm);
+                var facturaVm = GetFactura(vm);
+                var envioVm = GetEnvio(vm);
                 var comprobanteVm = GetComprobante(vm);
-                
-                var objects = new List<object> { odenVm, comprobanteVm };
+
+                var objects = new List<object> { odenVm, facturaVm, envioVm, comprobanteVm };
                 var externalReferenceId = _temporalObjectService.GetUniqueReference();
                 await _temporalObjectService.StoreObjectsCollectionAsync(externalReferenceId, objects);
 
@@ -157,7 +160,7 @@ namespace LXF.Web.Controllers
                 TempData["error"] = "No se pudieron cargar las provincias.";
 
             var provincias = ((IEnumerable<object>)response.Result).Select(p => ProvinciaToGetViewModel(p)).ToList();
-            
+
             var localidades = provincias.SelectMany(p => p.Localidades).ToList();
 
             ViewData["Provincias"] = new SelectList(provincias, "Id", "Nombre");
@@ -175,10 +178,37 @@ namespace LXF.Web.Controllers
         private OrdenCompraGetViewModel GetOrdenComprasGetViewModel(IEnumerable<object> list)
         {
             var ordenVm = list.OfType<OrdenCompraViewModel>().FirstOrDefault();
-            ordenVm.Factura = list.OfType<ComprobanteViewModel>().FirstOrDefault().Factura;
-            ordenVm.Envio = list.OfType<ComprobanteViewModel>().FirstOrDefault().Envio;
+            ordenVm.Factura = list.OfType<FacturaViewModel>().FirstOrDefault();
+            ordenVm.Envio = list.OfType<EnvioViewModel>().FirstOrDefault();
 
             return OrdenToGetViewModel(ordenVm);
+        }
+
+        private void UpdateValues(OrdenCompraViewModel vm)
+        {
+            vm.Nombre = vm.Factura.Nombre;
+            vm.Email = vm.Factura.Email;
+            vm.Celular = vm.Factura.Celular;
+            vm.Fecha = DateTime.Today.ToString("MM/dd/yyyy");
+
+            string provinciaElegida = "";
+
+            if (!string.IsNullOrEmpty(vm.Factura.Direccion) && vm.Factura.Direccion.Contains(","))
+            {
+                var partes = vm.Factura.Direccion.Split(',');
+                provinciaElegida = partes.Last().Trim();
+            }
+
+            decimal costoEnvio = EnvioUtility.CalcularCostoEnvio(provinciaElegida);
+
+            vm.Total += costoEnvio;
+            vm.Factura.Fecha = vm.Fecha;
+            vm.Factura.Total = vm.Total;
+            vm.Factura.Estado = "Pagada";
+            vm.Factura.TipoPago = "Tarjeta";
+
+            // Guardamos el costo REAL de envío (ya no el Total entero)
+            vm.Envio.Monto = costoEnvio;
         }
 
         private async Task AddProductoVm(OrdenCompraViewModel vm)
@@ -235,7 +265,7 @@ namespace LXF.Web.Controllers
                 {
                     Cantidad = item.Cantidad,
                     SubTotal = item.SubTotal,
-                    CodigoBarra = item.Producto.CodigoBarra, 
+                    CodigoBarra = item.Producto.CodigoBarra,
                     ProductoNombre = item.Producto.Nombre,
                     Precio = item.Precio,
                     ProductoId = item.ProductoId
@@ -249,25 +279,25 @@ namespace LXF.Web.Controllers
                 DetalleComprobantes = detalleComprobantes,
                 Total = vm.Total,
                 ClienteId = vm.PersonaClienteId,
-                Factura = vm.Factura,
-                Envio = vm.Envio
-
+                FacturaId = 1, // se completa post persistencia de Factura
+                EnvioId = 1 // se completa post persistencia de Envio
             };
         }
 
-        private void UpdateValues(OrdenCompraViewModel vm)
+        private FacturaViewModel GetFactura(OrdenCompraViewModel vm)
         {
-            vm.Nombre = vm.Factura.Nombre;
-            vm.Email = vm.Factura.Email;
-            vm.Celular = vm.Factura.Celular;
-            vm.Fecha = DateTime.Today.ToString("MM/dd/yyyy");
-
-            vm.Factura.Fecha = vm.Fecha;
-            vm.Factura.Total = vm.Total;
-            vm.Factura.Estado = "Pagada";
-            vm.Factura.TipoPago = "Tarjeta";
-
-            vm.Envio.Monto = vm.Total;
+            return new FacturaViewModel
+            {
+                Nombre = vm.Factura.Nombre,
+                Email = vm.Factura.Email,
+                Celular = vm.Factura.Celular,
+                Fecha = vm.Fecha,
+                Direccion = vm.Factura.Direccion,
+                Dni = vm.Factura.Dni,
+                Total = vm.Total,
+                Estado = "Pagada",
+                TipoPago = "Tarjeta"
+            };
         }
 
         private EnvioViewModel GetEnvio(OrdenCompraViewModel vm)
@@ -279,8 +309,8 @@ namespace LXF.Web.Controllers
                 Dni = vm.Envio.Dni,
                 Email = vm.Envio.Email,
                 Persona = vm.Envio.Persona,
-                Monto = vm.Total,
-                ComprobanteId = 0 // se completa post persistencia de Comprobante
+                Monto = vm.Envio.Monto,
+                Estado = EnvioUtility.GetRandomState()
             };
         }
 

@@ -2,67 +2,116 @@
 
 @model ProductoGetViewModel
 
+<style>
+    /* Ocultar flechas de inputs numéricos */
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    input[type="number"] {
+        -moz-appearance: textfield;
+    }
+
+    /* Estilo gris / desactivado para campos e imagen */
+    .input-disabled-custom {
+        background-color: #1a1d20 !important;
+        color: #9ea7b0 !important;
+        border-color: #343a40 !important;
+        cursor: default !important;
+    }
+
+    .img-disabled-custom {
+        filter: grayscale(100%) opacity(0.9);
+    }
+</style>
+
 <form asp-action="Delete">
     <br />
-    <div class="container border p-3">
-        <h1 class="text-white text-center">Eliminar Producto</h1>
-        <input asp-for="Id" hidden />
-        <hr />
+    <div class="container border border-secondary p-4 bg-dark text-light" style="border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.5);">
+
+        <input type="hidden" asp-for="Id" />
+
+        <div class="row mb-4 text-center">
+            <h2 class="text-danger fw-bold text-uppercase tracking-wide">
+                <i class="bi bi-trash3 me-2"></i> Eliminar Producto
+            </h2>
+        </div>
+
         <div class="row">
-            <div class="col-2">
-                <label class="control-label pt-2" style="font-size:20px;">Nombre</label>
-            </div>
-            <div class="col-10 pb-3">
-                <input asp-for="Nombre" disabled class="form-control" />
-            </div>
-            <div class="col-2">
-                <label class="control-label pt-2" style="font-size:20px;">Descripcion</label>
-            </div>
-            <div class="col-10 pb-3">
-                <input asp-for="Descripcion" disabled class="form-control" />
-            </div>
-            <div class="col-2">
-                <label class="control-label pt-2" style="font-size:20px;">Marca</label>
-            </div>
-            <div class="col-10 pb-3">
-                <input asp-for="Marca" disabled class="form-control" />
-            </div>
-            <div class="col-2">
-                <label class="control-label pt-2" style="font-size:20px;">Talle</label>
-            </div>
-            <div class="col-10 pb-3">
-                <input asp-for="Talle" disabled class="form-control" />
-            </div>
-            <div class="col-2">
-                <label class="control-label pt-2" style="font-size:20px;">Precio</label>
-            </div>
-            <div class="col-10 pb-3">
-                <input asp-for="Precio" disabled class="form-control" />
-            </div>
-            <div class="col-2">
-                <label class="control-label pt-2" style="font-size:20px;">Stock</label>
-            </div>
-            <div class="col-10 pb-3">
-                <input asp-for="Stock" disabled class="form-control" />
-            </div>
-            <div class="col-2">
-                <label class="control-label pt-2" style="font-size:20px;">CodigoBarra</label>
-            </div>
-            <div class="col-10 pb-3">
-                <input asp-for="CodigoBarra" disabled class="form-control" />
-            </div>
-            <div class="col-2">
-                <label class="control-label pt-2" style="font-size:20px;">Categoria</label>
-            </div>
-            <div class="col-10 pb-3">
-                <input asp-for="Categoria" disabled class="form-control" />
+            <!-- COLUMNA IZQUIERDA: DATOS -->
+            <div class="col-12 col-lg-8 pe-lg-4">
+                <div class="row">
+                    <div class="col-12 col-md-6 pb-3">
+                        <label class="form-label fw-bold mb-1" style="font-size: 0.9rem; color: #adb5bd;">Nombre</label>
+                        <input asp-for="Nombre" class="form-control input-disabled-custom" disabled />
+                    </div>
+
+                    <div class="col-12 col-md-6 pb-3">
+                        <label class="form-label fw-bold mb-1" style="font-size: 0.9rem; color: #adb5bd;">Código de Barra (SKU)</label>
+                        <input asp-for="CodigoBarra" type="text" class="form-control input-disabled-custom" disabled />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12 pb-3">
+                        <label class="form-label fw-bold mb-1" style="font-size: 0.9rem; color: #adb5bd;">Descripción</label>
+                        <textarea asp-for="Descripcion" class="form-control input-disabled-custom" rows="3" disabled></textarea>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12 col-md-6 pb-3">
+                        <label class="form-label fw-bold mb-1" style="font-size: 0.9rem; color: #adb5bd;">Categoría</label>
+                        <input value="@Model.Categoria" class="form-control input-disabled-custom" disabled />
+                    </div>
+
+                    <div class="col-12 col-md-6 pb-3">
+                        <label class="form-label fw-bold mb-1" style="font-size: 0.9rem; color: #adb5bd;">Talle</label>
+                        <input value="@Model.Talle" class="form-control input-disabled-custom" disabled />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12 col-md-4 pb-3">
+                        <label class="form-label fw-bold mb-1" style="font-size: 0.9rem; color: #adb5bd;">Marca</label>
+                        <input value="@Model.Marca" class="form-control input-disabled-custom" disabled />
+                    </div>
+
+                    <div class="col-12 col-md-4 pb-3">
+                        <label class="form-label fw-bold mb-1" style="font-size: 0.9rem; color: #adb5bd;">Precio</label>
+                        <input asp-for="Precio" type="number" step="0.01" class="form-control input-disabled-custom" disabled />
+                    </div>
+
+                    <div class="col-12 col-md-4 pb-3">
+                        <label class="form-label fw-bold mb-1" style="font-size: 0.9rem; color: #adb5bd;">Stock</label>
+                        <input asp-for="Stock" type="number" class="form-control input-disabled-custom" disabled />
+                    </div>
+                </div>
             </div>
 
-            <div class="col-5 offset-2">
-                <a asp-action="Index" class="btn-primary btn form-control ">Volver a la Lista</a>
+            <!-- COLUMNA DERECHA: IMAGEN -->
+            <div class="col-12 col-lg-4 mt-4 mt-lg-0">
+                <div class="border border-secondary p-3 text-center" style="border-radius: 8px; border-style: dashed !important; background-color: rgba(0,0,0,0.2);">
+                    <label class="form-label fw-bold mb-3" style="color: #adb5bd;">Imagen</label>
+
+                    <div class="d-flex justify-content-center align-items-center overflow-hidden bg-black" style="height: 250px; border-radius: 6px;">
+                        <img id="imgPreview"
+                             src="@(string.IsNullOrEmpty(Model.ImagenUrl) ? "https://placehold.co/400x400/1a1a1a/666666?text=Sin+Imagen" : Model.ImagenUrl)"
+                             class="img-fluid object-fit-cover w-100 h-100 img-disabled-custom"
+                             alt="Vista Previa" />
+                    </div>
+                </div>
             </div>
-            <div class="col-5">
-                <input type="submit" value="Eliminar" class="btn btn-danger form-control" />
+        </div>
+
+        <hr class="border-secondary my-4">
+
+        <div class="row">
+            <div class="col-12 d-flex justify-content-end gap-3">
+                <a asp-action="Index" class="btn btn-outline-light px-4">Cancelar</a>
+                <button type="submit" class="btn btn-danger px-5 fw-bold">Confirmar</button>
             </div>
         </div>
     </div>

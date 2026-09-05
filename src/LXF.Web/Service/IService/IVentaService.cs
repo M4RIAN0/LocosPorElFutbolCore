@@ -9,5 +9,7 @@ namespace LXF.Web.Service.IService
         Task<ResponseViewModel> GetComprobantesByClienteId(int clienteId);
 
         Task<ResponseViewModel> GetComprobantebyId(int id);
+
+        Task<byte[]> GeneratePDF(ComprobanteGetViewModel comprobanteGetVM, string rutaLogoPath);
     }
 }

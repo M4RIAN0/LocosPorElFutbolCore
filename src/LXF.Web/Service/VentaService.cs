@@ -1,7 +1,11 @@
 ﻿using AutoMapper;
+using Dominio.Entidades;
 using LXF.Web.Models.ViewModels;
 using LXF.Web.Service.IService;
 using LXF.Web.ServiceApiClient.IServiceApiClient;
+using QuestPDF.Fluent;
+using QuestPDF.Helpers;
+using QuestPDF.Infrastructure;
 
 namespace LXF.Web.Service
 {
@@ -37,6 +41,11 @@ namespace LXF.Web.Service
                 response.Result = Desearilize<ComprobanteGetViewModel>(response);
 
             return response;
+        }
+
+        public async Task<byte[]> GeneratePDF(ComprobanteGetViewModel comprobanteGetVM, string rutaLogoPath)
+        { 
+            return FacturaPDFGenerator.CreateFacturaPDF(comprobanteGetVM, rutaLogoPath);
         }
     }
 }

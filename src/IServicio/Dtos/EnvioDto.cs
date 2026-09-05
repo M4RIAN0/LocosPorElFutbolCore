@@ -10,7 +10,7 @@ namespace IServicio.Dtos
         public string Direccion { get; set; }
         public string Dni { get; set; }
         public decimal Monto { get; set; }
-        public int ComprobanteId { get; set; }
+        public string Estado { get; set; }
     }
 
     public class EnvioGetDto : DtoBase
@@ -21,6 +21,6 @@ namespace IServicio.Dtos
         public string Direccion { get; init; }
         public string Dni { get; init; }
         public decimal Monto { get; init; }
-        public int ComprobanteId { get; init; }
+        public string Estado { get; set; }
     }
 }

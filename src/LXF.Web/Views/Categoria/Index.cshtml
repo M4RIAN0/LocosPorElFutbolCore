@@ -1,50 +1,128 @@
 ﻿@using LXF.Web.Models.ViewModels
 @model IEnumerable<CategoriaGetViewModel>
 
-<div class="card shadow border-0 mt-4">
-	<div class="card-header bg-secondary bg-gradient ml-0 py-3">
-		<div class="row">
-			<div class="col-12 text-center">
-				<h1 class="text-white">Categorias</h1>
-			</div>
-		</div>
-	</div>
-	<div class="card-body p-4">
-		<div class="row pb-3">
-			<div class="col-6">
-			</div>
-			<div class="col-6 text-end">
-				<a asp-action="Create" class="btn btn-outline-primary"><i class="bi bi-plus-square"></i> Crear Categoria</a>
+<style>
+    body {
+        background-color: #212529;
+        color: #f8f9fa;
+    }
 
-			</div>
-		</div>
-		<table class="table">
-			<thead>
-				<tr>
-					<th>
-						Descripcion
-					</th>
-					<th></th>
-				</tr>
-			</thead>
-			<tbody>
-				@foreach (var item in Model)
-				{
-					<tr>
-						<td>
-							@item.Descripcion
-						</td>
-						<td>
-							<a asp-action="Update" asp-route-Id="@item.Id" class="btn btn-success">
-								<i class="bi bi-pencil-square"></i>
-							</a>
-							<a asp-action="Delete" asp-route-Id="@item.Id" class="btn btn-danger">
-								<i class="bi bi-trash"></i>
-							</a>
-						</td>
-					</tr>
-				}
-			</tbody>
-		</table>
-	</div>
+    .table-dark-custom {
+        background-color: #2b3035;
+    }
+
+        .table-dark-custom th {
+            background-color: #1a1d20;
+            color: #adb5bd;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 0.85rem;
+            border-bottom: 2px solid #495057;
+        }
+
+        .table-dark-custom td {
+            background-color: #2b3035;
+            color: #f8f9fa;
+            border-bottom: 1px solid #495057;
+            vertical-align: middle;
+        }
+
+    .table-hover tbody tr:hover td {
+        background-color: #343a40 !important;
+    }
+</style>
+
+<div class="container-fluid py-4">
+
+    <!-- Barra Superior: Título, Búsqueda y Botón Crear -->
+    <div class="row mb-4 align-items-center bg-dark p-3 rounded border border-secondary shadow-sm mx-0">
+        <div class="col-12 col-md-3 mb-3 mb-md-0">
+            <h3 class="text-light fw-bold mb-0 text-uppercase tracking-wide">
+                <i class="bi bi-folder me-2"></i> Categorías
+            </h3>
+        </div>
+        <div class="col-12 col-md-6 mb-3 mb-md-0">
+            <div class="input-group">
+                <span class="input-group-text bg-secondary text-light border-secondary"><i class="bi bi-search"></i></span>
+                <input type="text" id="searchInput" class="form-control bg-dark text-light border-secondary" placeholder="Buscar por nombre de categoría..." autocomplete="off" />
+            </div>
+        </div>
+        <div class="col-12 col-md-3 text-md-end">
+            <a asp-action="Create" class="btn btn-primary fw-bold px-4">
+                <i class="bi bi-plus-lg me-1"></i> Crear Categoría
+            </a>
+        </div>
+    </div>
+
+    <!-- Tabla de Categorías -->
+    <div class="row mx-0">
+        <div class="col-12">
+            <div class="table-responsive rounded border border-secondary">
+                <table class="table table-hover table-dark-custom mb-0" id="categoriasTable">
+                    <thead>
+                        <tr>
+                            <th class="px-4 py-3">Descripción</th>
+                            <th class="px-4 py-3 text-end" style="width: 200px;">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr class="categoria-row">
+                                <td class="px-4 fw-medium categoria-desc">@item.Descripcion</td>
+                                <td class="px-4 text-end">
+                                    <div class="d-flex justify-content-end gap-2">
+                                        <a asp-action="Update" asp-route-Id="@item.Id" class="btn btn-outline-light btn-sm">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </a>
+                                        <a asp-action="Delete" asp-route-Id="@item.Id" class="btn btn-outline-danger btn-sm">
+                                            <i class="bi bi-trash3"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Mensaje de no resultados -->
+            <div id="noResultsMsg" class="text-center py-5 d-none bg-dark rounded border border-secondary mt-3">
+                <i class="bi bi-search text-secondary" style="font-size: 2.5rem;"></i>
+                <h5 class="text-muted mt-3">No se encontraron categorías</h5>
+                <p class="text-secondary small mb-0">Intenta ajustar tu búsqueda.</p>
+            </div>
+        </div>
+    </div>
 </div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            $('#searchInput').on('input', function() {
+                var searchText = $(this).val().toLowerCase();
+                var visibleCount = 0;
+
+                $('.categoria-row').each(function() {
+                    var text = $(this).find('.categoria-desc').text().toLowerCase();
+
+                    if (text.includes(searchText)) {
+                        $(this).removeClass('d-none');
+                        visibleCount++;
+                    } else {
+                        $(this).addClass('d-none');
+                    }
+                });
+
+                if (visibleCount === 0) {
+                    $('#noResultsMsg').removeClass('d-none');
+                    $('#categoriasTable').addClass('d-none');
+                } else {
+                    $('#noResultsMsg').addClass('d-none');
+                    $('#categoriasTable').removeClass('d-none');
+                }
+            });
+        });
+    </script>
+}

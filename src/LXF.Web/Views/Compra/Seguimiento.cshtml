@@ -1,0 +1,244 @@
+﻿@using LXF.Web.Models.ViewModels
+@using LXF.Web.Utility
+@model ComprobanteGetViewModel
+
+@{
+    ViewData["Title"] = "Seguimiento del envío";
+
+    string colorEntregado = "#00a650";   // Verde ML
+    string colorEnCamino = "#00b4d8";    // Azul Celeste
+    string colorPreparacion = "#ff9f1c"; // Naranja / Ámbar
+    string colorConfirmado = "#2ec4b6";  // Turquesa
+
+    string estadoActual = Model.Envio?.Estado ?? EnvioUtility.CompraConfirmada;
+
+    int nivelEstado = estadoActual switch
+    {
+        EnvioUtility.Entregado => 4,
+        EnvioUtility.EnCamino => 3,
+        EnvioUtility.EnPreparacion => 2,
+        _ => 1
+    };
+}
+
+<div class="container mt-4" style="max-width: 900px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+
+    <!-- Botón Volver -->
+    <div class="mb-3">
+        <a href="/Compra/MisCompras" class="text-secondary text-decoration-none small">
+            <i class="bi bi-chevron-left"></i> Volver a mis compras
+        </a>
+    </div>
+
+    <!-- Encabezado Principal -->
+    <div class="card card-custom mb-4">
+        <div class="card-body p-4">
+            @switch (estadoActual)
+            {
+                case EnvioUtility.Entregado:
+                    <h5 style="color: @colorEntregado;" class="fw-bold mb-1">
+                        Entregado <i class="bi bi-lightning-fill ms-1"></i>
+                    </h5>
+                    <h3 class="text-white fw-bold mb-2">Llegó el @Model.Fecha</h3>
+                    <p class="text-secondary mb-0 small">
+                        Entregamos tu paquete en <strong class="text-white">@Model.Envio.Direccion</strong>
+                    </p>
+                    break;
+
+                case EnvioUtility.EnCamino:
+                    <h5 style="color: @colorEnCamino;" class="fw-bold mb-1">
+                        En camino <i class="bi bi-truck ms-1"></i>
+                    </h5>
+                    <h3 class="text-white fw-bold mb-2">Tu paquete está en viaje</h3>
+                    <p class="text-secondary mb-0 small">
+                        Llega a <strong class="text-white">@Model.Envio.Direccion</strong>
+                    </p>
+                    break;
+
+                case EnvioUtility.EnPreparacion:
+                    <h5 style="color: @colorPreparacion;" class="fw-bold mb-1">
+                        En preparación <i class="bi bi-box-seam ms-1"></i>
+                    </h5>
+                    <h3 class="text-white fw-bold mb-2">El vendedor está preparando tu paquete</h3>
+                    <p class="text-secondary mb-0 small">
+                        Te avisaremos apenas salga hacia la dirección de entrega
+                    </p>
+                    break;
+
+                default:
+                    <h5 style="color: @colorConfirmado;" class="fw-bold mb-1">
+                        Pago aprobado <i class="bi bi-check-circle-fill ms-1"></i>
+                    </h5>
+                    <h3 class="text-white fw-bold mb-2">Estamos procesando tu compra</h3>
+                    <p class="text-secondary mb-0 small">
+                        El vendedor ya recibió la confirmación de tu pedido
+                    </p>
+                    break;
+            }
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- LÍNEA DE TIEMPO VERTICAL -->
+        <div class="col-md-7">
+            <div class="card card-custom mb-4">
+                <div class="card-body p-4">
+                    <h6 class="text-white fw-bold mb-4">Detalle del seguimiento</h6>
+
+                    <div class="timeline">
+
+                        <!-- 4. Entregado -->
+                        <div class="timeline-item @(nivelEstado >= 4 ? "completed" : "")">
+                            <div class="timeline-point"></div>
+                            <div class="timeline-content">
+                                <h6 class="@(nivelEstado >= 4 ? "text-white" : "text-secondary") mb-0 fw-bold">Entregado</h6>
+                                @if (nivelEstado >= 4)
+                                {
+                                    <p class="text-secondary small mb-0">El paquete fue entregado a @Model.Envio.Persona</p>
+                                    <span class="text-secondary micro-text">@Model.Fecha - 16:30 hs</span>
+                                }
+                            </div>
+                        </div>
+
+                        <!-- 3. En camino -->
+                        <div class="timeline-item @(nivelEstado >= 3 ? "completed" : "")">
+                            <div class="timeline-point"></div>
+                            <div class="timeline-content">
+                                <h6 class="@(nivelEstado >= 3 ? "text-white" : "text-secondary") mb-0 fw-bold">En camino</h6>
+                                @if (nivelEstado >= 3)
+                                {
+                                    <p class="text-secondary small mb-0">El correo ya tiene tu paquete y está en viaje</p>
+                                    <span class="text-secondary micro-text">@Model.Fecha - 09:15 hs</span>
+                                }
+                            </div>
+                        </div>
+
+                        <!-- 2. En preparación -->
+                        <div class="timeline-item @(nivelEstado >= 2 ? "completed" : "")">
+                            <div class="timeline-point"></div>
+                            <div class="timeline-content">
+                                <h6 class="@(nivelEstado >= 2 ? "text-white" : "text-secondary") mb-0 fw-bold">En preparación</h6>
+                                @if (nivelEstado >= 2)
+                                {
+                                    <p class="text-secondary small mb-0">El vendedor empaquetó tu producto en el centro de distribución</p>
+                                    <span class="text-secondary micro-text">@Model.Fecha - 08:00 hs</span>
+                                }
+                            </div>
+                        </div>
+
+                        <!-- 1. Compra confirmada -->
+                        <div class="timeline-item @(nivelEstado >= 1 ? "completed" : "")">
+                            <div class="timeline-point"></div>
+                            <div class="timeline-content">
+                                <h6 class="@(nivelEstado >= 1 ? "text-white" : "text-secondary") mb-0 fw-bold">Compra confirmada</h6>
+                                @if (nivelEstado >= 1)
+                                {
+                                    <p class="text-secondary small mb-0">Aprobamos tu pago con @Model.Factura.TipoPago</p>
+                                    <span class="text-secondary micro-text">@Model.Fecha - 07:45 hs</span>
+                                }
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SIDEBAR DERECHO -->
+        <div class="col-md-5">
+            <div class="card card-custom mb-3">
+                <div class="card-body">
+                    <h6 class="text-white fw-bold mb-3">Destino de entrega</h6>
+                    <div class="d-flex align-items-start">
+                        <i class="bi bi-geo-alt text-secondary me-2 fs-5"></i>
+                        <div>
+                            <p class="text-white small mb-0">@Model.Envio.Direccion</p>
+                            <p class="text-secondary small mb-0">@Model.Envio.Persona (DNI @Model.Envio.Dni)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card card-custom">
+                <div class="card-body">
+                    <h6 class="text-white fw-bold mb-3">Contenido del paquete</h6>
+                    @foreach (var item in Model.DetalleComprobantes)
+                    {
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="bg-white rounded p-1 d-flex align-items-center justify-content-center" style="width: 48px; height: 48px; overflow: hidden;">
+                                <img src="@item.Producto.ImagenUrl" class="img-fluid" alt="@item.ProductoNombre">
+                            </div>
+                            <div class="ms-3 flex-grow-1">
+                                <p class="text-white small mb-0 text-truncate" style="max-width: 180px;">@item.ProductoNombre</p>
+                                <span class="text-secondary micro-text">@item.Cantidad @(item.Cantidad > 1 ? "unidades" : "unidad")</span>
+                            </div>
+                        </div>
+                    }
+                    <hr class="border-secondary">
+                    <a href="/Compra/Detalles/@Model.Id" class="text-primary text-decoration-none small">
+                        Ver detalle completo de la compra
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Tarjetas alineadas al gris del tema general */
+    .card-custom {
+        background-color: rgba(255, 255, 255, 0.03) !important;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 8px;
+    }
+
+    .text-secondary {
+        color: #b0b0b0 !important;
+    }
+
+    .text-primary {
+        color: #3483fa !important;
+    }
+
+    .micro-text {
+        font-size: 0.75rem;
+    }
+
+    /* LÍNEA DE TIEMPO CON VERDE NEÓN SOBRE GRIS DE LA APP */
+    .timeline {
+        position: relative;
+        padding-left: 10px;
+    }
+
+    .timeline-item {
+        position: relative;
+        padding-left: 25px;
+        padding-bottom: 30px;
+        border-left: 2px solid rgba(255, 255, 255, 0.15);
+    }
+
+        .timeline-item:last-child {
+            border-left: 2px solid transparent;
+            padding-bottom: 0;
+        }
+
+    .timeline-point {
+        position: absolute;
+        left: -7px;
+        top: 0;
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background-color: #555;
+        border: 2px solid #212529;
+    }
+
+    .timeline-item.completed {
+        border-left-color: #00a650;
+    }
+
+        .timeline-item.completed .timeline-point {
+            background-color: #00a650;
+            box-shadow: 0 0 8px rgba(0, 166, 80, 0.6);
+        }
+</style>

@@ -11,21 +11,23 @@ namespace LXF.Web.Controllers
     {
         private readonly IProductoService _service;
         private readonly IMapper _mapper;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public ProductoController(IProductoService service, IMapper mapper)
+        public ProductoController(IProductoService service, IMapper mapper, IWebHostEnvironment webHostEnvironment)
         {
             _service = service;
             _mapper = mapper;
+            _webHostEnvironment = webHostEnvironment;
         }
 
-        public async Task<IActionResult> Index() 
+        public async Task<IActionResult> Index()
         {
             ResponseViewModel? response = await _service.GetAll();
 
             if (!response.IsSuccess)
                 TempData["error"] = response?.Message;
 
-            var list = response.IsSuccess? response.Result : new List<ProductoGetViewModel>();
+            var list = response.IsSuccess ? response.Result : new List<ProductoGetViewModel>();
 
             return View(list);
         }
@@ -36,8 +38,11 @@ namespace LXF.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(ProductoViewModel vm)
+        public async Task<IActionResult> Create(ProductoViewModel vm, IFormFile? imagenArchivo)
         {
+            if (imagenArchivo != null)
+                await AddImage(vm, imagenArchivo);
+
             ResponseViewModel? response = await _service.Create(vm);
 
             if (response != null && response.IsSuccess)
@@ -59,7 +64,7 @@ namespace LXF.Web.Controllers
                 return await HandleErrorOnCreateOrUpdate(ToPutViewModel(response.Result), true);
             }
 
-            return NotFound(); 
+            return NotFound();
         }
 
         [HttpPost]
@@ -83,7 +88,7 @@ namespace LXF.Web.Controllers
             ResponseViewModel? response = await _service.GetById(id);
 
             if (response != null && response.IsSuccess)
-               return View(response.Result);
+                return View(response.Result);
 
             return NotFound();
         }
@@ -113,23 +118,60 @@ namespace LXF.Web.Controllers
         {
             var responseCategorias = await _service.GetCategorias();
             var responseMarcas = await _service.GetMarcas();
-            var responseTalles = await _service.GetTalles();
 
             if (createView)
             {
-               if (IsAnyResponseFailed(responseCategorias, responseMarcas, responseTalles))
-                  return View("Error", new ErrorViewModel { Message = "Hubo un problema al cargar los datos necesarios." });
+                if (IsAnyResponseFailed(responseCategorias, responseMarcas))
+                    return View("Error", new ErrorViewModel { Message = "Hubo un problema al cargar los datos necesarios." });
             }
-               
+
             ViewBag.Categorias = new SelectList(responseCategorias.Result as IEnumerable<CategoriaGetViewModel>, "Id", "Descripcion");
             ViewBag.Marcas = new SelectList(responseMarcas.Result as IEnumerable<MarcaGetViewModel>, "Id", "Descripcion");
-            ViewBag.Talles = new SelectList(responseTalles.Result as IEnumerable<TalleViewModel>, "Id", "Letra");
 
+            // Carga estática de talles para poblar el dropdown
+            ViewBag.Talles = ObtenerListadoTalles();
 
             if (vm != null)
                 return View(vm);
 
             return View();
+        }
+
+        private static List<object> ObtenerListadoTalles()
+        {
+            var talles = new List<string>
+            {
+                "XS", "S", "M", "L", "XL",
+                "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45", "46"
+            };
+
+            return talles.Select(t => new
+            {
+                Value = t,
+                Text = t,
+                EsNumero = int.TryParse(t, out _)
+            }).ToList<object>();
+        }
+
+        private async Task AddImage(ProductoViewModel vm, IFormFile? image)
+        {
+            string wwwRootPath = _webHostEnvironment.WebRootPath;
+
+            string uploadsFolder = Path.Combine(wwwRootPath, @"images\Productos");
+
+            if (!Directory.Exists(uploadsFolder))
+                Directory.CreateDirectory(uploadsFolder);
+
+            string extension = Path.GetExtension(image.FileName);
+            string fileName = $"prod-{Guid.NewGuid()}{extension}";
+            string filePath = Path.Combine(uploadsFolder, fileName);
+
+            using (var fileStream = new FileStream(filePath, FileMode.Create))
+            {
+                await image.CopyToAsync(fileStream);
+            }
+
+            vm.ImagenUrl = @"/images/Productos/" + fileName;
         }
 
         private ProductoPutViewModel ToPutViewModel(object? vm)

@@ -2,26 +2,22 @@
 @model CarroComprasGetViewModel
 @using Microsoft.AspNetCore.Mvc.Rendering
 @{
-    // Acceso a la dirección guardada en el registro
     string direccionRegistrada = ViewBag.Direccion as string ?? "Dirección no proporcionada en el registro.";
-
-    // ⭐ MENSAJE UNIFICADO PARA MINWORDS ⭐
     string minWordsMessage = "Ingrese al menos dos palabras (Nombre y Apellido).";
-
-    // ⭐ COLORES NARANJA UNIFICADOS ⭐
-    string orangeColor = "#ffc107"; // Color del texto "warning"
-    string lightOrangeBg = "rgba(255, 193, 7, 0.1)"; // Fondo claro para el aviso
+    string orangeColor = "#ffc107"; 
+    string lightOrangeBg = "rgba(255, 193, 7, 0.1)"; 
 }
 
 <form method="post" id="checkoutForm" asp-controller="Venta" asp-action="Pay">
 
-    @* Hidden Inputs para el POST *@
+    @* Inputs vitales para que el ModelState no falle *@
     <input asp-for="UserId" hidden />
     <input asp-for="Id" hidden />
     <input asp-for="Total" hidden />
     <input asp-for="@Model.Factura.Direccion" hidden />
     <input asp-for="@Model.Envio.Direccion" hidden  />
-
+    <input type="hidden" name="Envio.Estado" value="Compra confirmada" />
+    <input type="hidden" id="Envio_Monto" name="Envio.Monto" value="0" />
     <input type="hidden" name="PersonaClienteId" value="@ViewBag.PersonaClienteId" />
 
     @for (int i = 0; i < Model.DetalleCarroCompras.Count(); i++)
@@ -33,212 +29,193 @@
         <input type="hidden" name="DetalleOrdenCompras[@i].CarroComprasId" value="@Model.DetalleCarroCompras.ElementAt(i).CarroComprasId" />
     }
 
-    <div class="border mt-2 p-4 rounded">
-        <div class="container row">
+    <div class="container mt-4 text-light">
+        
+        <!-- Encabezado Limpio -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="text-warning mb-0">Confirmar Compra</h2>
+            <a asp-controller="Carro" asp-action="Index" class="btn btn-outline-warning">Volver al Carrito</a>
+        </div>
 
-            <div class="col-md-7 col-12">
-                <span style="font-size:25px;" class="text-warning mb-2">Facturación</span>
-            </div>
-
-            <div class="col-md-5 col-12">
-                <a asp-controller="Carro" asp-action="Index" class="btn btn-outline-warning form-control">Volver al Carrito </a>
-            </div>
-            <br /><br /><br />
-            <hr />
-
-            @* CONTENEDOR PRINCIPAL IZQUIERDO (7 COLUMNAS) *@
-            <div class="col-7">
-
-                @*  SECCIÓN 1: DATOS PARA FACTURACIÓN *@
-                <div id="seccion-facturacion" class="mb-4">
-                    <h5 class="text-warning mb-3">Datos para Facturación</h5>
-
-                    <div class="row pt-2">
-                        @* Nombre Completo (Max 100, Min 2 Palabras) *@
-                        <div class="col-12 py-2">
-                            <input asp-for="Factura.Nombre" placeholder="Nombre completo..." maxlength="100" class="form-control bg-dark text-light border-secondary"
-                                   data-val="true" data-val-required="El Nombre completo es obligatorio."
-                                   data-rule-minwords="2" data-msg-minwords="@minWordsMessage" />
-                            <span asp-validation-for="Factura.Nombre" class="text-danger"></span>
-                        </div>
-
-                        @* DNI (Solo Números, Max 8) *@
-                        <div class="col-12 py-2">
-                            <input asp-for="@Model.Factura.Dni" id="dniFacturacionInput" placeholder="DNI..." maxlength="8" inputmode="numeric" class="form-control bg-dark text-light border-secondary"
-                                   data-val="true" data-val-required="El DNI es obligatorio." />
-                            <span asp-validation-for="@Model.Factura.Dni" class="text-danger"></span>
-                        </div>
-
-                        @* Email (Max 100, Valid Email) *@
-                        <div class="col-12 py-2">
-                            <input asp-for="@Model.Factura.Email" placeholder="Email..." maxlength="100" type="email" class="form-control bg-dark text-light border-secondary"
-                                   data-val="true" data-val-required="El email es obligatorio." data-val-email="Ingrese una dirección de correo válida." required />
-                            <span asp-validation-for="@Model.Factura.Email" class="text-danger"></span>
-                        </div>
-
-                        @* Celular (Solo Números, Max 10) *@
-                        <div class="col-12 py-2">
-                            <input asp-for="@Model.Factura.Celular" id="celularFacturacionInput" class="form-control bg-dark text-light border-secondary" placeholder="Celular..." maxlength="10" inputmode="numeric"
-                                   data-val="true" data-val-required="El celular es obligatorio." />
-                            <span asp-validation-for="@Model.Factura.Celular" class="text-danger"></span>
-                        </div>
-
-                       
+        <div class="row g-4">
+            
+            <!-- COLUMNA IZQUIERDA: FORMULARIOS -->
+            <div class="col-lg-7">
+                
+                <!-- Tarjeta Facturación -->
+                <div class="card bg-dark border-secondary mb-4 shadow-sm">
+                    <div class="card-header border-secondary bg-transparent pt-3">
+                        <h5 class="text-warning mb-0">Datos para Facturación</h5>
                     </div>
-                </div>
-
-                @*  SECCIÓN 2: DATOS PARA EL ENVÍO (LÓGICA ALTERNABLE) *@
-                <div id="seccion-envio">
-                    <h5 class="text-warning mb-3">Datos para el Envío</h5>
-
-                    @* TOGGLE DE DIRECCIÓN *@
-                    <div class="form-check form-switch mb-3">
-                        <input class="form-check-input" type="checkbox" id="checkNuevaDireccion"
-                               style="background-color: @orangeColor; border-color: @orangeColor;"
-                               onchecked="this.style.backgroundColor='@orangeColor'; this.style.borderColor='@orangeColor';"
-                               onunchecked="this.style.backgroundColor='gray'; this.style.borderColor='gray';">
-                        <label class="form-check-label" for="checkNuevaDireccion" style="color: @orangeColor;">Agregar nueva dirección</label>
-                    </div>
-
-                    @* DIRECCIÓN PREDETERMINADA (NO EDITABLE) *@
-                    <div id="direccion-existente" class="p-3 border rounded border-secondary bg-dark text-light">
-                        <small class="d-block text-muted mb-1">Dirección de envío que proporcionaste cuando te registraste:</small>
-                        <p class="mb-0 text-break fw-bold">@direccionRegistrada</p>
-                    </div>
-
-                    @* FORMULARIO DE NUEVA DIRECCIÓN (INICIALMENTE OCULTO) *@
-                    <div id="direccion-nueva-form" class="mt-3" style="display:none;">
-
-                        @* --- AVISO DE DIRECCIÓN (ESTILO PROFESIONAL NARANJA CON MARGEN) --- *@
-                        <div class="p-2 small border rounded mb-3" style="background-color: @lightOrangeBg; border-color: @orangeColor !important; color: @orangeColor; font-weight: 500;" role="alert">
-                            Ingrese la nueva dirección completa (Calle, Número, Localidad y Provincia).
-                        </div>
-
-                        <div class="row">
-                            <div class="col-8 pb-2">
-                                @* Estos campos YA TIENEN data-val-required en el HTML *@
-                                <input name="Calle" id="calleInput" type="text" class="form-control bg-dark text-light border-secondary" placeholder="Calle..."
-                                       data-val="true" data-val-required="La calle es obligatoria." />
-                                <span data-valmsg-for="Calle" class="text-danger"></span>
-                            </div>
-                            <div class="col-4 pb-2">
-                                <input name="Numero" id="numeroCalleInput" type="text" class="form-control bg-dark text-light border-secondary" placeholder="Número..." inputmode="numeric" maxlength="5"
-                                       data-val="true" data-val-required="El número de calle es obligatorio." />
-                                <span data-valmsg-for="Numero" class="text-danger"></span>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-6 pb-2">
-                                <input name="Piso" id="pisoInput" type="text" class="form-control bg-dark text-light border-secondary" placeholder="Piso (Opcional)" inputmode="numeric" maxlength="3" />
-                                <span data-valmsg-for="Piso" class="text-danger"></span>
-                            </div>
-                            <div class="col-6 pb-2">
-                                <input name="Departamento" id="deptoInput" type="text" class="form-control bg-dark text-light border-secondary" placeholder="Depto (Opcional)" maxlength="3" />
-                                <span data-valmsg-for="Departamento" class="text-danger"></span>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-6 pb-2">
-                                <select name="Provincia" id="provinciaInput" asp-items="@(ViewData["Provincias"] as SelectList)" class="form-control bg-dark text-light border-secondary"
-                                        data-val="true" data-val-required="La selección de Provincia es obligatoria.">
-                                    <option value="" selected disabled>Seleccione Provincia...</option>
-                                </select>
-                                <span data-valmsg-for="Provincia" class="text-danger"></span>
-                            </div>
-                            <div class="col-6 pb-2">
-                                <select name="Localidad" id="localidadInput" class="form-control bg-dark text-light border-secondary" disabled
-                                        data-val="true" data-val-required="La selección de Localidad es obligatoria.">
-                                    <option value="" selected disabled>Seleccione Localidad...</option>
-                                </select>
-                                <span data-valmsg-for="Localidad" class="text-danger"></span>
-                            </div>
-                        </div>
-                        <hr class="border-secondary my-3" />
-                    </div>
-
-                    <div class="row">
-                        @* Persona que recibe (Validación unificada) *@
-                        <div class="col-12 py-2">
-                            <input asp-for="@Model.Envio.Persona" placeholder="Nombre de quien recibe..." maxlength="100" class="form-control bg-dark text-light border-secondary"
-                                   data-val="true" data-val-required="El Nombre del receptor es obligatorio."
-                                   data-rule-minwords="2" data-msg-minwords="@minWordsMessage" />
-                            <span asp-validation-for="@Model.Envio.Persona" class="text-danger"></span>
-                        </div>
-                        @* DNI del Receptor *@
-                        <div class="col-12 py-2">
-                            <input asp-for="@Model.Envio.Dni" id="dniEnvioInput" placeholder="DNI de quien recibe..." maxlength="8" inputmode="numeric" class="form-control bg-dark text-light border-secondary"
-                                   data-val="true" data-val-required="El DNI del receptor es obligatorio." />
-                            <span asp-validation-for="@Model.Envio.Dni" class="text-danger"></span>
-                        </div>
-                        @* Email (Max 100, Valid Email) *@
-                        <div class="col-12 py-2">
-                            <input asp-for="@Model.Envio.Email" placeholder="Email..." maxlength="100" type="email" class="form-control bg-dark text-light border-secondary"
-                                   data-val="true" data-val-required="El email es obligatorio." data-val-email="Ingrese una dirección de correo válida." required />
-                            <span asp-validation-for="@Model.Envio.Email" class="text-danger"></span>
-                        </div>
-
-                        @* Celular (Solo Números, Max 10) *@
-                        <div class="col-12 py-2">
-                            <input asp-for="@Model.Envio.Celular" id="celularEnvioInput" class="form-control bg-dark text-light border-secondary" placeholder="Celular..." maxlength="10" inputmode="numeric"
-                                   data-val="true" data-val-required="El celular es obligatorio." />
-                            <span asp-validation-for="@Model.Envio.Celular" class="text-danger"></span>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-            @* CONTENEDOR PRINCIPAL DERECHO (5 COLUMNAS - RESUMEN DE PRODUCTOS BASE) *@
-            <div class="col-5">
-                <div class="card mt-2">
                     <div class="card-body">
-
-                        @* Encabezados de Tabla (Base Original, Traducido) *@
-                        <div class=" d-none d-lg-block">
-                            <div class="row text-danger">
-                                <div class="col-6">Detalle Producto</div>
-                                <div class="col-3">Precio</div>
-                                <div class="col-3">Cantidad</div>
+                        <div class="row g-3">
+                            <div class="col-12">
+                                <input asp-for="Factura.Nombre" placeholder="Nombre completo..." maxlength="100" class="form-control bg-dark text-light border-secondary"
+                                       data-val="true" data-val-required="El Nombre completo es obligatorio."
+                                       data-rule-minwords="2" data-msg-minwords="@minWordsMessage" />
+                                <span asp-validation-for="Factura.Nombre" class="text-danger small"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <input asp-for="@Model.Factura.Dni" id="dniFacturacionInput" placeholder="DNI..." maxlength="8" inputmode="numeric" class="form-control bg-dark text-light border-secondary"
+                                       data-val="true" data-val-required="El DNI es obligatorio." />
+                                <span asp-validation-for="@Model.Factura.Dni" class="text-danger small"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <input asp-for="@Model.Factura.Celular" id="celularFacturacionInput" class="form-control bg-dark text-light border-secondary" placeholder="Celular..." maxlength="10" inputmode="numeric"
+                                       data-val="true" data-val-required="El celular es obligatorio." />
+                                <span asp-validation-for="@Model.Factura.Celular" class="text-danger small"></span>
+                            </div>
+                            <div class="col-12">
+                                <input asp-for="@Model.Factura.Email" placeholder="Email..." maxlength="100" type="email" class="form-control bg-dark text-light border-secondary"
+                                       data-val="true" data-val-required="El email es obligatorio." data-val-email="Ingrese un correo válido." required />
+                                <span asp-validation-for="@Model.Factura.Email" class="text-danger small"></span>
                             </div>
                         </div>
-                        <hr />
+                    </div>
+                </div>
 
+                <!-- Tarjeta Envío -->
+                <div class="card bg-dark border-secondary shadow-sm">
+                    <div class="card-header border-secondary bg-transparent pt-3 d-flex justify-content-between align-items-center">
+                        <h5 class="text-warning mb-0">Datos para el Envío</h5>
+                        <div class="form-check form-switch m-0">
+                            <input class="form-check-input" type="checkbox" id="checkNuevaDireccion" style="background-color: @orangeColor; border-color: @orangeColor;">
+                            <label class="form-check-label text-warning small" for="checkNuevaDireccion">Nueva dirección</label>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        
+                        <div id="direccion-existente" class="p-3 border rounded border-secondary bg-dark text-light mb-3">
+                            <small class="d-block text-muted mb-1">Dirección registrada:</small>
+                            <p class="mb-0 text-break fw-bold">@direccionRegistrada</p>
+                        </div>
+
+                        <div id="direccion-nueva-form" class="mt-2" style="display:none;">
+                            <div class="p-2 small border rounded mb-3" style="background-color: @lightOrangeBg; border-color: @orangeColor !important; color: @orangeColor;" role="alert">
+                                Ingrese la nueva dirección completa.
+                            </div>
+                            <div class="row g-2 mb-3">
+                                <div class="col-md-8">
+                                    <input name="Calle" id="calleInput" type="text" class="form-control bg-dark text-light border-secondary" placeholder="Calle..."
+                                           data-val="true" data-val-required="La calle es obligatoria." />
+                                    <span data-valmsg-for="Calle" class="text-danger small"></span>
+                                </div>
+                                <div class="col-md-4">
+                                    <input name="Numero" id="numeroCalleInput" type="text" class="form-control bg-dark text-light border-secondary" placeholder="Número..." inputmode="numeric" maxlength="5"
+                                           data-val="true" data-val-required="Obligatorio." />
+                                    <span data-valmsg-for="Numero" class="text-danger small"></span>
+                                </div>
+                                <div class="col-6">
+                                    <input name="Piso" id="pisoInput" type="text" class="form-control bg-dark text-light border-secondary" placeholder="Piso (Opcional)" inputmode="numeric" maxlength="3" />
+                                </div>
+                                <div class="col-6">
+                                    <input name="Departamento" id="deptoInput" type="text" class="form-control bg-dark text-light border-secondary" placeholder="Depto (Opcional)" maxlength="3" />
+                                </div>
+                                <div class="col-6">
+                                    <select name="Provincia" id="provinciaInput" asp-items="@(ViewData["Provincias"] as SelectList)" class="form-select bg-dark text-light border-secondary"
+                                            data-val="true" data-val-required="Seleccione Provincia.">
+                                        <option value="" selected disabled>Provincia...</option>
+                                    </select>
+                                    <span data-valmsg-for="Provincia" class="text-danger small"></span>
+                                </div>
+                                <div class="col-6">
+                                    <select name="Localidad" id="localidadInput" class="form-select bg-dark text-light border-secondary" disabled
+                                            data-val="true" data-val-required="Seleccione Localidad.">
+                                        <option value="" selected disabled>Localidad...</option>
+                                    </select>
+                                    <span data-valmsg-for="Localidad" class="text-danger small"></span>
+                                </div>
+                            </div>
+                            <hr class="border-secondary my-3" />
+                        </div>
+
+                        <div class="row g-3">
+                            <div class="col-12">
+                                <input asp-for="@Model.Envio.Persona" placeholder="Nombre de quien recibe..." maxlength="100" class="form-control bg-dark text-light border-secondary"
+                                       data-val="true" data-val-required="El Nombre del receptor es obligatorio."
+                                       data-rule-minwords="2" data-msg-minwords="@minWordsMessage" />
+                                <span asp-validation-for="@Model.Envio.Persona" class="text-danger small"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <input asp-for="@Model.Envio.Dni" id="dniEnvioInput" placeholder="DNI..." maxlength="8" inputmode="numeric" class="form-control bg-dark text-light border-secondary"
+                                       data-val="true" data-val-required="Obligatorio." />
+                                <span asp-validation-for="@Model.Envio.Dni" class="text-danger small"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <input asp-for="@Model.Envio.Celular" id="celularEnvioInput" class="form-control bg-dark text-light border-secondary" placeholder="Celular..." maxlength="10" inputmode="numeric"
+                                       data-val="true" data-val-required="Obligatorio." />
+                                <span asp-validation-for="@Model.Envio.Celular" class="text-danger small"></span>
+                            </div>
+                            <div class="col-12">
+                                <input asp-for="@Model.Envio.Email" placeholder="Email de contacto..." maxlength="100" type="email" class="form-control bg-dark text-light border-secondary"
+                                       data-val="true" data-val-required="Obligatorio." data-val-email="Correo inválido." required />
+                                <span asp-validation-for="@Model.Envio.Email" class="text-danger small"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- COLUMNA DERECHA: RESUMEN Y PAGO -->
+            <div class="col-lg-5">
+                <div class="card bg-dark border-secondary shadow-sm">
+                    <div class="card-header border-secondary bg-transparent pt-3">
+                        <h5 class="text-warning mb-0">Resumen del Pedido</h5>
+                    </div>
+                    <div class="card-body">
+                        
+                        <div class="d-flex justify-content-between text-secondary mb-2 small fw-bold text-uppercase border-bottom border-secondary pb-2">
+                            <span>Producto</span>
+                            <span>Subtotal</span>
+                        </div>
+            
                         @foreach (var cartObj in Model.DetalleCarroCompras)
                         {
-                            <div class="row h-100">
-                                <div class="col-6">
-                                    <span style="font-size:20px">@cartObj.Producto.Nombre</span>
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <div class="pe-3">
+                                    <span class="d-block text-light fw-semibold">@cartObj.Producto.Nombre</span>
+                                    <small class="text-secondary">@cartObj.Cantidad un. x $ @cartObj.Precio.ToString("N0")</small>
                                 </div>
-                                <div class="col-3" style="font-size:11px;">
-                                    <span style="font-size:17px;"> @cartObj.Precio.ToString("c")</span>
-                                </div>
-                                <div class="col-3" style="font-size:11px;">
-                                    <span style="font-size:17px;"> @cartObj.Cantidad</span>
+                                <div class="text-end text-light fw-bold">
+                                    $ @cartObj.SubTotal.ToString("N0")
                                 </div>
                             </div>
-                            <hr />
                         }
-
-                        @* Total del Pedido (Texto limpio) *@
-                        <div class="row">
-                            <div class="col-12 text-center pr-4 text-danger">
-                                Total: @Model.Total.ToString("c") <br />
+            
+                        <hr class="border-secondary" />
+            
+                        <!-- SECCIÓN DE ENVÍO DINÁMICO -->
+                        <div class="d-flex justify-content-between align-items-center py-2 px-3 rounded" style="background-color: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.1);">
+                            <div class="d-flex align-items-center">
+                                <i class="bi bi-truck fs-4 me-2 text-warning"></i>
+                                <div>
+                                    <span class="d-block text-light fw-semibold small">Costo de envío</span>
+                                    <small id="subtexto-destino" class="text-secondary micro-text">Cargando ubicación...</small>
+                                </div>
+                            </div>
+                            <div class="text-end">
+                                <span id="texto-costo-envio" class="fw-bold fs-6" style="color: #00a650;">
+                                    Cargando...
+                                </span>
                             </div>
                         </div>
-
-                    </div>
-                    @* Pie de tarjeta (Card Footer) *@
-                    <div class="card-footer">
-                        <div class="col-12 text-center">
-                            <button type="submit" class="btn-mp-final-image">
-                                <img src="~/images/Icono_MP.png"
-                                     alt="Pagar con Mercado Pago"
-                                     class="mp-button-image" />
-                            </button>
-                            <p class="mp-safe-text">Paga de forma segura</p>
+            
+                        <hr class="border-secondary" />
+            
+                        <!-- TOTAL ACTUALIZADO -->
+                        <div class="d-flex justify-content-between align-items-center mt-3">
+                            <span class="fs-5 text-light fw-bold">Total a Pagar:</span>
+                            <span id="texto-total-pagar" class="fs-4 text-warning fw-bold" data-subtotal="@Model.Total">
+                                $ @Model.Total.ToString("N0")
+                            </span>
                         </div>
+                    </div>
+                    
+                    <div class="card-footer border-secondary bg-transparent text-center py-4">
+                        <button type="submit" class="btn border-0 p-0 mb-2 btn-mp-final-image">
+                            <img src="~/images/Icono_MP.png" alt="Pagar con Mercado Pago" style="max-width: 160px; border-radius: 8px;" />
+                        </button>
+                        <p class="text-secondary small mb-0"><i class="bi bi-shield-lock-fill me-1"></i>Paga de forma segura</p>
                     </div>
                 </div>
             </div>
@@ -251,182 +228,208 @@
     <partial name="_ValidationScriptsPartial" />
 
     <script>
-        // ⭐ REGLA DE VALIDACIÓN: Mínimo de Palabras (2) ⭐
-        $.validator.addMethod("minwords", function (value, element, params) {
-            if (this.optional(element)) {
-                return true;
-            }
-            const count = value.trim().split(/\s+/).filter(Boolean).length;
-            return count >= params;
-        });
-
-        $.validator.unobtrusive.adapters.addBool("minwords");
-
-        // Función para re-analizar la validación unobtrusive
-        function reinitializeValidation(formId) {
-            const form = $(formId);
-            // Limpieza agresiva de los datos de validación
-            form.removeData('validator');
-            form.removeData('unobtrusiveValidation');
-            // Re-parseo del formulario para aplicar el submitHandler
-            $.validator.unobtrusive.parse(form);
-        }
-
-        // ⭐ INYECCIÓN DE DATA PARA PROVINCIAS/LOCALIDADES ⭐
-        const allLocalidadesData = @Html.Raw(Json.Serialize(ViewBag.LocalidadesData ?? new List<object>()));
-
+        // 1. CONSTANTES GLOBALES
+        const localidadesData = @Html.Raw(Json.Serialize(ViewBag.LocalidadesData ?? new List<object>()));
+        const direccionRegistrada = "@Html.Raw(direccionRegistrada)";
+        const subtotalBase = parseFloat($('#texto-total-pagar').data('subtotal'));
 
         $(document).ready(function () {
+            
+            // 2. INICIALIZACIÓN UNIFICADA DE MÓDULOS
+            configurarValidacionesPersonalizadas();
+            configurarMascarasDeEntrada();
+            configurarToggleDeDireccion();
+            configurarSelectoresDeUbicacion();
+            configurarProcesamientoDelFormulario();
 
-            // 0. RESTRICCIONES DE ENTRADA (MÁSCARAS)
+            // --- MÓDULOS Y FUNCIONES ---
 
-            // DNI (Facturación), DNI (Receptor), Celular (Facturación), Celular (Facturación)y Número de Calle (Solo números)
-            $('#dniFacturacionInput, #dniEnvioInput, #celularFacturacionInput, #celularEnvioInput, #numeroCalleInput, #pisoInput').on('input', function() {
-                // Asegura que solo se ingresen números
-                this.value = this.value.replace(/[^0-9]/g, '');
-            });
+            function configurarValidacionesPersonalizadas() {
+                $.validator.addMethod("minwords", function (value, element, params) {
+                    if (this.optional(element)) return true;
+                    return value.trim().split(/\s+/).filter(Boolean).length >= params;
+                });
+                $.validator.unobtrusive.adapters.addBool("minwords");
+            }
 
+            function revalidarFormulario() {
+                const $form = $("#checkoutForm");
+                $form.removeData('validator').removeData('unobtrusiveValidation');
+                $.validator.unobtrusive.parse($form);
+            }
 
-            // 1. LÓGICA DE TOGGLE DE DIRECCIÓN
+            function configurarMascarasDeEntrada() {
+                const camposNumericos = '#dniFacturacionInput, #dniEnvioInput, #celularFacturacionInput, #celularEnvioInput, #numeroCalleInput, #pisoInput';
+                $(document).on('input', camposNumericos, function() {
+                    this.value = this.value.replace(/[^0-9]/g, '');
+                });
+            }
 
-            const $checkNuevaDireccion = $('#checkNuevaDireccion');
-            const $direccionExistente = $('#direccion-existente');
-            const $direccionNuevaForm = $('#direccion-nueva-form');
+            function obtenerCostoEnvioPorTexto(textoProvincia) {
+                if (!textoProvincia) return null;
+                const prov = textoProvincia.toLowerCase();
 
-            // Nombres de los campos que tienen validación de required y deben ser alternados
-            const requiredFieldsNames = [
-                'Calle', 'Numero', 'Provincia', 'Localidad'
-            ];
+                if (prov.includes('tucum')) return 0;
+                if (prov.includes('salta') || prov.includes('jujuy') || prov.includes('catamarca') || prov.includes('santiago')) return 4500;
+                if (prov.includes('córdoba') || prov.includes('cordoba') || prov.includes('santa fe') || prov.includes('mendoza')) return 7200;
+                if (prov.includes('buenos aires') || prov.includes('entre ríos') || prov.includes('entre rios')) return 9500;
+                return 12500;
+            }
 
-            // Selector de todos los campos de entrada/selección en el formulario de dirección nueva 
-            const $newAddressFields = $('#calleInput, #numeroCalleInput, #pisoInput, #deptoInput, #provinciaInput, #localidadInput');
-
-            function toggleDireccionForm() {
-                if ($checkNuevaDireccion.is(':checked')) {
-                    $direccionExistente.slideUp();
-                    $direccionNuevaForm.slideDown();
-
-                    // Habilitar: QUITAR disabled. El data-val-required ya está en el HTML
-                    $newAddressFields.prop('disabled', false);
-
+            function actualizarResumenEnvio(costo, etiquetaDestino) {
+                // 1. Asignar el valor del costo al input hidden para que viaje en el POST
+                const montoCalculado = costo === null ? 0 : costo;
+                $('#Envio_Monto').val(montoCalculado);
+            
+                // 2. Formato visual
+                if (costo === null) {
+                    $('#texto-costo-envio').html('Seleccione provincia').css({ 'color': '#6c757d', 'font-weight': 'normal', 'font-size': '0.85rem' });
+                    $('#texto-total-pagar').html(`$ ${subtotalBase.toLocaleString('es-AR')}`);
+                } else if (costo === 0) {
+                    $('#texto-costo-envio').html('GRATIS').css({ 'color': '#00a650', 'font-weight': 'bold', 'font-size': '1rem' });
+                    $('#texto-total-pagar').html(`$ ${subtotalBase.toLocaleString('es-AR')}`);
                 } else {
-                    $direccionExistente.slideDown();
-                    $direccionNuevaForm.slideUp();
-
-                    // Deshabilitar: AÑADIR disabled (El validador lo ignorará)
-                    $newAddressFields.prop('disabled', true);
-
-                    // Limpieza: Borrar el valor de los campos (incluye selects)
-                    $newAddressFields.val('');
-                    // Forzar el reset de Localidad/Provincia a la opción disabled/selected
-                    $('#provinciaInput').val('');
-                    $('#localidadInput').val('').prop('disabled', true);
-
-                    // Limpiar mensajes de validación (opcional, pero limpio)
-                    $direccionNuevaForm.find('span.text-danger').empty();
+                    $('#texto-costo-envio').html(`$ ${costo.toLocaleString('es-AR')}`).css({ 'color': '#00a650', 'font-weight': 'bold', 'font-size': '1rem' });
+                    const totalFinal = subtotalBase + costo;
+                    $('#texto-total-pagar').html(`$ ${totalFinal.toLocaleString('es-AR')}`);
                 }
-
-                // CRÍTICO: Re-inicializar validación para que respete los cambios 'disabled'
-                reinitializeValidation("#checkoutForm");
+            
+                if (etiquetaDestino) {
+                    $('#subtexto-destino').text(etiquetaDestino);
+                }
             }
 
-            // ⭐ Inicialización al cargar la página ⭐
-            // Los campos de la dirección nueva ya deben tener 'disabled' por defecto en el HTML
-            // Aquí solo nos aseguramos de que el toggle esté correcto al inicio
-            if (!$checkNuevaDireccion.is(':checked')) {
-                $newAddressFields.prop('disabled', true);
-            } else {
-                $newAddressFields.prop('disabled', false);
+            function calcularEnvioDireccionPredeterminada() {
+                const costo = obtenerCostoEnvioPorTexto(direccionRegistrada);
+                
+                // Extraer solo "Localidad, Provincia" sin prefijos
+                let etiquetaUbicacion = "Dirección registrada";
+                if (direccionRegistrada && direccionRegistrada.includes(',')) {
+                    const partes = direccionRegistrada.split(',');
+                    if (partes.length >= 2) {
+                        etiquetaUbicacion = partes.slice(-2).join(',').trim();
+                    }
+                }
+                actualizarResumenEnvio(costo, etiquetaUbicacion);
             }
 
-            // Asignar evento al checkbox
-            $checkNuevaDireccion.on('change', toggleDireccionForm);
+            function configurarToggleDeDireccion() {
+                const $check = $('#checkNuevaDireccion');
+                const $camposNuevos = $('#calleInput, #numeroCalleInput, #pisoInput, #deptoInput, #provinciaInput, #localidadInput');
 
+                function aplicarCambioVisual() {
+                    if ($check.is(':checked')) {
+                        $('#direccion-existente').slideUp();
+                        $('#direccion-nueva-form').slideDown();
+                        $camposNuevos.prop('disabled', false);
 
-            // 2. LÓGICA DE CARGA DINÁMICA (PROVINCIA/LOCALIDAD)
+                        const provSeleccionada = $('#provinciaInput option:selected').text();
+                        const locSeleccionada = $('#localidadInput option:selected').text();
 
-
-            $('#provinciaInput').on('change', function() {
-                const selectedProvinciaId = $(this).val();
-                const $localidadSelect = $('#localidadInput');
-
-                // Si se cambia la provincia, deshabilitar localidad y limpiar
-                $localidadSelect.prop('disabled', true).empty().append('<option value="" selected disabled>Cargando Localidades...</option>');
-
-                if (selectedProvinciaId && selectedProvinciaId !== '') {
-
-                    const localidadesToFilter = Array.isArray(allLocalidadesData) ? allLocalidadesData : [];
-
-                    const filteredLocalidades = localidadesToFilter.filter(l => {
-                        if (l && l.provinciaId) {
-                            return String(l.provinciaId) === selectedProvinciaId;
+                        if (provSeleccionada && !provSeleccionada.includes('Provincia')) {
+                            const costo = obtenerCostoEnvioPorTexto(provSeleccionada);
+                            let etiqueta = provSeleccionada;
+                            if (locSeleccionada && !locSeleccionada.includes('Localidad')) {
+                                etiqueta = `${locSeleccionada}, ${provSeleccionada}`;
+                            }
+                            actualizarResumenEnvio(costo, etiqueta);
+                        } else {
+                            // Sin provincia elegida: costo nulo y subtexto indicativo
+                            actualizarResumenEnvio(null, 'Pendiente de selección');
                         }
-                        return false;
-                    });
-
-                    $localidadSelect.empty().append('<option value="" selected disabled>Seleccione Localidad...</option>');
-
-                    if (filteredLocalidades.length > 0) {
-                        $.each(filteredLocalidades, function(index, localidad) {
-                            $localidadSelect.append(new Option(localidad.nombre, localidad.id));
-                        });
-                        $localidadSelect.prop('disabled', false);
                     } else {
-                        $localidadSelect.append('<option value="" disabled>No hay localidades disponibles</option>');
+                        $('#direccion-existente').slideDown();
+                        $('#direccion-nueva-form').slideUp();
+                        $camposNuevos.prop('disabled', true).val('');
+                        $('#localidadInput').prop('disabled', true);
+                        $('#direccion-nueva-form').find('span.text-danger').empty();
+
+                        // Restaurar ubicación registrada
+                        calcularEnvioDireccionPredeterminada();
                     }
-                    reinitializeValidation("#checkoutForm");
-                }
-            });
-
-
-
-            // 3. Lógica de Concatenación y Submit
-
-            $('#checkoutForm').submit(function (e) {
-
-                // Forzar validación Unobtrusive antes de la lógica de dirección
-                if (!$(this).valid()) {
-                    e.preventDefault();
-                    return false;
+                    revalidarFormulario();
                 }
 
-                let direccionFinal = "";
+                $check.on('change', aplicarCambioVisual);
+                
+                // Carga inicial
+                calcularEnvioDireccionPredeterminada();
+            }
 
-                if ($checkNuevaDireccion.is(':checked')) {
-                    // A) Si se selecciona la NUEVA dirección, se concatena el formulario completo.
-                    const calle = $('#calleInput').val().trim();
-                    const numero = $('#numeroCalleInput').val().trim();
-                    const piso = $('#pisoInput').val().trim();
-                    const depto = $('#deptoInput').val().trim();
-                    const provincia = $('#provinciaInput option:selected').text();
-                    const localidad = $('#localidadInput option:selected').text();
+            function configurarSelectoresDeUbicacion() {
+                $('#provinciaInput').on('change', function() {
+                    const provinciaId = $(this).val();
+                    const provinciaTexto = $('#provinciaInput option:selected').text();
+                    const $localidadSelect = $('#localidadInput');
 
-                    if (calle && numero) { direccionFinal += calle + ' ' + numero; }
+                    $localidadSelect.prop('disabled', true).empty().append(new Option('Cargando...', ''));
 
-                    if (piso || depto) {
-                        let opcional = '';
-                        if (piso) { opcional += 'Piso: ' + piso; }
-                        if (depto) {
-                            if (opcional.length > 0) { opcional += ' / '; }
-                            opcional += 'Depto: ' + depto;
+                    if (provinciaId) {
+                        const costo = obtenerCostoEnvioPorTexto(provinciaTexto);
+                        actualizarResumenEnvio(costo, provinciaTexto);
+
+                        const filtradas = localidadesData.filter(l => String(l.provinciaId) === provinciaId);
+                        
+                        $localidadSelect.empty().append(new Option('Seleccione Localidad...', '', true, true));
+                        $localidadSelect.find('option').prop('disabled', true);
+                        
+                        if (filtradas.length > 0) {
+                            filtradas.forEach(loc => $localidadSelect.append(new Option(loc.nombre, loc.id)));
+                            $localidadSelect.prop('disabled', false);
+                        } else {
+                            $localidadSelect.empty().append(new Option('Sin localidades', '', true, true)).prop('disabled', true);
                         }
-                        if (opcional.length > 0) { direccionFinal += ', ' + opcional; }
+                        revalidarFormulario();
                     }
-                    if (localidad && localidad !== 'Seleccione Localidad...') { direccionFinal += ', ' + localidad; }
-                    if (provincia && provincia !== 'Seleccione Provincia...') { direccionFinal += ', ' + provincia; }
+                });
 
-                } else {
-                    // B) Si se usa la DIRECCIÓN DE REGISTRO
-                    direccionFinal = "@Html.Raw(direccionRegistrada)";
-                }
+                $('#localidadInput').on('change', function() {
+                    const provinciaTexto = $('#provinciaInput option:selected').text();
+                    const localidadTexto = $('#localidadInput option:selected').text();
 
-                // Asignar el string final al input oculto del ViewModel
-                $('#Factura_Direccion').val(direccionFinal);
-                $('#Envio_Direccion').val(direccionFinal);
+                    if (localidadTexto && !localidadTexto.includes('Seleccione')) {
+                        const costo = obtenerCostoEnvioPorTexto(provinciaTexto);
+                        actualizarResumenEnvio(costo, `${localidadTexto}, ${provinciaTexto}`);
+                    }
+                });
+            }
 
-                return true;
-            });
+            function configurarProcesamientoDelFormulario() {
+                $('#checkoutForm').submit(function (e) {
+                    if (!$(this).valid()) {
+                        e.preventDefault();
+                        return false;
+                    }
+
+                    let direccionFinal = "";
+                    
+                    if ($('#checkNuevaDireccion').is(':checked')) {
+                        const calle = $('#calleInput').val().trim();
+                        const numero = $('#numeroCalleInput').val().trim();
+                        const piso = $('#pisoInput').val().trim();
+                        const depto = $('#deptoInput').val().trim();
+                        const provincia = $('#provinciaInput option:selected').text();
+                        const localidad = $('#localidadInput option:selected').text();
+
+                        if (calle && numero) direccionFinal += `${calle} ${numero}`;
+                        
+                        let extra = [];
+                        if (piso) extra.push(`Piso: ${piso}`);
+                        if (depto) extra.push(`Depto: ${depto}`);
+                        if (extra.length) direccionFinal += `, ${extra.join(' / ')}`;
+                        
+                        if (localidad && !localidad.includes('Localidad')) direccionFinal += `, ${localidad}`;
+                        if (provincia && !provincia.includes('Provincia')) direccionFinal += `, ${provincia}`;
+                    } else {
+                        direccionFinal = direccionRegistrada;
+                    }
+
+                    $('#Factura_Direccion').val(direccionFinal);
+                    $('#Envio_Direccion').val(direccionFinal);
+                    
+                    return true;
+                });
+            }
         });
-
     </script>
-}
+}}

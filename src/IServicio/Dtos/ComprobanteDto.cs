@@ -10,8 +10,9 @@ namespace IServicio.Dtos
         public IEnumerable<DetalleComprobanteDto> DetalleComprobantes { get; set; }
         public decimal Total { get; set; }
         public int ClienteId { get; set; }
-        public FacturaDto Factura { get; init; }
-        public EnvioDto Envio { get; init; }
+        public FacturaDto Factura { get; set; }
+        public EnvioDto Envio { get; set; }
+
     }
 
     public class ComprobanteGetDto : DtoBase
@@ -21,7 +22,7 @@ namespace IServicio.Dtos
         [Column(TypeName = "decimal(18,2)")]
         public decimal Total { get; init; }
         public int ClienteId { get; init; }
-        public FacturaGetDto? Factura { get; init; }
-        public EnvioGetDto? Envio { get; init; }
+        public FacturaGetDto Factura { get; set; }
+        public EnvioGetDto Envio { get; set; }
     }
 }

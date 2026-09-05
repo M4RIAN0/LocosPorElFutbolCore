@@ -1,83 +1,192 @@
 ﻿@using LXF.Web.Models.ViewModels
+@using System.Globalization
 @model CarroComprasGetViewModel
-<form method="post">
-    <br />
-    <div class="">
-        <div class="card border mt-4 container">
-            <div class="card-header bg-dark text-light ml-0 row ">
-                <div class="col-6">
-                    <h3 class="text-success"><i class="bi bi-cart"></i> &nbsp; Carro de Compras</h3>
-                </div>
-                <div class="col-6 text-end">
-                    <a asp-action="Index" asp-controller="Home" class="btn btn-outline-warning mt-2 btn-sm">Continuar Comprando</a>
-                </div>
-            </div>
+
+@{
+    ViewData["Title"] = "Carrito";
+    var culturaArg = new CultureInfo("es-AR");
+}
+
+<div class="container mt-4 text-light" style="max-width: 1050px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+
+    <!-- ENCABEZADO CORTO Y MÍNIMO -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="text-white fw-bold mb-0 fs-3">
+            <i class="bi bi-cart3 text-warning me-2"></i>Carrito
+        </h2>
+        <a asp-action="Index" asp-controller="Home" class="btn-continuar-comprando">
+            <i class="bi bi-arrow-left me-1"></i>Continuar Comprando
+        </a>
+    </div>
+
+    @if (Model == null || Model.DetalleCarroCompras == null || !Model.DetalleCarroCompras.Any())
+    {
+        <!-- CARRO VACÍO -->
+        <div class="card card-custom text-center p-5 shadow-sm">
             <div class="card-body">
-                <div class=" d-none d-lg-block">
-                    <div class="row text-info">
-                        <div class="col-lg-2">
-                        </div>
-                        <div class="col-lg-5">
-                            Product Details
-                        </div>
-                        <div class="col-lg-2">
-                            Precio
-                        </div>
-                        <div class="col-lg-2">
-                            Cantidad
-                        </div>
-                        <div class="col-lg-1">
+                <i class="bi bi-cart-x fs-1 text-secondary mb-3 d-block"></i>
+                <h4 class="text-white fw-bold mb-2">Tu carrito está vacío</h4>
+                <p class="text-secondary small mb-4">¡Explora nuestro catálogo y suma tus camisetas preferidas!</p>
+                <a asp-controller="Home" asp-action="Index" class="btn-pagar-sobrio d-inline-block px-4 py-2 text-decoration-none">Ver Productos</a>
+            </div>
+        </div>
+    }
+    else
+    {
+        <form method="post">
+            <div class="row g-4">
+
+                <!-- COLUMNA IZQUIERDA: LISTA DE PRODUCTOS -->
+                <div class="col-lg-8">
+                    <div class="card card-custom shadow-sm">
+                        <div class="card-body p-4">
+
+                            <!-- Encabezado de Columnas (Escritorio) -->
+                            <div class="d-none d-md-flex row text-secondary small fw-bold text-uppercase border-bottom border-secondary pb-2 mb-3">
+                                <div class="col-md-6">Producto</div>
+                                <div class="col-md-3 text-center">Precio / Cantidad</div>
+                                <div class="col-md-3 text-end">Subtotal</div>
+                            </div>
+
+                            @foreach (var cartObj in Model.DetalleCarroCompras)
+                            {
+                                var subtotalProducto = cartObj.Cantidad * cartObj.Precio;
+
+                                <div class="row align-items-center py-3 @(cartObj != Model.DetalleCarroCompras.Last() ? "border-bottom border-secondary" : "")">
+
+                                    <!-- Imagen + Nombre + Descripción Completa -->
+                                    <div class="col-md-6 col-12 d-flex align-items-start mb-3 mb-md-0">
+                                        <div class="bg-white rounded p-1 d-flex align-items-center justify-content-center me-3 flex-shrink-0" style="width: 70px; height: 70px; overflow: hidden;">
+                                            <img src="@cartObj.Producto.ImagenUrl" class="img-fluid" alt="@cartObj.Producto.Nombre">
+                                        </div>
+                                        <div>
+                                            <h6 class="text-white fw-bold mb-1 fs-6">@cartObj.Producto.Nombre</h6>
+                                            <div class="text-secondary micro-text pe-2" style="font-size: 0.78rem; line-height: 1.35;">
+                                                @Html.Raw(cartObj.Producto.Descripcion)
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Controles de Cantidad + Precio Unitario -->
+                                    <div class="col-md-3 col-6 text-center">
+                                        <small class="text-secondary d-block mb-1" style="font-size: 0.75rem;">$ @cartObj.Precio.ToString("N0", culturaArg) c/u</small>
+                                        <div class="d-inline-flex align-items-center border border-secondary rounded bg-dark">
+                                            <a asp-action="SubtractItem" asp-route-detalleCarroComprasId="@cartObj.Id" class="btn btn-sm text-secondary px-2 py-0 border-0">
+                                                <i class="bi bi-dash fs-6"></i>
+                                            </a>
+                                            <span class="px-2 text-white fw-bold small">@cartObj.Cantidad</span>
+                                            <a asp-action="AddItem" asp-route-id="@cartObj.Id" class="btn btn-sm text-secondary px-2 py-0 border-0">
+                                                <i class="bi bi-plus fs-6"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                    <!-- Subtotal + Botón Eliminar -->
+                                    <div class="col-md-3 col-6 text-end d-flex align-items-center justify-content-end gap-3">
+                                        <span class="text-white fw-bold fs-6">$ @subtotalProducto.ToString("N0", culturaArg)</span>
+                                        <a asp-action="RemoveItem" asp-route-id="@cartObj.Id" class="btn btn-sm text-danger p-0 border-0" title="Eliminar producto">
+                                            <i class="bi bi-trash3 fs-5"></i>
+                                        </a>
+                                    </div>
+
+                                </div>
+                            }
+
                         </div>
                     </div>
                 </div>
-                <hr />
 
-                @foreach (var cartObj in Model.DetalleCarroCompras)
-                {
-                    <div class="row h-100">
-                        <div class="col-4 col-md-2 text-center py-2">
-                            <img src="@cartObj.Producto.ImagenUrl" class="rounded" width="100%" />
-                        </div>
-                        <div class="col-8 col-md-5">
-                            <h5>@cartObj.Producto.Nombre</h5>
-                            <div style="font-size:11px;">@Html.Raw(cartObj.Producto.Descripcion)</div>
-                        </div>
-                        <div class="col-3 col-md-2 pt-md-4" style="font-size:11px;">
-                            <span style="font-size:17px;">@string.Format("{0:c}", cartObj.Producto.Precio) </span>
-                        </div>
-                        <div class="col-6 col-md-2 pt-md-4 text-center">
-                            <div class="input-group input-group-sm justify-content-center" style="max-width: 120px; margin: auto;">
-                                <a asp-action="SubtractItem" asp-route-detalleCarroComprasId="@cartObj.Id" class="btn btn-outline-danger">
-                                    <i class="bi bi-dash"></i>
-                                </a>
-                                <input type="text" class="form-control text-center bg-dark text-light" value="@cartObj.Cantidad" readonly style="width: 40px; flex-grow: 0; padding: 0; font-size: 17px; border-color: #343a40;">
-                                <a asp-action="AddItem" asp-route-id="@cartObj.Id" class="btn btn-outline-success">
-                                    <i class="bi bi-plus"></i>
-                                </a>
+                <!-- COLUMNA DERECHA: RESUMEN DE PAGO UNIFICADO Y LIMPIO -->
+                <div class="col-lg-4">
+                    <div class="card card-custom shadow-sm mb-3">
+                        <div class="card-body p-4">
+                            <h5 class="text-white fw-bold mb-3 fs-6">Resumen de compra</h5>
+
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="text-secondary small">Subtotal (@Model.DetalleCarroCompras.Sum(x => x.Cantidad) @(Model.DetalleCarroCompras.Sum(x => x.Cantidad) == 1 ? "producto" : "productos"))</span>
+                                <span class="text-white small fw-semibold">$ @Model.Total.ToString("N0", culturaArg)</span>
                             </div>
-                        </div>
-                        <div class="col-2 col-lg-1 p-0 pt-lg-4 text-center">
-                            <a asp-action="RemoveItem" asp-route-id="@cartObj.Id" class="btn btn-sm btn-danger">
-                                <i class="bi bi-trash-fill"></i>
+
+                            <hr class="border-secondary opacity-50 my-3">
+
+                            <div class="d-flex justify-content-between align-items-baseline mb-4">
+                                <span class="fs-5 text-white fw-bold">Total</span>
+                                <span class="fs-3 text-warning fw-bold">$ @Model.Total.ToString("N0", culturaArg)</span>
+                            </div>
+
+                            <!-- Botón Estilizado Sobrio y Elegante -->
+                            <a asp-controller="Venta" asp-action="Checkout" class="btn-pagar-sobrio w-100 py-2 text-center d-flex align-items-center justify-content-center text-decoration-none">
+                                <span>Continuar compra</span>
+                                <i class="bi bi-arrow-right ms-2"></i>
                             </a>
                         </div>
                     </div>
-                }
-                <hr />
-                <div class="row">
-                    <div class="col text-end">
-                        <span class="text-danger" style="font-size:21px;"> Total : @string.Format("{0:c}", Model.Total) <br /></span>
+
+                    <!-- BENEFICIOS Y SEGURIDAD -->
+                    <div class="card card-custom p-3">
+                        <div class="d-flex align-items-center mb-2">
+                            <i class="bi bi-shield-check text-warning fs-5 me-2"></i>
+                            <span class="text-secondary micro-text">Compra 100% segura y garantizada</span>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-truck text-warning fs-5 me-2"></i>
+                            <span class="text-secondary micro-text">Envíos a todo el país</span>
+                        </div>
                     </div>
+
                 </div>
+
             </div>
-            <div class="card-footer row">
-                <div class="col-6 col-md-3 ">
-                    <button type="submit" class="btn btn-outline-danger form-control">Email Cart</button>
-                </div>
-                <div class="col-6 col-md-3 offset-md-6">
-                    <a asp-controller="Venta" asp-action="Checkout" class="btn btn-success form-control">Ir a Pagar</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</form>
+        </form>
+    }
+</div>
+
+<style>
+    .card-custom {
+        background-color: rgba(255, 255, 255, 0.03) !important;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 8px;
+    }
+
+    .text-secondary {
+        color: #b0b0b0 !important;
+    }
+
+    .micro-text {
+        font-size: 0.78rem;
+    }
+
+    /* BOTÓN CONTINUAR COMPRANDO */
+    .btn-continuar-comprando {
+        color: #e0e0e0;
+        background-color: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        border-radius: 6px;
+        padding: 6px 14px;
+        font-size: 0.85rem;
+        font-weight: 500;
+        text-decoration: none;
+        transition: all 0.2s ease-in-out;
+    }
+
+        .btn-continuar-comprando:hover {
+            color: #fff;
+            background-color: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+    /* BOTÓN CONTINUAR COMPRA SOBRIO (VERDE ML SÓLIDO SIN BRILLOS) */
+    .btn-pagar-sobrio {
+        background-color: #00a650;
+        color: #ffffff !important;
+        font-weight: 600;
+        font-size: 0.95rem;
+        border-radius: 6px;
+        border: none;
+        transition: background-color 0.2s ease-in-out;
+    }
+
+        .btn-pagar-sobrio:hover {
+            background-color: #008741;
+        }
+</style>

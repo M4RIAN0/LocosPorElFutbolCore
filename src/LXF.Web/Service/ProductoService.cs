@@ -9,16 +9,14 @@ namespace LXF.Web.Service
     {
         private readonly IProductoServiceApiClient _serviceApiClient;
         private readonly ICategoriaService _categoriaService;
-        private readonly ITalleService _talleService;
         private readonly IMarcaService _marcaService;
         private readonly IMapper _mapper;
 
         public ProductoService(IProductoServiceApiClient serviceApiClient, ICategoriaService categoriaService,
-                               ITalleService talleService, IMarcaService marcaService, IMapper mapper)
+                               IMarcaService marcaService, IMapper mapper)
         {
             _serviceApiClient = serviceApiClient;
             _categoriaService = categoriaService;
-            _talleService = talleService;
             _marcaService = marcaService;
             _mapper = mapper;
         }
@@ -66,11 +64,6 @@ namespace LXF.Web.Service
         public async Task<ResponseViewModel?> GetMarcas()
         {
             return await _marcaService.GetAll();
-        }
-
-        public async Task<ResponseViewModel?> GetTalles()
-        {
-            return await _talleService.GetAll();
         }
 
         public async Task<ResponseViewModel?> GetCategorias()

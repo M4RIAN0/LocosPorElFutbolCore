@@ -2,84 +2,142 @@
 
 @model ProductoPutViewModel
 
-<form asp-action="Update">
+<style>
+    /* Ocultar flechas de inputs numéricos */
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    input[type="number"] {
+        -moz-appearance: textfield;
+    }
+
+    .file-input-hidden {
+        display: none !important;
+    }
+</style>
+
+<form asp-action="Update" enctype="multipart/form-data" id="updateProductForm">
     <br />
-    <div class="container border p-3">
-        <h1 class="text-white text-center">Editar Producto</h1>
-        <input asp-for="Id" hidden />
-        <hr />
+    <div class="container border border-secondary p-4 bg-dark text-light" style="border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.5);">
+
+        <input type="hidden" asp-for="Id" />
+        <input type="hidden" asp-for="ImagenUrl" id="ImagenUrlHidden" />
+
+        <div class="row mb-4 text-center">
+            <h2 class="text-secondary fw-bold text-uppercase tracking-wide">
+                <i class="bi bi-pencil-square me-2"></i> Editar Producto
+            </h2>
+        </div>
+
         <div class="row">
-            <div class="col-2">
-                <label class="control-label pt-2" style="font-size:20px;">Nombre</label>
+            <!-- COLUMNA IZQUIERDA: DATOS -->
+            <div class="col-12 col-lg-8 pe-lg-4">
+                <div class="row">
+                    <div class="col-12 col-md-6 pb-3">
+                        <label class="form-label fw-bold mb-1" style="font-size: 0.9rem; color: #adb5bd;">Nombre</label>
+                        <input asp-for="Nombre" class="form-control bg-dark text-light border-secondary" placeholder="Ej: Zapatillas Nike..." />
+                        <span asp-validation-for="Nombre" class="text-danger small"></span>
+                    </div>
+
+                    <div class="col-12 col-md-6 pb-3">
+                        <label class="form-label fw-bold mb-1" style="font-size: 0.9rem; color: #adb5bd;">Código de Barra (SKU)</label>
+                        <input asp-for="CodigoBarra" id="codigoBarraInput" type="text" maxlength="6" inputmode="numeric" class="form-control bg-dark text-light border-secondary" placeholder="Ej: 779123" />
+                        <span asp-validation-for="CodigoBarra" class="text-danger small"></span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12 pb-3">
+                        <label class="form-label fw-bold mb-1" style="font-size: 0.9rem; color: #adb5bd;">Descripción</label>
+                        <textarea asp-for="Descripcion" class="form-control bg-dark text-light border-secondary" rows="3" placeholder="Detalles, materiales..."></textarea>
+                        <span asp-validation-for="Descripcion" class="text-danger small"></span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12 col-md-6 pb-3">
+                        <label class="form-label fw-bold mb-1" style="font-size: 0.9rem; color: #adb5bd;">Categoría</label>
+                        <select id="selectCategoria" asp-for="CategoriaId" class="form-select bg-dark text-light border-secondary" asp-items="@ViewBag.Categorias">
+                            <option value="" disabled>-- Seleccionar --</option>
+                        </select>
+                        <span asp-validation-for="CategoriaId" class="text-danger small"></span>
+                    </div>
+
+                    <div class="col-12 col-md-6 pb-3">
+                        <label class="form-label fw-bold mb-1" style="font-size: 0.9rem; color: #adb5bd;">Talle</label>
+                        <select id="selectTalle" asp-for="Talle" class="form-select bg-dark text-light border-secondary">
+                            <option value="" disabled>-- Seleccionar Talle --</option>
+                            @if (ViewBag.Talles != null)
+                            {
+                                foreach (var talle in ViewBag.Talles)
+                                {
+                                    <option value="@talle.Value" data-es-numero="@(talle.EsNumero ? "true" : "false")">
+                                        @talle.Text
+                                    </option>
+                                }
+                            }
+                        </select>
+                        <span asp-validation-for="Talle" class="text-danger small"></span>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12 col-md-4 pb-3">
+                        <label class="form-label fw-bold mb-1" style="font-size: 0.9rem; color: #adb5bd;">Marca</label>
+                        <select asp-for="MarcaId" class="form-select bg-dark text-light border-secondary" asp-items="@ViewBag.Marcas">
+                            <option value="" disabled>-- Seleccionar --</option>
+                        </select>
+                        <span asp-validation-for="MarcaId" class="text-danger small"></span>
+                    </div>
+
+                    <div class="col-12 col-md-4 pb-3">
+                        <label class="form-label fw-bold mb-1" style="font-size: 0.9rem; color: #adb5bd;">Precio</label>
+                        <input asp-for="Precio" id="precioInput" type="number" step="0.01" class="form-control bg-dark text-light border-secondary" />
+                        <span asp-validation-for="Precio" class="text-danger small"></span>
+                    </div>
+
+                    <div class="col-12 col-md-4 pb-3">
+                        <label class="form-label fw-bold mb-1" style="font-size: 0.9rem; color: #adb5bd;">Stock</label>
+                        <input asp-for="Stock" id="stockInput" type="number" class="form-control bg-dark text-light border-secondary" />
+                        <span asp-validation-for="Stock" class="text-danger small"></span>
+                    </div>
+                </div>
             </div>
-            <div class="col-10 pb-3">
-                <input asp-for="Nombre" class="form-control" />
-                <span asp-validation-for="Nombre" class="text-danger"></span>
+
+            <!-- COLUMNA DERECHA: IMAGEN -->
+            <div class="col-12 col-lg-4 mt-4 mt-lg-0">
+                <div class="border border-secondary p-3 text-center" style="border-radius: 8px; border-style: dashed !important; background-color: rgba(255,255,255,0.02);">
+                    <label class="form-label fw-bold mb-3" style="color: #adb5bd;">Imagen</label>
+
+                    <div class="mb-3 d-flex justify-content-center align-items-center overflow-hidden bg-black" style="height: 250px; border-radius: 6px;">
+                        <img id="imgPreview"
+                             src="@(string.IsNullOrEmpty(Model.ImagenUrl) ? "https://placehold.co/400x400/1a1a1a/666666?text=Sin+Imagen" : Model.ImagenUrl)"
+                             class="img-fluid object-fit-cover w-100 h-100"
+                             alt="Vista Previa" />
+                    </div>
+
+                    <input type="file" id="imagenArchivo" name="imagenArchivo" class="file-input-hidden" accept="image/*" />
+
+                    <button type="button" id="btnCambiarImagen" class="btn btn-outline-secondary btn-sm w-100 mb-2">
+                        <i class="bi bi-camera me-1"></i> Cambiar Imagen
+                    </button>
+
+                    <small class="text-muted d-block mb-2" style="font-size: 0.75rem;">Formatos: JPG, PNG, WEBP. Max 2MB.</small>
+
+                    <span asp-validation-for="ImagenUrl" class="text-danger small d-block"></span>
+                </div>
             </div>
-            <div class="col-2">
-                <label class="control-label pt-2" style="font-size:20px;">Descripcion</label>
-            </div>
-            <div class="col-10 pb-3">
-                <input asp-for="Descripcion" class="form-control" />
-                <span asp-validation-for="Descripcion" class="text-danger"></span>
-            </div>
-            <div class="col-2">
-                <label class="control-label pt-2" style="font-size:20px;">Marca</label>
-            </div>
-            <div class="col-10 pb-3">
-                <select asp-for="MarcaId" class="form-select" asp-items="@ViewBag.Marcas">
-                    <option disabled selected>--Seleccionar Marca--</option>
-                </select>
-            </div>
-            <div class="col-2">
-                <label class="control-label pt-2" style="font-size:20px;">Talle</label>
-            </div>
-            <div class="col-10 pb-3">
-                <select asp-for="TalleId" class="form-select" asp-items="@ViewBag.Talles">
-                    <option disabled selected>--Seleccionar Talle--</option>
-                </select>
-            </div>
-            <div class="col-2">
-                <label class="control-label pt-2" style="font-size:20px;">Precio</label>
-            </div>
-            <div class="col-10 pb-3">
-                <input asp-for="Precio" class="form-control" />
-                <span asp-validation-for="Precio" class="text-danger"></span>
-            </div>
-            <div class="col-2">
-                <label class="control-label pt-2" style="font-size:20px;">Stock</label>
-            </div>
-            <div class="col-10 pb-3">
-                <input asp-for="Stock" class="form-control" />
-                <span asp-validation-for="Stock" class="text-danger"></span>
-            </div>
-            <div class="col-2">
-                <label class="control-label pt-2" style="font-size:20px;">CodigoBarra</label>
-            </div>
-            <div class="col-10 pb-3">
-                <input asp-for="CodigoBarra" class="form-control" />
-                <span asp-validation-for="CodigoBarra" class="text-danger"></span>
-            </div>
-            <div class="col-2">
-                <label class="control-label pt-2" style="font-size:20px;">Categoria</label>
-            </div>
-            <div class="col-10 pb-3">
-                <select asp-for="CategoriaId" class="form-select" asp-items="@ViewBag.Categorias">
-                    <option disabled selected>--Seleccionar Categoria--</option>
-                </select>
-            </div>
-            <div class="col-2">
-                <label class="control-label pt-2" style="font-size:20px;">Imagen</label>
-            </div>
-            <div class="col-10 pb-3">
-                <input asp-for="ImagenUrl" class="form-control" />
-                <span asp-validation-for="ImagenUrl" class="text-danger"></span>
-            </div>
-            <div class="col-5 offset-2">
-                <a asp-action="Index" class="btn-primary btn form-control ">Volver a la Lista</a>
-            </div>
-            <div class="col-5">
-                <input type="submit" value="Editar" class="btn btn-success form-control" />
+        </div>
+
+        <hr class="border-secondary my-4">
+
+        <div class="row">
+            <div class="col-12 d-flex justify-content-end gap-3">
+                <a asp-action="Index" class="btn btn-outline-light px-4">Cancelar</a>
+                <button type="submit" class="btn btn-success px-5 fw-bold">Guardar</button>
             </div>
         </div>
     </div>
@@ -87,4 +145,106 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        $(document).ready(function() {
+
+            const imagenOriginal = $('#imgPreview').attr('src');
+            const talleSeleccionado = '@Model.Talle';
+
+            // 1. MANEJO DE IMAGEN EN EDICIÓN
+            $('#btnCambiarImagen').click(function() {
+                $('#imagenArchivo').click();
+            });
+
+            $('#imagenArchivo').change(function(event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        $('#imgPreview').attr('src', e.target.result).hide().fadeIn(300);
+                    }
+                    reader.readAsDataURL(file);
+
+                    $('#ImagenUrlHidden').val(file.name);
+                    $('#btnCambiarImagen')
+                        .removeClass('btn-outline-secondary')
+                        .addClass('btn-outline-success')
+                        .html('<i class="bi bi-check-lg me-1"></i> ' + file.name);
+                } else {
+                    $('#imgPreview').attr('src', imagenOriginal);
+                    $('#ImagenUrlHidden').val('@Model.ImagenUrl');
+                    $('#btnCambiarImagen')
+                        .removeClass('btn-outline-success')
+                        .addClass('btn-outline-secondary')
+                        .html('<i class="bi bi-camera me-1"></i> Cambiar Imagen');
+                }
+            });
+
+            // 2. RESTRICCIONES FÍSICAS DE TECLADO
+            $('#codigoBarraInput').on('input', function() {
+                this.value = this.value.replace(/[^0-9]/g, '');
+                if (this.value.length > 6) {
+                    this.value = this.value.slice(0, 6);
+                }
+            });
+
+            $('#stockInput').on('keydown', function(e) {
+                if (['e', 'E', '+', '-', '.', ','].includes(e.key)) {
+                    e.preventDefault();
+                }
+            });
+            $('#stockInput').on('input', function() {
+                if (this.value.length > 3) {
+                    this.value = this.value.slice(0, 3);
+                }
+                if (parseInt(this.value) > 100) {
+                    this.value = 100;
+                }
+            });
+
+            $('#precioInput').on('keydown', function(e) {
+                if (['e', 'E', '+', '-'].includes(e.key)) {
+                    e.preventDefault();
+                }
+            });
+            $('#precioInput').on('input', function() {
+                if (this.value.length > 8) {
+                    this.value = this.value.slice(0, 8);
+                }
+                if (parseFloat(this.value) > 99999.99) {
+                    this.value = 99999.99;
+                }
+            });
+
+            // 3. FILTRADO DINÁMICO DE TALLES Y AUTO-SELECCIÓN
+            var $selectTalle = $('#selectTalle');
+            var $opcionesTalles = $selectTalle.find('option[data-es-numero]').clone();
+
+            function filtrarTalles(talleASeleccionar) {
+                var categoriaTexto = $('#selectCategoria option:selected').text().toLowerCase();
+                var esZapatilla = categoriaTexto.includes('zapatillas') || categoriaTexto.includes('calzado');
+
+                $selectTalle.empty().append('<option value="" disabled>--Seleccionar Talle--</option>');
+
+                $opcionesTalles.each(function() {
+                    var esNumero = $(this).attr('data-es-numero') === 'true';
+                    if ((esZapatilla && esNumero) || (!esZapatilla && !esNumero)) {
+                        $selectTalle.append($(this).clone());
+                    }
+                });
+
+                if (talleASeleccionar) {
+                    $selectTalle.val(talleASeleccionar);
+                }
+                $selectTalle.prop('disabled', false);
+            }
+
+            filtrarTalles(talleSeleccionado);
+
+            $('#selectCategoria').change(function() {
+                filtrarTalles(null);
+            });
+        });
+    </script>
 }

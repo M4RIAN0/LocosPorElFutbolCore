@@ -1,24 +1,40 @@
-﻿@using LXF.Web.Models.ViewModels;
+﻿@using LXF.Web.Models.ViewModels
 @model MarcaGetViewModel
+
+<style>
+    .input-disabled-custom {
+        background-color: #1a1d20 !important;
+        color: #9ea7b0 !important;
+        border-color: #343a40 !important;
+        cursor: default !important;
+    }
+</style>
 
 <form asp-action="Delete">
     <br />
-    <div class="container border p-3">
-        <h1 class="text-white text-center">Eliminar Marca</h1>
-        <input asp-for="Id" hidden />
-        <hr />
+    <div class="container border border-secondary p-4 bg-dark text-light" style="border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.5); max-width: 600px;">
+
+        <input type="hidden" asp-for="Id" />
+
+        <div class="row mb-4 text-center">
+            <h2 class="text-danger fw-bold text-uppercase tracking-wide">
+                <i class="bi bi-trash3 me-2"></i> Eliminar Marca
+            </h2>
+        </div>
+
         <div class="row">
-            <div class="col-2">
-                <label class="control-label pt-2" style="font-size:20px;">Descripcion</label>
+            <div class="col-12 pb-3">
+                <label class="form-label fw-bold mb-1" style="font-size: 0.9rem; color: #adb5bd;">Descripción</label>
+                <input asp-for="Descripcion" class="form-control input-disabled-custom" disabled />
             </div>
-            <div class="col-10 pb-3">
-                <input asp-for="Descripcion" disabled class="form-control" />
-            </div>
-            <div class="col-5 offset-2">
-                <a asp-action="Index" class="btn-primary btn form-control ">Volver a la Lista</a>
-            </div>
-            <div class="col-5">
-                <input type="submit" value="Eliminar" class="btn btn-danger form-control" />
+        </div>
+
+        <hr class="border-secondary my-4">
+
+        <div class="row">
+            <div class="col-12 d-flex justify-content-end gap-3">
+                <a asp-action="Index" class="btn btn-outline-light px-4">Cancelar</a>
+                <button type="submit" class="btn btn-danger px-5 fw-bold">Confirmar</button>
             </div>
         </div>
     </div>
