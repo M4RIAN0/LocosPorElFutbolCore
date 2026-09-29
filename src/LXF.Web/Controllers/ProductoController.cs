@@ -34,7 +34,7 @@ namespace LXF.Web.Controllers
 
         public async Task<IActionResult> Create()
         {
-            return await HandleErrorOnCreateOrUpdate(null, true);
+            return await HandleErrorOnCreateOrUpdate(new ProductoViewModel(), true);
         }
 
         [HttpPost]
@@ -50,7 +50,9 @@ namespace LXF.Web.Controllers
                 TempData["success"] = "Producto Creado Correctamente";
                 return RedirectToAction(nameof(Index));
             }
-            else TempData["error"] = response?.Message;
+
+            TempData["error"] = response?.Message;
+            vm.ImagenUrl = null;
 
             return await HandleErrorOnCreateOrUpdate(vm, false);
         }
@@ -76,9 +78,9 @@ namespace LXF.Web.Controllers
             {
                 TempData["success"] = "Producto Modificado Correctamente";
                 return RedirectToAction(nameof(Index));
-
             }
-            else TempData["error"] = response?.Message;
+
+            TempData["error"] = response?.Message;
 
             return await HandleErrorOnCreateOrUpdate(vm, false);
         }
@@ -108,6 +110,18 @@ namespace LXF.Web.Controllers
             return View(vm);
         }
 
+        public async Task<IActionResult> Catalogo()
+        {
+            ResponseViewModel? response = await _service.GetInStockProductos();
+
+            if (!response.IsSuccess)
+                TempData["error"] = response?.Message;
+
+            var list = response.IsSuccess ? response.Result : new List<ProductoGetViewModel>();
+
+            return View(list);
+        }
+
         #region Private Methods
         private static bool IsAnyResponseFailed(params ResponseViewModel[] responses)
         {
@@ -127,9 +141,8 @@ namespace LXF.Web.Controllers
 
             ViewBag.Categorias = new SelectList(responseCategorias.Result as IEnumerable<CategoriaGetViewModel>, "Id", "Descripcion");
             ViewBag.Marcas = new SelectList(responseMarcas.Result as IEnumerable<MarcaGetViewModel>, "Id", "Descripcion");
-
-            // Carga estática de talles para poblar el dropdown
-            ViewBag.Talles = ObtenerListadoTalles();
+            ViewBag.Talles = GetListadoTalles();
+            ViewBag.Generos = GetListadoGeneros();
 
             if (vm != null)
                 return View(vm);
@@ -137,7 +150,17 @@ namespace LXF.Web.Controllers
             return View();
         }
 
-        private static List<object> ObtenerListadoTalles()
+        private static List<SelectListItem> GetListadoGeneros()
+        {
+            return new List<SelectListItem>
+    {
+        new SelectListItem { Value = "Hombre", Text = "Hombre" },
+        new SelectListItem { Value = "Mujer", Text = "Mujer" },
+        new SelectListItem { Value = "Unisex", Text = "Unisex" }
+    };
+        }
+
+        private static List<object> GetListadoTalles()
         {
             var talles = new List<string>
             {

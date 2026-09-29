@@ -15,8 +15,9 @@ namespace Infraestructura.Configurations
             builder.Property(x => x.NormalizedName).HasColumnName("NombreNormalizado");
 
             builder.HasData(
-          new Role { Id = Guid.NewGuid().ToString(), Name = "Administrador", NormalizedName = "ADMINISTRADOR", ConcurrencyStamp = null },
-          new Role { Id = Guid.NewGuid().ToString(), Name = "Cliente", NormalizedName = "CLIENTE", ConcurrencyStamp = null });
+                 new Role { Id = "11111111-1111-1111-1111-111111111111", Name = "Administrador", NormalizedName = "ADMINISTRADOR", ConcurrencyStamp = "11111111-1111-1111-1111-111111111111" },
+                 new Role { Id = "22222222-2222-2222-2222-222222222222", Name = "Cliente", NormalizedName = "CLIENTE", ConcurrencyStamp = "22222222-2222-2222-2222-222222222222" }
+            );
         }
     }
 }

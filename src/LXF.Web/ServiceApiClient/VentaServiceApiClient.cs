@@ -41,4 +41,14 @@ public class VentaServiceApiClient : IVentaServiceApiClient
             Url = $"{SD.LXFApiBase}/api/Venta/{id}/getComprobanteById" // generamos el endpoint del APi que vamos a consumir
         });
     }
+
+    public async Task<ResponseViewModel?> GetLastOrden()
+    {
+        return await _baseServiceApiClient.SendAsync(new RequestViewModel
+        {
+            ApiType = SD.ApiType.GET, // el tipo de peticion HTTP es GET
+            Url = $"{SD.LXFApiBase}/api/Venta/getLastOrden" // generamos el endpoint del APi que vamos a consumir
+        });
+    }
+
 }

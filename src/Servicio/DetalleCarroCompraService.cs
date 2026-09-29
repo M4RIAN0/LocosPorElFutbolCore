@@ -58,7 +58,6 @@ namespace Servicio
         {
             return _mapper.Map<DetalleCarroCompra>(obj);
         }
-        //Carro
         private CarroCompra GetCarroById(int id)
         {
             return _carroRepository.GetById(id);

@@ -3,14 +3,15 @@
 
 <form method="post" id="registerForm">
     <div class="container border p-4 bg-dark text-light">
-        @* Contenedor ajustado al layout oscuro *@
         <div class="row text-center p-3">
-            <h1 class="text-secondary">Registrarse</h1>
+            <h1 class="text-secondary">
+                <i class="bi bi-shield-lock me-3"></i>Registrarse
+                </h1>
         </div>
 
         <div class="row">
             <div class="col-12 col-md-6 offset-md-3 pb-2">
-                <input asp-for="Email" type="email" class="form-control bg-dark text-light border-secondary" placeholder="Email..." required />
+                <input asp-for="Email" type="email" class="form-control bg-dark text-light border-secondary" placeholder="Email..." />
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
         </div>
@@ -18,17 +19,15 @@
         <div class="row">
             <div class="col-12 col-md-6 offset-md-3 pb-2">
                 <div class="input-group">
-                    @* Contenedor para agrupar input y ojo *@
-                    <input asp-for="Password" id="passwordInput" type="password" class="form-control bg-dark text-light border-secondary" placeholder="Contraseña..." required />
+                    <input asp-for="Password" id="passwordInput" type="password" class="form-control bg-dark text-light border-secondary" placeholder="Contraseña..." />
                     <button class="btn border-secondary bg-dark toggle-password" type="button" data-target="passwordInput" style="border-left: 1px solid #343a40;">
-                        <i class="bi bi-eye-slash-fill" style="color: #adb5bd !important;"></i> @* Icono de ojo con color visible *@
+                        <i class="bi bi-eye-slash-fill" style="color: #adb5bd !important;"></i>
                     </button>
                 </div>
                 <span asp-validation-for="Password" class="text-danger"></span>
                 <div id="password-strength-bar" class="progress mt-1" style="height: 5px; display: none;">
                     <div id="strength-bar" class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
                 </div>
-                @* ⬇️ MODIFICACIÓN CLAVE: LAYOUT HORIZONTAL Y FUENTE MÁS PEQUEÑA ⬇️ *@
                 <ul class="password-checklist-horizontal list-unstyled mt-2 text-start">
                     <li id="checkLength" class="me-3"><i class="bi bi-x-circle-fill text-danger me-2"></i> Mín. 8 chars</li>
                     <li id="checkUpperLower" class="me-3"><i class="bi bi-x-circle-fill text-danger me-2"></i> Mayús/minús</li>
@@ -41,32 +40,35 @@
         <div class="row">
             <div class="col-12 col-md-6 offset-md-3 pb-2">
                 <div class="input-group">
-                    @* CORRECCIÓN: Añadidos data-val-* *@
-                    <input name="ConfirmPassword_NoMapping" id="confirmPasswordInput" type="password" class="form-control bg-dark text-light border-secondary" placeholder="Repetir Contraseña..." required data-val="true" data-val-required="La confirmación de la contraseña es obligatoria." />
+                    @* Este campo NO está en el ViewModel, por ende DEBE mantener sus data-val manuales *@
+                    <input name="ConfirmPassword_NoMapping" id="confirmPasswordInput" type="password" class="form-control bg-dark text-light border-secondary" placeholder="Repetir Contraseña..." data-val="true" data-val-required="La confirmación de la contraseña es obligatoria." />
                     <button class="btn border-secondary bg-dark toggle-password" type="button" data-target="confirmPasswordInput" style="border-left: 1px solid #343a40;">
-                        <i class="bi bi-eye-slash-fill" style="color: #adb5bd !important;"></i> @* Icono de ojo con color visible *@
+                        <i class="bi bi-eye-slash-fill" style="color: #adb5bd !important;"></i>
                     </button>
                 </div>
-                @* CORRECCIÓN CLAVE: Usamos span con data-valmsg-for y mantenemos el ID para JS de coincidencia *@
                 <span data-valmsg-for="ConfirmPassword_NoMapping" class="text-danger" id="password-match-feedback"></span>
             </div>
         </div>
 
         <div class="row">
             <div class="col-12 col-md-6 offset-md-3 pb-2">
-                @* MODIFICACIÓN: Se añade la regla de validación minwords (mínimo 2 palabras) *@
-                <input asp-for="Nombre" maxlength="50" class="form-control bg-dark text-light border-secondary" placeholder="Nombre..."
-                       data-val="true"
-                       data-val-required="El campo Nombre es obligatorio."
-                       data-rule-minwords="2"
-                       data-msg-minwords="Por favor, ingrese al menos dos palabras (Nombre y Apellido)." />
+                <input asp-for="Nombre" id="nombreInput" type="text" class="form-control bg-dark text-light border-secondary" placeholder="Nombre..." />
                 <span asp-validation-for="Nombre" class="text-danger"></span>
             </div>
         </div>
 
         <div class="row">
             <div class="col-12 col-md-6 offset-md-3 pb-2">
-                <input asp-for="Dni" id="dniInput" type="text" class="form-control bg-dark text-light border-secondary" placeholder="DNI..." maxlength="8" inputmode="numeric" />
+                <input asp-for="Apellido" id="apellidoInput" type="text" class="form-control bg-dark text-light border-secondary" placeholder="Apellido..." />
+                <span asp-validation-for="Apellido" class="text-danger"></span>
+            </div>
+        </div>
+
+        <input type="hidden" asp-for="NombreCompleto" id="nombreCompletoHidden" />
+
+        <div class="row">
+            <div class="col-12 col-md-6 offset-md-3 pb-2">
+                <input asp-for="Dni" id="dniInput" type="text" class="form-control bg-dark text-light border-secondary" placeholder="DNI..." inputmode="numeric" />
                 <span asp-validation-for="Dni" class="text-danger"></span>
             </div>
         </div>
@@ -74,7 +76,7 @@
         <div class="row">
             <div class="col-12 col-md-6 offset-md-3 pb-2">
                 <label for="fechaNacInput" class="form-label text-start d-block mb-1" style="font-size: 0.9rem; color: #adb5bd;">Fecha de Nacimiento</label>
-                <input asp-for="FechaNacimiento" id="fechaNacInput" type="date" class="form-control bg-dark text-light border-secondary" required />
+                <input asp-for="FechaNacimiento" id="fechaNacInput" type="date" class="form-control bg-dark text-light border-secondary" />
                 <span asp-validation-for="FechaNacimiento" class="text-danger"></span>
             </div>
         </div>
@@ -93,7 +95,7 @@
 
         <div class="row">
             <div class="col-12 col-md-6 offset-md-3 pb-2">
-                <input asp-for="Celular" maxlength="10" id="celularInput" class="form-control bg-dark text-light border-secondary" placeholder="Teléfono..." inputmode="numeric" />
+                <input asp-for="Celular" id="celularInput" type="text" class="form-control bg-dark text-light border-secondary" placeholder="Teléfono..." inputmode="numeric" />
                 <span asp-validation-for="Celular" class="text-danger"></span>
             </div>
         </div>
@@ -102,11 +104,8 @@
 
         <div class="row text-center mb-3">
             <div class="col-12 col-md-6 offset-md-3">
-                @* MODIFICACIÓN: Estilo moderno para el bloque de dirección (Borde/Texto Amarillo/Dorado sutil) *@
                 <div style="border: 1px solid #ffc107; padding: 10px; border-radius: 5px; background-color: rgba(255, 193, 7, 0.08);" class="text-warning">
-                    <h4 class="text-warning mb-0">
-                        Dirección de Envíos
-                    </h4>
+                    <h4 class="text-warning mb-0">Dirección de Envíos</h4>
                     <small class="d-block mt-1 text-light">La dirección que brindes será donde enviaremos tus pedidos.</small>
                 </div>
             </div>
@@ -116,13 +115,12 @@
 
         <div class="row">
             <div class="col-12 col-md-4 offset-md-3 pb-2">
-                <input name="Calle" id="calleInput" type="text" class="form-control bg-dark text-light border-secondary" placeholder="Calle..." required data-val="true" data-val-required="La calle es obligatoria." />
-                @* CORRECCIÓN CLAVE: span con data-valmsg-for para mostrar el error *@
+                @* Mantienen data-val manual porque se arman en JS *@
+                <input name="Calle" id="calleInput" type="text" class="form-control bg-dark text-light border-secondary" placeholder="Calle..." data-val="true" data-val-required="La calle es obligatoria." />
                 <span data-valmsg-for="Calle" class="text-danger"></span>
             </div>
             <div class="col-12 col-md-2 pb-2">
-                <input name="Numero" id="numeroCalleInput" type="text" class="form-control bg-dark text-light border-secondary" placeholder="Número..." inputmode="numeric" required data-val="true" data-val-required="El número de calle es obligatorio." />
-                @* CORRECCIÓN CLAVE: span con data-valmsg-for para mostrar el error *@
+                <input name="Numero" id="numeroCalleInput" type="text" class="form-control bg-dark text-light border-secondary" placeholder="Número..." inputmode="numeric" data-val="true" data-val-required="El número de calle es obligatorio." />
                 <span data-valmsg-for="Numero" class="text-danger"></span>
             </div>
         </div>
@@ -140,16 +138,15 @@
 
         <div class="row">
             <div class="col-12 col-md-3 offset-md-3 pb-2">
-                <select name="Provincia" id="provinciaInput" asp-items="@(ViewData["Provincias"] as SelectList)" class="form-control bg-dark text-light border-secondary" required data-val="true" data-val-required="La selección de Provincia es obligatoria.">
+                <select name="Provincia" id="provinciaInput" asp-items="@(ViewData["Provincias"] as SelectList)" class="form-control bg-dark text-light border-secondary" data-val="true" data-val-required="La selección de Provincia es obligatoria.">
                     <option value="" selected disabled>Seleccione Provincia...</option>
                 </select>
-                @* CORRECCIÓN CLAVE: span con data-valmsg-for para mostrar el error *@
+                <span data-valmsg-for="Provincia" class="text-danger"></span>
             </div>
             <div class="col-12 col-md-3 pb-2">
-                <select name="Localidad" id="localidadInput" class="form-control bg-dark text-light border-secondary" disabled required data-val="true" data-val-required="La selección de Localidad es obligatoria.">
+                <select name="Localidad" id="localidadInput" class="form-control bg-dark text-light border-secondary" disabled data-val="true" data-val-required="La selección de Localidad es obligatoria.">
                     <option value="" selected disabled>Seleccione Localidad...</option>
                 </select>
-                @* CORRECCIÓN CLAVE: span con data-valmsg-for para mostrar el error *@
                 <span data-valmsg-for="Localidad" class="text-danger"></span>
             </div>
         </div>
@@ -171,7 +168,7 @@
         // -------------------------------------------------------------
         // ⭐ NUEVA REGLA: Mínimo de Palabras ⭐
         // -------------------------------------------------------------
-        $.validator.addMethod("minwords", function (value, element, params) {
+        $.validator.addMethod("minwords", function(value, element, params) {
             if (this.optional(element)) {
                 return true;
             }
@@ -193,63 +190,27 @@
         // ⭐ ESTILOS ADICIONALES (Para el modo oscuro) ⭐
         const style = document.createElement('style');
         style.innerHTML = `
-            /* 💡 CAMBIO DE FONDO: Sugiere tema oscuro al navegador para widgets nativos */
-            :root, body {
-                color-scheme: dark !important;
-            }
-
-            /* Fix para el icono de calendario en Dark Mode (AJUSTE FINAL) */
-            input[type="date"]::-webkit-calendar-picker-indicator {
-                filter: none; /* Deshabilitar invert si causa problemas */
-                color: #adb5bd; /* Forzar color claro del icono */
-                cursor: pointer;
-            }
-            /* ======================================================== */
-            /* ⭐ Color de texto del campo de fecha (Para el input box) ⭐ */
-            /* ======================================================== */
-            input[type="date"] {
-                color: #f8f9fa !important; /* Texto de fecha seleccionado */
-            }
-            /* Chrome, Safari, Edge */
-            input[type="date"]::-webkit-datetime-edit-text,
-            input[type="date"]::-webkit-datetime-edit-month-field,
-            input[type="date"]::-webkit-datetime-edit-day-field,
-            input[type="date"]::-webkit-datetime-edit-year-field {
-                color: #f8f9fa !important;
-            }
-            /* Firefox: color de texto cuando está vacío (mm/dd/yyyy) */
-            input[type="date"].form-control:invalid {
-                color: #adb5bd !important;
-            }
-            /* ======================================================== */
-
-            /* Ocultar el ícono de 'ojo' nativo de Chrome en inputs de tipo password */
-            input[type="password"]::-ms-reveal,
-            input[type="password"]::-ms-clear,
-            input[type="password"]::-webkit-reveal {
-                display: none !important;
-            }
-            /* ESTILO CLAVE: Hace la lista horizontal y más pequeña */
-            .password-checklist-horizontal {
-                display: flex;
-                flex-wrap: wrap;
-                list-style: none; /* Quita los puntos de la lista */
-                padding-left: 0;
-                font-size: 0.8rem; /* Fuente más pequeña */
-            }
-            .password-checklist-horizontal li {
-                margin-right: 15px; /* Espacio entre los ítems */
-            }
-        `;
+                    :root, body { color-scheme: dark !important; }
+                    input[type="date"]::-webkit-calendar-picker-indicator { filter: none; color: #adb5bd; cursor: pointer; }
+                    input[type="date"] { color: #f8f9fa !important; }
+                    input[type="date"]::-webkit-datetime-edit-text,
+                    input[type="date"]::-webkit-datetime-edit-month-field,
+                    input[type="date"]::-webkit-datetime-edit-day-field,
+                    input[type="date"]::-webkit-datetime-edit-year-field { color: #f8f9fa !important; }
+                    input[type="date"].form-control:invalid { color: #adb5bd !important; }
+                    input[type="password"]::-ms-reveal,
+                    input[type="password"]::-ms-clear,
+                    input[type="password"]::-webkit-reveal { display: none !important; }
+                    .password-checklist-horizontal { display: flex; flex-wrap: wrap; list-style: none; padding-left: 0; font-size: 0.8rem; }
+                    .password-checklist-horizontal li { margin-right: 15px; }
+                `;
         document.head.appendChild(style);
-
 
         // ⭐ DATOS CLAVE: SERIALIZACIÓN SEGURA DE LOCALIDADES PARA FILTRADO ⭐
         const allLocalidadesData = @Html.Raw(Json.Serialize(ViewBag.LocalidadesData ?? new List<object>()));
 
-        $(document).ready(function () {
+        $(document).ready(function() {
 
-            // ⭐ LLAMADA DE RE-INICIALIZACIÓN: Asegura que los campos no mapeados se validen. ⭐
             reinitializeValidation("#registerForm");
 
             // ==============================================
@@ -260,7 +221,6 @@
                 const $passwordInput = $('#' + targetId);
                 const $icon = $(this).find('i');
 
-                // Toggle del tipo de input
                 if ($passwordInput.attr('type') === 'password') {
                     $passwordInput.attr('type', 'text');
                     $icon.removeClass('bi-eye-slash-fill').addClass('bi-eye-fill');
@@ -270,17 +230,13 @@
                 }
             });
 
-
             // ==============================================
             // 1. MÁSCARAS Y RESTRICCIONES DE ENTRADA
             // ==============================================
-
-            // DNI y Número de Calle, Celular (Aceptar solo números)
             $('#dniInput, #numeroCalleInput, #celularInput').on('input', function() {
                 this.value = this.value.replace(/[^0-9]/g, '');
             });
 
-            // BLOQUEO DEL TECLADO PARA EL INPUT DE FECHA (Permite el calendario)
             $('#fechaNacInput').on('keydown', function(e) {
                 if (e.key.length === 1 && !e.ctrlKey && !e.metaKey) {
                     e.preventDefault();
@@ -290,8 +246,6 @@
             // ==============================================
             // 2. FORTALEZA Y DOBLE CHECK DE CONTRASEÑA
             // ==============================================
-
-            // Activar la barra de fortaleza Y el checklist al tipear
             $('#passwordInput').on('input', function() {
                 var password = $(this).val();
                 var strength = checkPasswordStrength(password);
@@ -300,7 +254,6 @@
                 checkPasswordsMatch();
             });
 
-            // Coincidencia: Activar SOLO al salir del campo (blur)
             $('#confirmPasswordInput').on('blur', checkPasswordsMatch);
 
             function checkPasswordStrength(password) {
@@ -324,14 +277,12 @@
                 bar.removeClass('bg-danger bg-warning bg-success').addClass(color).css('width', strength + '%').attr('aria-valuenow', strength);
             }
 
-            // ⭐ FUNCIÓN CRÍTICA: Mutar la lista de requisitos (X a Check) ⭐
             function updatePasswordChecklist(password) {
                 const isLongEnough = password.length >= 8;
                 const hasUpperLower = password.match(/[a-z]/) && password.match(/[A-Z]/);
                 const hasDigit = password.match(/\d/);
                 const hasSpecial = password.match(/[^a-zA-Z\d\s]/);
 
-                // Función auxiliar para cambiar el icono y el color
                 const updateItem = (id, condition) => {
                     const icon = $(`#${id} i`);
                     icon.removeClass('bi-x-circle-fill bi-check-circle-fill text-danger text-success');
@@ -343,22 +294,18 @@
                     }
                 };
 
-                // Llamadas a la mutación:
                 updateItem('checkLength', isLongEnough);
                 updateItem('checkUpperLower', hasUpperLower);
                 updateItem('checkDigit', hasDigit);
                 updateItem('checkSpecial', hasSpecial);
             }
 
-
             function checkPasswordsMatch() {
                 var password = $('#passwordInput').val();
                 var confirmPassword = $('#confirmPasswordInput').val();
-                // Usamos el span con id="password-match-feedback"
                 var feedback = $('#password-match-feedback');
 
                 if (confirmPassword.length === 0 && password.length === 0) {
-                    // Limpia el span, no solo el texto, para que Unobtrusive tome el control
                     feedback.html('');
                     $('#confirmPasswordInput').removeClass('is-valid is-invalid');
                     return;
@@ -368,8 +315,6 @@
                     feedback.html('<span class="text-success">Las contraseñas coinciden.</span>');
                     $('#confirmPasswordInput').removeClass('is-invalid').addClass('is-valid');
                 } else if (confirmPassword.length > 0) {
-                    // Usamos el html para que el texto NO coinciden sea visible,
-                    // y el validador Unobtrusive no lo pise al ser el mismo span
                     feedback.html('<span class="text-danger">Las contraseñas NO coinciden.</span>');
                     $('#confirmPasswordInput').removeClass('is-valid').addClass('is-invalid');
                 } else {
@@ -381,20 +326,15 @@
             // ==============================================
             // 3. LÓGICA DE FILTRADO DE PROVINCIAS/LOCALIDADES
             // ==============================================
-
-            // Inicialización al cargar la página
             $('#localidadInput').prop('disabled', true).empty().append('<option value="" selected disabled>Seleccione Localidad...</option>');
 
             $('#provinciaInput').on('change', function() {
                 const selectedProvinciaId = $(this).val();
                 const $localidadSelect = $('#localidadInput');
 
-                // 1. Limpiar y deshabilitar
                 $localidadSelect.prop('disabled', true).empty().append('<option value="" selected disabled>Cargando Localidades...</option>');
 
                 if (selectedProvinciaId && selectedProvinciaId !== '') {
-
-                    // 2. Filtrado Reforzado: Tolerancia de Tipos (string vs. int)
                     const localidadesToFilter = Array.isArray(allLocalidadesData) ? allLocalidadesData : [];
 
                     const filteredLocalidades = localidadesToFilter.filter(l => {
@@ -403,40 +343,38 @@
                         }
                     });
 
-                    // 3. Limpiar y añadir opciones filtradas
                     $localidadSelect.empty().append('<option value="" selected disabled>Seleccione Localidad...</option>');
 
                     if (filteredLocalidades.length > 0) {
                         $.each(filteredLocalidades, function(index, localidad) {
                             $localidadSelect.append(new Option(localidad.nombre, localidad.id));
                         });
-                        $localidadSelect.prop('disabled', false); // Habilitar si hay opciones
+                        $localidadSelect.prop('disabled', false);
                     } else {
                         $localidadSelect.append('<option value="" disabled>No hay localidades disponibles</option>');
                     }
                 }
             });
 
-
             // ==============================================
             // 4. Lógica de Concatenación y submit
             // ==============================================
-            $('#registerForm').submit(function (e) {
-
-                // 4.0. Forzar validación Unobtrusive
+            $('#registerForm').submit(function(e) {
                 if (!$(this).valid()) {
                     e.preventDefault();
                     return false;
                 }
 
-                // 4.1. Validación de Coincidencia Final
                 if ($('#passwordInput').val() !== $('#confirmPasswordInput').val() || $('#passwordInput').val().length === 0) {
                     checkPasswordsMatch();
                     e.preventDefault();
                     return false;
                 }
 
-                // 4.2. Recoger valores y Concatenar
+                var nombre = $('#nombreInput').val().trim();
+                var apellido = $('#apellidoInput').val().trim();
+                $('#nombreCompletoHidden').val(nombre + ' ' + apellido);
+
                 var calle = $('#calleInput').val().trim();
                 var numero = $('#numeroCalleInput').val().trim();
                 var piso = $('#pisoInput').val().trim();
@@ -460,7 +398,6 @@
                 if (localidad && localidad !== 'Seleccione Localidad...') { direccion += ', ' + localidad; }
                 if (provincia && provincia !== 'Seleccione Provincia...') { direccion += ', ' + provincia; }
 
-                // 4. Asignar el string final al input oculto
                 $('#direccionCompletaHidden').val(direccion);
 
                 return true;

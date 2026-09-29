@@ -8,6 +8,7 @@ namespace LXF.Web.Models.ViewModels
         public string? UserId { get; set; }
         public IEnumerable<DetalleCarroComprasViewModel> DetalleCarroCompras { get; set; }
         public decimal Total { get; set; }
+        public DateTime LastModified { get; set; }
     }
 
     public class CarroComprasPutViewModel : ViewModelBase
@@ -15,6 +16,7 @@ namespace LXF.Web.Models.ViewModels
         public string? UserId { get; set; }
         public IEnumerable<DetalleCarroComprasPutViewModel> DetalleCarroCompras { get; set; }
         public decimal Total { get; set; }
+        public DateTime LastModified { get; set; }
     }
 
     public class CarroComprasGetViewModel : ViewModelBase
@@ -22,6 +24,8 @@ namespace LXF.Web.Models.ViewModels
         public string? UserId { get; init; }
         public IEnumerable<DetalleCarroComprasGetViewModel> DetalleCarroCompras { get; init; }
         public decimal Total { get; init; }
+        public DateTime LastModified { get; init; }
+        public int CarroId { get; init; }
 
         //Seccion Facturacion
 

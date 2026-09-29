@@ -12,5 +12,9 @@ namespace LXF.Web.Service.IService
         Task<ResponseViewModel?> GetByFilter(string cadena);
         Task<ResponseViewModel?> GetMarcas();
         Task<ResponseViewModel?> GetCategorias();
+        Task<ResponseViewModel?> GetByIdProductoVariante(int productoVarianteId);
+        Task<ResponseViewModel?> GetInStockProductos();
+        Task<ResponseViewModel?> GetSimilProductos(int productoId, int categoriaId, int marcaId);
+        Task<ResponseViewModel?> GetInterestingProductos(int productoId);
     }
 }

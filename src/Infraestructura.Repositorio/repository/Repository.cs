@@ -28,6 +28,8 @@ namespace Infraestructura.Repositorio.repository
             if (modelErrors.Count > 0)
                 throw new BadRequestException(modelErrors);
 
+            CheckUniqueIndexes(entity);
+
             _context.Set<T>().Add(entity);
         }
 
@@ -42,6 +44,8 @@ namespace Infraestructura.Repositorio.repository
 
             if (ModelErrors.Count > 0)
                 throw new BadRequestException(ModelErrors);
+
+            CheckUniqueIndexes(entity);
 
             _context.Set<T>().Attach(entity);
             _context.Entry(entity).State = EntityState.Modified;
@@ -76,7 +80,7 @@ namespace Infraestructura.Repositorio.repository
         {
             IQueryable<T> query = _context.Set<T>().AsNoTracking();
             query = includeProperties.Aggregate(query, (Current, includeProperty) => Current.Include(includeProperty));
-            return [.. query.AsNoTracking().Where(x => !x.IsDeleted)];
+            return [.. query.AsNoTracking().Where(predicate).Where(x => !x.IsDeleted)];
         }
 
         public IEnumerable<T> GetByFilter(Expression<Func<T, bool>> predicate, string includeProperties)
@@ -88,7 +92,7 @@ namespace Infraestructura.Repositorio.repository
                 query = query.Include(includeProperty);
             }
 
-            return [.. query.AsNoTracking().Where(x => !x.IsDeleted)];
+            return [.. query.AsNoTracking().Where(predicate).Where(x => !x.IsDeleted)];
         }
 
         public IList<T> GetByFilter2(Expression<Func<T, bool>> predicate, string includeProperties)
@@ -100,14 +104,14 @@ namespace Infraestructura.Repositorio.repository
                 query = query.Include(includeProperty);
             }
 
-            return [.. query.AsNoTracking().Where(x => !x.IsDeleted)];
+            return [.. query.AsNoTracking().Where(predicate).Where(x => !x.IsDeleted)];
         }
 
         public IList<T> GetByFilter2(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includeProperties)
         {
             IQueryable<T> query = _context.Set<T>().AsNoTracking();
             query = includeProperties.Aggregate(query, (Current, includeProperty) => Current.Include(includeProperty));
-            return [.. query.AsNoTracking().Where(x => !x.IsDeleted)];
+            return [.. query.AsNoTracking().Where(predicate).Where(x => !x.IsDeleted)];
         }
 
         public T GetById(int id)
@@ -224,6 +228,61 @@ namespace Infraestructura.Repositorio.repository
                 }
             }
             return props;
+        }
+
+        private void CheckUniqueIndexes(object entity, Dictionary<string, string> args = null)
+        {
+            bool isRoot = args == null;
+            args ??= new Dictionary<string, string>();
+
+            var type = entity.GetType();
+            var entityType = _context.Model.FindEntityType(type);
+
+            if (entityType != null)
+            {
+                foreach (var index in entityType.GetIndexes().Where(i => i.IsUnique))
+                {
+                    var param = Expression.Parameter(type, "x");
+                    var conditions = index.Properties
+                        .Select(p => Expression.Equal(Expression.Property(param, p.Name), Expression.Constant(type.GetProperty(p.Name)?.GetValue(entity), p.ClrType)))
+                        .ToList();
+
+                    conditions.Add(Expression.NotEqual(Expression.Property(param, "ID"), Expression.Constant(type.GetProperty("ID")?.GetValue(entity))));
+                    conditions.Add(Expression.Equal(Expression.Property(param, "IsDeleted"), Expression.Constant(false)));
+                    var lambda = Expression.Lambda(conditions.Aggregate(Expression.AndAlso), param);
+
+                    var dbSet = typeof(DbContext).GetMethod("Set", Type.EmptyTypes).MakeGenericMethod(type).Invoke(_context, null);
+                    var anyMethod = typeof(Queryable).GetMethods().First(m => m.Name == "Any" && m.GetParameters().Length == 2).MakeGenericMethod(type);
+
+                    if ((bool)anyMethod.Invoke(null, new object[] { dbSet, lambda }))
+                    {
+                        foreach (var p in index.Properties)
+                        {
+                            if (!p.IsForeignKey())
+                            {
+                                if (p.Name.Equals("CodigoBarra"))
+                                    args[p.Name] = "Codigo de Barra";
+                               
+                                else args[p.Name] = p.Name;
+                            }
+                        }
+                    }
+                }
+
+                foreach (var nav in entityType.GetNavigations().Where(n => n.IsCollection))
+                {
+                    if (nav.PropertyInfo?.GetValue(entity) is System.Collections.IEnumerable children)
+                    {
+                        foreach (var child in children)
+                            CheckUniqueIndexes(child, args);
+                    }
+                }
+            }
+
+            if (isRoot && args.Count > 0)
+            {
+                throw new DuplicateRecordException("Error de validación", args);
+            }
         }
     }
 }

@@ -1,17 +1,16 @@
 ﻿@using LXF.Web.Models.ViewModels
-
 @model ProductoPutViewModel
 
 <style>
-    /* Ocultar flechas de inputs numéricos */
+    /* Ocultar flechas numéricas y estilos base */
     input[type="number"]::-webkit-outer-spin-button,
-    input[type="number"]::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-    }
-
-    input[type="number"] {
-        -moz-appearance: textfield;
+    input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+    input[type="number"] { -moz-appearance: textfield; }
+    
+    /* Clase para bloquear interacciones */
+    .readonly-select {
+        pointer-events: none;
+        opacity: 0.6;
     }
 
     .file-input-hidden {
@@ -36,85 +35,109 @@
             <!-- COLUMNA IZQUIERDA: DATOS -->
             <div class="col-12 col-lg-8 pe-lg-4">
                 <div class="row">
-                    <div class="col-12 col-md-6 pb-3">
+                    <div class="col-12 col-md-8 pb-3">
                         <label class="form-label fw-bold mb-1" style="font-size: 0.9rem; color: #adb5bd;">Nombre</label>
                         <input asp-for="Nombre" class="form-control bg-dark text-light border-secondary" placeholder="Ej: Zapatillas Nike..." />
                         <span asp-validation-for="Nombre" class="text-danger small"></span>
                     </div>
-
-                    <div class="col-12 col-md-6 pb-3">
-                        <label class="form-label fw-bold mb-1" style="font-size: 0.9rem; color: #adb5bd;">Código de Barra (SKU)</label>
-                        <input asp-for="CodigoBarra" id="codigoBarraInput" type="text" maxlength="6" inputmode="numeric" class="form-control bg-dark text-light border-secondary" placeholder="Ej: 779123" />
-                        <span asp-validation-for="CodigoBarra" class="text-danger small"></span>
+                    <div class="col-12 col-md-4 pb-3">
+                        <label class="form-label fw-bold mb-1" style="font-size: 0.9rem; color: #adb5bd;">Precio</label>
+                        <input asp-for="Precio" value="@(Model?.Precio > 0 ? Model.Precio.ToString("0.##") : "")" id="precioInput" type="number" step="1" max="99999" class="form-control bg-dark text-light border-secondary" placeholder="Máx 99999" />
+                        <span asp-validation-for="Precio" class="text-danger small"></span>
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-12 pb-3">
                         <label class="form-label fw-bold mb-1" style="font-size: 0.9rem; color: #adb5bd;">Descripción</label>
-                        <textarea asp-for="Descripcion" class="form-control bg-dark text-light border-secondary" rows="3" placeholder="Detalles, materiales..."></textarea>
+                        <textarea asp-for="Descripcion" class="form-control bg-dark text-light border-secondary" rows="2" placeholder="Detalles, materiales..."></textarea>
                         <span asp-validation-for="Descripcion" class="text-danger small"></span>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-12 col-md-6 pb-3">
+                    <div class="col-12 col-md-4 pb-3">
                         <label class="form-label fw-bold mb-1" style="font-size: 0.9rem; color: #adb5bd;">Categoría</label>
                         <select id="selectCategoria" asp-for="CategoriaId" class="form-select bg-dark text-light border-secondary" asp-items="@ViewBag.Categorias">
-                            <option value="" disabled>-- Seleccionar --</option>
+                            <option value="" disabled selected>-- Seleccionar --</option>
                         </select>
                         <span asp-validation-for="CategoriaId" class="text-danger small"></span>
                     </div>
-
-                    <div class="col-12 col-md-6 pb-3">
-                        <label class="form-label fw-bold mb-1" style="font-size: 0.9rem; color: #adb5bd;">Talle</label>
-                        <select id="selectTalle" asp-for="Talle" class="form-select bg-dark text-light border-secondary">
-                            <option value="" disabled>-- Seleccionar Talle --</option>
-                            @if (ViewBag.Talles != null)
-                            {
-                                foreach (var talle in ViewBag.Talles)
-                                {
-                                    <option value="@talle.Value" data-es-numero="@(talle.EsNumero ? "true" : "false")">
-                                        @talle.Text
-                                    </option>
-                                }
-                            }
-                        </select>
-                        <span asp-validation-for="Talle" class="text-danger small"></span>
-                    </div>
-                </div>
-
-                <div class="row">
                     <div class="col-12 col-md-4 pb-3">
                         <label class="form-label fw-bold mb-1" style="font-size: 0.9rem; color: #adb5bd;">Marca</label>
                         <select asp-for="MarcaId" class="form-select bg-dark text-light border-secondary" asp-items="@ViewBag.Marcas">
-                            <option value="" disabled>-- Seleccionar --</option>
+                            <option value="" disabled selected>-- Seleccionar --</option>
                         </select>
                         <span asp-validation-for="MarcaId" class="text-danger small"></span>
                     </div>
-
                     <div class="col-12 col-md-4 pb-3">
-                        <label class="form-label fw-bold mb-1" style="font-size: 0.9rem; color: #adb5bd;">Precio</label>
-                        <input asp-for="Precio" id="precioInput" type="number" step="0.01" class="form-control bg-dark text-light border-secondary" />
-                        <span asp-validation-for="Precio" class="text-danger small"></span>
+                        <label class="form-label fw-bold mb-1" style="font-size: 0.9rem; color: #adb5bd;">Género</label>
+                        <select asp-for="Genero" class="form-select bg-dark text-light border-secondary" asp-items="@ViewBag.Generos">
+                            <option value="" disabled selected>-- Seleccionar --</option>
+                        </select>
+                        <span asp-validation-for="Genero" class="text-danger small"></span>
                     </div>
+                </div>
 
-                    <div class="col-12 col-md-4 pb-3">
-                        <label class="form-label fw-bold mb-1" style="font-size: 0.9rem; color: #adb5bd;">Stock</label>
-                        <input asp-for="Stock" id="stockInput" type="number" class="form-control bg-dark text-light border-secondary" />
-                        <span asp-validation-for="Stock" class="text-danger small"></span>
+                <!-- SECCIÓN DINÁMICA: VARIANTES -->
+                <div class="border border-secondary p-3 mt-2 rounded bg-dark" style="background-color: rgba(0,0,0,0.15) !important;">
+                    <h6 class="text-secondary fw-bold mb-3"><i class="bi bi-tags"></i> Talles</h6>
+                    
+                    <div class="row align-items-end mb-3">
+                        <div class="col-md-3">
+                            <label class="form-label small text-muted mb-1">Talle</label>
+                            <select id="varTalle" class="form-select form-select-sm bg-dark text-light border-secondary">
+                                <option value="" disabled selected>-- Elija Categoría --</option>
+                                @if (ViewBag.Talles != null)
+                                {
+                                    foreach (var talle in ViewBag.Talles)
+                                    {
+                                        <option value="@talle.Value" data-es-numero="@(talle.EsNumero ? "true" : "false")">@talle.Text</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label small text-muted mb-1">Stock</label>
+                            <input id="varStock" type="number" class="form-control form-control-sm bg-dark text-light border-secondary">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label small text-muted mb-1">Cod. Barra (6 núm)</label>
+                            <input id="varSku" type="text" maxlength="6" inputmode="numeric" class="form-control form-control-sm bg-dark text-light border-secondary">
+                        </div>
+                        <div class="col-md-2">
+                            <button type="button" id="btnAgregarVariante" class="btn btn-sm btn-outline-light w-100 fw-bold">Agregar</button>
+                        </div>
+                    </div>
+                    
+                    <span id="variantesError" class="text-danger small fw-bold d-block mb-2" style="display:none;"></span>
+                    
+                    <div class="table-responsive">
+                        <table class="table table-dark table-sm table-bordered border-secondary mb-0" id="tablaVariantes">
+                            <thead class="text-secondary">
+                                <tr>
+                                    <th>Talle</th>
+                                    <th>Stock</th>
+                                    <th>Cod. Barra</th>
+                                    <th class="text-center">Quitar</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Filas generadas por JS -->
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
 
-            <!-- COLUMNA DERECHA: IMAGEN -->
+            <!-- COLUMNA DERECHA: IMAGEN (Ajustada al contenido) -->
             <div class="col-12 col-lg-4 mt-4 mt-lg-0">
                 <div class="border border-secondary p-3 text-center" style="border-radius: 8px; border-style: dashed !important; background-color: rgba(255,255,255,0.02);">
                     <label class="form-label fw-bold mb-3" style="color: #adb5bd;">Imagen</label>
 
                     <div class="mb-3 d-flex justify-content-center align-items-center overflow-hidden bg-black" style="height: 250px; border-radius: 6px;">
                         <img id="imgPreview"
-                             src="@(string.IsNullOrEmpty(Model.ImagenUrl) ? "https://placehold.co/400x400/1a1a1a/666666?text=Sin+Imagen" : Model.ImagenUrl)"
+                             src="@(!string.IsNullOrEmpty(Model?.ImagenUrl) ? Model.ImagenUrl : "https://placehold.co/400x400/1a1a1a/666666?text=Sin+Imagen")"
                              class="img-fluid object-fit-cover w-100 h-100"
                              alt="Vista Previa" />
                     </div>
@@ -125,9 +148,8 @@
                         <i class="bi bi-camera me-1"></i> Cambiar Imagen
                     </button>
 
-                    <small class="text-muted d-block mb-2" style="font-size: 0.75rem;">Formatos: JPG, PNG, WEBP. Max 2MB.</small>
-
-                    <span asp-validation-for="ImagenUrl" class="text-danger small d-block"></span>
+                    <small class="text-muted d-block mb-2" style="font-size: 0.75rem;">Formatos: JPG, PNG. Max 2MB.</small>
+                    <span id="imagenError" class="text-danger fw-bold small" style="display: none;"><i class="bi bi-exclamation-triangle-fill"></i> Debes subir una imagen.</span>
                 </div>
             </div>
         </div>
@@ -145,106 +167,281 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
-
     <script>
         $(document).ready(function() {
-
+            let variantes = [];
             const imagenOriginal = $('#imgPreview').attr('src');
-            const talleSeleccionado = '@Model.Talle';
+            const productoIdGlobal = @(Model?.Id ?? 0);
 
-            // 1. MANEJO DE IMAGEN EN EDICIÓN
-            $('#btnCambiarImagen').click(function() {
-                $('#imagenArchivo').click();
-            });
+            // 1. CARGAR DATOS EXISTENTES INCLUYENDO PRODUCTO ID
+            @if(Model != null && Model.ProductosVariantes != null && Model.ProductosVariantes.Any())
+            {
+                foreach(var v in Model.ProductosVariantes)
+                {
+                    @:variantes.push({ id: @v.Id, productoId: productoIdGlobal, talle: '@v.Talle', stock: '@v.Stock', sku: '@v.CodigoBarra' });
+                }
+            }
 
+            // IMAGEN PREVIEW Y BOTÓN CAMBIAR
+            $('#btnCambiarImagen').click(() => $('#imagenArchivo').click());
+            
             $('#imagenArchivo').change(function(event) {
                 const file = event.target.files[0];
                 if (file) {
+                    $('#imagenError').hide();
                     const reader = new FileReader();
-                    reader.onload = function(e) {
-                        $('#imgPreview').attr('src', e.target.result).hide().fadeIn(300);
-                    }
+                    reader.onload = e => $('#imgPreview').attr('src', e.target.result).hide().fadeIn(300);
                     reader.readAsDataURL(file);
-
+                    
                     $('#ImagenUrlHidden').val(file.name);
-                    $('#btnCambiarImagen')
-                        .removeClass('btn-outline-secondary')
-                        .addClass('btn-outline-success')
-                        .html('<i class="bi bi-check-lg me-1"></i> ' + file.name);
+                    $('#btnCambiarImagen').removeClass('btn-outline-secondary').addClass('btn-outline-success').html('<i class="bi bi-check-lg"></i> Listo');
                 } else {
                     $('#imgPreview').attr('src', imagenOriginal);
-                    $('#ImagenUrlHidden').val('@Model.ImagenUrl');
-                    $('#btnCambiarImagen')
-                        .removeClass('btn-outline-success')
-                        .addClass('btn-outline-secondary')
-                        .html('<i class="bi bi-camera me-1"></i> Cambiar Imagen');
+                    $('#ImagenUrlHidden').val('@Model?.ImagenUrl');
+                    $('#btnCambiarImagen').removeClass('btn-outline-success').addClass('btn-outline-secondary').html('<i class="bi bi-camera"></i> Cambiar Imagen');
                 }
             });
 
-            // 2. RESTRICCIONES FÍSICAS DE TECLADO
-            $('#codigoBarraInput').on('input', function() {
-                this.value = this.value.replace(/[^0-9]/g, '');
-                if (this.value.length > 6) {
-                    this.value = this.value.slice(0, 6);
-                }
-            });
-
-            $('#stockInput').on('keydown', function(e) {
-                if (['e', 'E', '+', '-', '.', ','].includes(e.key)) {
-                    e.preventDefault();
-                }
-            });
-            $('#stockInput').on('input', function() {
-                if (this.value.length > 3) {
-                    this.value = this.value.slice(0, 3);
-                }
-                if (parseInt(this.value) > 100) {
-                    this.value = 100;
-                }
-            });
-
-            $('#precioInput').on('keydown', function(e) {
-                if (['e', 'E', '+', '-'].includes(e.key)) {
-                    e.preventDefault();
-                }
-            });
-            $('#precioInput').on('input', function() {
-                if (this.value.length > 8) {
-                    this.value = this.value.slice(0, 8);
-                }
-                if (parseFloat(this.value) > 99999.99) {
-                    this.value = 99999.99;
-                }
-            });
-
-            // 3. FILTRADO DINÁMICO DE TALLES Y AUTO-SELECCIÓN
-            var $selectTalle = $('#selectTalle');
+            // FILTRADO DINÁMICO DE TALLES
+            var $selectTalle = $('#varTalle');
             var $opcionesTalles = $selectTalle.find('option[data-es-numero]').clone();
 
-            function filtrarTalles(talleASeleccionar) {
-                var categoriaTexto = $('#selectCategoria option:selected').text().toLowerCase();
+            function actualizarTalles() {
+                var categoriaTexto = $('#selectCategoria').find('option:selected').text().toLowerCase();
                 var esZapatilla = categoriaTexto.includes('zapatillas') || categoriaTexto.includes('calzado');
 
-                $selectTalle.empty().append('<option value="" disabled>--Seleccionar Talle--</option>');
-
+                $selectTalle.empty().append('<option value="" disabled selected>-- Seleccionar Talle --</option>');
                 $opcionesTalles.each(function() {
                     var esNumero = $(this).attr('data-es-numero') === 'true';
                     if ((esZapatilla && esNumero) || (!esZapatilla && !esNumero)) {
                         $selectTalle.append($(this).clone());
                     }
                 });
-
-                if (talleASeleccionar) {
-                    $selectTalle.val(talleASeleccionar);
+                
+                if($('#selectCategoria').val()) {
+                    $selectTalle.prop('disabled', false);
                 }
-                $selectTalle.prop('disabled', false);
             }
 
-            filtrarTalles(talleSeleccionado);
+            $('#selectCategoria').change(actualizarTalles);
+            
+            if($('#selectCategoria').val()) {
+                actualizarTalles();
+            }
 
-            $('#selectCategoria').change(function() {
-                filtrarTalles(null);
+            // BLOQUEO DE CATEGORÍA CUANDO HAY TALLES AGREGADOS
+            function gestionarBloqueoCategoria() {
+                if (variantes.length > 0) {
+                    $('#selectCategoria').addClass('readonly-select');
+                } else {
+                    $('#selectCategoria').removeClass('readonly-select');
+                }
+            }
+
+            // OCULTAR ERROR DE VARIANTES AL INTERACTUAR
+            $('#varTalle, #varStock, #varSku').on('input change', function() {
+                $('#variantesError').hide();
             });
+
+            // RESTRICCIONES DE INPUTS (Precio Máx 5 dígitos)
+            $('#precioInput').on('keydown', function(e) {
+                if (['e', 'E', '+', '-'].includes(e.key)) { e.preventDefault(); }
+            });
+            $('#precioInput').on('input', function() {
+                if (this.value.length > 5) { this.value = this.value.slice(0, 5); }
+                if (parseInt(this.value) > 99999) { this.value = 99999; }
+            });
+
+            // STOCK MÁX 3 DÍGITOS Y COD BARRA 6
+            $('#varSku').on('input', function() { this.value = this.value.replace(/[^0-9]/g, '').slice(0, 6); });
+            
+            $('#varStock').on('keydown', function(e) {
+                if (['e', 'E', '+', '-', '.', ','].includes(e.key)) { e.preventDefault(); }
+            });
+            $('#varStock').on('input', function() {
+                this.value = this.value.replace(/[^0-9]/g, '');
+                if (this.value.length > 3) { this.value = this.value.slice(0, 3); }
+                if (parseInt(this.value) > 999) { this.value = 999; }
+            });
+
+            $('#varSku, #varStock').on('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    $('#btnAgregarVariante').click();
+                }
+            });
+
+            // RENDERIZAR TABLA DE VARIANTES CON EL CAMPO 'ID' Y 'PRODUCTOID'
+           // 1. DIBUJAR TABLA CON INPUT DE STOCK
+function renderTabla() {
+    let html = '';
+    variantes.forEach((v, index) => {
+        html += `<tr>
+            <td class="align-middle">${v.talle}
+                <input type="hidden" name="ProductosVariantes[${index}].Id" value="${v.id}" />
+                <input type="hidden" name="ProductosVariantes[${index}].ProductoId" value="${v.productoId}" />
+                <input type="hidden" name="ProductosVariantes[${index}].Talle" value="${v.talle}" />
+            </td>
+            <td class="align-middle">
+                <input type="number" 
+                       name="ProductosVariantes[${index}].Stock" 
+                       class="form-control form-control-sm bg-dark text-light border-secondary text-center edit-stock-input mx-auto" 
+                       style="width: 75px;" 
+                       data-index="${index}" 
+                       value="${v.stock}" 
+                       min="0" 
+                       max="999" 
+                       autocomplete="off" />
+            </td>
+            <td class="align-middle">${v.sku}
+                <input type="hidden" name="ProductosVariantes[${index}].CodigoBarra" value="${v.sku}" />
+            </td>
+            <td class="text-center align-middle">
+                <button type="button" class="btn btn-sm btn-outline-danger py-0" onclick="eliminarVariante(${index})"><i class="bi bi-x-lg"></i></button>
+            </td>
+        </tr>`;
+    });
+    $('#tablaVariantes tbody').html(html);
+    gestionarBloqueoCategoria();
+}
+
+// 2. CONTROL DE TECLAS (FLECHAS Y CARACTERES PROHIBIDOS)
+$('#tablaVariantes').on('keydown', '.edit-stock-input', function(e) {
+    let val = parseInt(this.value) || 0;
+
+    // Control manual de Flecha Arriba (Máximo 999)
+    if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        this.value = val < 999 ? val + 1 : 999;
+        $(this).trigger('input');
+        return;
+    }
+
+    // Control manual de Flecha Abajo (Mínimo 0)
+    if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        this.value = val > 0 ? val - 1 : 0;
+        $(this).trigger('input');
+        return;
+    }
+
+    // Bloquear caracteres no numéricos
+    if (['-', '+', '.', 'e', 'E', ','].includes(e.key)) {
+        e.preventDefault();
+    }
+});
+
+// 3. VALIDACIÓN DE ENTRADA Y SINCRONIZACIÓN EN MEMORIA
+$('#tablaVariantes').on('input', '.edit-stock-input', function() {
+    this.value = this.value.replace(/[^0-9]/g, '');
+
+    if (this.value !== "") {
+        let val = parseInt(this.value);
+        if (val > 999) this.value = 999;
+        if (val < 0) this.value = 0;
+    }
+
+    // Sincronizar con el arreglo JS para mantener persistencia
+    let idx = $(this).data('index');
+    if (idx !== undefined && variantes[idx]) {
+        variantes[idx].stock = this.value;
+    }
+});
+
+// 4. SI QUEDA VACÍO AL SALIR DEL INPUT, FORZAR '0'
+$('#tablaVariantes').on('keyup blur', '.edit-stock-input', function() {
+    if (this.value === '' || parseInt(this.value) < 0 || isNaN(parseInt(this.value))) {
+        this.value = '0';
+        let idx = $(this).data('index');
+        if (idx !== undefined && variantes[idx]) {
+            variantes[idx].stock = '0';
+        }
+    }
+});
+
+// 5. ASEGURAR GUARDA EN SUBMIT
+$('#updateProductForm').submit(function(e) {
+    // Sincronizar todos los inputs visibles con el array antes de enviar
+    $('.edit-stock-input').each(function() {
+        let idx = $(this).data('index');
+        if (idx !== undefined && variantes[idx]) {
+            variantes[idx].stock = $(this).val() || '0';
+        }
+    });
+
+    let valid = true;
+    // ... resto de tu código de submit se mantiene igual ...
+});
+
+            window.eliminarVariante = function(index) {
+                variantes.splice(index, 1);
+                renderTabla();
+                if(variantes.length === 0) {
+                    $('#variantesError').hide();
+                }
+            }
+
+            // AGREGAR VARIANTE
+            $('#btnAgregarVariante').click(function() {
+                const talle = $('#varTalle').val();
+                const stock = $('#varStock').val();
+                const sku = $('#varSku').val();
+                const $error = $('#variantesError');
+                
+                if(!talle || !stock || sku.length !== 6) {
+                    $error.text('Seleccione talle, ingrese stock válido y un Cod. Barra de 6 dígitos.').show();
+                    return;
+                }
+                if(variantes.some(v => v.talle === talle)) {
+                    $error.text('El talle seleccionado ya fue agregado a la tabla.').show();
+                    return;
+                }
+                if(variantes.some(v => v.sku === sku)) {
+                    $error.text('El Cod. Barra ingresado ya existe en la tabla.').show();
+                    return;
+                }
+
+                $error.hide();
+                // A los nuevos les asignamos ID 0 y ProductoId global
+                variantes.push({ id: 0, productoId: productoIdGlobal, talle: talle, stock: stock, sku: sku });
+                renderTabla();
+                
+                $('#varTalle').prop('selectedIndex', 0);
+                $('#varStock').val('');
+                $('#varSku').val('');
+            });
+
+            // VALIDACION FINAL SUBMIT
+            $('#updateProductForm').submit(function(e) {
+                let valid = true;
+
+                if ($('#imagenArchivo').val() === '' && !$('#ImagenUrlHidden').val()) {
+                    $('#imagenError').show();
+                    valid = false;
+                } else {
+                    $('#imagenError').hide();
+                }
+                
+                const t = $('#varTalle').val();
+                const s = $('#varStock').val();
+                const k = $('#varSku').val();
+                
+                if (t || s || k) {
+                    $('#variantesError').text('Tiene datos de un talle sin agregar. Haga clic en "Agregar" primero.').show();
+                    valid = false;
+                } else if (variantes.length === 0) {
+                    $('#variantesError').text('Debe mantener al menos un talle con su stock y código.').show();
+                    valid = false;
+                } else {
+                    $('#variantesError').hide();
+                }
+
+                if (!valid) {
+                    e.preventDefault();
+                }
+            });
+
+            renderTabla();
         });
     </script>
 }

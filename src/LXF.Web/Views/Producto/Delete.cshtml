@@ -1,20 +1,7 @@
 ﻿@using LXF.Web.Models.ViewModels
-
 @model ProductoGetViewModel
 
 <style>
-    /* Ocultar flechas de inputs numéricos */
-    input[type="number"]::-webkit-outer-spin-button,
-    input[type="number"]::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-    }
-
-    input[type="number"] {
-        -moz-appearance: textfield;
-    }
-
-    /* Estilo gris / desactivado para campos e imagen */
     .input-disabled-custom {
         background-color: #1a1d20 !important;
         color: #9ea7b0 !important;
@@ -40,67 +27,82 @@
         </div>
 
         <div class="row">
-            <!-- COLUMNA IZQUIERDA: DATOS -->
+            <!-- COLUMNA IZQUIERDA -->
             <div class="col-12 col-lg-8 pe-lg-4">
                 <div class="row">
-                    <div class="col-12 col-md-6 pb-3">
+                    <div class="col-12 col-md-8 pb-3">
                         <label class="form-label fw-bold mb-1" style="font-size: 0.9rem; color: #adb5bd;">Nombre</label>
                         <input asp-for="Nombre" class="form-control input-disabled-custom" disabled />
                     </div>
-
-                    <div class="col-12 col-md-6 pb-3">
-                        <label class="form-label fw-bold mb-1" style="font-size: 0.9rem; color: #adb5bd;">Código de Barra (SKU)</label>
-                        <input asp-for="CodigoBarra" type="text" class="form-control input-disabled-custom" disabled />
+                    <div class="col-12 col-md-4 pb-3">
+                        <label class="form-label fw-bold mb-1" style="font-size: 0.9rem; color: #adb5bd;">Precio</label>
+                        <input asp-for="Precio" type="number" step="0.01" class="form-control input-disabled-custom" disabled />
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-12 pb-3">
                         <label class="form-label fw-bold mb-1" style="font-size: 0.9rem; color: #adb5bd;">Descripción</label>
-                        <textarea asp-for="Descripcion" class="form-control input-disabled-custom" rows="3" disabled></textarea>
+                        <textarea asp-for="Descripcion" class="form-control input-disabled-custom" rows="2" disabled></textarea>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-12 col-md-6 pb-3">
+                    <div class="col-12 col-md-4 pb-3">
                         <label class="form-label fw-bold mb-1" style="font-size: 0.9rem; color: #adb5bd;">Categoría</label>
                         <input value="@Model.Categoria" class="form-control input-disabled-custom" disabled />
                     </div>
-
-                    <div class="col-12 col-md-6 pb-3">
-                        <label class="form-label fw-bold mb-1" style="font-size: 0.9rem; color: #adb5bd;">Talle</label>
-                        <input value="@Model.Talle" class="form-control input-disabled-custom" disabled />
-                    </div>
-                </div>
-
-                <div class="row">
                     <div class="col-12 col-md-4 pb-3">
                         <label class="form-label fw-bold mb-1" style="font-size: 0.9rem; color: #adb5bd;">Marca</label>
                         <input value="@Model.Marca" class="form-control input-disabled-custom" disabled />
                     </div>
-
                     <div class="col-12 col-md-4 pb-3">
-                        <label class="form-label fw-bold mb-1" style="font-size: 0.9rem; color: #adb5bd;">Precio</label>
-                        <input asp-for="Precio" type="number" step="0.01" class="form-control input-disabled-custom" disabled />
+                        <label class="form-label fw-bold mb-1" style="font-size: 0.9rem; color: #adb5bd;">Género</label>
+                        <input asp-for="Genero" class="form-control input-disabled-custom" disabled />
                     </div>
+                </div>
 
-                    <div class="col-12 col-md-4 pb-3">
-                        <label class="form-label fw-bold mb-1" style="font-size: 0.9rem; color: #adb5bd;">Stock</label>
-                        <input asp-for="Stock" type="number" class="form-control input-disabled-custom" disabled />
+                <!-- LISTA READ-ONLY DE VARIANTES -->
+                <div class="border border-secondary p-3 mt-2 rounded bg-dark" style="background-color: rgba(0,0,0,0.15) !important;">
+                    <h6 class="text-secondary fw-bold mb-3"><i class="bi bi-tags"></i> Talles y Stock (SKUs)</h6>
+                    <div class="table-responsive">
+                        <table class="table table-dark table-sm table-bordered border-secondary mb-0">
+                            <thead class="text-secondary">
+                                <tr>
+                                    <th>Talle</th>
+                                    <th>Stock</th>
+                                    <th>SKU</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.ProductosVariantes != null && Model.ProductosVariantes.Any())
+                                {
+                                    foreach (var v in Model.ProductosVariantes)
+                                    {
+                                        <tr>
+                                            <td class="text-muted">@v.Talle</td>
+                                            <td class="text-muted">@v.Stock</td>
+                                            <td class="text-muted">@v.CodigoBarra</td>
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr><td colspan="3" class="text-muted text-center">No hay variantes registradas.</td></tr>
+                                }
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
 
-            <!-- COLUMNA DERECHA: IMAGEN -->
+            <!-- COLUMNA DERECHA -->
             <div class="col-12 col-lg-4 mt-4 mt-lg-0">
-                <div class="border border-secondary p-3 text-center" style="border-radius: 8px; border-style: dashed !important; background-color: rgba(0,0,0,0.2);">
+                <div class="border border-secondary p-3 text-center h-100" style="border-radius: 8px; border-style: dashed !important; background-color: rgba(0,0,0,0.2);">
                     <label class="form-label fw-bold mb-3" style="color: #adb5bd;">Imagen</label>
-
                     <div class="d-flex justify-content-center align-items-center overflow-hidden bg-black" style="height: 250px; border-radius: 6px;">
-                        <img id="imgPreview"
-                             src="@(string.IsNullOrEmpty(Model.ImagenUrl) ? "https://placehold.co/400x400/1a1a1a/666666?text=Sin+Imagen" : Model.ImagenUrl)"
-                             class="img-fluid object-fit-cover w-100 h-100 img-disabled-custom"
-                             alt="Vista Previa" />
+                        <img src="@(string.IsNullOrEmpty(Model.ImagenUrl) ? "https://placehold.co/400x400/1a1a1a/666666?text=Sin+Imagen" : Model.ImagenUrl)"
+                             class="img-fluid object-fit-cover w-100 h-100 img-disabled-custom" />
                     </div>
                 </div>
             </div>

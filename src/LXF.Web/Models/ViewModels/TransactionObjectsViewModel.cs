@@ -7,5 +7,6 @@
         public FacturaViewModel Factura { get; set; }
         public EnvioViewModel Envio { get; set; }
         public int CarroId { get; set; }
+        public EmailVentaViewModel Email { get; set; }
     }
 }

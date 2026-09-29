@@ -36,6 +36,9 @@ namespace Infraestructura.Migrations
                     b.Property<bool>("IsEnabled")
                         .HasColumnType("bit");
 
+                    b.Property<DateTime>("LastModified")
+                        .HasColumnType("datetime2");
+
                     b.Property<decimal>("Total")
                         .HasColumnType("decimal(18,2)");
 
@@ -57,8 +60,7 @@ namespace Infraestructura.Migrations
 
                     b.Property<string>("Descripcion")
                         .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -78,62 +80,55 @@ namespace Infraestructura.Migrations
                         new
                         {
                             ID = 1,
-                            Descripcion = "Camisetas Futbol Masculinas",
+                            Descripcion = "Camisetas Futbol",
                             IsDeleted = false,
                             IsEnabled = false
                         },
                         new
                         {
                             ID = 2,
-                            Descripcion = "Camisetas Futbol Femeninas",
-                            IsDeleted = false,
-                            IsEnabled = false
-                        },
-                        new
-                        {
-                            ID = 3,
                             Descripcion = "Remeras",
                             IsDeleted = false,
                             IsEnabled = false
                         },
                         new
                         {
-                            ID = 4,
+                            ID = 3,
                             Descripcion = "Musculosas",
                             IsDeleted = false,
                             IsEnabled = false
                         },
                         new
                         {
-                            ID = 5,
+                            ID = 4,
                             Descripcion = "Shorts",
                             IsDeleted = false,
                             IsEnabled = false
                         },
                         new
                         {
-                            ID = 6,
+                            ID = 5,
                             Descripcion = "Medias",
                             IsDeleted = false,
                             IsEnabled = false
                         },
                         new
                         {
-                            ID = 7,
+                            ID = 6,
                             Descripcion = "Pantalones",
                             IsDeleted = false,
                             IsEnabled = false
                         },
                         new
                         {
-                            ID = 8,
+                            ID = 7,
                             Descripcion = "Camperas",
                             IsDeleted = false,
                             IsEnabled = false
                         },
                         new
                         {
-                            ID = 9,
+                            ID = 8,
                             Descripcion = "Zapatillas",
                             IsDeleted = false,
                             IsEnabled = false
@@ -203,7 +198,7 @@ namespace Infraestructura.Migrations
                     b.Property<decimal>("Precio")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("ProductoId")
+                    b.Property<int>("ProductoVarianteId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("SubTotal")
@@ -213,7 +208,7 @@ namespace Infraestructura.Migrations
 
                     b.HasIndex("CarroComprasId");
 
-                    b.HasIndex("ProductoId");
+                    b.HasIndex("ProductoVarianteId");
 
                     b.ToTable("DetalleCarroCompras");
                 });
@@ -254,6 +249,10 @@ namespace Infraestructura.Migrations
                     b.Property<decimal>("SubTotal")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<string>("Talle")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("ID");
 
                     b.HasIndex("ComprobanteId");
@@ -286,7 +285,7 @@ namespace Infraestructura.Migrations
                     b.Property<decimal>("Precio")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("ProductoId")
+                    b.Property<int>("ProductoVarianteId")
                         .HasColumnType("int");
 
                     b.Property<decimal>("SubTotal")
@@ -296,7 +295,7 @@ namespace Infraestructura.Migrations
 
                     b.HasIndex("OrdenComprasId");
 
-                    b.HasIndex("ProductoId");
+                    b.HasIndex("ProductoVarianteId");
 
                     b.ToTable("DetalleOrdenCompras");
                 });
@@ -311,8 +310,7 @@ namespace Infraestructura.Migrations
 
                     b.Property<string>("Celular")
                         .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Direccion")
                         .IsRequired()
@@ -320,8 +318,7 @@ namespace Infraestructura.Migrations
 
                     b.Property<string>("Dni")
                         .IsRequired()
-                        .HasMaxLength(8)
-                        .HasColumnType("nvarchar(8)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -341,8 +338,7 @@ namespace Infraestructura.Migrations
 
                     b.Property<string>("Persona")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
 
@@ -359,8 +355,7 @@ namespace Infraestructura.Migrations
 
                     b.Property<string>("Celular")
                         .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Direccion")
                         .IsRequired()
@@ -368,8 +363,7 @@ namespace Infraestructura.Migrations
 
                     b.Property<string>("Dni")
                         .IsRequired()
-                        .HasMaxLength(8)
-                        .HasColumnType("nvarchar(8)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -390,8 +384,7 @@ namespace Infraestructura.Migrations
 
                     b.Property<string>("Nombre")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("PersonaClienteID")
                         .HasColumnType("int");
@@ -866,8 +859,7 @@ namespace Infraestructura.Migrations
 
                     b.Property<string>("Descripcion")
                         .IsRequired()
-                        .HasMaxLength(240)
-                        .HasColumnType("nvarchar(240)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -901,72 +893,45 @@ namespace Infraestructura.Migrations
                         new
                         {
                             ID = 3,
-                            Descripcion = "Fila",
+                            Descripcion = "Puma",
                             IsDeleted = false,
                             IsEnabled = false
                         },
                         new
                         {
                             ID = 4,
-                            Descripcion = "Topper",
-                            IsDeleted = false,
-                            IsEnabled = false
-                        },
-                        new
-                        {
-                            ID = 5,
                             Descripcion = "Reebok",
                             IsDeleted = false,
                             IsEnabled = false
                         },
                         new
                         {
+                            ID = 5,
+                            Descripcion = "Dc",
+                            IsDeleted = false,
+                            IsEnabled = false
+                        },
+                        new
+                        {
                             ID = 6,
-                            Descripcion = "Umbro",
+                            Descripcion = "Vans",
                             IsDeleted = false,
                             IsEnabled = false
                         },
                         new
                         {
                             ID = 7,
-                            Descripcion = "Puma",
+                            Descripcion = "Adidas-Classic",
+                            IsDeleted = false,
+                            IsEnabled = false
+                        },
+                        new
+                        {
+                            ID = 8,
+                            Descripcion = "Under-Armour",
                             IsDeleted = false,
                             IsEnabled = false
                         });
-                });
-
-            modelBuilder.Entity("Dominio.Entidades.Movimiento", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
-
-                    b.Property<int>("FacturaId")
-                        .HasColumnType("int");
-
-                    b.Property<DateOnly>("Fecha")
-                        .HasColumnType("date");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<decimal>("Monto")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("Tipo")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("FacturaId");
-
-                    b.ToTable("Movimientos");
                 });
 
             modelBuilder.Entity("Dominio.Entidades.OrdenCompra", b =>
@@ -1019,13 +984,11 @@ namespace Infraestructura.Migrations
 
                     b.Property<string>("Apellido")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Celular")
                         .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Direccion")
                         .IsRequired()
@@ -1033,8 +996,7 @@ namespace Infraestructura.Migrations
 
                     b.Property<string>("Dni")
                         .IsRequired()
-                        .HasMaxLength(8)
-                        .HasColumnType("nvarchar(8)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -1051,8 +1013,7 @@ namespace Infraestructura.Migrations
 
                     b.Property<string>("Nombre")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Sexo")
                         .IsRequired()
@@ -1076,13 +1037,14 @@ namespace Infraestructura.Migrations
                     b.Property<int>("CategoriaId")
                         .HasColumnType("int");
 
-                    b.Property<int>("CodigoBarra")
-                        .HasColumnType("int");
-
                     b.Property<string>("Descripcion")
                         .IsRequired()
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
+
+                    b.Property<string>("Genero")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ImagenUrl")
                         .IsRequired()
@@ -1105,13 +1067,6 @@ namespace Infraestructura.Migrations
                     b.Property<decimal>("Precio")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("Stock")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Talle")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("ID");
 
                     b.HasIndex("CategoriaId");
@@ -1130,46 +1085,4386 @@ namespace Infraestructura.Migrations
                         {
                             ID = 1,
                             CategoriaId = 1,
-                            CodigoBarra = 123123,
-                            Descripcion = "Camiseta 100 % Poliester, con tecnologia AdiFreeIce, ideal para cual epoca de el año",
-                            ImagenUrl = "https://placehold.co/603x403",
+                            Descripcion = "Un clásico renovado. La nueva colección de Nike destaca por su corte ergonómico y tecnología de punta, brindando un ajuste perfecto.",
+                            Genero = "Hombre",
+                            ImagenUrl = "https://placehold.co/600x600",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 1,
-                            Nombre = "Camiseta Titular Manchester United 24/25",
-                            Precio = 150000.00m,
-                            Stock = 10,
-                            Talle = "M"
+                            Nombre = "Camiseta Futbol Nike Tech Serie 1",
+                            Precio = 98000m
                         },
                         new
                         {
                             ID = 2,
                             CategoriaId = 1,
-                            CodigoBarra = 323232,
-                            Descripcion = "Camiseta 100 % Poliester, con tecnologia AdiFreeIce, ideal para cual epoca de el año",
-                            ImagenUrl = "https://placehold.co/603x403",
+                            Descripcion = "Increíble diseño en camiseta futbol Nike Ultra. Una elección perfecta para quienes buscan estilo y rendimiento. Fabricación de alta calidad pensada para mujer.",
+                            Genero = "Mujer",
+                            ImagenUrl = "https://placehold.co/600x600",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 1,
-                            Nombre = "Camiseta Titular Mancheste City 24/25",
-                            Precio = 175000.00m,
-                            Stock = 10,
+                            Nombre = "Camiseta Futbol Nike Ultra Serie 2",
+                            Precio = 83000m
+                        },
+                        new
+                        {
+                            ID = 3,
+                            CategoriaId = 1,
+                            Descripcion = "Increíble diseño en camiseta futbol Nike Elite. Una elección perfecta para quienes buscan estilo y rendimiento. Fabricación de alta calidad pensada para unisex.",
+                            Genero = "Unisex",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 1,
+                            Nombre = "Camiseta Futbol Nike Elite Serie 3",
+                            Precio = 16000m
+                        },
+                        new
+                        {
+                            ID = 4,
+                            CategoriaId = 1,
+                            Descripcion = "Supera tus límites con lo nuevo en camiseta futbol Adidas. Pensado especialmente para hombre, ofrece una durabilidad excepcional en cada uso gracias a su tecnología Tech.",
+                            Genero = "Hombre",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 2,
+                            Nombre = "Camiseta Futbol Adidas Tech Serie 1",
+                            Precio = 68000m
+                        },
+                        new
+                        {
+                            ID = 5,
+                            CategoriaId = 1,
+                            Descripcion = "Increíble diseño en camiseta futbol Adidas Sport. Una elección perfecta para quienes buscan estilo y rendimiento. Fabricación de alta calidad pensada para mujer.",
+                            Genero = "Mujer",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 2,
+                            Nombre = "Camiseta Futbol Adidas Sport Serie 2",
+                            Precio = 31000m
+                        },
+                        new
+                        {
+                            ID = 6,
+                            CategoriaId = 1,
+                            Descripcion = "Descubre el confort absoluto con este modelo de Adidas. Su diseño exclusivo aporta frescura y libertad de movimiento, ideal para el día a día.",
+                            Genero = "Unisex",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 2,
+                            Nombre = "Camiseta Futbol Adidas Essential Serie 3",
+                            Precio = 86000m
+                        },
+                        new
+                        {
+                            ID = 7,
+                            CategoriaId = 1,
+                            Descripcion = "Increíble diseño en camiseta futbol Puma Tech. Una elección perfecta para quienes buscan estilo y rendimiento. Fabricación de alta calidad pensada para hombre.",
+                            Genero = "Hombre",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 3,
+                            Nombre = "Camiseta Futbol Puma Tech Serie 1",
+                            Precio = 15000m
+                        },
+                        new
+                        {
+                            ID = 8,
+                            CategoriaId = 1,
+                            Descripcion = "Increíble diseño en camiseta futbol Puma Ultra. Una elección perfecta para quienes buscan estilo y rendimiento. Fabricación de alta calidad pensada para mujer.",
+                            Genero = "Mujer",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 3,
+                            Nombre = "Camiseta Futbol Puma Ultra Serie 2",
+                            Precio = 17000m
+                        },
+                        new
+                        {
+                            ID = 9,
+                            CategoriaId = 1,
+                            Descripcion = "Un clásico renovado. La nueva colección de Puma destaca por su corte ergonómico y tecnología de punta, brindando un ajuste perfecto.",
+                            Genero = "Unisex",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 3,
+                            Nombre = "Camiseta Futbol Puma Max Serie 3",
+                            Precio = 79000m
+                        },
+                        new
+                        {
+                            ID = 10,
+                            CategoriaId = 1,
+                            Descripcion = "Increíble diseño en camiseta futbol Reebok Essential. Una elección perfecta para quienes buscan estilo y rendimiento. Fabricación de alta calidad pensada para hombre.",
+                            Genero = "Hombre",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 4,
+                            Nombre = "Camiseta Futbol Reebok Essential Serie 1",
+                            Precio = 91000m
+                        },
+                        new
+                        {
+                            ID = 11,
+                            CategoriaId = 1,
+                            Descripcion = "Un clásico renovado. La nueva colección de Reebok destaca por su corte ergonómico y tecnología de punta, brindando un ajuste perfecto.",
+                            Genero = "Mujer",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 4,
+                            Nombre = "Camiseta Futbol Reebok Retro Serie 2",
+                            Precio = 65000m
+                        },
+                        new
+                        {
+                            ID = 12,
+                            CategoriaId = 1,
+                            Descripcion = "Increíble diseño en camiseta futbol Reebok Essential. Una elección perfecta para quienes buscan estilo y rendimiento. Fabricación de alta calidad pensada para unisex.",
+                            Genero = "Unisex",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 4,
+                            Nombre = "Camiseta Futbol Reebok Essential Serie 3",
+                            Precio = 21000m
+                        },
+                        new
+                        {
+                            ID = 13,
+                            CategoriaId = 1,
+                            Descripcion = "Supera tus límites con lo nuevo en camiseta futbol Dc. Pensado especialmente para hombre, ofrece una durabilidad excepcional en cada uso gracias a su tecnología Classic.",
+                            Genero = "Hombre",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 5,
+                            Nombre = "Camiseta Futbol Dc Classic Serie 1",
+                            Precio = 92000m
+                        },
+                        new
+                        {
+                            ID = 14,
+                            CategoriaId = 1,
+                            Descripcion = "Lleva tu estilo urbano al siguiente nivel. Confección premium y detalles únicos hacen de este modelo de Tech una pieza indispensable en tu guardarropa.",
+                            Genero = "Mujer",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 5,
+                            Nombre = "Camiseta Futbol Dc Tech Serie 2",
+                            Precio = 82000m
+                        },
+                        new
+                        {
+                            ID = 15,
+                            CategoriaId = 1,
+                            Descripcion = "Un clásico renovado. La nueva colección de Dc destaca por su corte ergonómico y tecnología de punta, brindando un ajuste perfecto.",
+                            Genero = "Unisex",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 5,
+                            Nombre = "Camiseta Futbol Dc Elite Serie 3",
+                            Precio = 56000m
+                        },
+                        new
+                        {
+                            ID = 16,
+                            CategoriaId = 1,
+                            Descripcion = "Descubre el confort absoluto con este modelo de Vans. Su diseño exclusivo aporta frescura y libertad de movimiento, ideal para el día a día.",
+                            Genero = "Hombre",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 6,
+                            Nombre = "Camiseta Futbol Vans Elite Serie 1",
+                            Precio = 24000m
+                        },
+                        new
+                        {
+                            ID = 17,
+                            CategoriaId = 1,
+                            Descripcion = "Un clásico renovado. La nueva colección de Vans destaca por su corte ergonómico y tecnología de punta, brindando un ajuste perfecto.",
+                            Genero = "Mujer",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 6,
+                            Nombre = "Camiseta Futbol Vans Sport Serie 2",
+                            Precio = 28000m
+                        },
+                        new
+                        {
+                            ID = 18,
+                            CategoriaId = 1,
+                            Descripcion = "Supera tus límites con lo nuevo en camiseta futbol Vans. Pensado especialmente para unisex, ofrece una durabilidad excepcional en cada uso gracias a su tecnología Pro.",
+                            Genero = "Unisex",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 6,
+                            Nombre = "Camiseta Futbol Vans Pro Serie 3",
+                            Precio = 28000m
+                        },
+                        new
+                        {
+                            ID = 19,
+                            CategoriaId = 1,
+                            Descripcion = "Increíble diseño en camiseta futbol Adidas-Classic Tech. Una elección perfecta para quienes buscan estilo y rendimiento. Fabricación de alta calidad pensada para hombre.",
+                            Genero = "Hombre",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 7,
+                            Nombre = "Camiseta Futbol Adidas-Classic Tech Serie 1",
+                            Precio = 84000m
+                        },
+                        new
+                        {
+                            ID = 20,
+                            CategoriaId = 1,
+                            Descripcion = "Increíble diseño en camiseta futbol Adidas-Classic Pro. Una elección perfecta para quienes buscan estilo y rendimiento. Fabricación de alta calidad pensada para mujer.",
+                            Genero = "Mujer",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 7,
+                            Nombre = "Camiseta Futbol Adidas-Classic Pro Serie 2",
+                            Precio = 78000m
+                        },
+                        new
+                        {
+                            ID = 21,
+                            CategoriaId = 1,
+                            Descripcion = "Un clásico renovado. La nueva colección de Adidas-Classic destaca por su corte ergonómico y tecnología de punta, brindando un ajuste perfecto.",
+                            Genero = "Unisex",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 7,
+                            Nombre = "Camiseta Futbol Adidas-Classic Elite Serie 3",
+                            Precio = 45000m
+                        },
+                        new
+                        {
+                            ID = 22,
+                            CategoriaId = 1,
+                            Descripcion = "Increíble diseño en camiseta futbol Under-Armour Pro. Una elección perfecta para quienes buscan estilo y rendimiento. Fabricación de alta calidad pensada para hombre.",
+                            Genero = "Hombre",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 8,
+                            Nombre = "Camiseta Futbol Under-Armour Pro Serie 1",
+                            Precio = 19000m
+                        },
+                        new
+                        {
+                            ID = 23,
+                            CategoriaId = 1,
+                            Descripcion = "Lleva tu estilo urbano al siguiente nivel. Confección premium y detalles únicos hacen de este modelo de Elite una pieza indispensable en tu guardarropa.",
+                            Genero = "Mujer",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 8,
+                            Nombre = "Camiseta Futbol Under-Armour Elite Serie 2",
+                            Precio = 77000m
+                        },
+                        new
+                        {
+                            ID = 24,
+                            CategoriaId = 1,
+                            Descripcion = "Descubre el confort absoluto con este modelo de Under-Armour. Su diseño exclusivo aporta frescura y libertad de movimiento, ideal para el día a día.",
+                            Genero = "Unisex",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 8,
+                            Nombre = "Camiseta Futbol Under-Armour Tech Serie 3",
+                            Precio = 98000m
+                        },
+                        new
+                        {
+                            ID = 25,
+                            CategoriaId = 2,
+                            Descripcion = "Increíble diseño en short Nike Classic. Una elección perfecta para quienes buscan estilo y rendimiento. Fabricación de alta calidad pensada para hombre.",
+                            Genero = "Hombre",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 1,
+                            Nombre = "Short Nike Classic Serie 1",
+                            Precio = 87000m
+                        },
+                        new
+                        {
+                            ID = 26,
+                            CategoriaId = 2,
+                            Descripcion = "Supera tus límites con lo nuevo en short Nike. Pensado especialmente para mujer, ofrece una durabilidad excepcional en cada uso gracias a su tecnología Essential.",
+                            Genero = "Mujer",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 1,
+                            Nombre = "Short Nike Essential Serie 2",
+                            Precio = 38000m
+                        },
+                        new
+                        {
+                            ID = 27,
+                            CategoriaId = 2,
+                            Descripcion = "Supera tus límites con lo nuevo en short Nike. Pensado especialmente para unisex, ofrece una durabilidad excepcional en cada uso gracias a su tecnología Max.",
+                            Genero = "Unisex",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 1,
+                            Nombre = "Short Nike Max Serie 3",
+                            Precio = 35000m
+                        },
+                        new
+                        {
+                            ID = 28,
+                            CategoriaId = 2,
+                            Descripcion = "Increíble diseño en short Adidas Ultra. Una elección perfecta para quienes buscan estilo y rendimiento. Fabricación de alta calidad pensada para hombre.",
+                            Genero = "Hombre",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 2,
+                            Nombre = "Short Adidas Ultra Serie 1",
+                            Precio = 40000m
+                        },
+                        new
+                        {
+                            ID = 29,
+                            CategoriaId = 2,
+                            Descripcion = "Lleva tu estilo urbano al siguiente nivel. Confección premium y detalles únicos hacen de este modelo de Sport una pieza indispensable en tu guardarropa.",
+                            Genero = "Mujer",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 2,
+                            Nombre = "Short Adidas Sport Serie 2",
+                            Precio = 52000m
+                        },
+                        new
+                        {
+                            ID = 30,
+                            CategoriaId = 2,
+                            Descripcion = "Un clásico renovado. La nueva colección de Adidas destaca por su corte ergonómico y tecnología de punta, brindando un ajuste perfecto.",
+                            Genero = "Unisex",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 2,
+                            Nombre = "Short Adidas Classic Serie 3",
+                            Precio = 33000m
+                        },
+                        new
+                        {
+                            ID = 31,
+                            CategoriaId = 2,
+                            Descripcion = "Increíble diseño en short Puma Elite. Una elección perfecta para quienes buscan estilo y rendimiento. Fabricación de alta calidad pensada para hombre.",
+                            Genero = "Hombre",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 3,
+                            Nombre = "Short Puma Elite Serie 1",
+                            Precio = 97000m
+                        },
+                        new
+                        {
+                            ID = 32,
+                            CategoriaId = 2,
+                            Descripcion = "Lleva tu estilo urbano al siguiente nivel. Confección premium y detalles únicos hacen de este modelo de Sport una pieza indispensable en tu guardarropa.",
+                            Genero = "Mujer",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 3,
+                            Nombre = "Short Puma Sport Serie 2",
+                            Precio = 41000m
+                        },
+                        new
+                        {
+                            ID = 33,
+                            CategoriaId = 2,
+                            Descripcion = "Increíble diseño en short Puma Sport. Una elección perfecta para quienes buscan estilo y rendimiento. Fabricación de alta calidad pensada para unisex.",
+                            Genero = "Unisex",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 3,
+                            Nombre = "Short Puma Sport Serie 3",
+                            Precio = 37000m
+                        },
+                        new
+                        {
+                            ID = 34,
+                            CategoriaId = 2,
+                            Descripcion = "Increíble diseño en short Reebok Urban. Una elección perfecta para quienes buscan estilo y rendimiento. Fabricación de alta calidad pensada para hombre.",
+                            Genero = "Hombre",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 4,
+                            Nombre = "Short Reebok Urban Serie 1",
+                            Precio = 74000m
+                        },
+                        new
+                        {
+                            ID = 35,
+                            CategoriaId = 2,
+                            Descripcion = "Supera tus límites con lo nuevo en short Reebok. Pensado especialmente para mujer, ofrece una durabilidad excepcional en cada uso gracias a su tecnología Elite.",
+                            Genero = "Mujer",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 4,
+                            Nombre = "Short Reebok Elite Serie 2",
+                            Precio = 58000m
+                        },
+                        new
+                        {
+                            ID = 36,
+                            CategoriaId = 2,
+                            Descripcion = "Lleva tu estilo urbano al siguiente nivel. Confección premium y detalles únicos hacen de este modelo de Urban una pieza indispensable en tu guardarropa.",
+                            Genero = "Unisex",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 4,
+                            Nombre = "Short Reebok Urban Serie 3",
+                            Precio = 43000m
+                        },
+                        new
+                        {
+                            ID = 37,
+                            CategoriaId = 2,
+                            Descripcion = "Supera tus límites con lo nuevo en short Dc. Pensado especialmente para hombre, ofrece una durabilidad excepcional en cada uso gracias a su tecnología Essential.",
+                            Genero = "Hombre",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 5,
+                            Nombre = "Short Dc Essential Serie 1",
+                            Precio = 60000m
+                        },
+                        new
+                        {
+                            ID = 38,
+                            CategoriaId = 2,
+                            Descripcion = "Supera tus límites con lo nuevo en short Dc. Pensado especialmente para mujer, ofrece una durabilidad excepcional en cada uso gracias a su tecnología Sport.",
+                            Genero = "Mujer",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 5,
+                            Nombre = "Short Dc Sport Serie 2",
+                            Precio = 61000m
+                        },
+                        new
+                        {
+                            ID = 39,
+                            CategoriaId = 2,
+                            Descripcion = "Descubre el confort absoluto con este modelo de Dc. Su diseño exclusivo aporta frescura y libertad de movimiento, ideal para el día a día.",
+                            Genero = "Unisex",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 5,
+                            Nombre = "Short Dc Pro Serie 3",
+                            Precio = 70000m
+                        },
+                        new
+                        {
+                            ID = 40,
+                            CategoriaId = 2,
+                            Descripcion = "Supera tus límites con lo nuevo en short Vans. Pensado especialmente para hombre, ofrece una durabilidad excepcional en cada uso gracias a su tecnología Max.",
+                            Genero = "Hombre",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 6,
+                            Nombre = "Short Vans Max Serie 1",
+                            Precio = 64000m
+                        },
+                        new
+                        {
+                            ID = 41,
+                            CategoriaId = 2,
+                            Descripcion = "Lleva tu estilo urbano al siguiente nivel. Confección premium y detalles únicos hacen de este modelo de Essential una pieza indispensable en tu guardarropa.",
+                            Genero = "Mujer",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 6,
+                            Nombre = "Short Vans Essential Serie 2",
+                            Precio = 33000m
+                        },
+                        new
+                        {
+                            ID = 42,
+                            CategoriaId = 2,
+                            Descripcion = "Un clásico renovado. La nueva colección de Vans destaca por su corte ergonómico y tecnología de punta, brindando un ajuste perfecto.",
+                            Genero = "Unisex",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 6,
+                            Nombre = "Short Vans Pro Serie 3",
+                            Precio = 35000m
+                        },
+                        new
+                        {
+                            ID = 43,
+                            CategoriaId = 2,
+                            Descripcion = "Un clásico renovado. La nueva colección de Adidas-Classic destaca por su corte ergonómico y tecnología de punta, brindando un ajuste perfecto.",
+                            Genero = "Hombre",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 7,
+                            Nombre = "Short Adidas-Classic Essential Serie 1",
+                            Precio = 33000m
+                        },
+                        new
+                        {
+                            ID = 44,
+                            CategoriaId = 2,
+                            Descripcion = "Increíble diseño en short Adidas-Classic Pro. Una elección perfecta para quienes buscan estilo y rendimiento. Fabricación de alta calidad pensada para mujer.",
+                            Genero = "Mujer",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 7,
+                            Nombre = "Short Adidas-Classic Pro Serie 2",
+                            Precio = 31000m
+                        },
+                        new
+                        {
+                            ID = 45,
+                            CategoriaId = 2,
+                            Descripcion = "Descubre el confort absoluto con este modelo de Adidas-Classic. Su diseño exclusivo aporta frescura y libertad de movimiento, ideal para el día a día.",
+                            Genero = "Unisex",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 7,
+                            Nombre = "Short Adidas-Classic Essential Serie 3",
+                            Precio = 51000m
+                        },
+                        new
+                        {
+                            ID = 46,
+                            CategoriaId = 2,
+                            Descripcion = "Supera tus límites con lo nuevo en short Under-Armour. Pensado especialmente para hombre, ofrece una durabilidad excepcional en cada uso gracias a su tecnología Ultra.",
+                            Genero = "Hombre",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 8,
+                            Nombre = "Short Under-Armour Ultra Serie 1",
+                            Precio = 47000m
+                        },
+                        new
+                        {
+                            ID = 47,
+                            CategoriaId = 2,
+                            Descripcion = "Increíble diseño en short Under-Armour Elite. Una elección perfecta para quienes buscan estilo y rendimiento. Fabricación de alta calidad pensada para mujer.",
+                            Genero = "Mujer",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 8,
+                            Nombre = "Short Under-Armour Elite Serie 2",
+                            Precio = 56000m
+                        },
+                        new
+                        {
+                            ID = 48,
+                            CategoriaId = 2,
+                            Descripcion = "Un clásico renovado. La nueva colección de Under-Armour destaca por su corte ergonómico y tecnología de punta, brindando un ajuste perfecto.",
+                            Genero = "Unisex",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 8,
+                            Nombre = "Short Under-Armour Max Serie 3",
+                            Precio = 18000m
+                        },
+                        new
+                        {
+                            ID = 49,
+                            CategoriaId = 3,
+                            Descripcion = "Un clásico renovado. La nueva colección de Nike destaca por su corte ergonómico y tecnología de punta, brindando un ajuste perfecto.",
+                            Genero = "Hombre",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 1,
+                            Nombre = "Pantalon Nike Sport Serie 1",
+                            Precio = 32000m
+                        },
+                        new
+                        {
+                            ID = 50,
+                            CategoriaId = 3,
+                            Descripcion = "Descubre el confort absoluto con este modelo de Nike. Su diseño exclusivo aporta frescura y libertad de movimiento, ideal para el día a día.",
+                            Genero = "Mujer",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 1,
+                            Nombre = "Pantalon Nike Max Serie 2",
+                            Precio = 77000m
+                        },
+                        new
+                        {
+                            ID = 51,
+                            CategoriaId = 3,
+                            Descripcion = "Lleva tu estilo urbano al siguiente nivel. Confección premium y detalles únicos hacen de este modelo de Max una pieza indispensable en tu guardarropa.",
+                            Genero = "Unisex",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 1,
+                            Nombre = "Pantalon Nike Max Serie 3",
+                            Precio = 51000m
+                        },
+                        new
+                        {
+                            ID = 52,
+                            CategoriaId = 3,
+                            Descripcion = "Lleva tu estilo urbano al siguiente nivel. Confección premium y detalles únicos hacen de este modelo de Sport una pieza indispensable en tu guardarropa.",
+                            Genero = "Hombre",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 2,
+                            Nombre = "Pantalon Adidas Sport Serie 1",
+                            Precio = 63000m
+                        },
+                        new
+                        {
+                            ID = 53,
+                            CategoriaId = 3,
+                            Descripcion = "Increíble diseño en pantalon Adidas Classic. Una elección perfecta para quienes buscan estilo y rendimiento. Fabricación de alta calidad pensada para mujer.",
+                            Genero = "Mujer",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 2,
+                            Nombre = "Pantalon Adidas Classic Serie 2",
+                            Precio = 31000m
+                        },
+                        new
+                        {
+                            ID = 54,
+                            CategoriaId = 3,
+                            Descripcion = "Un clásico renovado. La nueva colección de Adidas destaca por su corte ergonómico y tecnología de punta, brindando un ajuste perfecto.",
+                            Genero = "Unisex",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 2,
+                            Nombre = "Pantalon Adidas Elite Serie 3",
+                            Precio = 82000m
+                        },
+                        new
+                        {
+                            ID = 55,
+                            CategoriaId = 3,
+                            Descripcion = "Supera tus límites con lo nuevo en pantalon Puma. Pensado especialmente para hombre, ofrece una durabilidad excepcional en cada uso gracias a su tecnología Urban.",
+                            Genero = "Hombre",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 3,
+                            Nombre = "Pantalon Puma Urban Serie 1",
+                            Precio = 17000m
+                        },
+                        new
+                        {
+                            ID = 56,
+                            CategoriaId = 3,
+                            Descripcion = "Lleva tu estilo urbano al siguiente nivel. Confección premium y detalles únicos hacen de este modelo de Elite una pieza indispensable en tu guardarropa.",
+                            Genero = "Mujer",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 3,
+                            Nombre = "Pantalon Puma Elite Serie 2",
+                            Precio = 43000m
+                        },
+                        new
+                        {
+                            ID = 57,
+                            CategoriaId = 3,
+                            Descripcion = "Descubre el confort absoluto con este modelo de Puma. Su diseño exclusivo aporta frescura y libertad de movimiento, ideal para el día a día.",
+                            Genero = "Unisex",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 3,
+                            Nombre = "Pantalon Puma Classic Serie 3",
+                            Precio = 27000m
+                        },
+                        new
+                        {
+                            ID = 58,
+                            CategoriaId = 3,
+                            Descripcion = "Supera tus límites con lo nuevo en pantalon Reebok. Pensado especialmente para hombre, ofrece una durabilidad excepcional en cada uso gracias a su tecnología Pro.",
+                            Genero = "Hombre",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 4,
+                            Nombre = "Pantalon Reebok Pro Serie 1",
+                            Precio = 84000m
+                        },
+                        new
+                        {
+                            ID = 59,
+                            CategoriaId = 3,
+                            Descripcion = "Lleva tu estilo urbano al siguiente nivel. Confección premium y detalles únicos hacen de este modelo de Elite una pieza indispensable en tu guardarropa.",
+                            Genero = "Mujer",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 4,
+                            Nombre = "Pantalon Reebok Elite Serie 2",
+                            Precio = 53000m
+                        },
+                        new
+                        {
+                            ID = 60,
+                            CategoriaId = 3,
+                            Descripcion = "Supera tus límites con lo nuevo en pantalon Reebok. Pensado especialmente para unisex, ofrece una durabilidad excepcional en cada uso gracias a su tecnología Pro.",
+                            Genero = "Unisex",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 4,
+                            Nombre = "Pantalon Reebok Pro Serie 3",
+                            Precio = 29000m
+                        },
+                        new
+                        {
+                            ID = 61,
+                            CategoriaId = 3,
+                            Descripcion = "Lleva tu estilo urbano al siguiente nivel. Confección premium y detalles únicos hacen de este modelo de Sport una pieza indispensable en tu guardarropa.",
+                            Genero = "Hombre",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 5,
+                            Nombre = "Pantalon Dc Sport Serie 1",
+                            Precio = 21000m
+                        },
+                        new
+                        {
+                            ID = 62,
+                            CategoriaId = 3,
+                            Descripcion = "Descubre el confort absoluto con este modelo de Dc. Su diseño exclusivo aporta frescura y libertad de movimiento, ideal para el día a día.",
+                            Genero = "Mujer",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 5,
+                            Nombre = "Pantalon Dc Ultra Serie 2",
+                            Precio = 49000m
+                        },
+                        new
+                        {
+                            ID = 63,
+                            CategoriaId = 3,
+                            Descripcion = "Increíble diseño en pantalon Dc Retro. Una elección perfecta para quienes buscan estilo y rendimiento. Fabricación de alta calidad pensada para unisex.",
+                            Genero = "Unisex",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 5,
+                            Nombre = "Pantalon Dc Retro Serie 3",
+                            Precio = 37000m
+                        },
+                        new
+                        {
+                            ID = 64,
+                            CategoriaId = 3,
+                            Descripcion = "Supera tus límites con lo nuevo en pantalon Vans. Pensado especialmente para hombre, ofrece una durabilidad excepcional en cada uso gracias a su tecnología Elite.",
+                            Genero = "Hombre",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 6,
+                            Nombre = "Pantalon Vans Elite Serie 1",
+                            Precio = 50000m
+                        },
+                        new
+                        {
+                            ID = 65,
+                            CategoriaId = 3,
+                            Descripcion = "Lleva tu estilo urbano al siguiente nivel. Confección premium y detalles únicos hacen de este modelo de Max una pieza indispensable en tu guardarropa.",
+                            Genero = "Mujer",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 6,
+                            Nombre = "Pantalon Vans Max Serie 2",
+                            Precio = 49000m
+                        },
+                        new
+                        {
+                            ID = 66,
+                            CategoriaId = 3,
+                            Descripcion = "Descubre el confort absoluto con este modelo de Vans. Su diseño exclusivo aporta frescura y libertad de movimiento, ideal para el día a día.",
+                            Genero = "Unisex",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 6,
+                            Nombre = "Pantalon Vans Pro Serie 3",
+                            Precio = 46000m
+                        },
+                        new
+                        {
+                            ID = 67,
+                            CategoriaId = 3,
+                            Descripcion = "Descubre el confort absoluto con este modelo de Adidas-Classic. Su diseño exclusivo aporta frescura y libertad de movimiento, ideal para el día a día.",
+                            Genero = "Hombre",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 7,
+                            Nombre = "Pantalon Adidas-Classic Retro Serie 1",
+                            Precio = 28000m
+                        },
+                        new
+                        {
+                            ID = 68,
+                            CategoriaId = 3,
+                            Descripcion = "Descubre el confort absoluto con este modelo de Adidas-Classic. Su diseño exclusivo aporta frescura y libertad de movimiento, ideal para el día a día.",
+                            Genero = "Mujer",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 7,
+                            Nombre = "Pantalon Adidas-Classic Essential Serie 2",
+                            Precio = 76000m
+                        },
+                        new
+                        {
+                            ID = 69,
+                            CategoriaId = 3,
+                            Descripcion = "Supera tus límites con lo nuevo en pantalon Adidas-Classic. Pensado especialmente para unisex, ofrece una durabilidad excepcional en cada uso gracias a su tecnología Max.",
+                            Genero = "Unisex",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 7,
+                            Nombre = "Pantalon Adidas-Classic Max Serie 3",
+                            Precio = 23000m
+                        },
+                        new
+                        {
+                            ID = 70,
+                            CategoriaId = 3,
+                            Descripcion = "Descubre el confort absoluto con este modelo de Under-Armour. Su diseño exclusivo aporta frescura y libertad de movimiento, ideal para el día a día.",
+                            Genero = "Hombre",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 8,
+                            Nombre = "Pantalon Under-Armour Elite Serie 1",
+                            Precio = 41000m
+                        },
+                        new
+                        {
+                            ID = 71,
+                            CategoriaId = 3,
+                            Descripcion = "Descubre el confort absoluto con este modelo de Under-Armour. Su diseño exclusivo aporta frescura y libertad de movimiento, ideal para el día a día.",
+                            Genero = "Mujer",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 8,
+                            Nombre = "Pantalon Under-Armour Pro Serie 2",
+                            Precio = 15000m
+                        },
+                        new
+                        {
+                            ID = 72,
+                            CategoriaId = 3,
+                            Descripcion = "Un clásico renovado. La nueva colección de Under-Armour destaca por su corte ergonómico y tecnología de punta, brindando un ajuste perfecto.",
+                            Genero = "Unisex",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 8,
+                            Nombre = "Pantalon Under-Armour Ultra Serie 3",
+                            Precio = 62000m
+                        },
+                        new
+                        {
+                            ID = 73,
+                            CategoriaId = 4,
+                            Descripcion = "Supera tus límites con lo nuevo en campera Nike. Pensado especialmente para hombre, ofrece una durabilidad excepcional en cada uso gracias a su tecnología Max.",
+                            Genero = "Hombre",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 1,
+                            Nombre = "Campera Nike Max Serie 1",
+                            Precio = 89000m
+                        },
+                        new
+                        {
+                            ID = 74,
+                            CategoriaId = 4,
+                            Descripcion = "Descubre el confort absoluto con este modelo de Nike. Su diseño exclusivo aporta frescura y libertad de movimiento, ideal para el día a día.",
+                            Genero = "Mujer",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 1,
+                            Nombre = "Campera Nike Pro Serie 2",
+                            Precio = 32000m
+                        },
+                        new
+                        {
+                            ID = 75,
+                            CategoriaId = 4,
+                            Descripcion = "Increíble diseño en campera Nike Ultra. Una elección perfecta para quienes buscan estilo y rendimiento. Fabricación de alta calidad pensada para unisex.",
+                            Genero = "Unisex",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 1,
+                            Nombre = "Campera Nike Ultra Serie 3",
+                            Precio = 90000m
+                        },
+                        new
+                        {
+                            ID = 76,
+                            CategoriaId = 4,
+                            Descripcion = "Descubre el confort absoluto con este modelo de Adidas. Su diseño exclusivo aporta frescura y libertad de movimiento, ideal para el día a día.",
+                            Genero = "Hombre",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 2,
+                            Nombre = "Campera Adidas Sport Serie 1",
+                            Precio = 80000m
+                        },
+                        new
+                        {
+                            ID = 77,
+                            CategoriaId = 4,
+                            Descripcion = "Increíble diseño en campera Adidas Pro. Una elección perfecta para quienes buscan estilo y rendimiento. Fabricación de alta calidad pensada para mujer.",
+                            Genero = "Mujer",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 2,
+                            Nombre = "Campera Adidas Pro Serie 2",
+                            Precio = 60000m
+                        },
+                        new
+                        {
+                            ID = 78,
+                            CategoriaId = 4,
+                            Descripcion = "Increíble diseño en campera Adidas Pro. Una elección perfecta para quienes buscan estilo y rendimiento. Fabricación de alta calidad pensada para unisex.",
+                            Genero = "Unisex",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 2,
+                            Nombre = "Campera Adidas Pro Serie 3",
+                            Precio = 59000m
+                        },
+                        new
+                        {
+                            ID = 79,
+                            CategoriaId = 4,
+                            Descripcion = "Lleva tu estilo urbano al siguiente nivel. Confección premium y detalles únicos hacen de este modelo de Urban una pieza indispensable en tu guardarropa.",
+                            Genero = "Hombre",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 3,
+                            Nombre = "Campera Puma Urban Serie 1",
+                            Precio = 39000m
+                        },
+                        new
+                        {
+                            ID = 80,
+                            CategoriaId = 4,
+                            Descripcion = "Increíble diseño en campera Puma Urban. Una elección perfecta para quienes buscan estilo y rendimiento. Fabricación de alta calidad pensada para mujer.",
+                            Genero = "Mujer",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 3,
+                            Nombre = "Campera Puma Urban Serie 2",
+                            Precio = 56000m
+                        },
+                        new
+                        {
+                            ID = 81,
+                            CategoriaId = 4,
+                            Descripcion = "Un clásico renovado. La nueva colección de Puma destaca por su corte ergonómico y tecnología de punta, brindando un ajuste perfecto.",
+                            Genero = "Unisex",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 3,
+                            Nombre = "Campera Puma Tech Serie 3",
+                            Precio = 79000m
+                        },
+                        new
+                        {
+                            ID = 82,
+                            CategoriaId = 4,
+                            Descripcion = "Increíble diseño en campera Reebok Sport. Una elección perfecta para quienes buscan estilo y rendimiento. Fabricación de alta calidad pensada para hombre.",
+                            Genero = "Hombre",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 4,
+                            Nombre = "Campera Reebok Sport Serie 1",
+                            Precio = 79000m
+                        },
+                        new
+                        {
+                            ID = 83,
+                            CategoriaId = 4,
+                            Descripcion = "Lleva tu estilo urbano al siguiente nivel. Confección premium y detalles únicos hacen de este modelo de Retro una pieza indispensable en tu guardarropa.",
+                            Genero = "Mujer",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 4,
+                            Nombre = "Campera Reebok Retro Serie 2",
+                            Precio = 37000m
+                        },
+                        new
+                        {
+                            ID = 84,
+                            CategoriaId = 4,
+                            Descripcion = "Descubre el confort absoluto con este modelo de Reebok. Su diseño exclusivo aporta frescura y libertad de movimiento, ideal para el día a día.",
+                            Genero = "Unisex",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 4,
+                            Nombre = "Campera Reebok Sport Serie 3",
+                            Precio = 42000m
+                        },
+                        new
+                        {
+                            ID = 85,
+                            CategoriaId = 4,
+                            Descripcion = "Un clásico renovado. La nueva colección de Dc destaca por su corte ergonómico y tecnología de punta, brindando un ajuste perfecto.",
+                            Genero = "Hombre",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 5,
+                            Nombre = "Campera Dc Tech Serie 1",
+                            Precio = 78000m
+                        },
+                        new
+                        {
+                            ID = 86,
+                            CategoriaId = 4,
+                            Descripcion = "Lleva tu estilo urbano al siguiente nivel. Confección premium y detalles únicos hacen de este modelo de Retro una pieza indispensable en tu guardarropa.",
+                            Genero = "Mujer",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 5,
+                            Nombre = "Campera Dc Retro Serie 2",
+                            Precio = 20000m
+                        },
+                        new
+                        {
+                            ID = 87,
+                            CategoriaId = 4,
+                            Descripcion = "Increíble diseño en campera Dc Urban. Una elección perfecta para quienes buscan estilo y rendimiento. Fabricación de alta calidad pensada para unisex.",
+                            Genero = "Unisex",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 5,
+                            Nombre = "Campera Dc Urban Serie 3",
+                            Precio = 42000m
+                        },
+                        new
+                        {
+                            ID = 88,
+                            CategoriaId = 4,
+                            Descripcion = "Increíble diseño en campera Vans Ultra. Una elección perfecta para quienes buscan estilo y rendimiento. Fabricación de alta calidad pensada para hombre.",
+                            Genero = "Hombre",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 6,
+                            Nombre = "Campera Vans Ultra Serie 1",
+                            Precio = 31000m
+                        },
+                        new
+                        {
+                            ID = 89,
+                            CategoriaId = 4,
+                            Descripcion = "Increíble diseño en campera Vans Sport. Una elección perfecta para quienes buscan estilo y rendimiento. Fabricación de alta calidad pensada para mujer.",
+                            Genero = "Mujer",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 6,
+                            Nombre = "Campera Vans Sport Serie 2",
+                            Precio = 27000m
+                        },
+                        new
+                        {
+                            ID = 90,
+                            CategoriaId = 4,
+                            Descripcion = "Descubre el confort absoluto con este modelo de Vans. Su diseño exclusivo aporta frescura y libertad de movimiento, ideal para el día a día.",
+                            Genero = "Unisex",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 6,
+                            Nombre = "Campera Vans Classic Serie 3",
+                            Precio = 21000m
+                        },
+                        new
+                        {
+                            ID = 91,
+                            CategoriaId = 4,
+                            Descripcion = "Descubre el confort absoluto con este modelo de Adidas-Classic. Su diseño exclusivo aporta frescura y libertad de movimiento, ideal para el día a día.",
+                            Genero = "Hombre",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 7,
+                            Nombre = "Campera Adidas-Classic Urban Serie 1",
+                            Precio = 78000m
+                        },
+                        new
+                        {
+                            ID = 92,
+                            CategoriaId = 4,
+                            Descripcion = "Increíble diseño en campera Adidas-Classic Sport. Una elección perfecta para quienes buscan estilo y rendimiento. Fabricación de alta calidad pensada para mujer.",
+                            Genero = "Mujer",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 7,
+                            Nombre = "Campera Adidas-Classic Sport Serie 2",
+                            Precio = 51000m
+                        },
+                        new
+                        {
+                            ID = 93,
+                            CategoriaId = 4,
+                            Descripcion = "Descubre el confort absoluto con este modelo de Adidas-Classic. Su diseño exclusivo aporta frescura y libertad de movimiento, ideal para el día a día.",
+                            Genero = "Unisex",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 7,
+                            Nombre = "Campera Adidas-Classic Elite Serie 3",
+                            Precio = 57000m
+                        },
+                        new
+                        {
+                            ID = 94,
+                            CategoriaId = 4,
+                            Descripcion = "Supera tus límites con lo nuevo en campera Under-Armour. Pensado especialmente para hombre, ofrece una durabilidad excepcional en cada uso gracias a su tecnología Essential.",
+                            Genero = "Hombre",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 8,
+                            Nombre = "Campera Under-Armour Essential Serie 1",
+                            Precio = 93000m
+                        },
+                        new
+                        {
+                            ID = 95,
+                            CategoriaId = 4,
+                            Descripcion = "Un clásico renovado. La nueva colección de Under-Armour destaca por su corte ergonómico y tecnología de punta, brindando un ajuste perfecto.",
+                            Genero = "Mujer",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 8,
+                            Nombre = "Campera Under-Armour Classic Serie 2",
+                            Precio = 50000m
+                        },
+                        new
+                        {
+                            ID = 96,
+                            CategoriaId = 4,
+                            Descripcion = "Increíble diseño en campera Under-Armour Ultra. Una elección perfecta para quienes buscan estilo y rendimiento. Fabricación de alta calidad pensada para unisex.",
+                            Genero = "Unisex",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 8,
+                            Nombre = "Campera Under-Armour Ultra Serie 3",
+                            Precio = 80000m
+                        },
+                        new
+                        {
+                            ID = 97,
+                            CategoriaId = 5,
+                            Descripcion = "Supera tus límites con lo nuevo en zapatilla Nike. Pensado especialmente para hombre, ofrece una durabilidad excepcional en cada uso gracias a su tecnología Classic.",
+                            Genero = "Hombre",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 1,
+                            Nombre = "Zapatilla Nike Classic Serie 1",
+                            Precio = 46000m
+                        },
+                        new
+                        {
+                            ID = 98,
+                            CategoriaId = 5,
+                            Descripcion = "Lleva tu estilo urbano al siguiente nivel. Confección premium y detalles únicos hacen de este modelo de Elite una pieza indispensable en tu guardarropa.",
+                            Genero = "Mujer",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 1,
+                            Nombre = "Zapatilla Nike Elite Serie 2",
+                            Precio = 19000m
+                        },
+                        new
+                        {
+                            ID = 99,
+                            CategoriaId = 5,
+                            Descripcion = "Increíble diseño en zapatilla Nike Essential. Una elección perfecta para quienes buscan estilo y rendimiento. Fabricación de alta calidad pensada para unisex.",
+                            Genero = "Unisex",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 1,
+                            Nombre = "Zapatilla Nike Essential Serie 3",
+                            Precio = 97000m
+                        },
+                        new
+                        {
+                            ID = 100,
+                            CategoriaId = 5,
+                            Descripcion = "Lleva tu estilo urbano al siguiente nivel. Confección premium y detalles únicos hacen de este modelo de Max una pieza indispensable en tu guardarropa.",
+                            Genero = "Hombre",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 2,
+                            Nombre = "Zapatilla Adidas Max Serie 1",
+                            Precio = 77000m
+                        },
+                        new
+                        {
+                            ID = 101,
+                            CategoriaId = 5,
+                            Descripcion = "Supera tus límites con lo nuevo en zapatilla Adidas. Pensado especialmente para mujer, ofrece una durabilidad excepcional en cada uso gracias a su tecnología Elite.",
+                            Genero = "Mujer",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 2,
+                            Nombre = "Zapatilla Adidas Elite Serie 2",
+                            Precio = 26000m
+                        },
+                        new
+                        {
+                            ID = 102,
+                            CategoriaId = 5,
+                            Descripcion = "Increíble diseño en zapatilla Adidas Essential. Una elección perfecta para quienes buscan estilo y rendimiento. Fabricación de alta calidad pensada para unisex.",
+                            Genero = "Unisex",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 2,
+                            Nombre = "Zapatilla Adidas Essential Serie 3",
+                            Precio = 65000m
+                        },
+                        new
+                        {
+                            ID = 103,
+                            CategoriaId = 5,
+                            Descripcion = "Supera tus límites con lo nuevo en zapatilla Puma. Pensado especialmente para hombre, ofrece una durabilidad excepcional en cada uso gracias a su tecnología Urban.",
+                            Genero = "Hombre",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 3,
+                            Nombre = "Zapatilla Puma Urban Serie 1",
+                            Precio = 21000m
+                        },
+                        new
+                        {
+                            ID = 104,
+                            CategoriaId = 5,
+                            Descripcion = "Un clásico renovado. La nueva colección de Puma destaca por su corte ergonómico y tecnología de punta, brindando un ajuste perfecto.",
+                            Genero = "Mujer",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 3,
+                            Nombre = "Zapatilla Puma Essential Serie 2",
+                            Precio = 73000m
+                        },
+                        new
+                        {
+                            ID = 105,
+                            CategoriaId = 5,
+                            Descripcion = "Lleva tu estilo urbano al siguiente nivel. Confección premium y detalles únicos hacen de este modelo de Sport una pieza indispensable en tu guardarropa.",
+                            Genero = "Unisex",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 3,
+                            Nombre = "Zapatilla Puma Sport Serie 3",
+                            Precio = 58000m
+                        },
+                        new
+                        {
+                            ID = 106,
+                            CategoriaId = 5,
+                            Descripcion = "Supera tus límites con lo nuevo en zapatilla Reebok. Pensado especialmente para hombre, ofrece una durabilidad excepcional en cada uso gracias a su tecnología Ultra.",
+                            Genero = "Hombre",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 4,
+                            Nombre = "Zapatilla Reebok Ultra Serie 1",
+                            Precio = 66000m
+                        },
+                        new
+                        {
+                            ID = 107,
+                            CategoriaId = 5,
+                            Descripcion = "Un clásico renovado. La nueva colección de Reebok destaca por su corte ergonómico y tecnología de punta, brindando un ajuste perfecto.",
+                            Genero = "Mujer",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 4,
+                            Nombre = "Zapatilla Reebok Urban Serie 2",
+                            Precio = 50000m
+                        },
+                        new
+                        {
+                            ID = 108,
+                            CategoriaId = 5,
+                            Descripcion = "Increíble diseño en zapatilla Reebok Ultra. Una elección perfecta para quienes buscan estilo y rendimiento. Fabricación de alta calidad pensada para unisex.",
+                            Genero = "Unisex",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 4,
+                            Nombre = "Zapatilla Reebok Ultra Serie 3",
+                            Precio = 96000m
+                        },
+                        new
+                        {
+                            ID = 109,
+                            CategoriaId = 5,
+                            Descripcion = "Descubre el confort absoluto con este modelo de Dc. Su diseño exclusivo aporta frescura y libertad de movimiento, ideal para el día a día.",
+                            Genero = "Hombre",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 5,
+                            Nombre = "Zapatilla Dc Max Serie 1",
+                            Precio = 89000m
+                        },
+                        new
+                        {
+                            ID = 110,
+                            CategoriaId = 5,
+                            Descripcion = "Lleva tu estilo urbano al siguiente nivel. Confección premium y detalles únicos hacen de este modelo de Sport una pieza indispensable en tu guardarropa.",
+                            Genero = "Mujer",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 5,
+                            Nombre = "Zapatilla Dc Sport Serie 2",
+                            Precio = 43000m
+                        },
+                        new
+                        {
+                            ID = 111,
+                            CategoriaId = 5,
+                            Descripcion = "Supera tus límites con lo nuevo en zapatilla Dc. Pensado especialmente para unisex, ofrece una durabilidad excepcional en cada uso gracias a su tecnología Ultra.",
+                            Genero = "Unisex",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 5,
+                            Nombre = "Zapatilla Dc Ultra Serie 3",
+                            Precio = 93000m
+                        },
+                        new
+                        {
+                            ID = 112,
+                            CategoriaId = 5,
+                            Descripcion = "Descubre el confort absoluto con este modelo de Vans. Su diseño exclusivo aporta frescura y libertad de movimiento, ideal para el día a día.",
+                            Genero = "Hombre",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 6,
+                            Nombre = "Zapatilla Vans Ultra Serie 1",
+                            Precio = 49000m
+                        },
+                        new
+                        {
+                            ID = 113,
+                            CategoriaId = 5,
+                            Descripcion = "Un clásico renovado. La nueva colección de Vans destaca por su corte ergonómico y tecnología de punta, brindando un ajuste perfecto.",
+                            Genero = "Mujer",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 6,
+                            Nombre = "Zapatilla Vans Retro Serie 2",
+                            Precio = 16000m
+                        },
+                        new
+                        {
+                            ID = 114,
+                            CategoriaId = 5,
+                            Descripcion = "Supera tus límites con lo nuevo en zapatilla Vans. Pensado especialmente para unisex, ofrece una durabilidad excepcional en cada uso gracias a su tecnología Max.",
+                            Genero = "Unisex",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 6,
+                            Nombre = "Zapatilla Vans Max Serie 3",
+                            Precio = 58000m
+                        },
+                        new
+                        {
+                            ID = 115,
+                            CategoriaId = 5,
+                            Descripcion = "Un clásico renovado. La nueva colección de Adidas-Classic destaca por su corte ergonómico y tecnología de punta, brindando un ajuste perfecto.",
+                            Genero = "Hombre",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 7,
+                            Nombre = "Zapatilla Adidas-Classic Max Serie 1",
+                            Precio = 61000m
+                        },
+                        new
+                        {
+                            ID = 116,
+                            CategoriaId = 5,
+                            Descripcion = "Un clásico renovado. La nueva colección de Adidas-Classic destaca por su corte ergonómico y tecnología de punta, brindando un ajuste perfecto.",
+                            Genero = "Mujer",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 7,
+                            Nombre = "Zapatilla Adidas-Classic Essential Serie 2",
+                            Precio = 83000m
+                        },
+                        new
+                        {
+                            ID = 117,
+                            CategoriaId = 5,
+                            Descripcion = "Un clásico renovado. La nueva colección de Adidas-Classic destaca por su corte ergonómico y tecnología de punta, brindando un ajuste perfecto.",
+                            Genero = "Unisex",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 7,
+                            Nombre = "Zapatilla Adidas-Classic Urban Serie 3",
+                            Precio = 27000m
+                        },
+                        new
+                        {
+                            ID = 118,
+                            CategoriaId = 5,
+                            Descripcion = "Descubre el confort absoluto con este modelo de Under-Armour. Su diseño exclusivo aporta frescura y libertad de movimiento, ideal para el día a día.",
+                            Genero = "Hombre",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 8,
+                            Nombre = "Zapatilla Under-Armour Urban Serie 1",
+                            Precio = 67000m
+                        },
+                        new
+                        {
+                            ID = 119,
+                            CategoriaId = 5,
+                            Descripcion = "Supera tus límites con lo nuevo en zapatilla Under-Armour. Pensado especialmente para mujer, ofrece una durabilidad excepcional en cada uso gracias a su tecnología Elite.",
+                            Genero = "Mujer",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 8,
+                            Nombre = "Zapatilla Under-Armour Elite Serie 2",
+                            Precio = 32000m
+                        },
+                        new
+                        {
+                            ID = 120,
+                            CategoriaId = 5,
+                            Descripcion = "Lleva tu estilo urbano al siguiente nivel. Confección premium y detalles únicos hacen de este modelo de Ultra una pieza indispensable en tu guardarropa.",
+                            Genero = "Unisex",
+                            ImagenUrl = "https://placehold.co/600x600",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            MarcaId = 8,
+                            Nombre = "Zapatilla Under-Armour Ultra Serie 3",
+                            Precio = 58000m
+                        });
+                });
+
+            modelBuilder.Entity("Dominio.Entidades.ProductoVariante", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<string>("CodigoBarra")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("ProductoId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Stock")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Talle")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("CodigoBarra")
+                        .IsUnique()
+                        .HasDatabaseName("IX_ProductoVariante_CodigoBarra")
+                        .HasFilter("[IsDeleted] = 0");
+
+                    b.HasIndex("ProductoId", "Talle")
+                        .IsUnique()
+                        .HasDatabaseName("IX_ProductoVariante_ProductoId_Talle")
+                        .HasFilter("[IsDeleted] = 0");
+
+                    b.ToTable("ProductosVariantes");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = 1,
+                            CodigoBarra = "100001",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 1,
+                            Stock = 0,
+                            Talle = "XL"
+                        },
+                        new
+                        {
+                            ID = 2,
+                            CodigoBarra = "100002",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 1,
+                            Stock = 0,
                             Talle = "L"
                         },
                         new
                         {
                             ID = 3,
-                            CategoriaId = 8,
-                            CodigoBarra = 976898,
-                            Descripcion = "Campera 100 % Algodon, con tecnologia AdiFreeIce, ideal para cualquier epoca de el año",
-                            ImagenUrl = "https://placehold.co/603x403",
+                            CodigoBarra = "100003",
                             IsDeleted = false,
                             IsEnabled = false,
-                            MarcaId = 2,
-                            Nombre = "Campera River Plate Retro",
-                            Precio = 300000.00m,
+                            ProductoId = 1,
+                            Stock = 21,
+                            Talle = "S"
+                        },
+                        new
+                        {
+                            ID = 4,
+                            CodigoBarra = "100004",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 2,
+                            Stock = 36,
+                            Talle = "S"
+                        },
+                        new
+                        {
+                            ID = 5,
+                            CodigoBarra = "100005",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 3,
+                            Stock = 41,
+                            Talle = "L"
+                        },
+                        new
+                        {
+                            ID = 6,
+                            CodigoBarra = "100006",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 4,
+                            Stock = 21,
+                            Talle = "XS"
+                        },
+                        new
+                        {
+                            ID = 7,
+                            CodigoBarra = "100007",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 4,
+                            Stock = 26,
+                            Talle = "M"
+                        },
+                        new
+                        {
+                            ID = 8,
+                            CodigoBarra = "100008",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 4,
+                            Stock = 8,
+                            Talle = "S"
+                        },
+                        new
+                        {
+                            ID = 9,
+                            CodigoBarra = "100009",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 5,
+                            Stock = 18,
+                            Talle = "L"
+                        },
+                        new
+                        {
+                            ID = 10,
+                            CodigoBarra = "100010",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 5,
+                            Stock = 30,
+                            Talle = "M"
+                        },
+                        new
+                        {
+                            ID = 11,
+                            CodigoBarra = "100011",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 6,
+                            Stock = 12,
+                            Talle = "L"
+                        },
+                        new
+                        {
+                            ID = 12,
+                            CodigoBarra = "100012",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 6,
+                            Stock = 9,
+                            Talle = "M"
+                        },
+                        new
+                        {
+                            ID = 13,
+                            CodigoBarra = "100013",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 6,
+                            Stock = 14,
+                            Talle = "XL"
+                        },
+                        new
+                        {
+                            ID = 14,
+                            CodigoBarra = "100014",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 7,
+                            Stock = 34,
+                            Talle = "M"
+                        },
+                        new
+                        {
+                            ID = 15,
+                            CodigoBarra = "100015",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 8,
+                            Stock = 1,
+                            Talle = "S"
+                        },
+                        new
+                        {
+                            ID = 16,
+                            CodigoBarra = "100016",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 8,
+                            Stock = 9,
+                            Talle = "XL"
+                        },
+                        new
+                        {
+                            ID = 17,
+                            CodigoBarra = "100017",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 8,
+                            Stock = 0,
+                            Talle = "L"
+                        },
+                        new
+                        {
+                            ID = 18,
+                            CodigoBarra = "100018",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 9,
+                            Stock = 27,
+                            Talle = "L"
+                        },
+                        new
+                        {
+                            ID = 19,
+                            CodigoBarra = "100019",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 10,
+                            Stock = 0,
+                            Talle = "L"
+                        },
+                        new
+                        {
+                            ID = 20,
+                            CodigoBarra = "100020",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 11,
+                            Stock = 39,
+                            Talle = "XS"
+                        },
+                        new
+                        {
+                            ID = 21,
+                            CodigoBarra = "100021",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 11,
+                            Stock = 3,
+                            Talle = "XL"
+                        },
+                        new
+                        {
+                            ID = 22,
+                            CodigoBarra = "100022",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 11,
+                            Stock = 49,
+                            Talle = "S"
+                        },
+                        new
+                        {
+                            ID = 23,
+                            CodigoBarra = "100023",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 12,
+                            Stock = 0,
+                            Talle = "S"
+                        },
+                        new
+                        {
+                            ID = 24,
+                            CodigoBarra = "100024",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 12,
+                            Stock = 46,
+                            Talle = "XL"
+                        },
+                        new
+                        {
+                            ID = 25,
+                            CodigoBarra = "100025",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 12,
+                            Stock = 23,
+                            Talle = "M"
+                        },
+                        new
+                        {
+                            ID = 26,
+                            CodigoBarra = "100026",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 13,
+                            Stock = 0,
+                            Talle = "M"
+                        },
+                        new
+                        {
+                            ID = 27,
+                            CodigoBarra = "100027",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 13,
+                            Stock = 23,
+                            Talle = "XS"
+                        },
+                        new
+                        {
+                            ID = 28,
+                            CodigoBarra = "100028",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 13,
+                            Stock = 6,
+                            Talle = "L"
+                        },
+                        new
+                        {
+                            ID = 29,
+                            CodigoBarra = "100029",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 14,
+                            Stock = 28,
+                            Talle = "L"
+                        },
+                        new
+                        {
+                            ID = 30,
+                            CodigoBarra = "100030",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 14,
+                            Stock = 24,
+                            Talle = "S"
+                        },
+                        new
+                        {
+                            ID = 31,
+                            CodigoBarra = "100031",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 15,
+                            Stock = 0,
+                            Talle = "L"
+                        },
+                        new
+                        {
+                            ID = 32,
+                            CodigoBarra = "100032",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 15,
+                            Stock = 21,
+                            Talle = "S"
+                        },
+                        new
+                        {
+                            ID = 33,
+                            CodigoBarra = "100033",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 16,
+                            Stock = 26,
+                            Talle = "S"
+                        },
+                        new
+                        {
+                            ID = 34,
+                            CodigoBarra = "100034",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 17,
+                            Stock = 27,
+                            Talle = "XS"
+                        },
+                        new
+                        {
+                            ID = 35,
+                            CodigoBarra = "100035",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 18,
+                            Stock = 3,
+                            Talle = "XL"
+                        },
+                        new
+                        {
+                            ID = 36,
+                            CodigoBarra = "100036",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 18,
+                            Stock = 7,
+                            Talle = "M"
+                        },
+                        new
+                        {
+                            ID = 37,
+                            CodigoBarra = "100037",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 19,
+                            Stock = 0,
+                            Talle = "XL"
+                        },
+                        new
+                        {
+                            ID = 38,
+                            CodigoBarra = "100038",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 20,
+                            Stock = 40,
+                            Talle = "M"
+                        },
+                        new
+                        {
+                            ID = 39,
+                            CodigoBarra = "100039",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 21,
+                            Stock = 25,
+                            Talle = "M"
+                        },
+                        new
+                        {
+                            ID = 40,
+                            CodigoBarra = "100040",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 21,
+                            Stock = 0,
+                            Talle = "L"
+                        },
+                        new
+                        {
+                            ID = 41,
+                            CodigoBarra = "100041",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 21,
+                            Stock = 12,
+                            Talle = "XS"
+                        },
+                        new
+                        {
+                            ID = 42,
+                            CodigoBarra = "100042",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 22,
+                            Stock = 0,
+                            Talle = "XL"
+                        },
+                        new
+                        {
+                            ID = 43,
+                            CodigoBarra = "100043",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 22,
+                            Stock = 32,
+                            Talle = "M"
+                        },
+                        new
+                        {
+                            ID = 44,
+                            CodigoBarra = "100044",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 23,
+                            Stock = 32,
+                            Talle = "XS"
+                        },
+                        new
+                        {
+                            ID = 45,
+                            CodigoBarra = "100045",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 24,
+                            Stock = 29,
+                            Talle = "XS"
+                        },
+                        new
+                        {
+                            ID = 46,
+                            CodigoBarra = "100046",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 24,
+                            Stock = 1,
+                            Talle = "XL"
+                        },
+                        new
+                        {
+                            ID = 47,
+                            CodigoBarra = "100047",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 24,
+                            Stock = 26,
+                            Talle = "S"
+                        },
+                        new
+                        {
+                            ID = 48,
+                            CodigoBarra = "100048",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 25,
+                            Stock = 22,
+                            Talle = "L"
+                        },
+                        new
+                        {
+                            ID = 49,
+                            CodigoBarra = "100049",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 25,
+                            Stock = 1,
+                            Talle = "S"
+                        },
+                        new
+                        {
+                            ID = 50,
+                            CodigoBarra = "100050",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 26,
+                            Stock = 42,
+                            Talle = "M"
+                        },
+                        new
+                        {
+                            ID = 51,
+                            CodigoBarra = "100051",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 27,
+                            Stock = 0,
+                            Talle = "M"
+                        },
+                        new
+                        {
+                            ID = 52,
+                            CodigoBarra = "100052",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 27,
+                            Stock = 25,
+                            Talle = "L"
+                        },
+                        new
+                        {
+                            ID = 53,
+                            CodigoBarra = "100053",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 28,
+                            Stock = 9,
+                            Talle = "M"
+                        },
+                        new
+                        {
+                            ID = 54,
+                            CodigoBarra = "100054",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 29,
+                            Stock = 12,
+                            Talle = "S"
+                        },
+                        new
+                        {
+                            ID = 55,
+                            CodigoBarra = "100055",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 29,
+                            Stock = 9,
+                            Talle = "M"
+                        },
+                        new
+                        {
+                            ID = 56,
+                            CodigoBarra = "100056",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 30,
+                            Stock = 21,
+                            Talle = "L"
+                        },
+                        new
+                        {
+                            ID = 57,
+                            CodigoBarra = "100057",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 31,
+                            Stock = 13,
+                            Talle = "M"
+                        },
+                        new
+                        {
+                            ID = 58,
+                            CodigoBarra = "100058",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 32,
+                            Stock = 0,
+                            Talle = "L"
+                        },
+                        new
+                        {
+                            ID = 59,
+                            CodigoBarra = "100059",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 32,
+                            Stock = 0,
+                            Talle = "XL"
+                        },
+                        new
+                        {
+                            ID = 60,
+                            CodigoBarra = "100060",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 33,
+                            Stock = 0,
+                            Talle = "XS"
+                        },
+                        new
+                        {
+                            ID = 61,
+                            CodigoBarra = "100061",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 34,
+                            Stock = 21,
+                            Talle = "XS"
+                        },
+                        new
+                        {
+                            ID = 62,
+                            CodigoBarra = "100062",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 34,
+                            Stock = 2,
+                            Talle = "S"
+                        },
+                        new
+                        {
+                            ID = 63,
+                            CodigoBarra = "100063",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 34,
+                            Stock = 12,
+                            Talle = "M"
+                        },
+                        new
+                        {
+                            ID = 64,
+                            CodigoBarra = "100064",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 35,
+                            Stock = 49,
+                            Talle = "S"
+                        },
+                        new
+                        {
+                            ID = 65,
+                            CodigoBarra = "100065",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 35,
+                            Stock = 20,
+                            Talle = "M"
+                        },
+                        new
+                        {
+                            ID = 66,
+                            CodigoBarra = "100066",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 36,
+                            Stock = 0,
+                            Talle = "XS"
+                        },
+                        new
+                        {
+                            ID = 67,
+                            CodigoBarra = "100067",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 36,
+                            Stock = 35,
+                            Talle = "S"
+                        },
+                        new
+                        {
+                            ID = 68,
+                            CodigoBarra = "100068",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 36,
+                            Stock = 42,
+                            Talle = "M"
+                        },
+                        new
+                        {
+                            ID = 69,
+                            CodigoBarra = "100069",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 37,
+                            Stock = 13,
+                            Talle = "XS"
+                        },
+                        new
+                        {
+                            ID = 70,
+                            CodigoBarra = "100070",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 37,
+                            Stock = 4,
+                            Talle = "L"
+                        },
+                        new
+                        {
+                            ID = 71,
+                            CodigoBarra = "100071",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 38,
+                            Stock = 38,
+                            Talle = "XL"
+                        },
+                        new
+                        {
+                            ID = 72,
+                            CodigoBarra = "100072",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 38,
+                            Stock = 20,
+                            Talle = "L"
+                        },
+                        new
+                        {
+                            ID = 73,
+                            CodigoBarra = "100073",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 38,
+                            Stock = 0,
+                            Talle = "XS"
+                        },
+                        new
+                        {
+                            ID = 74,
+                            CodigoBarra = "100074",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 39,
+                            Stock = 1,
+                            Talle = "XS"
+                        },
+                        new
+                        {
+                            ID = 75,
+                            CodigoBarra = "100075",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 39,
+                            Stock = 0,
+                            Talle = "S"
+                        },
+                        new
+                        {
+                            ID = 76,
+                            CodigoBarra = "100076",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 40,
+                            Stock = 18,
+                            Talle = "S"
+                        },
+                        new
+                        {
+                            ID = 77,
+                            CodigoBarra = "100077",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 40,
+                            Stock = 0,
+                            Talle = "XL"
+                        },
+                        new
+                        {
+                            ID = 78,
+                            CodigoBarra = "100078",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 41,
+                            Stock = 12,
+                            Talle = "XL"
+                        },
+                        new
+                        {
+                            ID = 79,
+                            CodigoBarra = "100079",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 42,
+                            Stock = 0,
+                            Talle = "XS"
+                        },
+                        new
+                        {
+                            ID = 80,
+                            CodigoBarra = "100080",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 42,
+                            Stock = 6,
+                            Talle = "S"
+                        },
+                        new
+                        {
+                            ID = 81,
+                            CodigoBarra = "100081",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 42,
+                            Stock = 0,
+                            Talle = "XL"
+                        },
+                        new
+                        {
+                            ID = 82,
+                            CodigoBarra = "100082",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 43,
+                            Stock = 0,
+                            Talle = "S"
+                        },
+                        new
+                        {
+                            ID = 83,
+                            CodigoBarra = "100083",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 44,
+                            Stock = 22,
+                            Talle = "XL"
+                        },
+                        new
+                        {
+                            ID = 84,
+                            CodigoBarra = "100084",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 44,
+                            Stock = 23,
+                            Talle = "S"
+                        },
+                        new
+                        {
+                            ID = 85,
+                            CodigoBarra = "100085",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 45,
+                            Stock = 46,
+                            Talle = "M"
+                        },
+                        new
+                        {
+                            ID = 86,
+                            CodigoBarra = "100086",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 46,
+                            Stock = 38,
+                            Talle = "L"
+                        },
+                        new
+                        {
+                            ID = 87,
+                            CodigoBarra = "100087",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 46,
+                            Stock = 0,
+                            Talle = "S"
+                        },
+                        new
+                        {
+                            ID = 88,
+                            CodigoBarra = "100088",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 47,
+                            Stock = 0,
+                            Talle = "S"
+                        },
+                        new
+                        {
+                            ID = 89,
+                            CodigoBarra = "100089",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 48,
+                            Stock = 48,
+                            Talle = "XL"
+                        },
+                        new
+                        {
+                            ID = 90,
+                            CodigoBarra = "100090",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 48,
+                            Stock = 38,
+                            Talle = "S"
+                        },
+                        new
+                        {
+                            ID = 91,
+                            CodigoBarra = "100091",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 48,
+                            Stock = 6,
+                            Talle = "XS"
+                        },
+                        new
+                        {
+                            ID = 92,
+                            CodigoBarra = "100092",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 49,
+                            Stock = 18,
+                            Talle = "XS"
+                        },
+                        new
+                        {
+                            ID = 93,
+                            CodigoBarra = "100093",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 49,
+                            Stock = 35,
+                            Talle = "XL"
+                        },
+                        new
+                        {
+                            ID = 94,
+                            CodigoBarra = "100094",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 49,
+                            Stock = 20,
+                            Talle = "M"
+                        },
+                        new
+                        {
+                            ID = 95,
+                            CodigoBarra = "100095",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 50,
+                            Stock = 45,
+                            Talle = "L"
+                        },
+                        new
+                        {
+                            ID = 96,
+                            CodigoBarra = "100096",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 50,
+                            Stock = 0,
+                            Talle = "M"
+                        },
+                        new
+                        {
+                            ID = 97,
+                            CodigoBarra = "100097",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 50,
+                            Stock = 0,
+                            Talle = "XL"
+                        },
+                        new
+                        {
+                            ID = 98,
+                            CodigoBarra = "100098",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 51,
+                            Stock = 44,
+                            Talle = "XS"
+                        },
+                        new
+                        {
+                            ID = 99,
+                            CodigoBarra = "100099",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 51,
+                            Stock = 0,
+                            Talle = "XL"
+                        },
+                        new
+                        {
+                            ID = 100,
+                            CodigoBarra = "100100",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 52,
+                            Stock = 15,
+                            Talle = "XS"
+                        },
+                        new
+                        {
+                            ID = 101,
+                            CodigoBarra = "100101",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 52,
+                            Stock = 46,
+                            Talle = "L"
+                        },
+                        new
+                        {
+                            ID = 102,
+                            CodigoBarra = "100102",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 53,
+                            Stock = 5,
+                            Talle = "S"
+                        },
+                        new
+                        {
+                            ID = 103,
+                            CodigoBarra = "100103",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 54,
+                            Stock = 32,
+                            Talle = "XL"
+                        },
+                        new
+                        {
+                            ID = 104,
+                            CodigoBarra = "100104",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 54,
+                            Stock = 33,
+                            Talle = "M"
+                        },
+                        new
+                        {
+                            ID = 105,
+                            CodigoBarra = "100105",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 54,
+                            Stock = 0,
+                            Talle = "S"
+                        },
+                        new
+                        {
+                            ID = 106,
+                            CodigoBarra = "100106",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 55,
+                            Stock = 3,
+                            Talle = "XS"
+                        },
+                        new
+                        {
+                            ID = 107,
+                            CodigoBarra = "100107",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 56,
+                            Stock = 45,
+                            Talle = "XL"
+                        },
+                        new
+                        {
+                            ID = 108,
+                            CodigoBarra = "100108",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 57,
+                            Stock = 40,
+                            Talle = "S"
+                        },
+                        new
+                        {
+                            ID = 109,
+                            CodigoBarra = "100109",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 58,
+                            Stock = 5,
+                            Talle = "XL"
+                        },
+                        new
+                        {
+                            ID = 110,
+                            CodigoBarra = "100110",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 59,
+                            Stock = 39,
+                            Talle = "XS"
+                        },
+                        new
+                        {
+                            ID = 111,
+                            CodigoBarra = "100111",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 60,
+                            Stock = 8,
+                            Talle = "XL"
+                        },
+                        new
+                        {
+                            ID = 112,
+                            CodigoBarra = "100112",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 60,
+                            Stock = 0,
+                            Talle = "M"
+                        },
+                        new
+                        {
+                            ID = 113,
+                            CodigoBarra = "100113",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 61,
+                            Stock = 41,
+                            Talle = "S"
+                        },
+                        new
+                        {
+                            ID = 114,
+                            CodigoBarra = "100114",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 62,
+                            Stock = 0,
+                            Talle = "XS"
+                        },
+                        new
+                        {
+                            ID = 115,
+                            CodigoBarra = "100115",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 62,
+                            Stock = 40,
+                            Talle = "L"
+                        },
+                        new
+                        {
+                            ID = 116,
+                            CodigoBarra = "100116",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 62,
+                            Stock = 7,
+                            Talle = "XL"
+                        },
+                        new
+                        {
+                            ID = 117,
+                            CodigoBarra = "100117",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 63,
+                            Stock = 0,
+                            Talle = "L"
+                        },
+                        new
+                        {
+                            ID = 118,
+                            CodigoBarra = "100118",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 63,
+                            Stock = 4,
+                            Talle = "XS"
+                        },
+                        new
+                        {
+                            ID = 119,
+                            CodigoBarra = "100119",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 63,
+                            Stock = 0,
+                            Talle = "XL"
+                        },
+                        new
+                        {
+                            ID = 120,
+                            CodigoBarra = "100120",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 64,
+                            Stock = 9,
+                            Talle = "M"
+                        },
+                        new
+                        {
+                            ID = 121,
+                            CodigoBarra = "100121",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 64,
+                            Stock = 10,
+                            Talle = "L"
+                        },
+                        new
+                        {
+                            ID = 122,
+                            CodigoBarra = "100122",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 64,
+                            Stock = 49,
+                            Talle = "XS"
+                        },
+                        new
+                        {
+                            ID = 123,
+                            CodigoBarra = "100123",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 65,
+                            Stock = 42,
+                            Talle = "XL"
+                        },
+                        new
+                        {
+                            ID = 124,
+                            CodigoBarra = "100124",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 66,
+                            Stock = 40,
+                            Talle = "XS"
+                        },
+                        new
+                        {
+                            ID = 125,
+                            CodigoBarra = "100125",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 66,
+                            Stock = 0,
+                            Talle = "L"
+                        },
+                        new
+                        {
+                            ID = 126,
+                            CodigoBarra = "100126",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 66,
+                            Stock = 0,
+                            Talle = "S"
+                        },
+                        new
+                        {
+                            ID = 127,
+                            CodigoBarra = "100127",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 67,
+                            Stock = 0,
+                            Talle = "L"
+                        },
+                        new
+                        {
+                            ID = 128,
+                            CodigoBarra = "100128",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 67,
+                            Stock = 13,
+                            Talle = "S"
+                        },
+                        new
+                        {
+                            ID = 129,
+                            CodigoBarra = "100129",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 67,
+                            Stock = 0,
+                            Talle = "M"
+                        },
+                        new
+                        {
+                            ID = 130,
+                            CodigoBarra = "100130",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 68,
+                            Stock = 0,
+                            Talle = "S"
+                        },
+                        new
+                        {
+                            ID = 131,
+                            CodigoBarra = "100131",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 68,
+                            Stock = 0,
+                            Talle = "XS"
+                        },
+                        new
+                        {
+                            ID = 132,
+                            CodigoBarra = "100132",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 69,
+                            Stock = 45,
+                            Talle = "L"
+                        },
+                        new
+                        {
+                            ID = 133,
+                            CodigoBarra = "100133",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 69,
+                            Stock = 1,
+                            Talle = "XL"
+                        },
+                        new
+                        {
+                            ID = 134,
+                            CodigoBarra = "100134",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 70,
+                            Stock = 41,
+                            Talle = "XS"
+                        },
+                        new
+                        {
+                            ID = 135,
+                            CodigoBarra = "100135",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 70,
+                            Stock = 12,
+                            Talle = "XL"
+                        },
+                        new
+                        {
+                            ID = 136,
+                            CodigoBarra = "100136",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 71,
+                            Stock = 0,
+                            Talle = "L"
+                        },
+                        new
+                        {
+                            ID = 137,
+                            CodigoBarra = "100137",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 72,
+                            Stock = 15,
+                            Talle = "S"
+                        },
+                        new
+                        {
+                            ID = 138,
+                            CodigoBarra = "100138",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 72,
+                            Stock = 25,
+                            Talle = "M"
+                        },
+                        new
+                        {
+                            ID = 139,
+                            CodigoBarra = "100139",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 73,
+                            Stock = 0,
+                            Talle = "S"
+                        },
+                        new
+                        {
+                            ID = 140,
+                            CodigoBarra = "100140",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 73,
+                            Stock = 6,
+                            Talle = "XL"
+                        },
+                        new
+                        {
+                            ID = 141,
+                            CodigoBarra = "100141",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 73,
+                            Stock = 46,
+                            Talle = "L"
+                        },
+                        new
+                        {
+                            ID = 142,
+                            CodigoBarra = "100142",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 74,
+                            Stock = 6,
+                            Talle = "XS"
+                        },
+                        new
+                        {
+                            ID = 143,
+                            CodigoBarra = "100143",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 75,
+                            Stock = 31,
+                            Talle = "XL"
+                        },
+                        new
+                        {
+                            ID = 144,
+                            CodigoBarra = "100144",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 75,
+                            Stock = 39,
+                            Talle = "XS"
+                        },
+                        new
+                        {
+                            ID = 145,
+                            CodigoBarra = "100145",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 76,
+                            Stock = 0,
+                            Talle = "L"
+                        },
+                        new
+                        {
+                            ID = 146,
+                            CodigoBarra = "100146",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 76,
+                            Stock = 35,
+                            Talle = "S"
+                        },
+                        new
+                        {
+                            ID = 147,
+                            CodigoBarra = "100147",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 77,
+                            Stock = 14,
+                            Talle = "S"
+                        },
+                        new
+                        {
+                            ID = 148,
+                            CodigoBarra = "100148",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 78,
+                            Stock = 0,
+                            Talle = "XS"
+                        },
+                        new
+                        {
+                            ID = 149,
+                            CodigoBarra = "100149",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 78,
+                            Stock = 0,
+                            Talle = "XL"
+                        },
+                        new
+                        {
+                            ID = 150,
+                            CodigoBarra = "100150",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 79,
+                            Stock = 24,
+                            Talle = "M"
+                        },
+                        new
+                        {
+                            ID = 151,
+                            CodigoBarra = "100151",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 79,
+                            Stock = 37,
+                            Talle = "XL"
+                        },
+                        new
+                        {
+                            ID = 152,
+                            CodigoBarra = "100152",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 79,
+                            Stock = 28,
+                            Talle = "XS"
+                        },
+                        new
+                        {
+                            ID = 153,
+                            CodigoBarra = "100153",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 80,
+                            Stock = 42,
+                            Talle = "S"
+                        },
+                        new
+                        {
+                            ID = 154,
+                            CodigoBarra = "100154",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 80,
+                            Stock = 0,
+                            Talle = "XL"
+                        },
+                        new
+                        {
+                            ID = 155,
+                            CodigoBarra = "100155",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 80,
+                            Stock = 1,
+                            Talle = "L"
+                        },
+                        new
+                        {
+                            ID = 156,
+                            CodigoBarra = "100156",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 81,
+                            Stock = 24,
+                            Talle = "L"
+                        },
+                        new
+                        {
+                            ID = 157,
+                            CodigoBarra = "100157",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 81,
+                            Stock = 10,
+                            Talle = "S"
+                        },
+                        new
+                        {
+                            ID = 158,
+                            CodigoBarra = "100158",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 81,
+                            Stock = 0,
+                            Talle = "M"
+                        },
+                        new
+                        {
+                            ID = 159,
+                            CodigoBarra = "100159",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 82,
+                            Stock = 35,
+                            Talle = "XL"
+                        },
+                        new
+                        {
+                            ID = 160,
+                            CodigoBarra = "100160",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 82,
+                            Stock = 9,
+                            Talle = "S"
+                        },
+                        new
+                        {
+                            ID = 161,
+                            CodigoBarra = "100161",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 83,
+                            Stock = 35,
+                            Talle = "M"
+                        },
+                        new
+                        {
+                            ID = 162,
+                            CodigoBarra = "100162",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 84,
+                            Stock = 18,
+                            Talle = "XS"
+                        },
+                        new
+                        {
+                            ID = 163,
+                            CodigoBarra = "100163",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 84,
+                            Stock = 10,
+                            Talle = "M"
+                        },
+                        new
+                        {
+                            ID = 164,
+                            CodigoBarra = "100164",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 84,
+                            Stock = 33,
+                            Talle = "L"
+                        },
+                        new
+                        {
+                            ID = 165,
+                            CodigoBarra = "100165",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 85,
+                            Stock = 0,
+                            Talle = "L"
+                        },
+                        new
+                        {
+                            ID = 166,
+                            CodigoBarra = "100166",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 86,
+                            Stock = 41,
+                            Talle = "M"
+                        },
+                        new
+                        {
+                            ID = 167,
+                            CodigoBarra = "100167",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 86,
+                            Stock = 3,
+                            Talle = "XS"
+                        },
+                        new
+                        {
+                            ID = 168,
+                            CodigoBarra = "100168",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 87,
+                            Stock = 11,
+                            Talle = "XS"
+                        },
+                        new
+                        {
+                            ID = 169,
+                            CodigoBarra = "100169",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 87,
+                            Stock = 10,
+                            Talle = "XL"
+                        },
+                        new
+                        {
+                            ID = 170,
+                            CodigoBarra = "100170",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 88,
+                            Stock = 0,
+                            Talle = "XL"
+                        },
+                        new
+                        {
+                            ID = 171,
+                            CodigoBarra = "100171",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 88,
+                            Stock = 47,
+                            Talle = "XS"
+                        },
+                        new
+                        {
+                            ID = 172,
+                            CodigoBarra = "100172",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 89,
+                            Stock = 49,
+                            Talle = "S"
+                        },
+                        new
+                        {
+                            ID = 173,
+                            CodigoBarra = "100173",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 89,
+                            Stock = 24,
+                            Talle = "L"
+                        },
+                        new
+                        {
+                            ID = 174,
+                            CodigoBarra = "100174",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 90,
+                            Stock = 0,
+                            Talle = "XL"
+                        },
+                        new
+                        {
+                            ID = 175,
+                            CodigoBarra = "100175",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 90,
+                            Stock = 10,
+                            Talle = "S"
+                        },
+                        new
+                        {
+                            ID = 176,
+                            CodigoBarra = "100176",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 90,
+                            Stock = 43,
+                            Talle = "L"
+                        },
+                        new
+                        {
+                            ID = 177,
+                            CodigoBarra = "100177",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 91,
+                            Stock = 15,
+                            Talle = "S"
+                        },
+                        new
+                        {
+                            ID = 178,
+                            CodigoBarra = "100178",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 91,
+                            Stock = 19,
+                            Talle = "XL"
+                        },
+                        new
+                        {
+                            ID = 179,
+                            CodigoBarra = "100179",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 92,
+                            Stock = 21,
+                            Talle = "L"
+                        },
+                        new
+                        {
+                            ID = 180,
+                            CodigoBarra = "100180",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 92,
+                            Stock = 19,
+                            Talle = "XL"
+                        },
+                        new
+                        {
+                            ID = 181,
+                            CodigoBarra = "100181",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 93,
+                            Stock = 11,
+                            Talle = "XL"
+                        },
+                        new
+                        {
+                            ID = 182,
+                            CodigoBarra = "100182",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 94,
                             Stock = 15,
                             Talle = "XL"
+                        },
+                        new
+                        {
+                            ID = 183,
+                            CodigoBarra = "100183",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 95,
+                            Stock = 6,
+                            Talle = "XS"
+                        },
+                        new
+                        {
+                            ID = 184,
+                            CodigoBarra = "100184",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 95,
+                            Stock = 1,
+                            Talle = "S"
+                        },
+                        new
+                        {
+                            ID = 185,
+                            CodigoBarra = "100185",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 95,
+                            Stock = 44,
+                            Talle = "M"
+                        },
+                        new
+                        {
+                            ID = 186,
+                            CodigoBarra = "100186",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 96,
+                            Stock = 44,
+                            Talle = "XL"
+                        },
+                        new
+                        {
+                            ID = 187,
+                            CodigoBarra = "100187",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 97,
+                            Stock = 4,
+                            Talle = "XS"
+                        },
+                        new
+                        {
+                            ID = 188,
+                            CodigoBarra = "100188",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 97,
+                            Stock = 0,
+                            Talle = "M"
+                        },
+                        new
+                        {
+                            ID = 189,
+                            CodigoBarra = "100189",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 97,
+                            Stock = 26,
+                            Talle = "XL"
+                        },
+                        new
+                        {
+                            ID = 190,
+                            CodigoBarra = "100190",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 98,
+                            Stock = 0,
+                            Talle = "S"
+                        },
+                        new
+                        {
+                            ID = 191,
+                            CodigoBarra = "100191",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 98,
+                            Stock = 27,
+                            Talle = "L"
+                        },
+                        new
+                        {
+                            ID = 192,
+                            CodigoBarra = "100192",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 98,
+                            Stock = 32,
+                            Talle = "M"
+                        },
+                        new
+                        {
+                            ID = 193,
+                            CodigoBarra = "100193",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 99,
+                            Stock = 32,
+                            Talle = "L"
+                        },
+                        new
+                        {
+                            ID = 194,
+                            CodigoBarra = "100194",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 100,
+                            Stock = 48,
+                            Talle = "XS"
+                        },
+                        new
+                        {
+                            ID = 195,
+                            CodigoBarra = "100195",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 100,
+                            Stock = 5,
+                            Talle = "S"
+                        },
+                        new
+                        {
+                            ID = 196,
+                            CodigoBarra = "100196",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 101,
+                            Stock = 0,
+                            Talle = "M"
+                        },
+                        new
+                        {
+                            ID = 197,
+                            CodigoBarra = "100197",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 101,
+                            Stock = 0,
+                            Talle = "XL"
+                        },
+                        new
+                        {
+                            ID = 198,
+                            CodigoBarra = "100198",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 101,
+                            Stock = 0,
+                            Talle = "L"
+                        },
+                        new
+                        {
+                            ID = 199,
+                            CodigoBarra = "100199",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 102,
+                            Stock = 0,
+                            Talle = "XL"
+                        },
+                        new
+                        {
+                            ID = 200,
+                            CodigoBarra = "100200",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 103,
+                            Stock = 0,
+                            Talle = "XS"
+                        },
+                        new
+                        {
+                            ID = 201,
+                            CodigoBarra = "100201",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 103,
+                            Stock = 6,
+                            Talle = "L"
+                        },
+                        new
+                        {
+                            ID = 202,
+                            CodigoBarra = "100202",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 103,
+                            Stock = 0,
+                            Talle = "XL"
+                        },
+                        new
+                        {
+                            ID = 203,
+                            CodigoBarra = "100203",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 104,
+                            Stock = 0,
+                            Talle = "S"
+                        },
+                        new
+                        {
+                            ID = 204,
+                            CodigoBarra = "100204",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 104,
+                            Stock = 42,
+                            Talle = "L"
+                        },
+                        new
+                        {
+                            ID = 205,
+                            CodigoBarra = "100205",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 105,
+                            Stock = 0,
+                            Talle = "S"
+                        },
+                        new
+                        {
+                            ID = 206,
+                            CodigoBarra = "100206",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 106,
+                            Stock = 17,
+                            Talle = "35"
+                        },
+                        new
+                        {
+                            ID = 207,
+                            CodigoBarra = "100207",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 106,
+                            Stock = 14,
+                            Talle = "44"
+                        },
+                        new
+                        {
+                            ID = 208,
+                            CodigoBarra = "100208",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 106,
+                            Stock = 0,
+                            Talle = "46"
+                        },
+                        new
+                        {
+                            ID = 209,
+                            CodigoBarra = "100209",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 106,
+                            Stock = 30,
+                            Talle = "38"
+                        },
+                        new
+                        {
+                            ID = 210,
+                            CodigoBarra = "100210",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 106,
+                            Stock = 0,
+                            Talle = "43"
+                        },
+                        new
+                        {
+                            ID = 211,
+                            CodigoBarra = "100211",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 107,
+                            Stock = 12,
+                            Talle = "42"
+                        },
+                        new
+                        {
+                            ID = 212,
+                            CodigoBarra = "100212",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 107,
+                            Stock = 49,
+                            Talle = "44"
+                        },
+                        new
+                        {
+                            ID = 213,
+                            CodigoBarra = "100213",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 107,
+                            Stock = 43,
+                            Talle = "46"
+                        },
+                        new
+                        {
+                            ID = 214,
+                            CodigoBarra = "100214",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 107,
+                            Stock = 0,
+                            Talle = "35"
+                        },
+                        new
+                        {
+                            ID = 215,
+                            CodigoBarra = "100215",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 107,
+                            Stock = 0,
+                            Talle = "37"
+                        },
+                        new
+                        {
+                            ID = 216,
+                            CodigoBarra = "100216",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 108,
+                            Stock = 11,
+                            Talle = "44"
+                        },
+                        new
+                        {
+                            ID = 217,
+                            CodigoBarra = "100217",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 108,
+                            Stock = 0,
+                            Talle = "42"
+                        },
+                        new
+                        {
+                            ID = 218,
+                            CodigoBarra = "100218",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 108,
+                            Stock = 10,
+                            Talle = "39"
+                        },
+                        new
+                        {
+                            ID = 219,
+                            CodigoBarra = "100219",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 108,
+                            Stock = 45,
+                            Talle = "45"
+                        },
+                        new
+                        {
+                            ID = 220,
+                            CodigoBarra = "100220",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 108,
+                            Stock = 21,
+                            Talle = "46"
+                        },
+                        new
+                        {
+                            ID = 221,
+                            CodigoBarra = "100221",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 109,
+                            Stock = 28,
+                            Talle = "42"
+                        },
+                        new
+                        {
+                            ID = 222,
+                            CodigoBarra = "100222",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 109,
+                            Stock = 22,
+                            Talle = "39"
+                        },
+                        new
+                        {
+                            ID = 223,
+                            CodigoBarra = "100223",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 109,
+                            Stock = 0,
+                            Talle = "44"
+                        },
+                        new
+                        {
+                            ID = 224,
+                            CodigoBarra = "100224",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 109,
+                            Stock = 32,
+                            Talle = "45"
+                        },
+                        new
+                        {
+                            ID = 225,
+                            CodigoBarra = "100225",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 109,
+                            Stock = 33,
+                            Talle = "34"
+                        },
+                        new
+                        {
+                            ID = 226,
+                            CodigoBarra = "100226",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 110,
+                            Stock = 26,
+                            Talle = "36"
+                        },
+                        new
+                        {
+                            ID = 227,
+                            CodigoBarra = "100227",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 110,
+                            Stock = 13,
+                            Talle = "45"
+                        },
+                        new
+                        {
+                            ID = 228,
+                            CodigoBarra = "100228",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 110,
+                            Stock = 43,
+                            Talle = "41"
+                        },
+                        new
+                        {
+                            ID = 229,
+                            CodigoBarra = "100229",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 110,
+                            Stock = 0,
+                            Talle = "42"
+                        },
+                        new
+                        {
+                            ID = 230,
+                            CodigoBarra = "100230",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 110,
+                            Stock = 11,
+                            Talle = "34"
+                        },
+                        new
+                        {
+                            ID = 231,
+                            CodigoBarra = "100231",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 110,
+                            Stock = 21,
+                            Talle = "40"
+                        },
+                        new
+                        {
+                            ID = 232,
+                            CodigoBarra = "100232",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 110,
+                            Stock = 17,
+                            Talle = "44"
+                        },
+                        new
+                        {
+                            ID = 233,
+                            CodigoBarra = "100233",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 111,
+                            Stock = 23,
+                            Talle = "38"
+                        },
+                        new
+                        {
+                            ID = 234,
+                            CodigoBarra = "100234",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 111,
+                            Stock = 0,
+                            Talle = "46"
+                        },
+                        new
+                        {
+                            ID = 235,
+                            CodigoBarra = "100235",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 111,
+                            Stock = 22,
+                            Talle = "42"
+                        },
+                        new
+                        {
+                            ID = 236,
+                            CodigoBarra = "100236",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 111,
+                            Stock = 31,
+                            Talle = "44"
+                        },
+                        new
+                        {
+                            ID = 237,
+                            CodigoBarra = "100237",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 112,
+                            Stock = 17,
+                            Talle = "40"
+                        },
+                        new
+                        {
+                            ID = 238,
+                            CodigoBarra = "100238",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 112,
+                            Stock = 34,
+                            Talle = "37"
+                        },
+                        new
+                        {
+                            ID = 239,
+                            CodigoBarra = "100239",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 112,
+                            Stock = 15,
+                            Talle = "42"
+                        },
+                        new
+                        {
+                            ID = 240,
+                            CodigoBarra = "100240",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 112,
+                            Stock = 47,
+                            Talle = "46"
+                        },
+                        new
+                        {
+                            ID = 241,
+                            CodigoBarra = "100241",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 113,
+                            Stock = 0,
+                            Talle = "35"
+                        },
+                        new
+                        {
+                            ID = 242,
+                            CodigoBarra = "100242",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 113,
+                            Stock = 35,
+                            Talle = "40"
+                        },
+                        new
+                        {
+                            ID = 243,
+                            CodigoBarra = "100243",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 113,
+                            Stock = 15,
+                            Talle = "39"
+                        },
+                        new
+                        {
+                            ID = 244,
+                            CodigoBarra = "100244",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 113,
+                            Stock = 33,
+                            Talle = "38"
+                        },
+                        new
+                        {
+                            ID = 245,
+                            CodigoBarra = "100245",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 114,
+                            Stock = 0,
+                            Talle = "42"
+                        },
+                        new
+                        {
+                            ID = 246,
+                            CodigoBarra = "100246",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 114,
+                            Stock = 17,
+                            Talle = "39"
+                        },
+                        new
+                        {
+                            ID = 247,
+                            CodigoBarra = "100247",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 114,
+                            Stock = 7,
+                            Talle = "38"
+                        },
+                        new
+                        {
+                            ID = 248,
+                            CodigoBarra = "100248",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 114,
+                            Stock = 37,
+                            Talle = "41"
+                        },
+                        new
+                        {
+                            ID = 249,
+                            CodigoBarra = "100249",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 114,
+                            Stock = 33,
+                            Talle = "36"
+                        },
+                        new
+                        {
+                            ID = 250,
+                            CodigoBarra = "100250",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 114,
+                            Stock = 41,
+                            Talle = "34"
+                        },
+                        new
+                        {
+                            ID = 251,
+                            CodigoBarra = "100251",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 114,
+                            Stock = 3,
+                            Talle = "44"
+                        },
+                        new
+                        {
+                            ID = 252,
+                            CodigoBarra = "100252",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 115,
+                            Stock = 12,
+                            Talle = "36"
+                        },
+                        new
+                        {
+                            ID = 253,
+                            CodigoBarra = "100253",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 115,
+                            Stock = 13,
+                            Talle = "34"
+                        },
+                        new
+                        {
+                            ID = 254,
+                            CodigoBarra = "100254",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 115,
+                            Stock = 21,
+                            Talle = "44"
+                        },
+                        new
+                        {
+                            ID = 255,
+                            CodigoBarra = "100255",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 115,
+                            Stock = 0,
+                            Talle = "45"
+                        },
+                        new
+                        {
+                            ID = 256,
+                            CodigoBarra = "100256",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 116,
+                            Stock = 11,
+                            Talle = "40"
+                        },
+                        new
+                        {
+                            ID = 257,
+                            CodigoBarra = "100257",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 116,
+                            Stock = 0,
+                            Talle = "44"
+                        },
+                        new
+                        {
+                            ID = 258,
+                            CodigoBarra = "100258",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 116,
+                            Stock = 32,
+                            Talle = "45"
+                        },
+                        new
+                        {
+                            ID = 259,
+                            CodigoBarra = "100259",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 117,
+                            Stock = 0,
+                            Talle = "36"
+                        },
+                        new
+                        {
+                            ID = 260,
+                            CodigoBarra = "100260",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 117,
+                            Stock = 0,
+                            Talle = "34"
+                        },
+                        new
+                        {
+                            ID = 261,
+                            CodigoBarra = "100261",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 117,
+                            Stock = 0,
+                            Talle = "46"
+                        },
+                        new
+                        {
+                            ID = 262,
+                            CodigoBarra = "100262",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 118,
+                            Stock = 42,
+                            Talle = "42"
+                        },
+                        new
+                        {
+                            ID = 263,
+                            CodigoBarra = "100263",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 118,
+                            Stock = 13,
+                            Talle = "46"
+                        },
+                        new
+                        {
+                            ID = 264,
+                            CodigoBarra = "100264",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 118,
+                            Stock = 7,
+                            Talle = "43"
+                        },
+                        new
+                        {
+                            ID = 265,
+                            CodigoBarra = "100265",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 118,
+                            Stock = 26,
+                            Talle = "41"
+                        },
+                        new
+                        {
+                            ID = 266,
+                            CodigoBarra = "100266",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 118,
+                            Stock = 9,
+                            Talle = "45"
+                        },
+                        new
+                        {
+                            ID = 267,
+                            CodigoBarra = "100267",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 118,
+                            Stock = 37,
+                            Talle = "44"
+                        },
+                        new
+                        {
+                            ID = 268,
+                            CodigoBarra = "100268",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 119,
+                            Stock = 0,
+                            Talle = "36"
+                        },
+                        new
+                        {
+                            ID = 269,
+                            CodigoBarra = "100269",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 119,
+                            Stock = 39,
+                            Talle = "38"
+                        },
+                        new
+                        {
+                            ID = 270,
+                            CodigoBarra = "100270",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 119,
+                            Stock = 47,
+                            Talle = "35"
+                        },
+                        new
+                        {
+                            ID = 271,
+                            CodigoBarra = "100271",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 119,
+                            Stock = 5,
+                            Talle = "40"
+                        },
+                        new
+                        {
+                            ID = 272,
+                            CodigoBarra = "100272",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 119,
+                            Stock = 47,
+                            Talle = "42"
+                        },
+                        new
+                        {
+                            ID = 273,
+                            CodigoBarra = "100273",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 120,
+                            Stock = 0,
+                            Talle = "40"
+                        },
+                        new
+                        {
+                            ID = 274,
+                            CodigoBarra = "100274",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 120,
+                            Stock = 0,
+                            Talle = "37"
+                        },
+                        new
+                        {
+                            ID = 275,
+                            CodigoBarra = "100275",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 120,
+                            Stock = 29,
+                            Talle = "39"
+                        },
+                        new
+                        {
+                            ID = 276,
+                            CodigoBarra = "100276",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 120,
+                            Stock = 23,
+                            Talle = "36"
+                        },
+                        new
+                        {
+                            ID = 277,
+                            CodigoBarra = "100277",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 120,
+                            Stock = 14,
+                            Talle = "38"
+                        },
+                        new
+                        {
+                            ID = 278,
+                            CodigoBarra = "100278",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 120,
+                            Stock = 23,
+                            Talle = "46"
                         });
                 });
 
@@ -1390,13 +5685,15 @@ namespace Infraestructura.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "0e26126a-5cfd-4e2a-bd2d-3ef42c84e590",
+                            Id = "11111111-1111-1111-1111-111111111111",
+                            ConcurrencyStamp = "11111111-1111-1111-1111-111111111111",
                             Name = "Administrador",
                             NormalizedName = "ADMINISTRADOR"
                         },
                         new
                         {
-                            Id = "f81bd96c-5f01-48e3-8554-68e08f9f9428",
+                            Id = "22222222-2222-2222-2222-222222222222",
+                            ConcurrencyStamp = "22222222-2222-2222-2222-222222222222",
                             Name = "Cliente",
                             NormalizedName = "CLIENTE"
                         });
@@ -1474,6 +5771,25 @@ namespace Infraestructura.Migrations
                         .HasFilter("[NombreUsuarioNormalizado] IS NOT NULL");
 
                     b.ToTable("Usuarios", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "33333333-3333-3333-3333-333333333333",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "adee9f6b-64e2-4ff0-9c5c-3a8f32fdd898",
+                            Email = "admin@gmail.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@GMAIL.COM",
+                            NormalizedUserName = "ADMIN@GMAIL.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAECF/QagxcECgm3IG/KJ3rrglUnFy/cwcB4ySBfkbFXjo5V0XFLovaH3g89WRPHHVEg==",
+                            PhoneNumber = "3814498305",
+                            PhoneNumberConfirmed = true,
+                            SecurityStamp = "33333333-3333-3333-3333-333333333333",
+                            TwoFactorEnabled = false,
+                            UserName = "admin@gmail.com"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
@@ -1489,6 +5805,13 @@ namespace Infraestructura.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("UsuarioRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "33333333-3333-3333-3333-333333333333",
+                            RoleId = "11111111-1111-1111-1111-111111111111"
+                        });
                 });
 
             modelBuilder.Entity("Dominio.Entidades.PersonaCliente", b =>
@@ -1505,30 +5828,16 @@ namespace Infraestructura.Migrations
                         new
                         {
                             ID = 1,
-                            Apellido = "Martinez",
-                            Celular = "123",
-                            Direccion = "Jujuy 362",
-                            Dni = "38060619",
-                            Email = "marcosmartinezmelek@gmail.com",
-                            FechaNacimiento = new DateOnly(1994, 4, 22),
+                            Apellido = "Martinez Melek",
+                            Celular = "3814498305",
+                            Direccion = "Matienzo 1870, Planta baja B, San Miguel de Tucumán, Tucumán",
+                            Dni = "39140888",
+                            Email = "admin@gmail.com",
+                            FechaNacimiento = new DateOnly(1995, 8, 12),
                             IsDeleted = false,
                             IsEnabled = false,
-                            Nombre = "Marcos",
-                            Sexo = "Masculino"
-                        },
-                        new
-                        {
-                            ID = 2,
-                            Apellido = "Garcia",
-                            Celular = "34567",
-                            Direccion = "Heras 1255",
-                            Dni = "45607656",
-                            Email = "juan@gmail.com",
-                            FechaNacimiento = new DateOnly(1994, 4, 22),
-                            IsDeleted = false,
-                            IsEnabled = false,
-                            Nombre = "Juan Carlos",
-                            Sexo = "Masculino"
+                            Nombre = "Maria Lourdes",
+                            Sexo = "Femenino"
                         });
                 });
 
@@ -1567,15 +5876,15 @@ namespace Infraestructura.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Dominio.Entidades.Producto", "Producto")
+                    b.HasOne("Dominio.Entidades.ProductoVariante", "ProductoVariante")
                         .WithMany("DetalleCarroCompras")
-                        .HasForeignKey("ProductoId")
+                        .HasForeignKey("ProductoVarianteId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("CarroCompras");
 
-                    b.Navigation("Producto");
+                    b.Navigation("ProductoVariante");
                 });
 
             modelBuilder.Entity("Dominio.Entidades.DetalleComprobante", b =>
@@ -1587,7 +5896,7 @@ namespace Infraestructura.Migrations
                         .IsRequired();
 
                     b.HasOne("Dominio.Entidades.Producto", "Producto")
-                        .WithMany("DetalleComprobantes")
+                        .WithMany()
                         .HasForeignKey("ProductoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -1605,15 +5914,15 @@ namespace Infraestructura.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Dominio.Entidades.Producto", "Producto")
+                    b.HasOne("Dominio.Entidades.ProductoVariante", "ProductoVariante")
                         .WithMany()
-                        .HasForeignKey("ProductoId")
+                        .HasForeignKey("ProductoVarianteId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("OrdenCompras");
 
-                    b.Navigation("Producto");
+                    b.Navigation("ProductoVariante");
                 });
 
             modelBuilder.Entity("Dominio.Entidades.Factura", b =>
@@ -1634,17 +5943,6 @@ namespace Infraestructura.Migrations
                     b.Navigation("Provincia");
                 });
 
-            modelBuilder.Entity("Dominio.Entidades.Movimiento", b =>
-                {
-                    b.HasOne("Dominio.Entidades.Factura", "Factura")
-                        .WithMany()
-                        .HasForeignKey("FacturaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Factura");
-                });
-
             modelBuilder.Entity("Dominio.Entidades.Producto", b =>
                 {
                     b.HasOne("Dominio.Entidades.Categoria", "Categoria")
@@ -1662,6 +5960,17 @@ namespace Infraestructura.Migrations
                     b.Navigation("Categoria");
 
                     b.Navigation("Marca");
+                });
+
+            modelBuilder.Entity("Dominio.Entidades.ProductoVariante", b =>
+                {
+                    b.HasOne("Dominio.Entidades.Producto", "Producto")
+                        .WithMany("ProductosVariantes")
+                        .HasForeignKey("ProductoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Producto");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
@@ -1725,9 +6034,12 @@ namespace Infraestructura.Migrations
 
             modelBuilder.Entity("Dominio.Entidades.Producto", b =>
                 {
-                    b.Navigation("DetalleCarroCompras");
+                    b.Navigation("ProductosVariantes");
+                });
 
-                    b.Navigation("DetalleComprobantes");
+            modelBuilder.Entity("Dominio.Entidades.ProductoVariante", b =>
+                {
+                    b.Navigation("DetalleCarroCompras");
                 });
 
             modelBuilder.Entity("Dominio.Entidades.Provincia", b =>

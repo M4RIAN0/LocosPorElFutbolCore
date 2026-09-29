@@ -55,18 +55,33 @@ namespace LXF.Web.Controllers
 
         public async Task<IActionResult> AddItem(int id)
         {
+            var userId = User.FindFirstValue("Sub");
+            ResponseViewModel? carroDb = await _service.GetByUserId(userId);
+
+            if (carroDb.IsSuccess && carroDb.Result != null)
+            {
+                var carroGet = CarroToGetViewModel(carroDb.Result);
+                var detalle = carroGet.DetalleCarroCompras.FirstOrDefault(x => x.Id == id);
+
+                if (detalle != null && detalle.Cantidad >= detalle.ProductoVariante.Stock)
+                {
+                    TempData["error"] = "Stock insuficiente.";
+                    return RedirectToAction(nameof(Index));
+                }
+            }
+
             ResponseViewModel? responseAdd = await _service.AddItem(id);
 
             if (responseAdd.IsSuccess)
             {
-                var userId = User.FindFirstValue("Sub");
                 ResponseViewModel? response = await _service.GetByUserId(userId);
 
                 if (response.IsSuccess && response.Result != null)
                     return RedirectToAction(nameof(Index));
             }
 
-            return View();
+            TempData["error"] = "Error al agregar el producto.";
+            return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> SubtractItem(int detalleCarroComprasId)

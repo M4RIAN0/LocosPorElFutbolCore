@@ -3,6 +3,7 @@ using Infraestructura.Configurations;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection.Emit;
 
 namespace Infraestructura
 {
@@ -24,11 +25,11 @@ namespace Infraestructura
         public DbSet<Factura> Factura { get; set; }
         public DbSet<Localidad> Localidad { get; set; }
         public DbSet<Marca> Marca { get; set; }
-        public DbSet<Movimiento> Movimiento { get; set; }
         public DbSet<OrdenCompra> OrdenCompra { get; set; }
         public DbSet<Persona> Persona { get; set; }
         public DbSet<PersonaCliente> Persona_Cliente { get; set; }
         public DbSet<Producto> Producto { get; set; }
+        public DbSet<ProductoVariante> ProductoVariante { get; set; }
         public DbSet<Provincia> Provincia { get; set; }
         public DbSet<Usuario> Usuario { get; set; }
         public DbSet<Role> Role { get; set; }
@@ -39,12 +40,14 @@ namespace Infraestructura
 
             builder.ApplyConfiguration(new ProvinciaConfiguration());
             builder.ApplyConfiguration(new LocalidadConfiguration());
-            builder.ApplyConfiguration(new PersonaClienteConfiguration());
             builder.ApplyConfiguration(new MarcaConfiguration());
             builder.ApplyConfiguration(new CategoriaConfiguration());
+            builder.ApplyConfiguration(new PersonaClienteConfiguration());
             builder.ApplyConfiguration(new ProductoConfiguration());
+            builder.ApplyConfiguration(new ProductoVarianteConfiguration());
             builder.ApplyConfiguration(new UserConfiguration());
             builder.ApplyConfiguration(new RoleConfiguration());
+            builder.ApplyConfiguration(new UserRoleConfiguration());
             builder.ApplyConfiguration(new DetalleCarroComprasConfiguration());
             builder.Entity<IdentityUserRole<string>>().ToTable("UsuarioRoles");
 

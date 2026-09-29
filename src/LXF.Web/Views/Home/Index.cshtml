@@ -6,179 +6,206 @@
     ViewData["Title"] = "Inicio";
     var culturaArg = new CultureInfo("es-AR");
 
+    // Asumimos que el backend ya se encarga de enviar solo los productos con stock
     var productosTotales = Model?.ToList() ?? new List<ProductoGetViewModel>();
-    var newInProducts = productosTotales.Take(5).ToList();
-    var saleProducts = productosTotales.Skip(5).Take(5).ToList();
+
+    // NEW IN: 25 productos agrupados de a 5 (5 páginas/puntitos)
+    var newInProducts = productosTotales.Take(25).ToList();
+    var newInChunks = newInProducts.Select((x, i) => new { Index = i, Value = x })
+                                   .GroupBy(x => x.Index / 5)
+                                   .Select(x => x.Select(v => v.Value).ToList())
+                                   .ToList();
+
+    // SALE: 30 productos agrupados de a 5 (6 páginas/puntitos)
+    var saleProducts = productosTotales.Skip(25).Take(30).ToList();
+    var saleChunks = saleProducts.Select((x, i) => new { Index = i, Value = x })
+                                 .GroupBy(x => x.Index / 5)
+                                 .Select(x => x.Select(v => v.Value).ToList())
+                                 .ToList();
 }
 
-    <div class="full-width-breakout">
-    
-        <!-- SUB-BARRA DE CATEGORÍAS (Exclusiva del Home) -->
-        <div class="w-100 d-none d-lg-block bg-transparent" style="border-bottom: 1px solid rgba(255, 255, 255, 0.1);">
-            <div class="container-fluid px-4">
-                <div class="d-flex justify-content-center align-items-center py-2 gap-4">
-                    <a href="#" class="subnav-link"><span class="badge-newin fw-bold">NEW IN</span></a>
-                    <a href="#" class="subnav-link">HOMBRE</a>
-                    <a href="#" class="subnav-link">MUJER</a>
-                    <a href="#" class="subnav-link">NIÑOS</a>
-                    <a href="#" class="subnav-link">ACCESORIOS</a>
-                    <a href="#" class="subnav-link marcas">MARCAS</a>
-                    <a href="#" class="subnav-link">SALE</a>
-    
-                    <!-- Logos de marcas a la derecha -->
-                    <div class="d-flex align-items-center gap-3 ms-4">
-                        <span class="text-white fs-6" style="font-family: 'Brush Script MT', cursive, serif;">Mitchell & Ness</span>
-                        <i class="bi bi-triangle-half text-white fs-5" style="transform: rotate(180deg);"></i>
-                        <i class="bi bi-twitter text-white fs-5" style="transform: rotate(45deg);"></i>
-                    </div>
-                </div>
+<div class="full-width-breakout">
+
+    <!-- SUB-BARRA DE CATEGORÍAS -->
+    <div class="w-100 d-none d-lg-block bg-transparent" style="border-bottom: 1px solid rgba(255, 255, 255, 0.1);">
+        <div class="container-fluid px-4">
+            <div class="d-flex justify-content-center align-items-center py-2 gap-4">
+                <a asp-controller="Producto" asp-action="Catalogo" class="subnav-link"> <span class="badge-newin fw-bold">NEW IN</span> </a>
+                <a href="#" class="subnav-link">HOMBRE</a>
+                <a href="#" class="subnav-link">MUJER</a>
+                <a href="#" class="subnav-link ">UNISEX</a>
+                <a href="#" class="subnav-link">SALE</a>
             </div>
         </div>
-    
-        <!-- CARRUSEL PRINCIPAL (HERO BANNER) -->
-        <!-- Agregado position:relative para asegurar que los controles se ubiquen sobre la imagen -->
-        <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-pause="false" style="position: relative;">
-            <div class="carousel-indicators">
-                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="3" aria-label="Slide 4"></button>
-                <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="4" aria-label="Slide 5"></button>
-            </div>
-            <div class="carousel-inner">
-                <div class="carousel-item active" data-bs-interval="4000">
-                    <img src="~/images/Banners/Hero-1.webp" class="d-block w-100 object-fit-cover" style="height: 65vh;" alt="Banner principal">
-                    <div class="carousel-caption d-none d-md-block text-start mb-5" style="left: 5%;">
-                        <a href="#" class="btn btn-grid-primary rounded-0 px-4 py-2 fw-bold text-uppercase">Comprar</a>
-                    </div>
-                </div>
-                <div class="carousel-item" data-bs-interval="4000">
-                    <img src="~/images/Banners/Hero-2.webp" class="d-block w-100 object-fit-cover" style="height: 65vh;" alt="Banner 2">
-                    <div class="carousel-caption d-none d-md-block text-start mb-5" style="left: 5%;">
-                        <a href="#" class="btn btn-grid-primary rounded-0 px-4 py-2 fw-bold text-uppercase">Comprar</a>
-                    </div>
-                </div>
-                <div class="carousel-item" data-bs-interval="4000">
-                    <img src="~/images/Banners/Hero-3.webp" class="d-block w-100 object-fit-cover" style="height: 65vh;" alt="Banner 3">
-                    <div class="carousel-caption d-none d-md-block text-start mb-5" style="left: 5%;">
-                        <a href="#" class="btn btn-grid-primary rounded-0 px-4 py-2 fw-bold text-uppercase">Comprar</a>
-                    </div>
-                </div>
-                <div class="carousel-item" data-bs-interval="4000">
-                    <img src="~/images/Banners/Hero-4.webp" class="d-block w-100 object-fit-cover" style="height: 65vh;" alt="Banner 4">
-                    <div class="carousel-caption d-none d-md-block text-start mb-5" style="left: 5%;">
-                        <a href="#" class="btn btn-grid-primary rounded-0 px-4 py-2 fw-bold text-uppercase">Comprar</a>
-                    </div>
-                </div>
-                <div class="carousel-item" data-bs-interval="4000">
-                    <img src="~/images/Banners/Hero-5.webp" class="d-block w-100 object-fit-cover" style="height: 65vh;" alt="Banner 5">
-                    <div class="carousel-caption d-none d-md-block text-start mb-5" style="left: 5%;">
-                        <a href="#" class="btn btn-grid-primary rounded-0 px-4 py-2 fw-bold text-uppercase">Comprar</a>
-                    </div>
-                </div>
-            </div>
-            <!-- Los botones ahora están correctamente dentro de #heroCarousel -->
-            <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
-        </div>
-    
     </div>
 
-    <div class="container-fluid px-4 px-lg-5 pt-2" style="font-family: 'Arial', sans-serif;">
-
-        <!-- TIRA DE BENEFICIOS -->
-        <div class="row row-cols-2 row-cols-md-4 g-3 my-4 d-flex justify-content-center">
-            <div class="col">
-                <div class="benefit-box shadow-sm">
-                    <i class="bi bi-shop display-6 text-white mb-2"></i>
-                    <h5 class="fw-bold text-white text-uppercase m-0">RETIRO GRATIS</h5>
-                    <p class="text-secondary small m-0">EN SUCURSALES</p>
+    <!-- CARRUSEL PRINCIPAL (HERO BANNER) -->
+    <div id="heroCarousel" class="carousel slide hero-carousel" data-bs-ride="carousel" data-bs-pause="false" style="position: relative;">
+        <!-- Puntos superpuestos redondos estilo Hero -->
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="3" aria-label="Slide 4"></button>
+            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="4" aria-label="Slide 5"></button>
+        </div>
+        <div class="carousel-inner">
+            <div class="carousel-item active" data-bs-interval="4000">
+                <img src="~/images/Banners/Hero-1.webp" class="d-block w-100 object-fit-cover" style="height: 65vh;" alt="Banner principal">
+                <div class="carousel-caption d-none d-md-block text-start mb-5" style="left: 5%;">
+                    <a href="#" class="btn btn-grid-primary rounded-0 px-4 py-2 fw-bold text-uppercase">Comprar</a>
                 </div>
             </div>
-            <div class="col">
-                <div class="benefit-box shadow-sm">
-                    <i class="bi bi-truck display-6 text-white mb-2"></i>
-                    <h5 class="fw-bold text-white text-uppercase m-0">ENVÍOS A TODO</h5>
-                    <p class="text-secondary small m-0">EL PAÍS</p>
+            <div class="carousel-item" data-bs-interval="4000">
+                <img src="~/images/Banners/Hero-2.webp" class="d-block w-100 object-fit-cover" style="height: 65vh;" alt="Banner 2">
+                <div class="carousel-caption d-none d-md-block text-start mb-5" style="left: 5%;">
+                    <a href="#" class="btn btn-grid-primary rounded-0 px-4 py-2 fw-bold text-uppercase">Comprar</a>
                 </div>
             </div>
-            <div class="col">
-                <div class="benefit-box shadow-sm">
-                    <i class="bi bi-shield-check display-6 text-white mb-2"></i>
-                    <h5 class="fw-bold text-white text-uppercase m-0">PAGO SEGURO</h5>
-                    <p class="text-secondary small m-0">CON MERCADO PAGO</p>
+            <div class="carousel-item" data-bs-interval="4000">
+                <img src="~/images/Banners/Hero-3.webp" class="d-block w-100 object-fit-cover" style="height: 65vh;" alt="Banner 3">
+                <div class="carousel-caption d-none d-md-block text-start mb-5" style="left: 5%;">
+                    <a href="#" class="btn btn-grid-primary rounded-0 px-4 py-2 fw-bold text-uppercase">Comprar</a>
                 </div>
             </div>
-            <div class="col">
-                <div class="benefit-box shadow-sm">
-                    <i class="bi bi-arrow-repeat display-6 text-white mb-2"></i>
-                    <h5 class="fw-bold text-white text-uppercase m-0">DEVOLUCIONES</h5>
-                    <p class="text-secondary small m-0">RÁPIDAS Y SIMPLES</p>
+            <div class="carousel-item" data-bs-interval="4000">
+                <img src="~/images/Banners/Hero-4.webp" class="d-block w-100 object-fit-cover" style="height: 65vh;" alt="Banner 4">
+                <div class="carousel-caption d-none d-md-block text-start mb-5" style="left: 5%;">
+                    <a href="#" class="btn btn-grid-primary rounded-0 px-4 py-2 fw-bold text-uppercase">Comprar</a>
+                </div>
+            </div>
+            <div class="carousel-item" data-bs-interval="4000">
+                <img src="~/images/Banners/Hero-5.webp" class="d-block w-100 object-fit-cover" style="height: 65vh;" alt="Banner 5">
+                <div class="carousel-caption d-none d-md-block text-start mb-5" style="left: 5%;">
+                    <a href="#" class="btn btn-grid-primary rounded-0 px-4 py-2 fw-bold text-uppercase">Comprar</a>
                 </div>
             </div>
         </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
 
-    <!-- SECCIÓN: NEW IN -->
-    @if (newInProducts.Any())
+</div>
+
+<div class="container-fluid px-4 px-lg-5 pt-2" style="font-family: 'Arial', sans-serif;">
+
+    <!-- TIRA DE BENEFICIOS -->
+    <div class="row row-cols-2 row-cols-md-4 g-3 my-4 d-flex justify-content-center">
+        <!-- (Se mantienen intactos los beneficios) -->
+        <div class="col"><div class="benefit-box shadow-sm"><i class="bi bi-shop display-6 text-white mb-2"></i><h5 class="fw-bold text-white text-uppercase m-0">RETIRO GRATIS</h5><p class="text-secondary small m-0">EN SUCURSALES</p></div></div>
+        <div class="col"><div class="benefit-box shadow-sm"><i class="bi bi-truck display-6 text-white mb-2"></i><h5 class="fw-bold text-white text-uppercase m-0">ENVÍOS A TODO</h5><p class="text-secondary small m-0">EL PAÍS</p></div></div>
+        <div class="col"><div class="benefit-box shadow-sm"><i class="bi bi-shield-check display-6 text-white mb-2"></i><h5 class="fw-bold text-white text-uppercase m-0">PAGO SEGURO</h5><p class="text-secondary small m-0">CON MERCADO PAGO</p></div></div>
+        <div class="col"><div class="benefit-box shadow-sm"><i class="bi bi-arrow-repeat display-6 text-white mb-2"></i><h5 class="fw-bold text-white text-uppercase m-0">DEVOLUCIONES</h5><p class="text-secondary small m-0">RÁPIDAS Y SIMPLES</p></div></div>
+    </div>
+
+    <!-- SECCIÓN: NEW IN (AHORA ES UN CARRUSEL AUTOMÁTICO CON PUNTOS) -->
+    @if (newInChunks.Any())
     {
         <div class="d-flex justify-content-between align-items-end mb-3 mt-5">
             <h3 class="text-white fw-bold text-uppercase mb-0 tracking-wide">New In</h3>
-            <a href="#" class="btn-ver-todo">Ver todo</a>
+            <a asp-controller="Producto" asp-action="Catalogo" class="btn-ver-todo">Ver todo</a>
         </div>
+        <div class="slider-wrapper">
+            <div id="newInCarousel" class="carousel slide product-carousel" data-bs-ride="carousel" data-bs-interval="4000">
+            <!-- Puntos (5 desplazamientos) -->
+            <div class="carousel-indicators custom-indicators">
+                @for (int i = 0; i < newInChunks.Count; i++)
+                {
+                    <button type="button" data-bs-target="#newInCarousel" data-bs-slide-to="@i" class="@(i == 0 ? "active" : "")" aria-label="Slide @(i + 1)"></button>
+                }
+            </div>
 
-        <div class="row row-cols-2 row-cols-md-3 row-cols-lg-5 g-3 mb-5">
-            @foreach (var producto in newInProducts)
-            {
-                <div class="col">
-                    <a asp-action="ProductoDetails" asp-route-id="@producto.Id" class="text-decoration-none">
-                        <div class="card grid-product-card h-100 shadow-sm">
-                            <div class="position-relative bg-white" style="aspect-ratio: 1/1;">
-                                <span class="badge-nuevo">NUEVO</span>
-                                <img src="@(string.IsNullOrEmpty(producto.ImagenUrl) ? "https://placehold.co/600x600/ffffff/333333?text=NO+IMAGE" : producto.ImagenUrl)" class="card-img-top w-100 h-100 object-fit-cover p-3" alt="@producto.Nombre">
-                                <div class="brand-logo-container">
-                                    <i class="bi bi-tag-fill text-dark"></i>
+            <div class="carousel-inner">
+                @for (int c = 0; c < newInChunks.Count; c++)
+                {
+                    var chunk = newInChunks[c];
+                    <div class="carousel-item @(c == 0 ? "active" : "")">
+                        <div class="row row-cols-2 row-cols-md-3 row-cols-lg-5 g-3">
+                            @foreach (var prod in chunk)
+                            {
+                                <div class="col">
+                                    <div class="slider-card h-100">
+                                        <form asp-action="ProductoDetails" asp-controller="Home" method="post" class="d-flex flex-column h-100 m-0 cart-slider-form">
+                                            <input type="hidden" name="Id" value="@prod.Id" />
+                                            <input type="hidden" name="Precio" value="@prod.Precio" />
+                                            <input type="hidden" name="ProductosVariantes[0].Id" class="selected-size-input" value="" />
+                                            <input type="hidden" name="Cantidad" value="1" />
+
+                                            <div class="slider-img-container">
+                                                <a asp-action="ProductoDetails" asp-controller="Home" asp-route-id="@prod.Id" class="d-block w-100 h-100">
+                                                    <img src="@(string.IsNullOrEmpty(prod.ImagenUrl) ? "https://placehold.co/400" : prod.ImagenUrl)" class="object-fit-cover w-100 h-100 p-3" alt="Prod">
+                                                </a>
+                                                <div class="slider-sizes-overlay">
+                                                    @if (prod.ProductosVariantes != null)
+                                                    {
+                                                        var variantesList = prod.ProductosVariantes.OrderBy(x => x.Talle).ToList();
+                                                        for (int i = 0; i < variantesList.Count; i++)
+                                                        {
+                                                            var v = variantesList[i];
+                                                            if (i < 4)
+                                                            {
+                                                                string dClass = v.Stock <= 0 ? "disabled" : "";
+                                                                <button type="button" class="hover-size-box @dClass" data-variant-id="@v.Id">@v.Talle</button>
+                                                            }
+                                                            else if (i == 4)
+                                                            {
+                                                                int restantes = variantesList.Count - 4;
+                                                                <a asp-action="ProductoDetails" asp-controller="Home" asp-route-id="@prod.Id" class="hover-size-box extra-sizes-box text-decoration-none">
+                                                                    +@restantes
+                                                                </a>
+                                                                break;
+                                                            }
+                                                        }
+                                                    }
+                                                </div>
+                                            </div>
+
+                                            <div class="slider-card-body">
+                                                <a asp-action="ProductoDetails" asp-controller="Home" asp-route-id="@prod.Id" class="text-decoration-none text-reset d-block">
+                                                    <div class="mb-2">
+                                                        <img src="~/images/Marcas-ico/@(prod.Marca).svg" alt="@prod.Marca" style="height: 40px; width: auto; object-fit: contain;"
+                                                             onerror="this.onerror=null; this.outerHTML='<span style=\'font-size: 1rem; font-weight: 700; color: #ffffff; text-transform: uppercase;\'>@prod.Marca</span>';" />
+                                                    </div>
+                                                    <div class="slider-title">@prod.Nombre</div>
+                                                    <div class="slider-price">$ @prod.Precio.ToString("N0", culturaArg)</div>
+                                                    <div class="slider-tax">$ @((prod.Precio / 1.21m).ToString("N0", culturaArg)) precio sin impuestos nacionales</div>
+                                                </a>
+                                                <div class="slider-action-container mt-2">
+                                                    <button type="submit" class="btn-add-cart-slider">Agregar al carrito</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="card-body px-2 py-3 bg-transparent">
-                                <p class="product-title mb-2">@producto.Nombre</p>
-                                <p class="product-price mb-1">$ @producto.Precio.ToString("N0", culturaArg)</p>
-                            </div>
+                            }
                         </div>
-                    </a>
-                </div>
-            }
+                    </div>
+                }
+            </div>
+
+            <!-- Flechas a los costados para NEW IN (Opcional, pero consistente con Sale) -->
+            <button class="nav-btn prev" type="button" data-bs-target="#newInCarousel" data-bs-slide="prev">
+                <i class="bi bi-chevron-left"></i>
+            </button>
+            <button class="nav-btn next" type="button" data-bs-target="#newInCarousel" data-bs-slide="next">
+                <i class="bi bi-chevron-right"></i>
+            </button>
+        </div>
         </div>
     }
 
     <!-- SECCIÓN: CATEGORÍAS GRANDES -->
     <div class="row row-cols-1 row-cols-md-3 g-3 mb-5 mt-3">
-        <div class="col">
-            <a href="#" class="text-decoration-none">
-                <div class="category-banner-card shadow-sm">
-                    <img src="~/images/Categorias/Cat-Hombre.webp" alt="HOMBRE">
-                </div>
-            </a>
-        </div>
-        <div class="col">
-            <a href="#" class="text-decoration-none">
-                <div class="category-banner-card shadow-sm">
-                    <img src="~/images/Categorias/Cat-Mujer.webp" alt="MUJER">
-                </div>
-            </a>
-        </div>
-        <div class="col">
-            <a href="#" class="text-decoration-none">
-                <div class="category-banner-card shadow-sm">
-                    <img src="~/images/Categorias/Cat-Ninos.webp" alt="NIÑOS">
-                </div>
-            </a>
-        </div>
+        <!-- (Imágenes intactas) -->
+        <div class="col"><a href="#" class="text-decoration-none"><div class="category-banner-card shadow-sm"><img src="~/images/Categorias/Cat-Hombre.webp" alt="HOMBRE"></div></a></div>
+        <div class="col"><a href="#" class="text-decoration-none"><div class="category-banner-card shadow-sm"><img src="~/images/Categorias/Cat-Mujer.webp" alt="MUJER"></div></a></div>
+        <div class="col"><a href="#" class="text-decoration-none"><div class="category-banner-card shadow-sm"><img src="~/images/Categorias/Cat-Ninos.webp" alt="NIÑOS"></div></a></div>
     </div>
 
     <!-- SECCIÓN: TUS MODELOS FAVORITOS -->
@@ -207,7 +234,7 @@
         <h3 class="text-white fw-bold text-uppercase text-center mb-4 tracking-wide fs-4" style="color: #d1c8b8 !important;">Marcas Destacadas</h3>
         <div class="row row-cols-2 row-cols-md-3 row-cols-lg-6 g-3">
             @{
-                string[] marcas = { "JORDAN", "NIKE", "FILA", "ADIDAS", "PUMA", "MITCHELL & NESS" };
+                string[] marcas = { "JORDAN", "NIKE", "FILA", "ADIDAS", "PUMA", "VANS" };
                 for (int i = 0; i < marcas.Length; i++)
                 {
                     <div class="col">
@@ -223,56 +250,82 @@
         </div>
     </div>
 
-    <!-- SECCIÓN: SALE -->
-    @if (saleProducts.Any())
+    <!-- SECCIÓN: SALE (CON 6 PUNTITOS Y FLECHAS LATERALES) -->
+    @if (saleChunks.Any())
     {
         <div class="d-flex justify-content-between align-items-end mb-3 mt-5 pt-3">
             <h3 class="text-white fw-bold text-uppercase mb-0 tracking-wide">Sale</h3>
-            <a href="#" class="btn-ver-todo">Ver todo</a>
         </div>
+        <div class="slider-wrapper">
+            <div id="saleCarousel" class="carousel slide product-carousel mb-5" data-bs-ride="carousel" data-bs-interval="4000">
+            <!-- Puntos (6 desplazamientos) -->
+            <div class="carousel-indicators custom-indicators">
+                @for (int i = 0; i < saleChunks.Count; i++)
+                {
+                    <button type="button" data-bs-target="#saleCarousel" data-bs-slide-to="@i" class="@(i == 0 ? "active" : "")" aria-label="Slide @(i + 1)"></button>
+                }
+            </div>
 
-        <div class="row row-cols-2 row-cols-md-3 row-cols-lg-5 g-3 mb-5 pb-5">
-            @foreach (var producto in saleProducts)
-            {
-                <div class="col">
-                    <a asp-action="ProductoDetails" asp-route-id="@producto.Id" class="text-decoration-none">
-                        <div class="card grid-product-card h-100 shadow-sm">
-                            <div class="position-relative bg-white" style="aspect-ratio: 1/1;">
-                                <span class="badge-sale">-20%</span>
-                                <img src="@(string.IsNullOrEmpty(producto.ImagenUrl) ? "https://placehold.co/600x600/ffffff/333333?text=NO+IMAGE" : producto.ImagenUrl)" class="card-img-top w-100 h-100 object-fit-cover p-3" alt="@producto.Nombre">
-                                <div class="brand-logo-container">
-                                    <i class="bi bi-tag-fill text-dark"></i>
+            <div class="carousel-inner">
+                @for (int c = 0; c < saleChunks.Count; c++)
+                {
+                    var chunk = saleChunks[c];
+                    <div class="carousel-item @(c == 0 ? "active" : "")">
+                        <div class="row row-cols-2 row-cols-md-3 row-cols-lg-5 g-3">
+                            @foreach (var producto in chunk)
+                            {
+                                <div class="col">
+                                    <a asp-action="ProductoDetails" asp-route-id="@producto.Id" class="text-decoration-none">
+                                        <div class="card grid-product-card h-100 shadow-sm">
+                                            <div class="position-relative bg-white" style="aspect-ratio: 1/1;">
+                                                <span class="badge-sale">-20%</span>
+                                                <img src="@(string.IsNullOrEmpty(producto.ImagenUrl) ? "https://placehold.co/600x600/ffffff/333333?text=NO+IMAGE" : producto.ImagenUrl)" class="card-img-top w-100 h-100 object-fit-cover p-3" alt="@producto.Nombre">
+                                                <div class="brand-logo-container">
+                                                    <i class="bi bi-tag-fill text-dark"></i>
+                                                </div>
+                                            </div>
+                                            <div class="card-body px-2 py-3 bg-transparent">
+                                                <p class="product-title mb-2">@producto.Nombre</p>
+                                                <div class="d-flex align-items-center gap-2 mb-1">
+                                                    <p class="product-price text-danger mb-0">$ @producto.Precio.ToString("N0", culturaArg)</p>
+                                                    <p class="text-decoration-line-through text-secondary mb-0" style="font-size: 0.75rem;">$ @((producto.Precio * 1.2m).ToString("N0", culturaArg))</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
                                 </div>
-                            </div>
-                            <div class="card-body px-2 py-3 bg-transparent">
-                                <p class="product-title mb-2">@producto.Nombre</p>
-                                <div class="d-flex align-items-center gap-2 mb-1">
-                                    <p class="product-price text-danger mb-0">$ @producto.Precio.ToString("N0", culturaArg)</p>
-                                    <p class="text-decoration-line-through text-secondary mb-0" style="font-size: 0.75rem;">$ @((producto.Precio * 1.2m).ToString("N0", culturaArg))</p>
-                                </div>
-                            </div>
+                            }
                         </div>
-                    </a>
-                </div>
-            }
+                    </div>
+                }
+            </div>
+
+            <!-- Flechas a los costados para SALE (Mantenidas como solicitaste) -->
+            <button class="nav-btn prev" type="button" data-bs-target="#saleCarousel" data-bs-slide="prev">
+                <i class="bi bi-chevron-left"></i>
+            </button>
+            <button class="nav-btn next" type="button" data-bs-target="#saleCarousel" data-bs-slide="next">
+                <i class="bi bi-chevron-right"></i>
+            </button>
         </div>
+         </div>
     }
 </div>
 
 <style>
-     /* Ocultamos el scroll horizontal que puede generar el 100vw */
-     body {
-         overflow-x: hidden;
-     }
 
-     /* NUEVO TRUCO PARA ROMPER EL CONTENEDOR DE _LAYOUT */
-     .full-width-breakout {
-         width: 100vw !important;
-         margin-left: calc(50% - 50vw) !important;
-         max-width: 100vw !important;
-     }
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet" >
 
-    /* LINKS DE LA SUB-BARRA */
+    body {
+        overflow-x: hidden;
+    }
+
+    .full-width-breakout {
+        width: 100vw !important;
+        margin-left: calc(50% - 50vw) !important;
+        max-width: 100vw !important;
+    }
+
     .subnav-link {
         color: #ffffff;
         font-size: 0.95rem;
@@ -287,12 +340,94 @@
             color: #cccccc;
         }
 
-    /* ESTILOS GENERALES RESTANTES */
     .tracking-wide {
         letter-spacing: 1.5px;
     }
 
-    /* BENEFICIOS */
+    /* ESTILOS DE PUNTITOS (INDICATORS) PARA HERO BANNER */
+    .hero-carousel .carousel-indicators {
+        bottom: 10px; /* Sobre la imagen */
+    }
+
+        .hero-carousel .carousel-indicators [data-bs-target] {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin: 0 5px;
+            background-color: #ffffff;
+            opacity: 0.5;
+            border: none;
+            transition: opacity 0.3s;
+        }
+
+        .hero-carousel .carousel-indicators .active {
+            opacity: 1;
+        }
+
+    /* ESTILOS PARA LOS CARRUSELES DE PRODUCTOS (NEW IN / SALE) */
+    /* Reduce el espacio total debajo de las tarjetas (antes era 50px) */
+    .product-carousel {
+        padding-bottom: 35px;
+    }
+
+    /* Pega los indicadores más a la base de las tarjetas */
+    .custom-indicators {
+        bottom: 0 !important;
+        margin-bottom: 0 !important;
+    }
+
+        /* Hace los puntos más chicos (8px) y más pegados entre sí (4px) */
+        .custom-indicators [data-bs-target] {
+            width: 8px !important;
+            height: 8px !important;
+            border-radius: 50% !important;
+            background-color: #cccccc !important;
+            margin: 0 4px !important;
+            border: none !important;
+            opacity: 1 !important;
+        }
+
+        .custom-indicators .active {
+            background-color: #222222 !important;
+        }
+
+    /* FLECHAS DE NAVEGACIÓN LATERAL (NEW IN Y SALE) */
+    .slider-wrapper {
+        position: relative;
+    }
+
+    .nav-btn {
+        position: absolute;
+        top: 40%;
+        transform: translateY(-50%);
+        background: transparent;
+        border: none;
+        color: #adb5bd;
+        font-size: 1.5rem;
+        cursor: pointer;
+        z-index: 10;
+    }
+
+        .nav-btn:hover {
+            color: #f8f9fa;
+        }
+
+        .nav-btn.prev {
+            left: -30px;
+        }
+
+        .nav-btn.next {
+            right: -30px;
+        }
+
+    @@media (max-width: 768px) {
+        .nav-btn {
+            display: none;
+        }
+    }
+
+
+    /* --- RESTO DEL CSS SE MANTIENE INTACTO --- */
     .benefit-box {
         background-color: #000;
         border-radius: 0;
@@ -305,12 +440,11 @@
         border: 1px solid #1a1a1a;
     }
 
-    /* CATEGORÍAS GRANDES */
     .category-banner-card {
         position: relative;
         overflow: hidden;
         border-radius: 0;
-        aspect-ratio: 2/3; /* Fija la proporción de póster vertical */
+        aspect-ratio: 2/3;
     }
 
         .category-banner-card img {
@@ -320,12 +454,10 @@
             transition: transform 0.5s ease;
         }
 
-        /* Mantenemos el zoom suave al pasar el mouse */
         .category-banner-card:hover img {
             transform: scale(1.05);
         }
 
-    /* TARJETAS DE PRODUCTO (New In y Sale originales) */
     .grid-product-card {
         background-color: transparent !important;
         border: none !important;
@@ -357,7 +489,6 @@
         font-weight: 800;
     }
 
-    /* TARJETAS MODELOS/MARCAS */
     .model-card {
         position: relative;
         background-color: #1a1a1a;
@@ -418,4 +549,244 @@
         background-color: transparent;
         padding: 2px;
     }
+
+    /* ESTILOS TARJETA NEW IN */
+    .slider-card {
+        background-color: transparent;
+        border: 1px solid #495057;
+        position: relative;
+        border-radius: 6px;
+        overflow: hidden;
+        width: 100%;
+    }
+
+    .slider-img-container {
+        position: relative;
+        background-color: transparent;
+        border-bottom: 1px solid #495057;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        aspect-ratio: 1/1;
+    }
+
+        .slider-img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 15px;
+        }
+
+    .slider-sizes-overlay {
+        position: absolute;
+        bottom: -18px;
+        left: 0;
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 5px;
+        opacity: 0;
+        transition: opacity 0.2s ease, transform 0.2s ease;
+        transform: translateY(5px);
+        z-index: 10;
+    }
+
+    .slider-card:hover .slider-sizes-overlay {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .hover-size-box {
+        width: 32px;
+        height: 32px;
+        background-color: #2b3035;
+        border: 1px solid #495057;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.8rem;
+        font-weight: 700;
+        cursor: pointer;
+        color: #f8f9fa;
+        border-radius: 4px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        transition: all 0.2s;
+    }
+
+        .hover-size-box:hover:not(.disabled):not(.extra-sizes-box), .hover-size-box.active:not(.extra-sizes-box) {
+            background-color: #f8f9fa;
+            color: #212529;
+            border-color: #f8f9fa;
+        }
+
+        .hover-size-box.disabled {
+            color: #6c757d;
+            cursor: default;
+            pointer-events: none;
+            background: linear-gradient(to top right, transparent calc(50% - 1px), #495057, transparent calc(50% + 1px));
+        }
+
+    .extra-sizes-box {
+        background-color: #2b3035 !important;
+        color: #ced4da !important;
+        cursor: pointer !important;
+        pointer-events: auto !important;
+        border-style: dashed !important;
+        border-color: #495057 !important;
+        font-size: 0.75rem;
+    }
+
+        .extra-sizes-box:hover {
+            background-color: #2b3035 !important;
+            color: #ced4da !important;
+            border-color: #495057 !important;
+        }
+
+    .slider-card-body {
+        padding: 25px 15px 15px 15px;
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+    }
+
+    .slider-title {
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: #e9ecef;
+        text-transform: uppercase;
+        margin-bottom: 6px;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        letter-spacing: 0.5px;
+    }
+
+    .slider-price {
+        font-size: 1.25rem;
+        font-weight: 800;
+        color: #ffffff;
+        margin-bottom: 2px;
+        letter-spacing: -0.5px;
+    }
+
+    .slider-tax {
+        font-size: 0.7rem;
+        color: #8c959f;
+        font-weight: 400;
+        margin-bottom: 0;
+    }
+
+    .slider-action-container {
+        height: 42px;
+        margin-top: 15px;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+    }
+
+    .slider-card:hover .slider-action-container {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .btn-add-cart-slider {
+        background-color: #f8f9fa;
+        color: #1a1d20;
+        border: none;
+        font-weight: 700;
+        font-size: 0.85rem;
+        height: 100%;
+        width: 100%;
+        border-radius: 4px;
+        display: block;
+    }
+
+        .btn-add-cart-slider:hover {
+            background-color: #e2e6ea;
+        }
+
+    /* Evitar que las flechas laterales queden ocultas en pantallas móviles */
+    @@media (max-width: 768px) {
+        .custom-nav-arrow {
+            display: none;
+        }
+    }
 </style>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+
+            // Selección de talle en la tarjeta
+            $('.hover-size-box:not(.extra-sizes-box)').click(function(e) {
+                if ($(this).hasClass('disabled')) return;
+
+                if (e.originalEvent) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                }
+
+                var container = $(this).closest('.slider-sizes-overlay');
+                container.find('.hover-size-box').removeClass('active');
+                $(this).addClass('active');
+
+                var selectedVariantId = $(this).data('variant-id');
+                $(this).closest('form').find('.selected-size-input').val(selectedVariantId);
+            });
+
+            // Autoseleccionar el primer talle disponible al cargar (ignorando el +N)
+            $('.slider-card').each(function() {
+                $(this).find('.hover-size-box:not(.disabled):not(.extra-sizes-box)').first().click();
+            });
+
+            // ========================================================
+            // INTERCEPTAMOS EL FORMULARIO ORIGINAL
+            // ========================================================
+            $('.cart-slider-form').submit(function(e) {
+                e.preventDefault();
+
+                var form = $(this);
+                var selectedSize = form.find('.selected-size-input').val();
+
+                if (!selectedSize) {
+                    toastr.warning("Por favor, selecciona un talle antes de agregar al carrito.");
+                    return false;
+                }
+
+                var btn = form.find('.btn-add-cart-slider');
+                btn.prop('disabled', true);
+
+                $.ajax({
+                    url: '/Home/AddToCartAjax',
+                    type: 'POST',
+                    data: form.serialize(),
+                    success: function(response) {
+                        if (response.success) {
+                            toastr.success(response.message);
+
+                            var dotExists = $('#cart-icon-container').find('.cart-dot').length > 0;
+                            if (!dotExists) {
+                                $('#cart-icon-container').append('<span class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-dark rounded-circle cart-dot"><span class="visually-hidden">Items en carrito</span></span>');
+                            }
+                        } else {
+                            toastr.error(response.message);
+                        }
+                    },
+                    error: function(xhr) {
+                        if (xhr.status === 401) {
+                            window.location.href = '/Identity/Login';
+                        } else {
+                            toastr.error("Ocurrió un error al procesar la solicitud.");
+                        }
+                    },
+                    complete: function() {
+                        btn.prop('disabled', false);
+                    }
+                });
+            });
+
+        });
+    </script>
+}

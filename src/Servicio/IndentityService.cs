@@ -1,32 +1,42 @@
 ﻿using AutoMapper;
+using Azure.Core;
+using Dominio;
 using Dominio.Entidades;
 using Infraestructura;
+using IServicio.Dtos;
 using IServicio.Email;
 using IServicio.Identity;
 using IServicio.Identity.Dto;
 using IServicio.JwToken;
 using Lxf.Support.BuildingBlocks;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace Servicio
 {
     public class IndentityService : IIdentityService
     {
+        IPersonaClienteRepository _personaClienteRepository;
         private readonly LxfContext _db;
         private readonly UserManager<Usuario> _userManager;
         private readonly RoleManager<Role> _roleManager;
         private readonly IEmailSender _emailSender;
         private readonly IJwTokenGenerator _jwTokenGenerator;
+        private readonly IConfiguration _configuration;
         private readonly IMapper _mapper;
 
-        public IndentityService(LxfContext db, UserManager<Usuario> userManager, RoleManager<Role> roleManager, IJwTokenGenerator jwTokenGenerator, IEmailSender emailSender, IMapper mapper)
+        public IndentityService(IPersonaClienteRepository personaClienteRepository, LxfContext db, UserManager<Usuario> userManager, RoleManager<Role> roleManager,
+               IJwTokenGenerator jwTokenGenerator, IEmailSender emailSender, IConfiguration configuration, IMapper mapper)
         {
+            _personaClienteRepository = personaClienteRepository;
             _db = db;
             _userManager = userManager;
             _roleManager = roleManager;
+            _configuration = configuration;
             _emailSender = emailSender;
             _jwTokenGenerator = jwTokenGenerator;
             _mapper = mapper;
@@ -89,30 +99,35 @@ namespace Servicio
             return loginResponseDto;
         }
 
-        public async Task<UsuarioDto> Register(RegisterDto registerDto)
+        public async Task<IdentityResult> Register(RegisterDto registerDto)
         {
+            Dictionary<string, string> errors = [];
+            _personaClienteRepository.BeginTransaction();
+
             Usuario usuario = RegisterDtoToUsuario(registerDto);
+            var resultCreate = await _userManager.CreateAsync(usuario, registerDto.Password);
 
-            var result = await _userManager.CreateAsync(usuario, registerDto.Password);
-
-            if (result.Succeeded)
+            if (!resultCreate.Succeeded)
             {
-                var userToReturn = _db.Usuario.First(x => x.UserName == registerDto.Email);
-
-                return new()
-                {
-                    Email = registerDto.Email,
-                    Id = userToReturn.Id,
-                    Nombre = registerDto.Nombre,
-                    Celular = registerDto.Celular
-                };
+                resultCreate.Errors.ToList().ForEach(p => errors.Add(p.Code, p.Description));
+                throw new BadRequestException(errors);
             }
 
-            Dictionary<string, string> errors = [];
+            var resultAddRole = await _userManager.AddToRoleAsync(usuario, "Cliente");
 
-            result.Errors.ToList().ForEach(p => errors.Add(p.Code, p.Description));
+            if (!resultAddRole.Succeeded)
+            {
+                resultAddRole.Errors.ToList().ForEach(p => errors.Add(p.Code, p.Description));
+                throw new BadRequestException(errors);
+            }
 
-            throw new BadRequestException(errors);
+            var personaModel = RegisterDtoToPersonaCliente(registerDto);
+            _personaClienteRepository.Add(personaModel);
+            _personaClienteRepository.Save();
+
+            _personaClienteRepository.Commit();
+
+            return resultAddRole;
         }
 
         public async Task<UserToken> TokenPassword(string email)
@@ -153,20 +168,34 @@ namespace Servicio
             throw new ElementNotFoundException("No se encontro Usuario con el email especificado.");
         }
 
-        public bool SendMail(UserToken userToken, Message message)
+        public async Task<bool> SendMail(Message message)
         {
+            var tokenPassword = await TokenPassword(message.To);
+
+            var frontendUrl = _configuration.GetSection("UISettings:Url").Value;
+            var encodedToken = WebUtility.UrlEncode(tokenPassword.Token);
+            var encodedEmail = WebUtility.UrlEncode(message.To);
+            var callBackLink = $"{frontendUrl}/Identity/ResetPassword?token={encodedToken}&email={encodedEmail}";
+
+            message.Content = message.Content.Replace("{{URL_RESETEO}}", callBackLink);
+
             return _emailSender.SendEmail(message);
         }
 
         #region private methods
-        private Usuario RegisterDtoToUsuario(RegisterDto dto)
+        private Usuario RegisterDtoToUsuario(object? obj)
         {
-            return _mapper.Map<Usuario>(dto);
+            return _mapper.Map<Usuario>(obj);
         }
 
-        private UsuarioDto UsuarioToUsuarioDto(Usuario model)
+        private UsuarioDto UsuarioToUsuarioDto(object? obj)
         {
-            return _mapper.Map<UsuarioDto>(model);
+            return _mapper.Map<UsuarioDto>(obj);
+        }
+
+        private PersonaCliente RegisterDtoToPersonaCliente(object? obj)
+        {
+            return _mapper.Map<PersonaCliente>(obj);
         }
         #endregion
     }

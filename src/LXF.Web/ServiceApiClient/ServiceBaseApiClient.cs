@@ -72,15 +72,17 @@ namespace LXF.Web.ServiceApiClient
                 switch (apiRepsonse.StatusCode)
                 {
                     case HttpStatusCode.BadRequest:
-                        return ResponseFail(apiContent, "Bad Request");
+                        return ResponseFail(apiContent);
                     case HttpStatusCode.NotFound:
-                        return ResponseFail(apiContent, "Not Found");
+                        return ResponseFail(apiContent);
                     case HttpStatusCode.Forbidden:
-                        return new() { IsSuccess = false, Message = "Access Denied" };
+                        return ResponseFail(apiContent);
                     case HttpStatusCode.Unauthorized:
-                        return new() { IsSuccess = false, Message = "Unauthorized" };
+                        return ResponseFail(apiContent);
+                    case HttpStatusCode.Conflict:
+                        return ResponseFail(apiContent);
                     case HttpStatusCode.InternalServerError:
-                        return new() { IsSuccess = false, Message = "Internal Server Error" };
+                        return ResponseFail(apiContent);
                     default: return ResponseOk(apiContent);      
                 }
             }
@@ -100,9 +102,9 @@ namespace LXF.Web.ServiceApiClient
            new (){ IsSuccess = true, Message = "Ok", Result = apiContent };
         }
 
-        private static ResponseViewModel? ResponseFail(string apiContent, string statusCode)
+        private static ResponseViewModel? ResponseFail(string apiContent)
         {
-            return new(){ IsSuccess = false, Message =$"{statusCode} - {apiContent.Substring(apiContent.IndexOf("detail\":\"") + "detail\":\"".Length).Split('\"')[0]}" };
+            return new(){ IsSuccess = false, Message =$"{apiContent.Substring(apiContent.IndexOf("detail\":\"") + "detail\":\"".Length).Split('\"')[0]}" };
         }
         #endregion
     }

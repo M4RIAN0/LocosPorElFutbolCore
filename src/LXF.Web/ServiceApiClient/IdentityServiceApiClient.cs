@@ -1,6 +1,7 @@
 ﻿using LXF.Web.Models.ViewModels;
 using LXF.Web.ServiceApiClient.IServiceApiClient;
 using LXF.Web.Utility;
+using Microsoft.AspNetCore.Identity.Data;
 
 namespace LXF.Web.ServiceApiClient
 {
@@ -40,6 +41,26 @@ namespace LXF.Web.ServiceApiClient
                 ApiType = SD.ApiType.POST,
                 Data = vm,
                 Url = $"{SD.LXFApiBase}/api/Identity/Register"
+            }, withBearer: false);
+        }
+
+        public async Task<ResponseViewModel?> ForgotPasswordAsync(ForgotPasswordViewModel vm)
+        {
+            return await _baseServiceApiClient.SendAsync(new RequestViewModel
+            {
+                ApiType = SD.ApiType.POST,
+                Data = vm,
+                Url = $"{SD.LXFApiBase}/api/Identity/ForgotPassword"
+            }, withBearer: false);
+        }
+
+        public async Task<ResponseViewModel?> ResetPasswordAsync(ResetPasswordViewModel vm)
+        {
+            return await _baseServiceApiClient.SendAsync(new RequestViewModel
+            {
+                ApiType = SD.ApiType.POST,
+                Data = vm,
+                Url = $"{SD.LXFApiBase}/api/Identity/ResetPassword"
             }, withBearer: false);
         }
     }

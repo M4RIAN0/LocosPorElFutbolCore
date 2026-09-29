@@ -23,7 +23,7 @@ namespace IServicio.TemporalObject
             return Guid.NewGuid().ToString("N");
         }
     
-        // ⭐ 1. Guardar la Colección Genérica ⭐
+        //  1. Guardar la Colección Genérica 
         public async Task StoreObjectsCollectionAsync<T>(string reference, IEnumerable<T> coleccion)
         {
             if (coleccion == null)
@@ -39,7 +39,7 @@ namespace IServicio.TemporalObject
             await Task.CompletedTask;
         }
     
-        // ⭐ 2. Recuperar la Colección Genérica ⭐
+        //  2. Recuperar la Colección Genérica 
         public Task<IEnumerable<T>?> RetrieveObjectsCollectionAsync<T>(string reference)
         {
             // Intenta obtener el valor de la caché. 
@@ -53,7 +53,7 @@ namespace IServicio.TemporalObject
             return Task.FromResult<IEnumerable<T>?>(default);
         }
     
-        // ⭐ 3. Eliminar la Colección Temporal ⭐
+        //  3. Eliminar la Colección Temporal 
         public void RemoveObjectsCollectionTemporal(string reference)
         {
             // Remove elimina la clave y el valor asociado de la caché.

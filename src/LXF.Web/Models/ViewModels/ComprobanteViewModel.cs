@@ -1,12 +1,16 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LXF.Web.Models.ViewModels
 {
     public class ComprobanteViewModel
     {
-        public required string Fecha { get; set; }
+        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
+        public string Fecha { get; set; }
         public IEnumerable<DetalleComprobanteViewModel> DetalleComprobantes { get; set; }
-        public required decimal Total { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessage = "El campo {0} es obligatorio.")]
+        [Column(TypeName = "decimal(18,2)")]
+        public  decimal Total { get; set; }
         public int ClienteId { get; set; }
         public int FacturaId { get; set; }
         public int EnvioId { get; set; }
@@ -14,9 +18,11 @@ namespace LXF.Web.Models.ViewModels
 
     public class ComprobanteGetViewModel : ViewModelBase
     {
+        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public string Fecha { get; init; }
         public IEnumerable<DetalleComprobanteGetViewModel> DetalleComprobantes { get; init; }
 
+        [Required(AllowEmptyStrings = false, ErrorMessage = "El campo {0} es obligatorio.")]
         [Column(TypeName = "decimal(18,2)")]
         public decimal Total { get; init; }
         public int ClienteId { get; init; }

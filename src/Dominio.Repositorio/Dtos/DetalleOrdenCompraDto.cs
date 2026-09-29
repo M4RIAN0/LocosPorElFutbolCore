@@ -7,9 +7,9 @@ namespace Dominio.Repositorio.Dtos
         public int Cantidad { get; set; }
         public decimal Precio { get; set; }
         public decimal SubTotal { get; set; }
-        public int ProductoId { get; set; }
+        public int ProductoVarianteId { get; set; }
         public int OrdenComprasId { get; set; }
-        public ProductoDto? Producto { get; init; }
+        public ProductoVarianteDto? ProductoVariante { get; init; }
 
     }
 
@@ -23,8 +23,8 @@ namespace Dominio.Repositorio.Dtos
         public int Cantidad { get; init; }
         public decimal Precio { get; init; }
         public decimal SubTotal { get; init; }
-        public int ProductoId { get; init; }
+        public int ProductoVarianteId { get; init; }
         public int OrdenComprasId { get; init; }
-        public ProductoGetDto Producto { get; init; }
+        public ProductoVarianteGetDto ProductoVariante { get; init; }
     }
 }

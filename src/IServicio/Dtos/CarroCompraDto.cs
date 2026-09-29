@@ -1,4 +1,5 @@
 ﻿using Servicio.Base;
+using System;
 using System.Collections.Generic;
 
 namespace IServicio.Dtos
@@ -8,6 +9,7 @@ namespace IServicio.Dtos
         public string? UserId { get; set; }
         public IEnumerable<DetalleCarroCompraDto> DetalleCarroCompras { get; set; }
         public decimal Total { get; set; }
+        public DateTime LastModified { get; set; }
     }
 
     public class CarroCompraPutDto: DtoBase
@@ -15,6 +17,7 @@ namespace IServicio.Dtos
         public string? UserId { get; set; }
         public IEnumerable<DetalleCarroCompraPutDto> DetalleCarroCompras { get; set; }
         public decimal Total { get; set; }
+        public DateTime LastModified { get; set; }
     }
 
     public class CarroCompraGetDto : DtoBase
@@ -22,5 +25,6 @@ namespace IServicio.Dtos
         public string? UserId { get; init; }
         public IEnumerable<DetalleCarroCompraGetDto> DetalleCarroCompras { get; init; }
         public decimal Total { get; init; }
+        public DateTime LastModified { get; init; }
     }
 }

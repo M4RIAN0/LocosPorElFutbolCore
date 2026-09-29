@@ -36,14 +36,7 @@ public class FacturaPDFGenerator
             {
                 col.Item().Row(r =>
                 {
-                    if (System.IO.File.Exists(rutaLogoPath))
-                    {
-                        r.ConstantItem(50).Height(50).Image(rutaLogoPath);
-                    }
-                    else
-                    {
-                        r.ConstantItem(50).Height(50).Background(Colors.Grey.Lighten3).AlignCenter().AlignMiddle().Text("LXF").Bold();
-                    }
+                    r.ConstantItem(50).Height(50).AlignCenter().AlignMiddle().Text("LXF").FontColor(Colors.Black).FontSize(24).Bold();
 
                     r.RelativeItem().PaddingLeft(5).Column(c =>
                     {
@@ -77,7 +70,6 @@ public class FacturaPDFGenerator
     {
         container.PaddingTop(5).Column(col =>
         {
-            // Datos del Comprador (Receptor) - 100% Mapeados desde el ViewModel
             col.Item().Border(1).BorderColor(Colors.Black).Padding(4).Column(c =>
             {
                 c.Item().Row(r =>
@@ -160,8 +152,12 @@ public class FacturaPDFGenerator
 
                 foreach (var item in model.DetalleComprobantes)
                 {
-                    table.Cell().BorderLeft(1).BorderRight(1).Padding(2).Text(item.ProductoNombre.ToUpper());
-                    table.Cell().BorderLeft(1).BorderRight(1).Padding(2).AlignRight().Text($"{item.Cantidad:N2}");
+                    table.Cell().BorderLeft(1).BorderRight(1).Padding(2).Text(text =>
+                    {
+                        text.Span($"{item.ProductoNombre.ToUpper()} ");
+                        text.Span($"(Talle {item.Talle})").FontSize(7);
+                    });
+                    table.Cell().BorderLeft(1).BorderRight(1).Padding(2).AlignRight().Text($"{item.Cantidad}");
                     table.Cell().BorderLeft(1).BorderRight(1).Padding(2).AlignRight().Text($"{item.Precio:N2}");
                     table.Cell().BorderLeft(1).BorderRight(1).Padding(2).AlignRight().Text($"{item.SubTotal:N2}");
                 }
@@ -169,13 +165,13 @@ public class FacturaPDFGenerator
                 if (model.Envio != null && model.Envio.Monto > 0)
                 {
                     table.Cell().BorderLeft(1).BorderRight(1).Padding(2).Text("COSTO DE ENVIO");
-                    table.Cell().BorderLeft(1).BorderRight(1).Padding(2).AlignRight().Text("1,00");
+                    table.Cell().BorderLeft(1).BorderRight(1).Padding(2).AlignRight().Text("1");
                     table.Cell().BorderLeft(1).BorderRight(1).Padding(2).AlignRight().Text($"{model.Envio.Monto:N2}");
                     table.Cell().BorderLeft(1).BorderRight(1).Padding(2).AlignRight().Text($"{model.Envio.Monto:N2}");
                 }
             });
 
-            // Régimen de Transparencia Fiscal calculado dinámicamente según el total
+            // Régimen de Transparencia Fiscal 
             decimal ivaContenido = model.Total * 0.17355m;
             col.Item().PaddingTop(20).Width(260).Border(1).BorderColor(Colors.Black).Padding(3).Column(tf =>
             {
@@ -224,8 +220,6 @@ public class FacturaPDFGenerator
             });
 
             col.Item().PaddingTop(4).AlignCenter().Text("ESTA ES UNA REPRESENTACIÓN GRÁFICA DE UN COMPROBANTE FICTICIO EMITIDO A MODO DE SIMULACIÓN.").FontSize(7).Italic().FontColor(Colors.Grey.Darken1);
-
-            col.Item().PaddingTop(2).AlignCenter().Text("Created By MAPE ✰").FontSize(8.5f).Bold().FontColor(Colors.Grey.Darken2);
         });
     }
 }

@@ -8,6 +8,7 @@ namespace IServicio
         void PersistObjects(TransactionObjectsDto dto);
         IEnumerable<ComprobanteGetDto> GetComprobantesByClienteId(int clienteId);
         ComprobanteGetDto GetComprobantebyId(int id);
+        bool SendVentaMail(EmailVentaDto dto);
 
 
     }

@@ -31,18 +31,19 @@ namespace Infraestructura.Gateways
             var mpItems = dto.DetalleOrdenCompras.ToList().Select(item => new PreferenceItemRequest
             {
                 // Título, cantidad y precio son obligatorios
-                Title = item.Producto.Nombre,
-                Description = item.Producto.Descripcion,
+                Title = item.ProductoVariante.Producto.Nombre,
+                Description = item.ProductoVariante.Producto.Descripcion,
                 Quantity = item.Cantidad,
                 UnitPrice = item.Precio,
                 CurrencyId = "ARS",
-                Id = item.ProductoId.ToString()
+                Id = item.ProductoVarianteId.ToString()
             }).ToList();
 
             // 3. Crear el objeto de request de la preferencia
             var request = new PreferenceRequest
             {
                 Items = mpItems,
+                
 
                 // Referencia externa: Clave para ligar el pago a tu OrdenCompra
                 ExternalReference = externalReferenceId,
@@ -63,6 +64,14 @@ namespace Infraestructura.Gateways
                 // Payer = new PreferencePayerRequest { ... }
             };
 
+            if (dto.CostoEnvio > 0 && dto != null)
+            {
+                request.Shipments = new PreferenceShipmentsRequest
+                {
+                    Cost = dto.CostoEnvio
+                };
+            }
+
             // 4. Llamar al SDK de Mercado Pago
             var client = new PreferenceClient();
             Preference preference = await client.CreateAsync(request);
@@ -75,7 +84,7 @@ namespace Infraestructura.Gateways
             }
 
             // Manejo de errores si la API de MP falló
-            throw new InvalidOperationException($"Error al crear url de pago: {preference}");
+            throw new InvalidOperationException($"Error al crear url de pago:");/* {preference}");*/
         }
     }
 }

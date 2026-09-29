@@ -14,16 +14,17 @@ namespace LxF.API
             {
                 config.CreateMap<Usuario, UsuarioDto>()
                 .ForMember(vm => vm.Celular, m => m.MapFrom(u => u.PhoneNumber));
+                config.CreateMap<UsuarioDto, Usuario>()
+               .ForMember(vm => vm.NormalizedEmail, m => m.MapFrom(u => u.Email.ToLower()));
 
                 config.CreateMap<RegisterDto, Usuario>()
-                .ForMember(vm => vm.Nombre, m => m.MapFrom(u => u.Nombre))
+                .ForMember(vm => vm.Nombre, m => m.MapFrom(u => u.NombreCompleto))
                 .ForMember(vm => vm.UserName, m => m.MapFrom(u => u.Email))
                 .ForMember(vm => vm.NormalizedUserName, m => m.MapFrom(u => u.Email.ToUpper()))
                 .ForMember(vm => vm.NormalizedEmail, m => m.MapFrom(u => u.Email.ToUpper()))
                 .ForMember(vm => vm.PhoneNumber, m => m.MapFrom(u => u.Celular));
-
-                config.CreateMap<UsuarioDto, Usuario>()
-               .ForMember(vm => vm.NormalizedEmail, m => m.MapFrom(u => u.Email.ToLower()));
+                config.CreateMap<RegisterDto, PersonaCliente>()
+                .ForMember(vm => vm.FechaNacimiento, m => m.MapFrom(u => DateOnly.Parse(u.FechaNacimiento)));
 
                 config.CreateMap<PersonaClienteDto, PersonaCliente>()
                 .ForMember(vm => vm.FechaNacimiento, m => m.MapFrom(u => DateOnly.Parse(u.FechaNacimiento)));
@@ -45,29 +46,33 @@ namespace LxF.API
                 config.CreateMap<Producto, ProductoGetDto>()
                 .ForMember(vm => vm.Categoria, m => m.MapFrom(u => u.Categoria.Descripcion))
                 .ForMember(vm => vm.Marca, m => m.MapFrom(u => u.Marca.Descripcion));
+                config.CreateMap<ProductoGetDto, Producto>()
+                .ForMember(dest => dest.Categoria, opt => opt.Ignore())
+                .ForMember(dest => dest.Marca, opt => opt.Ignore());
+                config.CreateMap<Producto, ProductoResumenDto>();
+
+                config.CreateMap<ProductoVarianteDto, ProductoVariante>();
+                config.CreateMap<ProductoVariante, ProductoVarianteGetDto>();
+                config.CreateMap<ProductoVariantePutDto, ProductoVariante>();
+                config.CreateMap<ProductoVarianteGetDto, ProductoVariante>()
+                .ForMember(dest => dest.Producto, opt => opt.Ignore());
 
                 config.CreateMap<Provincia, ProvinciaGetDto>();
 
 
                 config.CreateMap<Localidad, LocalidadGetDto>();
 
-
-                config.CreateMap<MovimientoDto, Movimiento>()
-                .ForMember(vm => vm.Fecha, m => m.MapFrom(u => DateOnly.Parse(u.Fecha)));
-                config.CreateMap<Movimiento, MovimientoGetDto>()
-                .ForMember(vm => vm.Fecha, m => m.MapFrom(u => u.Fecha.ToString()));
-
                 config.CreateMap<ComprobanteDto, Comprobante>()
-                .ForMember(vm => vm.Fecha, opt => opt.MapFrom(u => DateOnly.ParseExact(u.Fecha, "MM/dd/yyyy")));
+                .ForMember(vm => vm.Fecha, opt => opt.MapFrom(u => DateOnly.ParseExact(u.Fecha, "yyyy-mm-dd")));
                 config.CreateMap<Comprobante, ComprobanteGetDto>()
-                .ForMember(vm => vm.Fecha, m => m.MapFrom(u => u.Fecha.ToString("MM/dd/yyyy")));
+                .ForMember(vm => vm.Fecha, m => m.MapFrom(u => u.Fecha.ToString("yyyy-MM-dd")));
 
                 config.CreateMap<DetalleComprobanteDto, DetalleComprobante>();
                 config.CreateMap<DetalleComprobante, DetalleComprobanteGetDto>().
                 ForMember(vm => vm.Producto, opt => opt.MapFrom(u => u.Producto));
 
                 config.CreateMap<FacturaDto, Factura>()
-                .ForMember(vm => vm.Fecha, opt => opt.MapFrom(u => DateOnly.ParseExact(u.Fecha, "MM/dd/yyyy")));
+                .ForMember(vm => vm.Fecha, opt => opt.MapFrom(u => DateOnly.ParseExact(u.Fecha, "yyyy-mm-dd")));
                 config.CreateMap<Factura, FacturaGetDto>()
                 .ForMember(vm => vm.Fecha, m => m.MapFrom(u => u.Fecha.ToString()));
 
@@ -79,8 +84,7 @@ namespace LxF.API
 
                 config.CreateMap<DetalleCarroCompra, DetalleCarroCompraDto>();
                 config.CreateMap<DetalleCarroCompra, DetalleCarroCompraPutDto>();
-                config.CreateMap<DetalleCarroCompra, DetalleCarroCompraGetDto>().
-                ForMember(vm => vm.Producto, opt => opt.MapFrom(u => u.Producto));
+                config.CreateMap<DetalleCarroCompra, DetalleCarroCompraGetDto>();
                 config.CreateMap<DetalleCarroCompraDto, DetalleCarroCompra>();
                 config.CreateMap<DetalleCarroCompraPutDto, DetalleCarroCompra>();
 
@@ -88,13 +92,13 @@ namespace LxF.API
                 config.CreateMap<OrdenCompra, OrdenCompraPutDto>();
                 config.CreateMap<OrdenCompra, OrdenCompraGetDto>();
                 config.CreateMap<OrdenCompraDto, OrdenCompra>()
-                .ForMember(vm => vm.Fecha, opt => opt.MapFrom(u => DateOnly.ParseExact(u.Fecha, "MM/dd/yyyy")));
+                .ForMember(vm => vm.Fecha, opt => opt.MapFrom(u => DateOnly.ParseExact(u.Fecha, "yyyy-mm-dd")));
                 config.CreateMap<OrdenCompraPutDto, OrdenCompra>();
 
                 config.CreateMap<DetalleOrdenCompra, DetalleOrdenCompraDto>();
                 config.CreateMap<DetalleOrdenCompra, DetalleOrdenCompraPutDto>();
-                config.CreateMap<DetalleOrdenCompra, DetalleOrdenCompraGetDto>().
-                ForMember(vm => vm.Producto, opt => opt.MapFrom(u => u.Producto));
+                config.CreateMap<DetalleOrdenCompra, DetalleOrdenCompraGetDto>();
+                //ForMember(vm => vm.ProductoVariante, opt => opt.MapFrom(u => u.ProductoVariante));
                 config.CreateMap<DetalleOrdenCompraDto, DetalleOrdenCompra>();
                 config.CreateMap<DetalleOrdenCompraPutDto, DetalleOrdenCompra>();
 

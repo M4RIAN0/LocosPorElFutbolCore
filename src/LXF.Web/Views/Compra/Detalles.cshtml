@@ -32,7 +32,7 @@
                                 Entregado
                             </h5>
                             <p class="mb-1 fs-5 fw-bold text-white">
-                                Llegó el @Model.Fecha
+                                Llegó el @(DateTime.Parse(Model.Fecha).ToString("dd/MM/yyyy"))
                                 <span style="color: @colorEntregado; margin-left: 5px;">
                                     <i class="bi bi-lightning-fill"></i>
                                 </span>
@@ -83,8 +83,13 @@
 
             <!-- Paquete -->
             <div class="card card-custom mb-3">
-                <div class="card-header border-secondary bg-transparent py-3">
+                <div class="card-header border-secondary bg-transparent py-3 d-flex justify-content-between align-items-center">
                     <span class="fw-bold text-white">Paquete</span>
+                    <!-- Encabezados de precios -->
+                    <div class="text-secondary small d-flex justify-content-end" style="width: 250px;">
+                        <span style="width: 120px; text-align: right;">Precio unitario</span>
+                        <span style="width: 120px; text-align: right;">Total</span>
+                    </div>
                 </div>
                 <div class="card-body">
                     @foreach (var item in Model.DetalleComprobantes)
@@ -96,11 +101,13 @@
                             <div class="ms-3 flex-grow-1">
                                 <h6 class="mb-0 text-white fw-normal">@item.ProductoNombre</h6>
                                 <small class="text-secondary">
-                                    @item.Cantidad @(item.Cantidad > 1 ? "unidades" : "unidad")
+                                    Talle @item.Talle (@item.Cantidad @(item.Cantidad > 1 ? "unidades" : "unidad"))
                                 </small>
                             </div>
-                            <div class="text-end text-white">
-                                <span>$ @item.Precio.ToString("N2")</span>
+                            <!-- Valores de precios encolumnados -->
+                            <div class="d-flex justify-content-end align-items-center" style="width: 250px;">
+                                <span class="text-secondary" style="width: 120px; text-align: right;">$ @item.Precio.ToString("N2")</span>
+                                <span class="text-white fw-bold" style="width: 120px; text-align: right;">$ @((item.Precio * item.Cantidad).ToString("N2"))</span>
                             </div>
                         </div>
                     }

@@ -37,5 +37,6 @@ namespace Dominio.Repositorio.Dtos
         public string Email { get; init; }
         public string Fecha { get; init; }
         public string Status { get; init; }
+        public decimal? CostoEnvio { get; init; }
     }
 }

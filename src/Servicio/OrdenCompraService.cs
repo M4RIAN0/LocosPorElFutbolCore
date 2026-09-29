@@ -21,12 +21,12 @@ namespace Servicio
 
         public OrdenCompraGetDto GetLast()
         {
-            return ToOrdenCompraGetDto(_ordenRepository.OrderByDescending(x => x.ID, "DetalleOrdenCompras.Producto").FirstOrDefault());
+            return ToOrdenCompraGetDto(_ordenRepository.OrderByDescending(x => x.ID, "DetalleOrdenCompras.ProductoVariante.Producto").FirstOrDefault());
         }
         #region Private Methods
-        private OrdenCompraGetDto ToOrdenCompraGetDto(OrdenCompra model)
+        private OrdenCompraGetDto ToOrdenCompraGetDto(object? obj)
         {
-            return _mapper.Map<OrdenCompraGetDto>(model);
+            return _mapper.Map<OrdenCompraGetDto>(obj);
         }
         #endregion
     }

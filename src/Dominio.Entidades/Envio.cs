@@ -8,26 +8,22 @@ namespace Dominio.Entidades
     [Table("Envios")]
     public partial class Envio : MasterEntityModel
     {
-        [Required(AllowEmptyStrings = false, ErrorMessage = "El campo {0} es obligatorio.")]
-        [StringLength(100, ErrorMessage = "El campo {0} no debe superar los {1} caracteres.")]
+        [Required]
         public string Persona { get; set; }
 
-        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
+        [Required]
         public string Email { get; set; }
 
-        [Required(AllowEmptyStrings = false, ErrorMessage = "El campo {0} es obligatorio")]
-        [StringLength(10, ErrorMessage = "El campo {0} no debe superar los {1} caractere")]
+        [Required]
         public string Celular { get; set; }
 
-        [Required(AllowEmptyStrings = false, ErrorMessage = "El campo {0} es obligatorio.")]
+        [Required]
         public string Direccion { get; set; }
 
-        [Required(AllowEmptyStrings = false, ErrorMessage = "El campo {0} es obligatorio.")]
-        [StringLength(8, ErrorMessage = "El campo {0} no debe superar los {1} caracteres.")]
+        [Required]
         public string Dni { get; set; }
 
-        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
-        [Column(TypeName = "decimal(18,2)")]
+        [Required]
         public decimal Monto { get; set; }
         public string Estado { get; set; }
 

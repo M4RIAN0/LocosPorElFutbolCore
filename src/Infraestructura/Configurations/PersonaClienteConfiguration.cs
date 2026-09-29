@@ -9,35 +9,24 @@ namespace Infraestructura.Configurations
     {
         public void Configure(EntityTypeBuilder<PersonaCliente> builder)
         {
-            builder.HasIndex(m => new { m.Nombre, m.Apellido, m.Dni})
+            builder.HasIndex(m => new { m.Nombre, m.Apellido, m.Dni })
             .IsUnique()
-            .HasDatabaseName("IX_PersonaCliente_Nombre_Apellido_Dni"); // Nombre del índice en la base de datos
+            .HasDatabaseName("IX_PersonaCliente_Nombre_Apellido_Dni");
 
             builder.HasData(
                new PersonaCliente
                {
                    ID = 1,
-                   Apellido = "Martinez",
-                   Nombre = "Marcos",
-                   Dni = "38060619",
-                   Direccion = "Jujuy 362",
-                   Sexo = "Masculino",
-                   FechaNacimiento = DateOnly.FromDateTime(new DateTime(1994, 4, 22)),
-                   Celular = "123",
-                   Email = "marcosmartinezmelek@gmail.com"
-               },
-               new PersonaCliente
-               {
-                   ID = 2,
-                   Apellido = "Garcia",
-                   Nombre = "Juan Carlos",
-                   Dni = "45607656",
-                   Direccion = "Heras 1255",
-                   Sexo = "Masculino",
-                   FechaNacimiento = DateOnly.FromDateTime(new DateTime(1994, 4, 22)),
-                   Celular = "34567",
-                   Email = "juan@gmail.com"
-               });
+                   Apellido = "Martinez Melek",
+                   Nombre = "Maria Lourdes",
+                   Dni = "39140888",
+                   Direccion = "Matienzo 1870, Planta baja B, San Miguel de Tucumán, Tucumán",
+                   Sexo = "Femenino",
+                   FechaNacimiento = DateOnly.FromDateTime(new DateTime(1995, 8, 12)),
+                   Celular = "3814498305",
+                   Email = "admin@gmail.com"
+               }
+            );
         }
     }
 }

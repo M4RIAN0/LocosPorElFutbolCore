@@ -1,4 +1,5 @@
 ﻿using Dominio.Repositorio.Dtos;
+using IServicio.Email;
 
 namespace IServicio.Dtos
 {
@@ -8,6 +9,7 @@ namespace IServicio.Dtos
         public ComprobanteDto Comprobante { get; set; }
         public FacturaDto Factura { get; set; }
         public EnvioDto Envio { get; set; }
-        public int CarroId { get; set; } 
+        public int CarroId { get; set; }
+        public EmailVentaDto Email { get; set; }
     }
 }

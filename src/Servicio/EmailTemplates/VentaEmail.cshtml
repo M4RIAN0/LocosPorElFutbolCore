@@ -1,0 +1,169 @@
+@using LXF.Web.Models.ViewModels
+@model OrdenCompraGetViewModel
+
+@{
+    // Reemplaza esto por tu dominio real cuando subas la API a producción
+    string baseUrl = "https://tudominio.com";
+    decimal subtotalCalculado = 0;
+
+    string direccionEnvio = Model.Envio != null ? Model.Envio.Direccion : "Retiro en sucursal";
+    string recibeEnvio = Model.Envio != null ? Model.Envio.Persona : Model.Nombre;
+    decimal costoEnvio = Model.Envio != null ? Model.Envio.Monto : 0;
+    string metodoPago = Model.Factura != null ? Model.Factura.TipoPago : "A convenir";
+    string dniComprador = Model.Factura != null ? Model.Factura.Dni : "-";
+}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body style="margin: 0; padding: 0; background-color: #e9ecef; font-family: Arial, Helvetica, sans-serif; color: #212529;">
+    <table width="100%" border="0" cellspacing="0" cellpadding="0" style="background-color: #e9ecef; padding: 40px 15px;">
+        <tr>
+            <td align="center">
+                <!-- Contenedor Principal -->
+                <table width="600" border="0" cellspacing="0" cellpadding="0" style="background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+                    
+                    <!-- Header Oscuro -->
+                    <tr>
+                        <td align="center" style="background-color: #212529; padding: 35px 20px;">
+                            <h1 style="color: #ffffff; margin: 0; font-size: 26px; letter-spacing: 2px; text-transform: uppercase;">LXF</h1>
+                            <p style="color: #adb5bd; margin: 8px 0 0 0; font-size: 14px;">Confirmación de Pedido</p>
+                        </td>
+                    </tr>
+
+                    <!-- Saludo -->
+                    <tr>
+                        <td style="padding: 35px 35px 20px 35px;">
+                            <h2 style="margin: 0 0 15px 0; color: #212529; font-size: 20px;">¡Hola, @Model.Nombre!</h2>
+                            <p style="margin: 0; color: #495057; line-height: 1.6; font-size: 15px;">
+                                Recibimos tu pago exitosamente el día <strong>@Model.Fecha</strong>. Ya estamos preparando tu pedido para que lo recibas lo antes posible.
+                            </p>
+                        </td>
+                    </tr>
+
+                    <!-- Cajas de Información (Envío y Pago) -->
+                    <tr>
+                        <td style="padding: 0 35px 25px 35px;">
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                <tr>
+                                    <td width="48%" valign="top" style="background-color: #f8f9fa; border: 1px solid #dee2e6; border-radius: 6px; padding: 15px;">
+                                        <h3 style="margin: 0 0 10px 0; font-size: 13px; color: #6c757d; text-transform: uppercase; letter-spacing: 1px;">Datos de Envío</h3>
+                                        <p style="margin: 0; color: #212529; font-size: 14px; line-height: 1.5;">
+                                            <strong>@recibeEnvio</strong><br>
+                                            @direccionEnvio<br>
+                                        </p>
+                                    </td>
+                                    <td width="4%"></td>
+                                    <td width="48%" valign="top" style="background-color: #f8f9fa; border: 1px solid #dee2e6; border-radius: 6px; padding: 15px;">
+                                        <h3 style="margin: 0 0 10px 0; font-size: 13px; color: #6c757d; text-transform: uppercase; letter-spacing: 1px;">Facturación</h3>
+                                        <p style="margin: 0; color: #212529; font-size: 14px; line-height: 1.5;">
+                                            <strong>Método:</strong> @metodoPago<br>
+                                            <strong>DNI:</strong> @dniComprador
+                                        </p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- Detalle de Productos -->
+                    <tr>
+                        <td style="padding: 0 35px 15px 35px;">
+                            <h3 style="margin: 0 0 10px 0; font-size: 15px; color: #212529; border-bottom: 2px solid #343a40; padding-bottom: 8px;">Resumen de la compra</h3>
+                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                <thead>
+                                    <tr>
+                                        <th align="left" style="padding: 12px 12px 12px 0; color: #6c757d; font-size: 12px; text-transform: uppercase; border-bottom: 1px solid #dee2e6;">Artículo</th>
+                                        <th align="center" style="padding: 12px; color: #6c757d; font-size: 12px; text-transform: uppercase; border-bottom: 1px solid #dee2e6;">Cant.</th>
+                                        <th align="right" style="padding: 12px 0 12px 12px; color: #6c757d; font-size: 12px; text-transform: uppercase; border-bottom: 1px solid #dee2e6;">Subtotal</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model.DetalleOrdenCompras != null)
+                                    {
+                                        foreach (var item in Model.DetalleOrdenCompras)
+                                        {
+                                            subtotalCalculado += item.SubTotal;
+
+                                            string nombreProducto = item.ProductoVariante?.Producto?.Nombre ?? "Producto";
+                                            string talle = item.ProductoVariante?.Talle ?? "-";
+
+                                            string rutaRelativa = item.ProductoVariante?.Producto?.ImagenUrl ?? "";
+                                            string imagenUrl = rutaRelativa.StartsWith("/")
+                                                                ? $"{baseUrl}{rutaRelativa}"
+                                                                : (string.IsNullOrEmpty(rutaRelativa) ? "https://placehold.co/100" : rutaRelativa);
+
+                                            <tr>
+                                                <td style="padding: 15px 12px; border-bottom: 1px solid #dee2e6;">
+                                                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                        <tr>
+                                                            <td width="50" valign="middle">
+                                                                <img src="@imagenUrl" alt="@nombreProducto" width="45" height="45" style="display: block; border-radius: 4px; object-fit: contain; background-color: #f8f9fa;" />
+                                                            </td>
+                                                            <td valign="middle" style="padding-left: 10px;">
+                                                                <strong style="color: #212529; font-size: 14px;">@nombreProducto</strong><br>
+                                                                <span style="font-size: 12px; color: #6c757d;">Talle: @talle</span>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                                <td align="center" style="padding: 15px 12px; border-bottom: 1px solid #dee2e6; color: #495057; font-size: 14px;">
+                                                    @item.Cantidad
+                                                </td>
+                                                <td align="right" style="padding: 15px 12px; border-bottom: 1px solid #dee2e6; color: #495057; font-size: 14px; font-weight: bold;">
+                                                    $@item.Precio.ToString("N0")
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- Totales -->
+                    <tr>
+                        <td align="right" style="padding: 0 35px 35px 35px;">
+                            <table width="250" border="0" cellspacing="0" cellpadding="0" align="right">
+                                <tr>
+                                    <td align="left" style="padding: 8px 0; color: #6c757d; font-size: 14px;">Subtotal productos:</td>
+                                    <td align="right" style="padding: 8px 0; color: #212529; font-size: 14px; font-weight: bold;">$@subtotalCalculado.ToString("N0")</td>
+                                </tr>
+                                <tr>
+                                    <td align="left" style="padding: 8px 0; color: #6c757d; font-size: 14px; border-bottom: 1px solid #dee2e6;">Costo de envío:</td>
+                                    <td align="right" style="padding: 8px 0; color: #212529; font-size: 14px; font-weight: bold; border-bottom: 1px solid #dee2e6;">$@costoEnvio.ToString("N0")</td>
+                                </tr>
+                                <tr>
+                                    <td align="left" style="padding: 15px 0 0 0; color: #212529; font-size: 16px; font-weight: bold;">Total Abonado:</td>
+                                    <td align="right" style="padding: 15px 0 0 0; color: #212529; font-size: 20px; font-weight: bold;">$@Model.Total.ToString("N0")</td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <!-- Footer Pro (Simplificado) -->
+                    <tr>
+                        <td align="center" style="padding: 35px 20px; background-color: #f8f9fa; border-top: 1px solid #dee2e6;">
+                            <!-- Info Legal y Dirección -->
+                            <p style="color: #6c757d; font-size: 12px; line-height: 1.6; margin: 0 0 15px 0;">
+                                <strong>LXF Deportes</strong><br>
+                                Casa Central: 25 de Mayo 230, San Miguel de Tucumán.<br>
+                                © 2026 Todos los derechos reservados.
+                            </p>
+
+                            <!-- Disclaimer Automático -->
+                            <p style="color: #adb5bd; font-size: 11px; line-height: 1.5; margin: 0;">
+                                Recibes este correo porque realizaste una transacción en nuestra plataforma online.<br>
+                                Por favor no respondas a este mensaje generado automáticamente.
+                            </p>
+                        </td>
+                    </tr>
+
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>
