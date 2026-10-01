@@ -74,6 +74,12 @@ namespace LXF.Web.Controllers
                 return NotFound("No se encontró el comprobante o no se pudo generar la factura.");
             }
 
+            // 1. Armas el nombre personalizable para el archivo usando los datos de tu comprobante
+            string nombreArchivo = $"Factura_B_{comprobanteGetVM.Id}.pdf";
+
+            // 2. Le indicas al navegador que lo abra en la pestaña (inline) pero con este nombre específico
+            Response.Headers.Append("Content-Disposition", $"inline; filename={nombreArchivo}");
+
             return File(pdfBytes, "application/pdf");
         }
 

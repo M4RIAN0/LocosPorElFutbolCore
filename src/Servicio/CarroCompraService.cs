@@ -156,6 +156,12 @@ namespace Servicio
             _carroRepository.Commit();
         }
 
+        public bool GetAnyWithProductId(int productId)
+        {
+            var result = _carroRepository.GetByFilter(x => x.DetalleCarroCompras.Any(d => d.ProductoVariante.ProductoId == productId));
+            return result.Any();
+        }
+
         #region Private Methods
         private void EditValuesDetalleCarroCompra(CarroCompraPutDto dto)
         {
@@ -206,6 +212,7 @@ namespace Servicio
         {
             return _mapper.Map<DetalleCarroCompra>(dto);
         }
+
         #endregion
     }
 }

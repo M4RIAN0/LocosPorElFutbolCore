@@ -1,6 +1,10 @@
 ﻿@using LXF.Web.Models.ViewModels
 @model ProductoGetViewModel
 
+@{
+    var culturaArg = new System.Globalization.CultureInfo("es-AR");
+}
+
 <!-- Importamos la fuente Roboto -->
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
 
@@ -601,11 +605,11 @@
                 <hr class="border-secondary my-3" style="opacity: 0.3;">
 
                 <div class="product-price">
-                    $@Model.Precio.ToString("N0")
+                    $@Model.Precio.ToString("N0", culturaArg)
                 </div>
 
                 <div class="tax-price">
-                    $@((Model.Precio / 1.21m).ToString("N0")) precio sin impuestos nacionales
+                    $@((Model.Precio / 1.21m).ToString("N2", culturaArg)) precio sin impuestos nacionales
                 </div>
 
                 <div class="mp-box">
@@ -726,8 +730,8 @@
                                                         </div>
 
                                                         <div class="slider-title">@prod.Nombre</div>
-                                                        <div class="slider-price">$@prod.Precio.ToString("N0")</div>
-                                                        <div class="slider-tax">$@((prod.Precio / 1.21m).ToString("N0")) precio sin impuestos nacionales</div>
+                                                        <div class="slider-price">$@prod.Precio.ToString("N0", culturaArg)</div>
+                                                        <div class="slider-tax">$@((prod.Precio / 1.21m).ToString("N2", culturaArg)) precio sin impuestos nacionales</div>
                                                     </a>
 
                                                     <div class="slider-action-container">
@@ -804,8 +808,8 @@
                                                         </div>
 
                                                         <div class="slider-title">@prod.Nombre</div>
-                                                        <div class="slider-price">$@prod.Precio.ToString("N0")</div>
-                                                        <div class="slider-tax">$@((prod.Precio / 1.21m).ToString("N0")) precio sin impuestos nacionales</div>
+                                                        <div class="slider-price">$@prod.Precio.ToString("N0", culturaArg)</div>
+                                                        <div class="slider-tax">$@((prod.Precio / 1.21m).ToString("N2", culturaArg)) aprecio sin impuestos nacionales</div>
                                                     </a>
 
                                                     <div class="slider-action-container">

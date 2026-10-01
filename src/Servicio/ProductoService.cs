@@ -84,6 +84,16 @@ namespace Servicio
             return [.. enStock.Where(p => p.Id != productoId).OrderBy(p => Guid.NewGuid()).Take(30)];
         }
 
+        public IEnumerable<ProductoGetDto> GetByFilterGenderProductos(string cadenaBuscar)
+        {
+            var enStock = GetInStockProductos();
+
+            var codigo = -1;
+            int.TryParse(cadenaBuscar, out codigo);
+
+            return [.. enStock.Where(x => x.Genero.Equals(cadenaBuscar)).Select(x => ToGetDto(x))];
+        }
+
         public void Update(ProductoPutDto dto)
         {
             var model = ToPutEntity(dto);
@@ -96,6 +106,11 @@ namespace Servicio
             _repository.Save();
             
             _repository.Commit();
+        }
+
+        public ProductoGetDto GetLast()
+        {
+            return ToGetDto (_repository.OrderByDescending(x => x.ID, "Marca,Categoria,ProductosVariantes").FirstOrDefault());
         }
 
         #region Private Methods
@@ -159,6 +174,7 @@ namespace Servicio
         {
             return _mapper.Map<ProductoVarianteGetDto>(obj);
         }
+
         #endregion
     }
 }

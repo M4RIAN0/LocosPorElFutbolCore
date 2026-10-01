@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infraestructura.Migrations
 {
     [DbContext(typeof(LxfContext))]
-    [Migration("20260929033348_Initial")]
+    [Migration("20261001013507_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -5780,13 +5780,13 @@ namespace Infraestructura.Migrations
                         {
                             Id = "33333333-3333-3333-3333-333333333333",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "adee9f6b-64e2-4ff0-9c5c-3a8f32fdd898",
+                            ConcurrencyStamp = "a3b51f8d-2fb3-47c1-bef0-faebf40532fe",
                             Email = "admin@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@GMAIL.COM",
                             NormalizedUserName = "ADMIN@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAECF/QagxcECgm3IG/KJ3rrglUnFy/cwcB4ySBfkbFXjo5V0XFLovaH3g89WRPHHVEg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEOraojZ9Z1Gbt+sMs7aEkX7sVPPu+MMIuB9u5WwrTkVmqa8bTyHe/sSiNOFtaHl4MA==",
                             PhoneNumber = "3814498305",
                             PhoneNumberConfirmed = true,
                             SecurityStamp = "33333333-3333-3333-3333-333333333333",

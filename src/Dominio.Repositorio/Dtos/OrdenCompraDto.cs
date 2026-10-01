@@ -1,5 +1,6 @@
 ﻿using Servicio.Base;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Dominio.Repositorio.Dtos
 {

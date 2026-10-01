@@ -107,5 +107,22 @@ namespace LxF.API.Controllers
             var result = _service.GetInterestingProductos(id);
             return Ok(result);
         }
+
+        [HttpGet("GetByFilterGenderProductos/{word}")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        public IActionResult GetByFilterGenderProductos(string word)
+        {
+            var result = _service.GetByFilterGenderProductos(word);
+            return Ok(result);
+        }
+
+        [HttpGet("GetLastProducto")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        public IActionResult GetLastProducto()
+        {
+            var result = _service.GetLast();
+            return Ok(result);
+        }
+
     }
 }

@@ -2,6 +2,7 @@
 @model IEnumerable<ProductoGetViewModel>
 
 @{
+    var culturaArg = new System.Globalization.CultureInfo("es-AR");
     var categorias = Model.Select(m => m.Categoria).Where(c => !string.IsNullOrEmpty(c)).Distinct().OrderBy(c => c).ToList();
     var marcas = Model.Select(m => m.Marca).Where(m => !string.IsNullOrEmpty(m)).Distinct().OrderBy(m => m).ToList();
 }
@@ -230,7 +231,7 @@
                             <div class="product-info">
                                 <div class="product-brand">@item.Marca</div>
                                 <div class="product-name" title="@item.Nombre">@item.Nombre</div>
-                                <div class="product-price">$@item.Precio.ToString("N0")</div>
+                                <div class="product-price">$@item.Precio.ToString("N0", culturaArg)</div>
                             </div>
 
                             <div class="product-actions">

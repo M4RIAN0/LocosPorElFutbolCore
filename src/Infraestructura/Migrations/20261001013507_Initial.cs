@@ -539,7 +539,7 @@ namespace Infraestructura.Migrations
             migrationBuilder.InsertData(
                 table: "Usuarios",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmado", "LockoutEnabled", "LockoutEnd", "Nombre", "EmailNormalizado", "NombreUsuarioNormalizado", "PasswordHash", "Celular", "CelularConfirmado", "SecurityStamp", "TwoFactorEnabled", "NombreUsuario" },
-                values: new object[] { "33333333-3333-3333-3333-333333333333", 0, "adee9f6b-64e2-4ff0-9c5c-3a8f32fdd898", "admin@gmail.com", true, false, null, null, "ADMIN@GMAIL.COM", "ADMIN@GMAIL.COM", "AQAAAAIAAYagAAAAECF/QagxcECgm3IG/KJ3rrglUnFy/cwcB4ySBfkbFXjo5V0XFLovaH3g89WRPHHVEg==", "3814498305", true, "33333333-3333-3333-3333-333333333333", false, "admin@gmail.com" });
+                values: new object[] { "33333333-3333-3333-3333-333333333333", 0, "a3b51f8d-2fb3-47c1-bef0-faebf40532fe", "admin@gmail.com", true, false, null, null, "ADMIN@GMAIL.COM", "ADMIN@GMAIL.COM", "AQAAAAIAAYagAAAAEOraojZ9Z1Gbt+sMs7aEkX7sVPPu+MMIuB9u5WwrTkVmqa8bTyHe/sSiNOFtaHl4MA==", "3814498305", true, "33333333-3333-3333-3333-333333333333", false, "admin@gmail.com" });
 
             migrationBuilder.InsertData(
                 table: "Localidades",

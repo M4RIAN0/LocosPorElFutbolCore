@@ -1,5 +1,6 @@
 ﻿using Servicio.Base;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace IServicio.Dtos

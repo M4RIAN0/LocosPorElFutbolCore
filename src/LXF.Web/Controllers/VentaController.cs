@@ -1,7 +1,5 @@
 ﻿using AutoMapper;
-using Azure;
 using Dominio.Repositorio.Dtos;
-using IServicio.Dtos;
 using IServicio.Email;
 using IServicio.MercadoPago;
 using IServicio.TemporalObject;
@@ -11,6 +9,8 @@ using LXF.Web.Utility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Collections.Concurrent;
+using System.Globalization;
 using System.Security.Claims;
 
 namespace LXF.Web.Controllers
@@ -25,6 +25,8 @@ namespace LXF.Web.Controllers
         private readonly IMercadoPagoService _mercadoPagoService;
         private readonly ITemporalObjectService _temporalObjectService;
         private readonly IMapper _mapper;
+        private static readonly ConcurrentDictionary<string, SemaphoreSlim> _locks = new();
+
         public VentaController(IVentaService ventaService, ICarroComprasService carroCompraService,
                                IProductoService productoService, IPersonaClienteService personaClienteService,
                                IProvinciaService provinciaService, IMercadoPagoService mercadoPagoService,
@@ -57,7 +59,7 @@ namespace LXF.Web.Controllers
                 TempData["error"] = "El Carrito se Elimino. Vuelve a Crearlo";
                 return RedirectToAction("Index", "Home");
             }
-           
+
         }
 
         [Authorize]
@@ -95,43 +97,71 @@ namespace LXF.Web.Controllers
         public async Task<IActionResult> Success([FromQuery] PagosRetornoViewModel mpData)
         {
             if (mpData.collection_status != "approved" || string.IsNullOrEmpty(mpData.external_reference))
-                return RedirectToAction("Failure", "Venta", mpData);
-
-            var list = await _temporalObjectService.RetrieveObjectsCollectionAsync<object>(mpData.external_reference);
-            
-            if(list == null || !list.Any())
             {
-                ViewBag.OcultarCarrito = true;
-                return View("SuccessEmpty");
+                mpData.IsFailure = true;
+                return RedirectToAction("Failure", "Venta", mpData);
             }
-            _temporalObjectService.RemoveObjectsCollectionTemporal(mpData.external_reference);
 
-            var ordenGetVm = await GetOrdenComprasGetViewModel(list);
+            var syncLock = _locks.GetOrAdd(mpData.external_reference, _ => new SemaphoreSlim(1, 1));
+            await syncLock.WaitAsync();
 
-            var emailVm = new EmailVentaViewModel
+            try
             {
-                Message = new Message
+                var list = await _temporalObjectService.RetrieveObjectsCollectionAsync<object>(mpData.external_reference);
+                var carro = await LoadCarroVmBasedOnLoggedInUser();
+
+                if (list == null || !list.Any())
                 {
-                    To = ordenGetVm.Email,
-                    Subject = "Confirmación de Pedido - LXF Deportes",
-                    Content = GenerarPlantillaEmailVenta(ordenGetVm)
-                },
-            };
+                    if (carro.Id != 0)
+                    {
+                        mpData.IsFailure = true;
+                        return RedirectToAction("Failure", "Venta", mpData);
+                    }
 
-            list = list.Append(emailVm);
+                    ViewBag.OcultarCarrito = true;
+                    return View("SuccessEmpty");
+                }
 
-            var response = await PersistObjects(list);
+                _temporalObjectService.RemoveObjectsCollectionTemporal(mpData.external_reference);
 
-            if (response == null || !response.IsSuccess)
-                return RedirectToAction("Failure", "Venta", mpData);
+                var ordenGetVm = await GetOrdenComprasGetViewModel(list);
 
-            ViewBag.OcultarCarrito = true;
-            return View(ordenGetVm);
+                var emailVm = new EmailVentaViewModel
+                {
+                    Message = new Message
+                    {
+                        To = ordenGetVm.Email,
+                        Subject = "Confirmación de Pedido - LXF Deportes",
+                        Content = GenerarPlantillaEmailVenta(ordenGetVm)
+                    },
+                };
+
+                list = list.Append(emailVm);
+
+                var response = await PersistObjects(list);
+
+                if (response == null || !response.IsSuccess)
+                {
+                    mpData.IsFailure = true;
+                    return RedirectToAction("Failure", "Venta", mpData);
+                }
+                ViewBag.OcultarCarrito = true;
+                return View(ordenGetVm);
+            }
+
+            finally
+            {
+                syncLock.Release();
+                if (syncLock.CurrentCount == 1)
+                {
+                    _locks.TryRemove(mpData.external_reference, out _);
+                }
+            }
         }
 
         public async Task<IActionResult> Failure([FromQuery] PagosRetornoViewModel mpData)
         {
-            if (string.IsNullOrEmpty(mpData.collection_status) || mpData.collection_status == "null")
+            if (string.IsNullOrEmpty(mpData.collection_status) || mpData.collection_status == "null" || mpData.IsFailure == null)
             {
                 return RedirectToAction("Checkout");
             }
@@ -141,9 +171,8 @@ namespace LXF.Web.Controllers
 
         public IActionResult ReintentarCompra()
         {
-            // Seteamos el mensaje y redirigimos al Home para que el Layout lo muestre
-            TempData["error"] = "El Carrito se Elimino. Vuelve a Crearlo";
-            return RedirectToAction("Index", "Home");
+
+            return RedirectToAction("Checkout");
         }
 
         #region private methods
@@ -222,6 +251,8 @@ namespace LXF.Web.Controllers
         {
             var ordenVm = list.OfType<OrdenCompraViewModel>().FirstOrDefault();
             List<DetalleOrdenCompraGetViewModel> listDetalleOrden = [];
+            
+            var fecha = DateTime.Parse(ordenVm.Fecha).ToString("dd/MM/yyyy");
 
             foreach (var item in ordenVm.DetalleOrdenCompras)
             {
@@ -244,7 +275,7 @@ namespace LXF.Web.Controllers
                 Celular = ordenVm.Celular,
                 Total = ordenVm.Total,
                 Email = ordenVm.Email,
-                Fecha = ordenVm.Fecha,
+                Fecha = fecha,
                 DetalleOrdenCompras = listDetalleOrden,
                 Envio = EnvioToGetViewModel(list.OfType<EnvioViewModel>().FirstOrDefault()),
                 Factura = FacturaToGetViewModel(list.OfType<FacturaViewModel>().FirstOrDefault())
@@ -387,7 +418,7 @@ namespace LXF.Web.Controllers
                         };
 
                         var productoVariante = ProductoVarianteToViewMdel(response.Result);
-                        
+
                         var productoVarianteGetDto = new ProductoVarianteGetDto
                         {
                             Talle = productoVariante.Talle,
@@ -428,10 +459,9 @@ namespace LXF.Web.Controllers
 
         private string GenerarPlantillaEmailVenta(OrdenCompraGetViewModel vm)
         {
-            string baseUrl = "https://tudominio.com";
-
             string filasProductos = string.Empty;
             decimal subtotalCalculado = 0;
+            var culturaArg = new System.Globalization.CultureInfo("es-AR");
 
             if (vm.DetalleOrdenCompras != null)
             {
@@ -449,13 +479,13 @@ namespace LXF.Web.Controllers
                                 <span style='font-size: 12px; color: #6c757d;'>Talle: {talle}</span>
                             </td>
                             <td align='center' style='padding: 15px 12px; border-bottom: 1px solid #dee2e6; color: #495057; font-size: 14px;'>
-                                ${item.Precio.ToString("N0")}
+                                ${item.Precio.ToString("N0", culturaArg)}
                             </td>
                             <td align='center' style='padding: 15px 12px; border-bottom: 1px solid #dee2e6; color: #495057; font-size: 14px;'>
                                 {item.Cantidad}
                             </td>
                             <td align='right' style='padding: 15px 0 15px 12px; border-bottom: 1px solid #dee2e6; color: #495057; font-size: 14px; font-weight: bold;'>
-                                ${(item.Precio * item.Cantidad).ToString("N0")}
+                                ${(item.Precio * item.Cantidad).ToString("N0", culturaArg)}
                             </td>
                         </tr>";
                 }
@@ -549,15 +579,15 @@ namespace LXF.Web.Controllers
                                         <table width='250' border='0' cellspacing='0' cellpadding='0' align='right'>
                                             <tr>
                                                 <td align='left' style='padding: 8px 0; color: #6c757d; font-size: 14px;'>Subtotal productos:</td>
-                                                <td align='right' style='padding: 8px 0; color: #212529; font-size: 14px; font-weight: bold;'>${subtotalCalculado.ToString("N0")}</td>
+                                                <td align='right' style='padding: 8px 0; color: #212529; font-size: 14px; font-weight: bold;'>${subtotalCalculado.ToString("N0", culturaArg)}</td>
                                             </tr>
                                             <tr>
                                                 <td align='left' style='padding: 8px 0; color: #6c757d; font-size: 14px; border-bottom: 1px solid #dee2e6;'>Costo de envío:</td>
-                                                <td align='right' style='padding: 8px 0; color: #212529; font-size: 14px; font-weight: bold; border-bottom: 1px solid #dee2e6;'>${costoEnvio.ToString("N0")}</td>
+                                                <td align='right' style='padding: 8px 0; color: #212529; font-size: 14px; font-weight: bold; border-bottom: 1px solid #dee2e6;'>${costoEnvio.ToString("N0", culturaArg)}</td>
                                             </tr>
                                             <tr>
                                                 <td align='left' style='padding: 15px 0 0 0; color: #212529; font-size: 16px; font-weight: bold;'>Total Abonado:</td>
-                                                <td align='right' style='padding: 15px 0 0 0; color: #212529; font-size: 20px; font-weight: bold;'>${vm.Total.ToString("N0")}</td>
+                                                <td align='right' style='padding: 15px 0 0 0; color: #212529; font-size: 20px; font-weight: bold;'>${vm.Total.ToString("N0", culturaArg)}</td>
                                             </tr>
                                         </table>
                                     </td>

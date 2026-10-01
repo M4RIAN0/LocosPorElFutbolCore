@@ -39,8 +39,6 @@ namespace LXF.Web.Models.ViewModels
         public string Direccion { get; set; }
         public string Celular { get; set; }
         public string Email { get; set; }
-
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public string Fecha { get; init; }
         public string Estado { get; init; }
 

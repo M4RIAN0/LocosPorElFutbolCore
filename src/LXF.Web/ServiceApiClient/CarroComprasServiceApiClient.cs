@@ -1,6 +1,7 @@
 ﻿using LXF.Web.Models.ViewModels;
 using LXF.Web.ServiceApiClient.IServiceApiClient;
 using LXF.Web.Utility;
+using MercadoPago.Resource.User;
 
 namespace LXF.Web.ServiceApiClient;
 
@@ -79,6 +80,15 @@ public class CarroComprasServiceApiClient : ICarroComprasServiceApiClient
         {
             ApiType = SD.ApiType.GET, // el tipo de peticion HTTP es GET
             Url = $"{SD.LXFApiBase}/api/Carro/{userId}" // generamos el endpoint del APi que vamos a consumir
+        });
+    }
+
+    public async Task<ResponseViewModel?> GetAnyWithProductId(int productId)
+    {
+        return await _baseServiceApiClient.SendAsync(new RequestViewModel
+        {
+            ApiType = SD.ApiType.GET, // el tipo de peticion HTTP es GET
+            Url = $"{SD.LXFApiBase}/api/Carro/GetAnyWithProductId/{productId}" // generamos el endpoint del APi que vamos a consumir
         });
     }
 }

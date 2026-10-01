@@ -6,5 +6,6 @@
         public string collection_status { get; set; }
         public string external_reference { get; set; }
         public string? payment_type { get; set; }
+        public bool? IsFailure { get; set; }
     }
 }

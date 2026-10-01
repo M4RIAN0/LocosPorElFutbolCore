@@ -2,9 +2,11 @@
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
+using System.Globalization;
 
 public class FacturaPDFGenerator
 {
+    private static readonly CultureInfo culturaArg = new CultureInfo("es-AR");
     public static byte[] CreateFacturaPDF(ComprobanteGetViewModel model, string rutaLogoPath)
     {
         QuestPDF.Settings.License = LicenseType.Community;
@@ -158,16 +160,16 @@ public class FacturaPDFGenerator
                         text.Span($"(Talle {item.Talle})").FontSize(7);
                     });
                     table.Cell().BorderLeft(1).BorderRight(1).Padding(2).AlignRight().Text($"{item.Cantidad}");
-                    table.Cell().BorderLeft(1).BorderRight(1).Padding(2).AlignRight().Text($"{item.Precio:N2}");
-                    table.Cell().BorderLeft(1).BorderRight(1).Padding(2).AlignRight().Text($"{item.SubTotal:N2}");
+                    table.Cell().BorderLeft(1).BorderRight(1).Padding(2).AlignRight().Text($"{item.Precio.ToString("N0", culturaArg)}");
+                    table.Cell().BorderLeft(1).BorderRight(1).Padding(2).AlignRight().Text($"{item.SubTotal.ToString("N0", culturaArg)}");
                 }
 
                 if (model.Envio != null && model.Envio.Monto > 0)
                 {
                     table.Cell().BorderLeft(1).BorderRight(1).Padding(2).Text("COSTO DE ENVIO");
                     table.Cell().BorderLeft(1).BorderRight(1).Padding(2).AlignRight().Text("1");
-                    table.Cell().BorderLeft(1).BorderRight(1).Padding(2).AlignRight().Text($"{model.Envio.Monto:N2}");
-                    table.Cell().BorderLeft(1).BorderRight(1).Padding(2).AlignRight().Text($"{model.Envio.Monto:N2}");
+                    table.Cell().BorderLeft(1).BorderRight(1).Padding(2).AlignRight().Text($"{model.Envio.Monto.ToString("N0", culturaArg)}");
+                    table.Cell().BorderLeft(1).BorderRight(1).Padding(2).AlignRight().Text($"{model.Envio.Monto.ToString("N0", culturaArg)}");
                 }
             });
 
@@ -209,12 +211,12 @@ public class FacturaPDFGenerator
                     c.Item().Row(r =>
                     {
                         r.RelativeItem().Text("SUBTOTAL:").Bold().AlignRight();
-                        r.ConstantItem(80).Text($"$ {model.Total:N2}").AlignRight();
+                        r.ConstantItem(80).Text($"$ {model.Total.ToString("N2", culturaArg)}").AlignRight();
                     });
                     c.Item().Row(r =>
                     {
                         r.RelativeItem().Text("TOTAL:").Bold().FontSize(11).AlignRight();
-                        r.ConstantItem(80).Text($"$ {model.Total:N2}").Bold().FontSize(11).AlignRight();
+                        r.ConstantItem(80).Text($"$ {model.Total.ToString("N2", culturaArg)}").Bold().FontSize(11).AlignRight();
                     });
                 });
             });

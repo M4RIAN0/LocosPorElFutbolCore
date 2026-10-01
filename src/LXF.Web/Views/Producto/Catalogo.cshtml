@@ -2,6 +2,8 @@
 @model IEnumerable<ProductoGetViewModel>
 
 @{
+     var culturaArg =  new System.Globalization.CultureInfo("es-AR");
+
     // Filtramos para quedarnos SOLO con productos que tengan al menos una variante con stock
     var productosEnStock = Model.Where(p => p.ProductosVariantes != null && p.ProductosVariantes.Any(v => v.Stock > 0)).ToList();
 
@@ -133,28 +135,35 @@
 
 <div class="container-fluid py-4">
 
-    <!-- ALINEACIÓN PERFECTA DEL CONTADOR -->
-    <div class="row mx-0 mb-4 align-items-center">
-        <!-- Usa el mismo ancho (col-lg-2) que la barra lateral -->
-       <div class="col-12 col-lg-2 ps-0">
-            <span class="text-secondary" style="font-size: 0.95rem;" id="productCountHeader">@productosEnStock.Count() productos</span>
-        </div>
-        
-        <!-- El resto de la barra para el botón de ordenamiento alineado a la derecha -->
-        <div class="col-12 col-lg-10 pe-0 text-end">
-            <div class="dropdown sort-dropdown">
-                <button class="btn dropdown-toggle px-3 py-1" type="button" id="dropdownOrder" data-bs-toggle="dropdown" aria-expanded="false">
-                    Ordenar por
-                </button>
-                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownOrder">
-                    <li><a class="dropdown-item sort-btn" href="#" data-sort="desc">Precio: mayor a menor</a></li>
-                    <li><a class="dropdown-item sort-btn" href="#" data-sort="asc">Precio: menor a mayor</a></li>
-                </ul>
+  <!-- ALINEACIÓN PERFECTA DEL CONTADOR Y BÚSQUEDA -->
+        <div class="row mx-0 mb-4 align-items-center">
+            <!-- Contador -->
+            <div class="col-12 col-lg-2 ps-0 mb-3 mb-lg-0">
+                <span class="text-secondary" style="font-size: 0.95rem;" id="productCountHeader">@productosEnStock.Count() productos</span>
+            </div>
+            
+            <!-- Buscador -->
+            <div class="col-12 col-lg-6 mb-3 mb-lg-0">
+                <div class="input-group">
+                    <span class="input-group-text bg-dark text-secondary border-secondary"><i class="bi bi-search"></i></span>
+                    <input type="text" id="searchInput" class="form-control bg-dark text-light border-secondary" placeholder="Buscar por nombre de producto..." autocomplete="off" />
+                </div>
+            </div>
+            
+            <!-- Ordenamiento -->
+            <div class="col-12 col-lg-4 pe-0 text-end">
+                <div class="dropdown sort-dropdown">
+                    <button class="btn dropdown-toggle px-3 py-1" type="button" id="dropdownOrder" data-bs-toggle="dropdown" aria-expanded="false">
+                        Ordenar por
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownOrder">
+                        <li><a class="dropdown-item sort-btn" href="#" data-sort="desc">Precio: mayor a menor</a></li>
+                        <li><a class="dropdown-item sort-btn" href="#" data-sort="asc">Precio: menor a mayor</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
-    </div>
-
-    <div class="row mx-0">
+        <div class="row mx-0">
         <!-- BARRA LATERAL DE FILTROS -->
         <div class="col-12 col-lg-2 filter-sidebar d-none d-lg-block ps-0">
             
@@ -240,8 +249,8 @@
                             <input type="range" class="range-max" min="@minPrecio" max="@maxPrecio" value="@maxPrecio" step="1">
                         </div>
                         <div class="price-input-group">
-                            <span id="minPriceText">$ @minPrecio.ToString("N0")</span>
-                            <span id="maxPriceText">$ @maxPrecio.ToString("N0")</span>
+                            <span id="minPriceText">$ @minPrecio.ToString("N0", culturaArg)</span>
+                            <span id="maxPriceText">$ @maxPrecio.ToString("N0", culturaArg)</span>
                         </div>
                     </div>
                 </div>
@@ -258,8 +267,8 @@
                     string tallesStr = item.ProductosVariantes != null 
                                        ? string.Join(",", item.ProductosVariantes.Select(v => v.Talle)) : "";
 
-                    <div class="col product-item" 
-                         data-categoria="@item.Categoria" data-marca="@item.Marca" 
+                  <div class="col product-item" 
+                         data-nombre="@item.Nombre.ToLower()" data-categoria="@item.Categoria" data-marca="@item.Marca" 
                          data-talles="@tallesStr" data-precio="@item.Precio" data-genero="@item.Genero">
                         
                         <div class="slider-card w-100 h-100">
@@ -306,8 +315,8 @@
                                                  onerror="this.onerror=null; this.outerHTML='<span style=\'font-size: 0.9rem; font-weight: 700; color: #ffffff; text-transform: uppercase;\'>@item.Marca</span>';" />
                                         </div>
                                         <div class="slider-title">@item.Nombre</div>
-                                        <div class="slider-price">$@item.Precio.ToString("N0")</div>
-                                        <div class="slider-tax">$@((item.Precio / 1.21m).ToString("N0")) precio sin impuestos nacionales</div>
+                                        <div class="slider-price">$@item.Precio.ToString("N0", culturaArg)</div>
+                                        <div class="slider-tax">$@((item.Precio / 1.21m).ToString("N2", culturaArg)) precio sin impuestos nacionales</div>
                                     </a>
                                     
                                     <div class="slider-action-container">
@@ -418,8 +427,9 @@
 
             if(rangeInput.length > 0) { updatePriceUI(); }
 
-            // --- FILTRADO COMBINADO ---
+        // --- FILTRADO COMBINADO ---
             function filterProducts() {
+                var searchText = $('#searchInput').val().toLowerCase();
                 var selCat = $('input[data-filter-type="categoria"]:checked').map(function(){ return $(this).val(); }).get();
                 var selMar = $('input[data-filter-type="marca"]:checked').map(function(){ return $(this).val(); }).get();
                 var selTal = $('input[data-filter-type="talle"]:checked').map(function(){ return $(this).val(); }).get();
@@ -433,6 +443,7 @@
                 $('.product-item').each(function() {
                     var $item = $(this);
                     
+                    var itemNombre = $item.data('nombre');
                     var itemCat = $item.data('categoria');
                     var itemMar = $item.data('marca');
                     var itemGen = $item.data('genero');
@@ -441,6 +452,7 @@
                     var itemTallesStr = $item.data('talles').toString();
                     var itemTallesArr = itemTallesStr ? itemTallesStr.split(',') : [];
 
+                    var matchSearch = searchText === '' || itemNombre.includes(searchText);
                     var matchCat = selCat.length === 0 || selCat.includes(itemCat);
                     var matchMar = selMar.length === 0 || selMar.includes(itemMar);
                     var matchGen = selGen.length === 0 || selGen.includes(itemGen);
@@ -451,7 +463,7 @@
                         matchTal = selTal.some(t => itemTallesArr.includes(t));
                     }
 
-                    if (matchCat && matchMar && matchGen && matchTal && matchPrecio) {
+                    if (matchSearch && matchCat && matchMar && matchGen && matchTal && matchPrecio) {
                         $item.removeClass('d-none');
                         visibleCount++;
                     } else {
@@ -459,6 +471,7 @@
                     }
                 });
 
+                // Esta línea que ya tenías actualizará el número de productos al tipear
                 $('#productCountHeader').text(visibleCount + (visibleCount === 1 ? ' producto' : ' productos'));
                 
                 if (visibleCount === 0) {
@@ -469,6 +482,11 @@
             }
 
             $('.filter-checkbox').on('change', filterProducts);
+            
+            // Evento para que filtre mientras escribes en el buscador
+            $('#searchInput').on('input', function() {
+                filterProducts();
+            });
 
             // --- ORDENAMIENTO ---
             $('.sort-btn').click(function(e) {

@@ -11,5 +11,6 @@ namespace LXF.Web.ServiceApiClient.IServiceApiClient
         Task<ResponseViewModel?> Remove(int id);
         Task<ResponseViewModel?> RemoveItem(int id);
         Task<ResponseViewModel?> GetByUserId(string userId);
+        Task<ResponseViewModel?> GetAnyWithProductId(int productId);
     }
 }

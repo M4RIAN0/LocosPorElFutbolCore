@@ -15,5 +15,7 @@ namespace IServicio
         IEnumerable<ProductoGetDto> GetInStockProductos();
         IEnumerable<ProductoGetDto> GetSimilProductos(int productoId, int categoriaId, int marcaId);
         IEnumerable<ProductoGetDto> GetInterestingProductos(int productoId);
+        IEnumerable<ProductoGetDto> GetByFilterGenderProductos(string cadenaBuscar);
+        ProductoGetDto GetLast();
     }
 }

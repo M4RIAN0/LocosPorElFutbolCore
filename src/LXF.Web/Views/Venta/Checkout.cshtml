@@ -1,7 +1,9 @@
 ﻿@using LXF.Web.Models.ViewModels
 @model CarroComprasGetViewModel
 @using Microsoft.AspNetCore.Mvc.Rendering
+
 @{
+    var culturaArg = new System.Globalization.CultureInfo("es-AR");
     string direccionRegistrada = ViewBag.Direccion as string ?? "Dirección no proporcionada en el registro.";
     string minWordsMessage = "Ingrese al menos dos palabras (Nombre y Apellido).";
     string orangeColor = "#ffc107"; 
@@ -188,10 +190,10 @@
                             <div class="d-flex justify-content-between align-items-center mb-3">
                                 <div class="pe-3">
                                     <span class="d-block text-light fw-semibold">@cartObj.ProductoVariante.Producto.Nombre</span>
-                                    <small class="text-secondary">Talle @cartObj.ProductoVariante.Talle | @cartObj.Cantidad un. x $ @cartObj.Precio.ToString("N0")</small>
+                                    <small class="text-secondary">Talle @cartObj.ProductoVariante.Talle | @cartObj.Cantidad un. x $ @cartObj.Precio.ToString("N0", culturaArg)</small>
                                 </div>
                                 <div class="text-end text-light fw-bold">
-                                    $ @cartObj.SubTotal.ToString("N0")
+                                    $ @cartObj.SubTotal.ToString("N0", culturaArg)
                                 </div>
                             </div>
                         }
@@ -220,7 +222,7 @@
                         <div class="d-flex justify-content-between align-items-center mt-3">
                             <span class="fs-5 text-light fw-bold">Total a Pagar:</span>
                             <span id="texto-total-pagar" class="fs-4 text-warning fw-bold" data-subtotal="@Model.Total">
-                                $ @Model.Total.ToString("N0")
+                                $ @Model.Total.ToString("N0", culturaArg)
                             </span>
                         </div>
                     </div>

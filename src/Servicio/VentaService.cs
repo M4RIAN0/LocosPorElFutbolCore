@@ -89,7 +89,6 @@ namespace Servicio
         }
 
         #region Private Mhetods
-
         private void UpdateComprobante(TransactionObjectsDto dto)
         {
             dto.Comprobante.Factura = dto.Factura;

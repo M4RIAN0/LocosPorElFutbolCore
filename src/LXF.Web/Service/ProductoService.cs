@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Dominio.Entidades;
 using LXF.Web.Models.ViewModels;
 using LXF.Web.Service.IService;
 using LXF.Web.ServiceApiClient.IServiceApiClient;
@@ -107,6 +108,26 @@ namespace LXF.Web.Service
 
             if (response.IsSuccess)
                 response.Result = DesearilizeList<ProductoGetViewModel>(response);
+
+            return response;
+        }
+
+        public async Task<ResponseViewModel?> GetByFilterGenderProductos(string cadena)
+        {
+            var response = await _serviceApiClient.GetByFilterGenderProductos(cadena);
+
+            if (response.IsSuccess)
+                response.Result = DesearilizeList<ProductoGetViewModel>(response);
+
+            return response;
+        }
+
+        public async Task<ResponseViewModel?> GetLastProducto()
+        {
+            var response = await _serviceApiClient.GetLastProducto();
+
+            if (response.IsSuccess)
+                response.Result = Desearilize<ProductoGetViewModel>(response);
 
             return response;
         }

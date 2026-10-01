@@ -250,6 +250,21 @@ public class HomeController : Controller
         return Json(new { success = false, message = carro?.Message ?? "Error al procesar el carrito." });
     }
 
+    public async Task<IActionResult> CatalogGender(string word)
+    {
+        ResponseViewModel? response = await _productoService.GetByFilterGenderProductos(word);
+        if (response.IsSuccess && response.Result != null)
+        {
+            var list = response.Result;
+            return View(list);
+        }
+        else
+        {
+            TempData["error"] = response?.Message;
+            return View(new List<ProductoGetViewModel>());
+        }
+    }
+
     #region Private Methods
     private async Task<IActionResult> ResponseMethod(ResponseViewModel response, ProductoGetViewModel vm)
     {

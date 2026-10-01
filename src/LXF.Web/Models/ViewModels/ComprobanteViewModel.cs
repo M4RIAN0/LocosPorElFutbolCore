@@ -18,11 +18,9 @@ namespace LXF.Web.Models.ViewModels
 
     public class ComprobanteGetViewModel : ViewModelBase
     {
-        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public string Fecha { get; init; }
         public IEnumerable<DetalleComprobanteGetViewModel> DetalleComprobantes { get; init; }
 
-        [Required(AllowEmptyStrings = false, ErrorMessage = "El campo {0} es obligatorio.")]
         [Column(TypeName = "decimal(18,2)")]
         public decimal Total { get; init; }
         public int ClienteId { get; init; }

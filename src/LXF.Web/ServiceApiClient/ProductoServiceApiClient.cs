@@ -104,5 +104,23 @@ namespace LXF.Web.ServiceApiClient
                 Url = $"{SD.LXFApiBase}/api/Producto/GetInterestingProductos/{productoId}"
             });
         }
+
+        public async Task<ResponseViewModel?> GetByFilterGenderProductos(string cadenaBuscar)
+        {
+            return await _baseServiceApiClient.SendAsync(new RequestViewModel
+            {
+                ApiType = SD.ApiType.GET,
+                Url = $"{SD.LXFApiBase}/api/Producto/GetByFilterGenderProductos/{cadenaBuscar}"
+            });
+        }
+
+        public async Task<ResponseViewModel?> GetLastProducto()
+        {
+            return await _baseServiceApiClient.SendAsync(new RequestViewModel
+            {
+                ApiType = SD.ApiType.GET,
+                Url = $"{SD.LXFApiBase}/api/Producto/GetLastProducto"
+            });
+        }
     }
 }

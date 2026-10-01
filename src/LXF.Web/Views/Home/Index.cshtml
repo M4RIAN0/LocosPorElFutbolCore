@@ -30,10 +30,9 @@
     <div class="w-100 d-none d-lg-block bg-transparent" style="border-bottom: 1px solid rgba(255, 255, 255, 0.1);">
         <div class="container-fluid px-4">
             <div class="d-flex justify-content-center align-items-center py-2 gap-4">
-                <a asp-controller="Producto" asp-action="Catalogo" class="subnav-link"> <span class="badge-newin fw-bold">NEW IN</span> </a>
-                <a href="#" class="subnav-link">HOMBRE</a>
-                <a href="#" class="subnav-link">MUJER</a>
-                <a href="#" class="subnav-link ">UNISEX</a>
+               <a asp-controller="Home" asp-action="CatalogGender" asp-route-word="Hombre" class="subnav-link">HOMBRE</a>
+               <a asp-controller="Home" asp-action="CatalogGender" asp-route-word="Mujer" class="subnav-link">MUJER</a>
+               <a asp-controller="Home" asp-action="CatalogGender" asp-route-word="Unisex" class="subnav-link">UNISEX</a>
                 <a href="#" class="subnav-link">SALE</a>
             </div>
         </div>
@@ -108,7 +107,6 @@
     @if (newInChunks.Any())
     {
         <div class="d-flex justify-content-between align-items-end mb-3 mt-5">
-            <h3 class="text-white fw-bold text-uppercase mb-0 tracking-wide">New In</h3>
             <a asp-controller="Producto" asp-action="Catalogo" class="btn-ver-todo">Ver todo</a>
         </div>
         <div class="slider-wrapper">
@@ -174,7 +172,7 @@
                                                     </div>
                                                     <div class="slider-title">@prod.Nombre</div>
                                                     <div class="slider-price">$ @prod.Precio.ToString("N0", culturaArg)</div>
-                                                    <div class="slider-tax">$ @((prod.Precio / 1.21m).ToString("N0", culturaArg)) precio sin impuestos nacionales</div>
+                                                    <div class="slider-tax">$ @((prod.Precio / 1.21m).ToString("N2", culturaArg)) precio sin impuestos nacionales</div>
                                                 </a>
                                                 <div class="slider-action-container mt-2">
                                                     <button type="submit" class="btn-add-cart-slider">Agregar al carrito</button>
@@ -200,12 +198,24 @@
         </div>
     }
 
-    <!-- SECCIÓN: CATEGORÍAS GRANDES -->
+  <!-- SECCIÓN: CATEGORÍAS GRANDES -->
     <div class="row row-cols-1 row-cols-md-3 g-3 mb-5 mt-3">
         <!-- (Imágenes intactas) -->
-        <div class="col"><a href="#" class="text-decoration-none"><div class="category-banner-card shadow-sm"><img src="~/images/Categorias/Cat-Hombre.webp" alt="HOMBRE"></div></a></div>
-        <div class="col"><a href="#" class="text-decoration-none"><div class="category-banner-card shadow-sm"><img src="~/images/Categorias/Cat-Mujer.webp" alt="MUJER"></div></a></div>
-        <div class="col"><a href="#" class="text-decoration-none"><div class="category-banner-card shadow-sm"><img src="~/images/Categorias/Cat-Ninos.webp" alt="NIÑOS"></div></a></div>
+        <div class="col">
+            <a asp-controller="Home" asp-action="CatalogGender" asp-route-word="Hombre" class="text-decoration-none">
+                <div class="category-banner-card shadow-sm"><img src="~/images/Categorias/Cat-Hombre.webp" alt="HOMBRE"></div>
+            </a>
+        </div>
+        <div class="col">
+            <a asp-controller="Home" asp-action="CatalogGender" asp-route-word="Mujer" class="text-decoration-none">
+                <div class="category-banner-card shadow-sm"><img src="~/images/Categorias/Cat-Mujer.webp" alt="MUJER"></div>
+            </a>
+        </div>
+        <div class="col">
+            <a asp-controller="Home" asp-action="CatalogGender" asp-route-word="Unisex" class="text-decoration-none">
+                <div class="category-banner-card shadow-sm"><img src="~/images/Categorias/Cat-Ninos.webp" alt="UNISEX"></div>
+            </a>
+        </div>
     </div>
 
     <!-- SECCIÓN: TUS MODELOS FAVORITOS -->

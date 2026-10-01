@@ -16,5 +16,7 @@ namespace LXF.Web.Service.IService
         Task<ResponseViewModel?> GetInStockProductos();
         Task<ResponseViewModel?> GetSimilProductos(int productoId, int categoriaId, int marcaId);
         Task<ResponseViewModel?> GetInterestingProductos(int productoId);
+        Task<ResponseViewModel?> GetByFilterGenderProductos(string cadena);
+        Task<ResponseViewModel?> GetLastProducto();
     }
 }

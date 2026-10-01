@@ -63,18 +63,18 @@ namespace LxF.API
                 config.CreateMap<Localidad, LocalidadGetDto>();
 
                 config.CreateMap<ComprobanteDto, Comprobante>()
-                .ForMember(vm => vm.Fecha, opt => opt.MapFrom(u => DateOnly.ParseExact(u.Fecha, "yyyy-mm-dd")));
+                .ForMember(vm => vm.Fecha, opt => opt.MapFrom(u => DateOnly.ParseExact(u.Fecha, "yyyy-MM-dd")));
                 config.CreateMap<Comprobante, ComprobanteGetDto>()
-                .ForMember(vm => vm.Fecha, m => m.MapFrom(u => u.Fecha.ToString("yyyy-MM-dd")));
+                .ForMember(vm => vm.Fecha, m => m.MapFrom(u => u.Fecha.ToString("dd/MM/yyyy")));
 
                 config.CreateMap<DetalleComprobanteDto, DetalleComprobante>();
                 config.CreateMap<DetalleComprobante, DetalleComprobanteGetDto>().
                 ForMember(vm => vm.Producto, opt => opt.MapFrom(u => u.Producto));
 
                 config.CreateMap<FacturaDto, Factura>()
-                .ForMember(vm => vm.Fecha, opt => opt.MapFrom(u => DateOnly.ParseExact(u.Fecha, "yyyy-mm-dd")));
+                .ForMember(vm => vm.Fecha, opt => opt.MapFrom(u => DateOnly.ParseExact(u.Fecha, "yyyy-MM-dd")));
                 config.CreateMap<Factura, FacturaGetDto>()
-                .ForMember(vm => vm.Fecha, m => m.MapFrom(u => u.Fecha.ToString()));
+                .ForMember(vm => vm.Fecha, m => m.MapFrom(u => u.Fecha.ToString("dd/MM/yyyy")));
 
                 config.CreateMap<CarroCompra, CarroCompraDto>();
                 config.CreateMap<CarroCompra, CarroCompraPutDto>();
@@ -90,15 +90,15 @@ namespace LxF.API
 
                 config.CreateMap<OrdenCompra, OrdenCompraDto>();
                 config.CreateMap<OrdenCompra, OrdenCompraPutDto>();
-                config.CreateMap<OrdenCompra, OrdenCompraGetDto>();
+                config.CreateMap<OrdenCompra, OrdenCompraGetDto>()
+                .ForMember(vm => vm.Fecha, m => m.MapFrom(u => u.Fecha.ToString("dd/MM/yyyy")));
                 config.CreateMap<OrdenCompraDto, OrdenCompra>()
-                .ForMember(vm => vm.Fecha, opt => opt.MapFrom(u => DateOnly.ParseExact(u.Fecha, "yyyy-mm-dd")));
+                .ForMember(vm => vm.Fecha, opt => opt.MapFrom(u => DateOnly.ParseExact(u.Fecha, "yyyy-MM-dd")));
                 config.CreateMap<OrdenCompraPutDto, OrdenCompra>();
 
                 config.CreateMap<DetalleOrdenCompra, DetalleOrdenCompraDto>();
                 config.CreateMap<DetalleOrdenCompra, DetalleOrdenCompraPutDto>();
                 config.CreateMap<DetalleOrdenCompra, DetalleOrdenCompraGetDto>();
-                //ForMember(vm => vm.ProductoVariante, opt => opt.MapFrom(u => u.ProductoVariante));
                 config.CreateMap<DetalleOrdenCompraDto, DetalleOrdenCompra>();
                 config.CreateMap<DetalleOrdenCompraPutDto, DetalleOrdenCompra>();
 

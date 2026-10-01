@@ -1,4 +1,6 @@
-﻿namespace LXF.Web.Models.ViewModels
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace LXF.Web.Models.ViewModels
 {
 
     public class OrdenCompraViewModel
