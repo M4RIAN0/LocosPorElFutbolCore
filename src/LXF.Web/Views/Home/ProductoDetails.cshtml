@@ -1,52 +1,1090 @@
 ﻿@using LXF.Web.Models.ViewModels
 @model ProductoGetViewModel
-<form method="post">
-    <input asp-for="Id" hidden />
-    <div class=" pt-4">
-        <div class="card container" style="border:1px solid #808080;">
-            <div class="card-header bg-dark text-light row" style="border-radius: 0px;">
-                <div class="col-12 col-md-6">
-                    <h1 class="text-white">@Model.Nombre</h1>
-                </div>
-                <div class="col-12 col-md-6 text-end">
-                    <input asp-for="Precio" hidden />
-                    <h1 class="text-warning"> @string.Format("{0:c}", Model.Precio)</h1>
-                </div>
-            </div>
-            <div class="card-body">
-                <div class="container rounded p-2">
-                    <div class="row">
-                        <div class="col-12 col-lg-4 p-1 text-center">
-                            <img src="@Model.ImagenUrl" style="border-radius:35px;" width="100%" class="rounded" />
-                        </div>
-                        <div class="col-12 col-lg-8">
-                            <div class="row pl-3">
 
-                                <div class="col-12">
-                                    <span class="badge bg-primary text-success p-3 border">@Model.Categoria</span>
-                                    <p class="text-secondary pt-3">@Html.Raw(Model.Descripcion)</p>
-                                </div>
-                            </div>
-                            <div class="row mx-0">
-                                <input asp-for="Cantidad" class="form-control" />
-                                <span asp-validation-for="Cantidad" class="text-bg-danger"></span>
-                            </div>
-                        </div>
+@{
+    var culturaArg = new System.Globalization.CultureInfo("es-AR");
+}
+
+<!-- Importamos la fuente Roboto -->
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+<style>
+    body {
+        background-color: #212529;
+        color: #f8f9fa;
+        font-family: 'Roboto', sans-serif;
+    }
+
+    /* --- COLUMNA IZQUIERDA (IMÁGENES Y ESPECIFICACIONES) --- */
+    .thumbnails-col {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        width: 80px;
+    }
+
+    .thumbnail-box {
+        width: 80px;
+        height: 80px;
+        background-color: transparent;
+        border: 1px solid #495057;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 4px;
+    }
+
+        .thumbnail-box.active, .thumbnail-box:hover {
+            border: 2px solid #adb5bd;
+        }
+
+        .thumbnail-box img {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+        }
+
+    .main-img-box {
+        background-color: transparent;
+        border: 1px solid #495057;
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 500px;
+    }
+
+        .main-img-box img {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.3));
+        }
+
+    .desc-specs-container {
+        margin-top: 2.5rem;
+    }
+
+    .section-title {
+        font-size: 0.95rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        margin-bottom: 1.2rem;
+        color: #f8f9fa;
+        letter-spacing: 0.5px;
+    }
+
+    .desc-text {
+        font-size: 0.85rem;
+        color: #ced4da;
+        text-transform: uppercase;
+        line-height: 1.6;
+    }
+
+    .specs-table {
+        width: 100%;
+        font-size: 0.85rem;
+        color: #ced4da;
+    }
+
+        .specs-table th, .specs-table td {
+            padding: 12px 15px;
+            border: none;
+        }
+
+        .specs-table tr:nth-child(odd) {
+            background-color: #2b3035;
+        }
+
+        .specs-table tr:nth-child(even) {
+            background-color: #212529;
+        }
+
+        .specs-table th {
+            font-weight: 700;
+            width: 35%;
+            color: #adb5bd;
+        }
+
+    /* --- COLUMNA DERECHA (INFO DEL PRODUCTO) --- */
+    .breadcrumb-custom {
+        font-size: 0.75rem;
+        color: #6c757d;
+        margin-bottom: 1.5rem;
+    }
+
+    /* LOGO MARCA PRINCIPAL */
+    .brand-logo {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #ffffff;
+        margin-bottom: 0.5rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .product-title {
+        font-size: 1.4rem;
+        font-weight: 500;
+        text-transform: uppercase;
+        margin-bottom: 0.3rem;
+        color: #e9ecef;
+    }
+
+    .product-sku {
+        font-size: 0.8rem;
+        color: #adb5bd;
+        margin-bottom: 1rem;
+        text-transform: uppercase;
+    }
+
+    .product-price {
+        font-size: 2rem;
+        font-weight: 800;
+        margin-bottom: 0.2rem;
+        letter-spacing: -0.5px;
+        color: #fff;
+    }
+
+    .tax-price {
+        font-size: 0.8rem;
+        color: #8c959f;
+        font-weight: 500;
+        margin-bottom: 1.5rem;
+    }
+
+    .mp-box {
+        border: 1px solid #495057;
+        padding: 12px 15px;
+        background-color: transparent;
+        margin-bottom: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        border-radius: 4px;
+    }
+
+    .mp-logo {
+        height: 16px;
+        width: auto;
+        margin-bottom: 8px;
+        object-fit: contain;
+        align-self: flex-start;
+    }
+
+    .mp-text {
+        font-size: 0.85rem;
+        color: #198754;
+    }
+
+    .sizes-title {
+        font-size: 0.8rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        margin-bottom: 12px;
+        color: #f8f9fa;
+    }
+
+    .sizes-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 1.5rem;
+    }
+
+    .size-box-main {
+        width: 45px;
+        height: 40px;
+        border: 1px solid #495057;
+        background-color: #2b3035;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        font-size: 0.9rem;
+        cursor: pointer;
+        color: #ced4da;
+        border-radius: 4px;
+    }
+
+        .size-box-main:hover:not(.disabled) {
+            border-color: #adb5bd;
+        }
+
+        .size-box-main.active {
+            background-color: #212529;
+            color: #f8f9fa;
+            border: 2px solid #f8f9fa;
+        }
+
+        .size-box-main.disabled {
+            color: #6c757d;
+            cursor: default; /* El puntero queda como flecha normal */
+            pointer-events: none; /* Bloquea clics y hover */
+            background: linear-gradient(to top right, transparent calc(50% - 1px), #495057, transparent calc(50% + 1px));
+        }
+
+    .btn-add-cart {
+        background-color: #f8f9fa;
+        color: #1a1d20;
+        border: none;
+        font-weight: 700;
+        font-size: 1rem;
+        padding: 14px 0;
+        width: 100%;
+        border-radius: 6px;
+        transition: background-color 0.2s;
+        margin-bottom: 2rem;
+    }
+
+        .btn-add-cart:hover {
+            background-color: #e2e6ea;
+        }
+
+    .info-links-wrapper {
+        display: inline-flex;
+        flex-direction: column;
+        width: fit-content;
+    }
+
+    .info-link-row {
+        display: flex;
+        align-items: center;
+        padding: 12px 0;
+        border-bottom: 1px solid #343a40;
+        font-size: 0.85rem;
+    }
+
+        .info-link-row:first-child {
+            border-top: 1px solid #343a40;
+        }
+
+        .info-link-row i {
+            font-size: 1.2rem;
+            margin-right: 15px;
+            color: #adb5bd;
+        }
+
+    .info-link-action {
+        color: #0d6efd;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+        .info-link-action:hover {
+            text-decoration: underline;
+        }
+
+    /* --- CARRUSELES --- */
+    .carousel-section {
+        margin-top: 4rem;
+        position: relative;
+    }
+
+    .carousel-title {
+        font-size: 1.1rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        margin-bottom: 1.5rem;
+        letter-spacing: 0.5px;
+    }
+
+    .slider-wrapper {
+        position: relative;
+    }
+
+    .nav-btn {
+        position: absolute;
+        top: 40%;
+        transform: translateY(-50%);
+        background: transparent;
+        border: none;
+        color: #adb5bd;
+        font-size: 1.5rem;
+        cursor: pointer;
+        z-index: 10;
+    }
+
+        .nav-btn:hover {
+            color: #f8f9fa;
+        }
+
+        .nav-btn.prev {
+            left: -30px;
+        }
+
+        .nav-btn.next {
+            right: -30px;
+        }
+
+    /* ESTILOS NUEVOS PARA CARRUSEL Y PUNTOS */
+    .product-carousel {
+        padding-bottom: 35px;
+    }
+
+    .custom-indicators {
+        bottom: 0 !important;
+        margin-bottom: 0 !important;
+    }
+
+        .custom-indicators [data-bs-target] {
+            width: 8px !important;
+            height: 8px !important;
+            border-radius: 50% !important;
+            background-color: #cccccc !important;
+            margin: 0 4px !important;
+            border: none !important;
+            opacity: 1 !important;
+        }
+
+        .custom-indicators .active {
+            background-color: #222222 !important;
+        }
+
+    /* FONDO TRANSPARENTE EN SLIDER CARD */
+    .slider-card {
+        flex: 0 0 calc(20% - 12px);
+        background-color: transparent;
+        border: 1px solid #495057;
+        position: relative;
+        min-width: 180px;
+        border-radius: 6px;
+        overflow: hidden;
+    }
+
+    .slider-img-container {
+        position: relative;
+        background-color: transparent;
+        border-bottom: 1px solid #495057;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+        .slider-img-container img {
+            width: 100%;
+            height: 200px;
+            object-fit: contain;
+            padding: 15px;
+        }
+
+    .slider-sizes-overlay {
+        position: absolute;
+        bottom: -14px;
+        left: 0;
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 4px;
+        padding: 0 5px;
+        opacity: 0;
+        transition: opacity 0.2s ease, transform 0.2s ease;
+        transform: translateY(5px);
+        z-index: 10;
+    }
+
+    .slider-card:hover .slider-sizes-overlay {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .hover-size-box {
+        width: 28px; /* Achicamos el ancho (antes 32px) */
+        height: 28px; /* Achicamos el alto (antes 32px) */
+        background-color: #2b3035;
+        border: 1px solid #495057;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.7rem; /* Fuente más pequeña para que encaje perfecto */
+        font-weight: 700;
+        cursor: pointer;
+        color: #f8f9fa;
+        border-radius: 4px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        transition: all 0.2s;
+    }
+
+        .hover-size-box:hover:not(.disabled), .hover-size-box.active {
+            background-color: #f8f9fa;
+            color: #212529;
+            border-color: #f8f9fa;
+        }
+
+        .hover-size-box.disabled {
+            color: #6c757d;
+            cursor: default; /* El puntero queda como flecha normal */
+            pointer-events: none; /* Bloquea clics y hover */
+            background: linear-gradient(to top right, transparent calc(50% - 1px), #495057, transparent calc(50% + 1px));
+        }
+
+    .slider-card-body {
+        padding: 25px 15px 15px 15px;
+        background-color: transparent;
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+    }
+
+    /* LOGO MARCA SLIDER */
+    .slider-brand-logo {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: #ffffff;
+        margin-bottom: 5px;
+        text-transform: uppercase;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .slider-title {
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        margin-bottom: 5px;
+        color: #ced4da;
+        font-weight: 500;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .slider-price {
+        font-size: 1.3rem;
+        font-weight: 800;
+        color: #fff;
+        margin-bottom: 0px;
+    }
+
+    .slider-tax {
+        font-size: 0.7rem;
+        color: #8c959f;
+        margin-bottom: 0;
+    }
+
+    .slider-action-container {
+        height: 42px;
+        margin-top: 15px;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+    }
+
+    .slider-card:hover .slider-action-container {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+    .btn-add-cart-slider {
+        background-color: #f8f9fa;
+        color: #1a1d20;
+        border: none;
+        font-weight: 700;
+        font-size: 0.85rem;
+        height: 100%;
+        width: 100%;
+        border-radius: 4px;
+        display: block;
+    }
+
+        .btn-add-cart-slider:hover {
+            background-color: #e2e6ea;
+        }
+
+    /* Modales */
+    .modal-content {
+        background-color: #2b3035;
+        color: #f8f9fa;
+        border: 1px solid #495057;
+        border-radius: 6px;
+    }
+
+    .modal-header {
+        border-bottom: 1px solid #495057;
+        padding-bottom: 15px;
+    }
+
+    .btn-close {
+        filter: invert(1) grayscale(100%) brightness(200%);
+    }
+
+    /* OCULTAR FLECHAS VISUALES EN EL INPUT NUMBER */
+    input[type="number"]::-webkit-outer-spin-button,
+    input[type="number"]::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    input[type="number"] {
+        -moz-appearance: textfield;
+    }
+
+    @@media (max-width: 768px) {
+        .nav-btn {
+            display: none;
+        }
+    }
+</style>
+
+@{
+    var simBase = (ViewBag.ProductosSimilares as IEnumerable<ProductoGetViewModel>)?.Take(30).ToList() ?? new List<ProductoGetViewModel>();
+    var simChunks = simBase.Select((x, i) => new { Index = i, Value = x }).GroupBy(x => x.Index / 5).Select(x => x.Select(v => v.Value).ToList()).ToList();
+
+    var intBase = (ViewBag.ProductosInteresar as IEnumerable<ProductoGetViewModel>)?.Take(30).ToList() ?? new List<ProductoGetViewModel>();
+    var intChunks = intBase.Select((x, i) => new { Index = i, Value = x }).GroupBy(x => x.Index / 5).Select(x => x.Select(v => v.Value).ToList()).ToList();
+
+    var cartQuantities = ViewBag.CartQuantities as Dictionary<int, int> ?? new Dictionary<int, int>();
+}
+
+<div class="container py-4">
+
+    <div class="row">
+        <!-- ================= COLUMNA IZQUIERDA ================= -->
+        <div class="col-12 col-lg-7 pe-lg-5">
+
+            <div class="d-flex gap-3">
+                <div class="thumbnails-col d-none d-md-flex">
+                    <div class="thumbnail-box active">
+                        <img src="@(string.IsNullOrEmpty(Model.ImagenUrl) ? "https://placehold.co/400" : Model.ImagenUrl)" alt="Thumb" />
                     </div>
                 </div>
+                <div class="main-img-box flex-grow-1 relative">
+                    <img src="@(string.IsNullOrEmpty(Model.ImagenUrl) ? "https://placehold.co/800" : Model.ImagenUrl)" alt="@Model.Nombre" />
+                </div>
             </div>
-            <div class="card-footer row bg-dark">
-                <div class="col-12 col-md-6 pb-1 ">
-                    <a asp-action="Index" class="btn btn-success btn-square form-control btn-lg" style="height:50px;">Volver a Lista</a>
+
+            <div class="desc-specs-container">
+                <h5 class="section-title">Descripción</h5>
+                <p class="desc-text mb-5">
+                    @Html.Raw(Model.Descripcion)
+                </p>
+
+                <h5 class="section-title">Especificaciones</h5>
+                <table class="specs-table mb-4">
+                    <tbody>
+                        <tr><th>Género:</th><td>Unisex</td></tr>
+                        <tr><th>Marca:</th><td>@Model.Marca</td></tr>
+                        <tr><th>Disciplina:</th><td>@Model.Categoria</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- ================= COLUMNA DERECHA ================= -->
+        <div class="col-12 col-lg-5">
+
+            <!-- FORMULARIO PRINCIPAL -->
+            <form method="post" asp-action="ProductoDetails" id="mainAddToCartForm">
+
+                <input type="hidden" name="Id" value="@Model.Id" />
+                <input type="hidden" name="Precio" value="@Model.Precio" />
+                <input type="hidden" name="ProductosVariantes[0].Id" id="selectedVariantIdMain" value="" />
+
+                <div class="breadcrumb-custom">
+                    Calzado > @Model.Categoria > @Model.Nombre.ToLower()
                 </div>
-                <div class="col-12 col-md-6 ">
-                    <button type="submit" class="btn btn-primary form-control btn-lg" style="height:50px;">Añadir al Carrito</button>
+
+                <!-- LOGO MARCA PRINCIPAL - RUTA CORREGIDA -->
+                <div class="mb-3 d-flex align-items-center">
+                    <img src="~/images/Marcas-ico/@(Model.Marca).svg" alt="@Model.Marca" style="height: 45px; width: auto; object-fit: contain;"
+                         onerror="this.onerror=null; this.outerHTML='<span style=\'font-size: 1.5rem; font-weight: 700; color: #ffffff; text-transform: uppercase; letter-spacing: 1px;\'>@Model.Marca</span>';" />
                 </div>
+
+                <h1 class="product-title">@Model.Nombre</h1>
+
+                <div class="product-sku">
+                    Código: <span id="displaySku">Seleccione un talle</span>
+                </div>
+
+                <hr class="border-secondary my-3" style="opacity: 0.3;">
+
+                <div class="product-price">
+                    $@Model.Precio.ToString("N0", culturaArg)
+                </div>
+
+                <div class="tax-price">
+                    $@((Model.Precio / 1.21m).ToString("N2", culturaArg)) precio sin impuestos nacionales
+                </div>
+
+                <div class="mp-box">
+                    <img src="https://http2.mlstatic.com/frontend-assets/ui-navigation/5.19.1/mercadopago/logo__small@2x.png" alt="Mercado Pago" class="mp-logo">
+                    <span class="mp-text">Pagá de forma segura con <strong>Mercado Pago</strong></span>
+                </div>
+
+                <div class="sizes-title">Seleccione un talle</div>
+
+                <!-- GRILLA DE TALLES DINÁMICA -->
+                <div class="sizes-grid">
+                    @if (Model.ProductosVariantes != null && Model.ProductosVariantes.Any())
+                    {
+                        foreach (var v in Model.ProductosVariantes.OrderBy(x => x.Talle))
+                        {
+                            // Disable solo comprueba el STOCK REAL (DB)
+                            string disableClass = v.Stock <= 0 ? "disabled" : "";
+
+                            // Para el input, calculamos lo que aún puede agregar
+                            int enCarro = cartQuantities.ContainsKey(v.Id) ? cartQuantities[v.Id] : 0;
+                            int stockEfectivo = v.Stock - enCarro;
+                            if (stockEfectivo < 0) stockEfectivo = 0;
+
+                            <div class="size-box-main @disableClass" data-variant-id="@v.Id" data-sku="@v.CodigoBarra" data-stock="@stockEfectivo">
+                                @v.Talle
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <span class="text-muted small">No hay talles disponibles.</span>
+                    }
+                </div>
+
+                <!-- SELECTOR DE CANTIDAD -->
+                <div class="d-flex align-items-center mb-3 gap-3" id="quantityArea">
+                    <span class="text-light fw-bold" style="font-size: 0.9rem;">CANTIDAD:</span>
+                    <input type="number" name="Cantidad" id="inputCantidad" value="1" min="1"
+                           class="form-control bg-dark text-light border-secondary text-center fw-bold"
+                           style="width: 80px;" autocomplete="off" />
+                    <span id="stockMsg" class="text-muted small"></span>
+                </div>
+
+                <!-- MENSAJE LIMITE DE CARRITO (OCULTO POR DEFECTO) -->
+                <div id="stockLimitMsg" class="text-warning small mb-3 d-none">
+                    <i class="bi bi-info-circle me-1"></i> Stock Insuficiente.
+                </div>
+
+                <button type="submit" class="btn-add-cart" id="btnAddToCart">Agregar al carrito</button>
+            </form>
+
+            <div class="mt-2 info-links-wrapper">
+                <div class="info-link-row">
+                    <i class="bi bi-box-seam"></i><span>Cambios gratis en sucursales <a class="info-link-action ms-1" data-bs-toggle="modal" data-bs-target="#modalCambios">ver más</a></span>
+                </div>
+                <div class="info-link-row">
+                    <i class="bi bi-shop"></i><span>Retiro express en tiendas <a class="info-link-action ms-1" data-bs-toggle="modal" data-bs-target="#modalRetiro">ver más</a></span>
+                </div>
+                <div class="info-link-row border-bottom-0">
+                    <i class="bi bi-truck"></i><span>Envíos <a class="info-link-action ms-1" data-bs-toggle="modal" data-bs-target="#modalEnvios">ver más</a></span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ================= CARRUSELES ================= -->
+
+    <div class="carousel-section">
+        <h4 class="carousel-title">Productos Similares</h4>
+        <div class="slider-wrapper">
+            <div id="carouselSimilares" class="carousel slide product-carousel" data-bs-ride="carousel" data-bs-interval="4000">
+                <div class="carousel-indicators custom-indicators">
+                    @for (int i = 0; i < simChunks.Count; i++)
+                    {
+                        <button type="button" data-bs-target="#carouselSimilares" data-bs-slide-to="@i" class="@(i == 0 ? "active" : "")"></button>
+                    }
+                </div>
+                <div class="carousel-inner">
+                    @for (int c = 0; c < simChunks.Count; c++)
+                    {
+                        <div class="carousel-item @(c == 0 ? "active" : "")">
+                            <div class="row row-cols-2 row-cols-md-3 row-cols-lg-5 g-3">
+                                @foreach (var prod in simChunks[c])
+                                {
+                                    <div class="col">
+                                        <div class="slider-card">
+                                            <form asp-action="ProductoDetails" method="post" class="d-flex flex-column h-100 m-0 cart-slider-form">
+
+                                                <input type="hidden" name="Id" value="@prod.Id" />
+                                                <input type="hidden" name="Precio" value="@prod.Precio" />
+                                                <input type="hidden" name="ProductosVariantes[0].Id" class="selected-size-input" value="" />
+                                                <input type="hidden" name="Cantidad" value="1" />
+
+                                                <div class="slider-img-container">
+                                                    <a asp-action="ProductoDetails" asp-route-id="@prod.Id" class="d-block">
+                                                        <img src="@(string.IsNullOrEmpty(prod.ImagenUrl) ? "https://placehold.co/400" : prod.ImagenUrl)" alt="Prod">
+                                                    </a>
+                                                    <div class="slider-sizes-overlay">
+                                                        @if (prod.ProductosVariantes != null)
+                                                        {
+                                                            foreach (var v in prod.ProductosVariantes.OrderBy(x => x.Talle))
+                                                            {
+                                                                string dClass = v.Stock <= 0 ? "disabled" : "";
+                                                                <button type="button" class="hover-size-box @dClass" data-variant-id="@v.Id">@v.Talle</button>
+                                                            }
+                                                        }
+                                                    </div>
+                                                </div>
+
+                                                <div class="slider-card-body">
+                                                    <a asp-action="ProductoDetails" asp-route-id="@prod.Id" class="text-decoration-none text-reset d-block">
+
+                                                        <!-- LOGO MARCA CARRUSEL - RUTA CORREGIDA -->
+                                                        <div class="mb-2">
+                                                            <img src="~/images/Marcas-ico/@(prod.Marca).svg" alt="@prod.Marca" style="height: 40px; width: auto; object-fit: contain;"
+                                                                 onerror="this.onerror=null; this.outerHTML='<span style=\'font-size: 1.1rem; font-weight: 700; color: #ffffff; text-transform: uppercase;\'>@prod.Marca</span>';" />
+                                                        </div>
+
+                                                        <div class="slider-title">@prod.Nombre</div>
+                                                        <div class="slider-price">$@prod.Precio.ToString("N0", culturaArg)</div>
+                                                        <div class="slider-tax">$@((prod.Precio / 1.21m).ToString("N2", culturaArg)) precio sin impuestos nacionales</div>
+                                                    </a>
+
+                                                    <div class="slider-action-container">
+                                                        <button type="submit" class="btn-add-cart-slider">Agregar al carrito</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    }
+                </div>
+                <button class="nav-btn prev" type="button" data-bs-target="#carouselSimilares" data-bs-slide="prev">
+                    <i class="bi bi-chevron-left"></i>
+                </button>
+                <button class="nav-btn next" type="button" data-bs-target="#carouselSimilares" data-bs-slide="next">
+                    <i class="bi bi-chevron-right"></i>
+                </button>
             </div>
         </div>
     </div>
-</form>
 
-@section Scripts{
+    <div class="carousel-section">
+        <h4 class="carousel-title">También te puede interesar</h4>
+        <div class="slider-wrapper">
+            <div id="carouselInteresar" class="carousel slide product-carousel" data-bs-ride="carousel" data-bs-interval="4000">
+                <div class="carousel-indicators custom-indicators">
+                    @for (int i = 0; i < intChunks.Count; i++)
+                    {
+                        <button type="button" data-bs-target="#carouselInteresar" data-bs-slide-to="@i" class="@(i == 0 ? "active" : "")"></button>
+                    }
+                </div>
+                <div class="carousel-inner">
+                    @for (int c = 0; c < intChunks.Count; c++)
+                    {
+                        <div class="carousel-item @(c == 0 ? "active" : "")">
+                            <div class="row row-cols-2 row-cols-md-3 row-cols-lg-5 g-3">
+                                @foreach (var prod in intChunks[c])
+                                {
+                                    <div class="col">
+                                        <div class="slider-card">
+                                            <form asp-action="ProductoDetails" method="post" class="d-flex flex-column h-100 m-0 cart-slider-form">
+
+                                                <input type="hidden" name="Id" value="@prod.Id" />
+                                                <input type="hidden" name="Precio" value="@prod.Precio" />
+                                                <input type="hidden" name="ProductosVariantes[0].Id" class="selected-size-input" value="" />
+                                                <input type="hidden" name="Cantidad" value="1" />
+
+                                                <div class="slider-img-container">
+                                                    <a asp-action="ProductoDetails" asp-route-id="@prod.Id" class="d-block">
+                                                        <img src="@(string.IsNullOrEmpty(prod.ImagenUrl) ? "https://placehold.co/400" : prod.ImagenUrl)" alt="Prod">
+                                                    </a>
+                                                    <div class="slider-sizes-overlay">
+                                                        @if (prod.ProductosVariantes != null)
+                                                        {
+                                                            foreach (var v in prod.ProductosVariantes.OrderBy(x => x.Talle))
+                                                            {
+                                                                string dClass = v.Stock <= 0 ? "disabled" : "";
+                                                                <button type="button" class="hover-size-box @dClass" data-variant-id="@v.Id">@v.Talle</button>
+                                                            }
+                                                        }
+                                                    </div>
+                                                </div>
+
+                                                <div class="slider-card-body">
+                                                    <a asp-action="ProductoDetails" asp-route-id="@prod.Id" class="text-decoration-none text-reset d-block">
+
+                                                        <!-- LOGO MARCA CARRUSEL - RUTA CORREGIDA -->
+                                                        <div class="mb-2">
+                                                            <img src="~/images/Marcas-ico/@(prod.Marca).svg" alt="@prod.Marca" style="height: 40px; width: auto; object-fit: contain;"
+                                                                 onerror="this.onerror=null; this.outerHTML='<span style=\'font-size: 1.1rem; font-weight: 700; color: #ffffff; text-transform: uppercase;\'>@prod.Marca</span>';" />
+                                                        </div>
+
+                                                        <div class="slider-title">@prod.Nombre</div>
+                                                        <div class="slider-price">$@prod.Precio.ToString("N0", culturaArg)</div>
+                                                        <div class="slider-tax">$@((prod.Precio / 1.21m).ToString("N2", culturaArg)) aprecio sin impuestos nacionales</div>
+                                                    </a>
+
+                                                    <div class="slider-action-container">
+                                                        <button type="submit" class="btn-add-cart-slider">Agregar al carrito</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    }
+                </div>
+                <button class="nav-btn prev" type="button" data-bs-target="#carouselInteresar" data-bs-slide="prev">
+                    <i class="bi bi-chevron-left"></i>
+                </button>
+                <button class="nav-btn next" type="button" data-bs-target="#carouselInteresar" data-bs-slide="next">
+                    <i class="bi bi-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============================================== -->
+<!-- MODALES -->
+<!-- ============================================== -->
+<div class="modal fade" id="modalCambios" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content p-3">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold text-uppercase d-flex align-items-center" style="font-size: 1.1rem; letter-spacing: 0.5px;">
+                    <i class="bi bi-box-seam me-2 text-secondary fs-4"></i> Políticas de Cambio
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body pt-4" style="font-size: 0.9rem; line-height: 1.6;">
+                <p>El plazo de cambio es de treinta (30) días corridos contando a partir de la fecha en que recibiste tu compra. Puedes realizarlo gratis en cualquier sucursal o por correo a cargo del comprador a través de cualquier sucursal Andreani.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalRetiro" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content p-3">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold text-uppercase d-flex align-items-center" style="font-size: 1.1rem; letter-spacing: 0.5px;">
+                    <i class="bi bi-shop me-2 text-secondary fs-4"></i> Sucursales
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body pt-4 pb-2" style="font-size: 0.9rem;">
+                <div class="border border-secondary rounded p-3 mb-2 bg-dark text-light">SAN MIGUEL DE TUCUMÁN - 25 de Mayo 230</div>
+                <div class="border border-secondary rounded p-3 mb-2 bg-dark text-light">SAN MIGUEL DE TUCUMÁN - San Martín 780</div>
+                <div class="border border-secondary rounded p-3 mb-2 bg-dark text-light">SAN MIGUEL DE TUCUMÁN - Muñecas 150</div>
+                <div class="border border-secondary rounded p-3 mb-2 bg-dark text-light">YERBA BUENA - Fermin Cariola 42, Portal Tucumán Shopping</div>
+                <div class="border border-secondary rounded p-3 mb-2 bg-dark text-light">YERBA BUENA - Avenida Aconquija 1336, Solar Del Cerro Shopping</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalEnvios" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content p-3">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold text-uppercase d-flex align-items-center" style="font-size: 1.1rem; letter-spacing: 0.5px;">
+                    <i class="bi bi-truck me-2 text-secondary fs-4"></i> Envíos
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body pt-4 pb-2" style="font-size: 0.95rem;">
+                Los valores de envío dependerán de la zona de envío. El monto se determinará a la hora de seleccionar el envío.
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script>
+        $(document).ready(function() {
+
+            let maxStockActual = 1;
+            let $inputCantidad = $('#inputCantidad');
+
+            // 1. Selección en Producto Principal
+            $('.size-box-main').click(function() {
+                if ($(this).hasClass('disabled')) return;
+
+                $('.size-box-main').removeClass('active');
+                $(this).addClass('active');
+
+                $('#selectedVariantIdMain').val($(this).data('variant-id'));
+                $('#displaySku').text($(this).data('sku'));
+
+                // Extraemos el stock usando isNaN por seguridad
+                let st = parseInt($(this).data('stock'));
+                maxStockActual = isNaN(st) ? 1 : st;
+
+                $inputCantidad.attr('max', maxStockActual);
+
+                // --- INICIO LÓGICA ESPECIAL CARRO LLENO ---
+                if (maxStockActual === 0) {
+                    $inputCantidad.val(0);
+                    $('#quantityArea').removeClass('d-flex').addClass('d-none');
+                    $('#btnAddToCart').addClass('d-none');
+                    $('#stockLimitMsg').removeClass('d-none');
+                } else {
+                    $('#quantityArea').removeClass('d-none').addClass('d-flex');
+                    $('#btnAddToCart').removeClass('d-none');
+                    $('#stockLimitMsg').addClass('d-none');
+
+                    let valorActual = parseInt($inputCantidad.val()) || 1;
+
+                    if (valorActual > maxStockActual || valorActual === 0) {
+                        $inputCantidad.val(maxStockActual);
+                    }
+                    if (maxStockActual > 1) {
+                        $('#stockMsg').text('(' + maxStockActual + ' Disponibles)');
+                    } else {
+                        $('#stockMsg').text('(' + maxStockActual + ' Disponible)');
+                    }
+                }
+                // --- FIN LÓGICA ESPECIAL CARRO LLENO ---
+            });
+
+            // 2. Control manual del Input de Cantidad para permitir teclado
+            $inputCantidad.on('keydown', function(e) {
+                // Si el stock está en 0 por carro lleno, bloqueamos todo el teclado excepto navegación
+                if (maxStockActual === 0) {
+                    if (['Backspace', 'Delete', 'Tab', 'ArrowLeft', 'ArrowRight'].includes(e.key)) return;
+                    e.preventDefault();
+                    return;
+                }
+
+                // GESTIONAR FLECHAS ARRIBA Y ABAJO MANUALMENTE
+                if (e.key === 'ArrowUp') {
+                    e.preventDefault();
+                    let val = parseInt(this.value) || 1;
+                    if (val < maxStockActual) {
+                        this.value = val + 1;
+                    }
+                    return;
+                }
+
+                if (e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    let val = parseInt(this.value) || 1;
+                    if (val > 1) {
+                        this.value = val - 1;
+                    }
+                    return;
+                }
+
+                // Bloquear caracteres no deseados
+                if (['-', '+', '.', 'e', 'E', ','].includes(e.key)) {
+                    e.preventDefault();
+                }
+
+                // Bloquear tipeo de '0' si la caja está vacía o si están reemplazando todo
+                if (e.key === '0' && (this.value === '' || (this.selectionStart === 0 && this.selectionEnd === this.value.length))) {
+                    e.preventDefault();
+                }
+            });
+
+            $inputCantidad.on('input', function() {
+                if (maxStockActual === 0) {
+                    this.value = 0;
+                    return;
+                }
+
+                let val = parseInt(this.value);
+                if (val > maxStockActual) {
+                    this.value = maxStockActual;
+                }
+            });
+
+            // Si borran la caja, forzamos "1" al instante
+            $inputCantidad.on('keyup blur', function() {
+                if (maxStockActual === 0) {
+                    this.value = 0;
+                    return;
+                }
+
+                if (this.value === '' || parseInt(this.value) < 1) {
+                    this.value = '1';
+                    this.select();
+                }
+            });
+
+            // 3. Selección en los Sliders
+            $('.hover-size-box').click(function(e) {
+                if ($(this).hasClass('disabled')) return;
+
+                if (e.originalEvent) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                }
+
+                var container = $(this).closest('.slider-sizes-overlay');
+                container.find('.hover-size-box').removeClass('active');
+                $(this).addClass('active');
+
+                var selectedVariantId = $(this).data('variant-id');
+                $(this).closest('form').find('.selected-size-input').val(selectedVariantId);
+            });
+
+            // 4. Auto-seleccionar el talle más chico disponible al cargar la página
+            $('.sizes-grid .size-box-main:not(.disabled)').first().click();
+
+            $('.slider-card').each(function() {
+                $(this).find('.hover-size-box:not(.disabled)').first().click();
+            });
+
+            // Validaciones al enviar formulario
+            $('#mainAddToCartForm').submit(function(e) {
+                if (!$('#selectedVariantIdMain').val()) {
+                    e.preventDefault();
+                    alert("Por favor, seleccione un talle.");
+                }
+            });
+
+            $('.cart-slider-form').submit(function(e) {
+                var selectedSize = $(this).find('.selected-size-input').val();
+                if (!selectedSize) {
+                    e.preventDefault();
+                    alert("Por favor, selecciona un talle antes de agregar al carrito.");
+                }
+            });
+
+            // ========================================================
+            // AJAX - AGREGAR AL CARRITO (CARRUSELES)
+            // ========================================================
+            $('.cart-slider-form').submit(function(e) {
+                e.preventDefault(); // Evita recargar
+
+                var form = $(this);
+                var selectedSize = form.find('.selected-size-input').val();
+
+                if (!selectedSize) {
+                    toastr.warning("Por favor, selecciona un talle antes de agregar al carrito.");
+                    return false;
+                }
+
+                var btn = form.find('.btn-add-cart-slider');
+                btn.prop('disabled', true); // Bloqueo silencioso
+
+                $.ajax({
+                    url: '/Home/AddToCartAjax',
+                    type: 'POST',
+                    data: form.serialize(),
+                    success: function(response) {
+                        if (response.success) {
+                            toastr.success(response.message);
+                            var dotExists = $('#cart-icon-container').find('.cart-dot').length > 0;
+                            if (!dotExists) {
+                                $('#cart-icon-container').append('<span class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-dark rounded-circle cart-dot"><span class="visually-hidden">Items en carrito</span></span>');
+                            }
+                        } else {
+                            toastr.error(response.message);
+                        }
+                    },
+                    error: function(xhr) {
+                        if (xhr.status === 401) { window.location.href = '/Identity/Login'; }
+                        else { toastr.error("Ocurrió un error al procesar la solicitud."); }
+                    },
+                    complete: function() {
+                        btn.prop('disabled', false);
+                    }
+                });
+            });
+
+        });
+    </script>
 }

@@ -81,5 +81,13 @@ namespace LxF.API.Controllers
             return Ok();
         }
 
+
+        [HttpGet("GetAnyWithProductId/{productId:int}")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        public IActionResult GetAnyWithProductId(int productId)
+        {
+            var result = _service.GetAnyWithProductId(productId);
+            return Ok(result);
+        }
     }
 }

@@ -11,5 +11,6 @@ namespace LXF.Web.Service.IService
         Task<ResponseViewModel?> Remove(int id);
         Task<ResponseViewModel?> RemoveItem(int id);
         Task<ResponseViewModel?> GetByUserId(string id);
+        Task<ResponseViewModel?> GetAnyWithProductId(int productId);
     }
 }

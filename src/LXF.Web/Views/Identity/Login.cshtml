@@ -1,27 +1,88 @@
 ﻿@using LXF.Web.Models.ViewModels
 @model LoginRequestViewModel
 
+<style>
+    /* Forzamos el esquema oscuro y ocultamos el icono de revelar contraseña por defecto de Edge/Chrome */
+    :root, body { color-scheme: dark !important; }
+    input[type="password"]::-ms-reveal,
+    input[type="password"]::-ms-clear,
+    input[type="password"]::-webkit-reveal { display: none !important; }
+
+    /* Estilos para el enlace de Olvidaste la contraseña */
+    .forgot-password-link {
+        color: #adb5bd;
+        text-decoration: none;
+        font-size: 0.9rem;
+        transition: color 0.2s ease, text-decoration 0.2s ease;
+    }
+    .forgot-password-link:hover {
+        color: #ffc107; /* Tono de advertencia/amarillo que combina con el tema */
+        text-decoration: underline;
+    }
+</style>
+
 <form method="post">
-    <div class=" container border p-4">
-        <div class=" row text-center p-3">
-         <h1>Login</h1>
+    <div class="container border p-4 bg-dark text-light">
+        
+        <div class="row text-center p-3">
+            <h1 class="text-secondary">
+                <i class="bi bi-person-circle me-3"></i>Login
+            </h1>
         </div>
+
         <div class="row">
             <div class="col-12 col-md-6 offset-md-3 pb-2">
-                <input asp-for="NombreUsuario" class="form-control" placeholder="Nombre de Usuario..." />
-                <span asp-validation-for="NombreUsuario" class="text-danger" />
-            </div>
-            <div class="col-12 col-md-6 offset-md-3 pb-2">
-                <input asp-for="Password" class="form-control" placeholder="Contraseña..." />
-                <span asp-validation-for="Password" class="text-danger" />
-            </div>
-            <div class="col-12 col-md-6 offset-md-3 pb-2">
-                <button type ="submit" class="form-control btn btn-success" value="Submit">Login</button>
+                <input asp-for="NombreUsuario" class="form-control bg-dark text-light border-secondary" placeholder="Nombre de Usuario..." />
+                <span asp-validation-for="NombreUsuario" class="text-danger"></span>
             </div>
         </div>
+
+        <div class="row">
+            <div class="col-12 col-md-6 offset-md-3 pb-2">
+                <div class="input-group">
+                    <input asp-for="Password" id="passwordInput" type="password" class="form-control bg-dark text-light border-secondary" placeholder="Contraseña..." />
+                    <button class="btn border-secondary bg-dark toggle-password" type="button" data-target="passwordInput" style="border-left: 1px solid #343a40;">
+                        <i class="bi bi-eye-slash-fill" style="color: #adb5bd !important;"></i>
+                    </button>
+                </div>
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="row mt-2">
+            <div class="col-12 col-md-6 offset-md-3 pb-2">
+                <button type="submit" class="form-control btn btn-success" value="Submit">Ingresar</button>
+            </div>
+        </div>
+
+        <div class="row mt-2">
+            <div class="col-12 col-md-6 offset-md-3 text-center">
+                <a asp-action="ForgotPassword" class="forgot-password-link">¿Olvidaste la contraseña?</a>
+            </div>
+        </div>
+
     </div>
 </form>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Lógica para mostrar/ocultar la contraseña
+            $('.toggle-password').on('click', function() {
+                const targetId = $(this).data('target');
+                const $passwordInput = $('#' + targetId);
+                const $icon = $(this).find('i');
+
+                if ($passwordInput.attr('type') === 'password') {
+                    $passwordInput.attr('type', 'text');
+                    $icon.removeClass('bi-eye-slash-fill').addClass('bi-eye-fill');
+                } else {
+                    $passwordInput.attr('type', 'password');
+                    $icon.removeClass('bi-eye-fill').addClass('bi-eye-slash-fill');
+                }
+            });
+        });
+    </script>
 }

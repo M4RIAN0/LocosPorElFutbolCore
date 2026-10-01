@@ -9,28 +9,21 @@ namespace Dominio.Entidades
     [Table("Facturas")]
     public partial class Factura : MasterEntityModel
     {
-        [Required(AllowEmptyStrings = false, ErrorMessage = "El campo {0} es obligatorio.")]
-        [StringLength(100, ErrorMessage = "El campo {0} no debe superar los {1} caracteres.")]
+        [Required]
         public string Nombre { get; set; }
-        [Required(AllowEmptyStrings = false, ErrorMessage = "El campo {0} es obligatorio.")]
-        [StringLength(8, ErrorMessage = "El campo {0} no debe superar los {1} caracteres.")]
+        [Required]
         public string Dni { get; set; }
-        [Required(AllowEmptyStrings = false, ErrorMessage = "El campo {0} es obligatorio.")]
+        [Required]
         public string Direccion { get; set; }
-        [Required(AllowEmptyStrings = false, ErrorMessage = "El campo {0} es obligatorio")]
-        [StringLength(10, ErrorMessage = "El campo {0} no debe superar los {1} caractere")]
+        [Required]
         public string Celular { get; set; }
-        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
+        [Required]
         public string Email { get; set; }
-
-        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
+        [Required]
         public DateOnly Fecha { get; set; }
-
-        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
+        [Required]
         public string Estado { get; set; }
-
-        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
-        [Column(TypeName = "decimal(18,2)")]
+        [Required]
         public decimal Total { get; set; }
 
         public string TipoPago { get; set; }

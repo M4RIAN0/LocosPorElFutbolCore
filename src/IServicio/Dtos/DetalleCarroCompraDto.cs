@@ -8,7 +8,7 @@ namespace IServicio.Dtos
         public int Cantidad { get; set; }
         public decimal Precio { get; set; }
         public decimal SubTotal { get; set; }
-        public int ProductoId { get; set; }
+        public int ProductoVarianteId { get; set; }
         public int CarroComprasId { get; set; }
 
     }
@@ -23,8 +23,8 @@ namespace IServicio.Dtos
         public int Cantidad { get; init; }
         public decimal Precio { get; init; }
         public decimal SubTotal { get; init; }
-        public int ProductoId { get; init; }
+        public int ProductoVarianteId { get; init; }
         public int CarroComprasId { get; init; }
-        public ProductoGetDto Producto { get; init; }
+        public ProductoVarianteGetDto ProductoVariante { get; init; }
     }
 }

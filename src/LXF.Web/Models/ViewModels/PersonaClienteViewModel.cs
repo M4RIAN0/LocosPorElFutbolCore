@@ -4,21 +4,25 @@ namespace LXF.Web.Models.ViewModels
 {
     public class PersonaClienteViewModel
     {
-
-        public required string Apellido { get; set; }
-
+        [Required]
+        [StringLength(50)]
         public required string Nombre { get; set; }
-
+        [Required]
+        [StringLength(50)]
+        public required string Apellido { get; set; }
+        [Required]
+        [StringLength(8)]
         public required string Dni { get; set; }
-
-        public required string Direccion { get; set; }
-
-        public required string Sexo { get; set; }
-
+        [Required]
         public required string FechaNacimiento { get; set; }
-
+        [Required]
+        public required string Sexo { get; set; }
+        [Required]
+        [StringLength(10)]
         public required string Celular { get; set; }
-
+        [Required]
+        public required string Direccion { get; set; }
+        [Required]
         public required string Email { get; set; }
     }
 

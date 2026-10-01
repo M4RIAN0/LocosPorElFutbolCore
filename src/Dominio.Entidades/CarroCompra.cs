@@ -1,4 +1,5 @@
 ﻿using DominioBase;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -9,6 +10,7 @@ namespace Dominio.Entidades
     {
         public string? UserId { get; set; }
         public decimal Total { get; set; }
+        public DateTime LastModified { get; set; } = DateTime.Now;
 
         //propiedades de navegacion
         public virtual IEnumerable<DetalleCarroCompra> DetalleCarroCompras { get; set; }

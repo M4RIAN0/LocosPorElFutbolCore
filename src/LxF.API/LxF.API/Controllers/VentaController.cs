@@ -10,10 +10,12 @@ namespace LxF.API.Controllers
     public class VentaController : ControllerBase
     {
         private readonly IVentaService _service;
+        private readonly IOrdenCompraService _ordenCompraService;
 
-        public VentaController(IVentaService service)
+        public VentaController(IVentaService service, IOrdenCompraService ordenCompraService)
         {
             _service = service;
+            _ordenCompraService = ordenCompraService;
         }
 
         [HttpPost]
@@ -40,6 +42,14 @@ namespace LxF.API.Controllers
         public IActionResult GetComprobanteById(int id)
         {
             var result = _service.GetComprobantebyId(id);
+            return Ok(result);
+        }
+
+        [HttpGet("getLastOrden")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        public IActionResult GetLast()
+        {
+            var result = _ordenCompraService.GetLast();
             return Ok(result);
         }
     }

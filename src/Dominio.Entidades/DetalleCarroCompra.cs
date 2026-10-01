@@ -12,9 +12,9 @@ namespace Dominio.Entidades
 
         //propiedades de navegacion
         public int CarroComprasId { get; set; }
-        public int ProductoId { get; set; }
+        public int ProductoVarianteId { get; set; }
         public virtual CarroCompra CarroCompras { get; set; }
-        public virtual Producto Producto { get; set; }
+        public virtual ProductoVariante ProductoVariante { get; set; }
 
     }
 }

@@ -7,5 +7,6 @@ namespace LXF.Web.ServiceApiClient.IServiceApiClient
         Task<ResponseViewModel?> Add(TransactionObjectsViewModel vm);
         Task<ResponseViewModel?> GetComprobantesByClienteId(int clienteId);
         Task<ResponseViewModel?> GetComprobanteById(int id);
+        Task<ResponseViewModel?> GetLastOrden();
     }
 }

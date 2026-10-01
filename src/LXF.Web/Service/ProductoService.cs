@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Dominio.Entidades;
 using LXF.Web.Models.ViewModels;
 using LXF.Web.Service.IService;
 using LXF.Web.ServiceApiClient.IServiceApiClient;
@@ -69,6 +70,66 @@ namespace LXF.Web.Service
         public async Task<ResponseViewModel?> GetCategorias()
         {
             return await _categoriaService.GetAll();
+        }
+
+        public async Task<ResponseViewModel?> GetByIdProductoVariante(int productoVarianteId)
+        {
+            var response = await _serviceApiClient.GetByIdProductoVariante(productoVarianteId);
+
+            if (response.IsSuccess)
+                response.Result = Desearilize<ProductoVarianteGetViewModel>(response);
+
+            return response;
+        }
+
+        public async Task<ResponseViewModel?> GetInStockProductos()
+        {
+            var response = await _serviceApiClient.GetInStockProductos();
+
+            if (response.IsSuccess)
+                response.Result = DesearilizeList<ProductoGetViewModel>(response);
+
+            return response;
+        }
+
+        public async Task<ResponseViewModel?> GetSimilProductos(int productoId, int categoriaId, int marcaId)
+        {
+            var response = await _serviceApiClient.GetSimilProductos(productoId, categoriaId, marcaId);
+
+            if (response.IsSuccess)
+                response.Result = DesearilizeList<ProductoGetViewModel>(response);
+
+            return response;
+        }
+
+        public async Task<ResponseViewModel?> GetInterestingProductos(int productoId)
+        {
+            var response = await _serviceApiClient.GetInterestingProductos(productoId);
+
+            if (response.IsSuccess)
+                response.Result = DesearilizeList<ProductoGetViewModel>(response);
+
+            return response;
+        }
+
+        public async Task<ResponseViewModel?> GetByFilterGenderProductos(string cadena)
+        {
+            var response = await _serviceApiClient.GetByFilterGenderProductos(cadena);
+
+            if (response.IsSuccess)
+                response.Result = DesearilizeList<ProductoGetViewModel>(response);
+
+            return response;
+        }
+
+        public async Task<ResponseViewModel?> GetLastProducto()
+        {
+            var response = await _serviceApiClient.GetLastProducto();
+
+            if (response.IsSuccess)
+                response.Result = Desearilize<ProductoGetViewModel>(response);
+
+            return response;
         }
     }
 }

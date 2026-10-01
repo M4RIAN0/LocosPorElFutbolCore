@@ -1,9 +1,8 @@
 ﻿using AutoMapper;
+using IServicio.Email;
 using LXF.Web.Models.ViewModels;
 using LXF.Web.Service.IService;
-using LXF.Web.ServiceApiClient;
 using LXF.Web.ServiceApiClient.IServiceApiClient;
-using LXF.Web.Utility;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
@@ -75,24 +74,8 @@ namespace LXF.Web.Controllers
 
                 if (identityResponse != null && identityResponse.IsSuccess)
                 {
-                    vm.Role = SD.RoleCustomer;
-
-                    var assignRole = await _IdentityserviceApiClient.AssignRoleAsync(vm);
-
-
-                    if (assignRole != null && assignRole.IsSuccess)
-                    {
-                        TempData["success"] = identityResponse?.Message;
-                    }
-                    
-                    var personaVM = GetPersonaVm(vm);
-                    var personaResponse = await _personaClienteServiceApiClient.Add(personaVM);
-
-                    if (personaResponse.IsSuccess)
-                    {
-                        TempData["success"] = identityResponse.Message;
-                        return RedirectToAction(nameof(Login));
-                    }
+                    TempData["success"] = identityResponse.Message;
+                    return RedirectToAction(nameof(Login));
                 }
                 else
                 {
@@ -108,6 +91,81 @@ namespace LXF.Web.Controllers
             await HttpContext.SignOutAsync();
             _tokenProvider.ClearToken();
             return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet]
+        public IActionResult ForgotPassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel vm)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(vm);
+            }
+
+            var htmlContent = GenerarPlantillaEmailResetPassword(vm.Email, "{{URL_RESETEO}}");
+
+            vm.Message = new Message
+            {
+                To = vm.Email,
+                Subject = "Recuperar Contraseña - LXF Deportes",
+                Content = htmlContent
+            };
+
+            var response = await _IdentityserviceApiClient.ForgotPasswordAsync(vm);
+
+            if (response != null && response.IsSuccess)
+            {
+                TempData["success"] = $"Se envió un mail a {vm.Email} para restablecer la contraseña.";
+                return RedirectToAction("Login");
+            }
+            else
+            {
+                TempData["error"] = "No existe un usuario registrado con ese Email.";
+                return View(vm);
+            }
+        }
+
+        [HttpGet]
+        public IActionResult ResetPassword(string token, string email)
+        {
+            if (string.IsNullOrEmpty(token) || string.IsNullOrEmpty(email))
+            {
+                TempData["MensajeError"] = "El enlace de recuperación es inválido o está corrupto.";
+                return RedirectToAction("Login");
+            }
+
+            var model = new ResetPasswordViewModel
+            {
+                Token = token,
+                Email = email
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var response = await _IdentityserviceApiClient.ResetPasswordAsync(model);
+
+            if (response.IsSuccess)
+            {
+                TempData["Success"] = "¡Tu contraseña ha sido restablecida con éxito! Ya puedes iniciar sesión.";
+                return RedirectToAction("Login");
+            }
+
+            TempData["Error"] = "Hubo un error al restablecer la contraseña. Es posible que el enlace haya expirado.";
+            return View(model);
         }
 
         #region Private Events 
@@ -141,8 +199,9 @@ namespace LXF.Web.Controllers
         {
             string[] partesNombre = vm.Nombre.Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
-            return new  PersonaClienteViewModel {
-                
+            return new PersonaClienteViewModel
+            {
+
                 Apellido = string.Join(" ", partesNombre.Skip(1)),
                 Nombre = partesNombre[0],
                 Dni = vm.Dni,
@@ -157,9 +216,9 @@ namespace LXF.Web.Controllers
 
         private async Task<IActionResult> GetFormPopulated(RegisterRequestViewModel? vm)
         {
-           var response = await _provinciaService.GetAll();
+            var response = await _provinciaService.GetAll();
 
-           if (response.IsSuccess && response.Result != null)
+            if (response.IsSuccess && response.Result != null)
             {
                 var provincias = ((IEnumerable<object>)response.Result).Select(p => ToGetViewModelProvincias(p)).ToList();
                 var localidades = provincias.SelectMany(p => p.Localidades).ToList();
@@ -181,7 +240,7 @@ namespace LXF.Web.Controllers
                 return View(vm);
             }
 
-           TempData["error"] = "No se pudieron cargar las provincias.";
+            TempData["error"] = "No se pudieron cargar las provincias.";
 
             if (vm == null)
                 return View();
@@ -189,8 +248,63 @@ namespace LXF.Web.Controllers
             return View(vm);
         }
 
+        private string GenerarPlantillaEmailResetPassword(string email, string callBackLinkPlaceholder)
+        {
+            return $@"
+            <!DOCTYPE html>
+            <html lang='es'>
+            <head><meta charset='UTF-8'></head>
+            <body style='margin: 0; padding: 0; background-color: #e9ecef; font-family: Arial, sans-serif; color: #212529;'>
+                <table width='100%' border='0' cellspacing='0' cellpadding='0' style='padding: 40px 15px;'>
+                    <tr>
+                        <td align='center'>
+                            <table width='600' border='0' cellspacing='0' cellpadding='0' style='background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.05);'>
+                                <tr>
+                                    <td align='center' style='background-color: #212529; padding: 35px 20px;'>
+                                        <h1 style='color: #ffffff; margin: 0; font-size: 26px; letter-spacing: 2px; text-transform: uppercase;'>LXF</h1>
+                                        <p style='color: #adb5bd; margin: 8px 0 0 0; font-size: 14px;'>Recuperar Contraseña</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style='padding: 35px 35px 20px 35px; text-align: center;'>
+                                        <h2 style='margin: 0 0 15px 0; color: #212529; font-size: 20px;'>¿Olvidaste tu contraseña?</h2>
+                                        <p style='margin: 0; color: #495057; line-height: 1.6; font-size: 15px;'>
+                                            Recibimos una solicitud para restablecer la contraseña de la cuenta asociada a <strong>{email}</strong>. 
+                                            Haz clic en el botón de abajo para recuperar tu acceso.
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align='center' style='padding: 15px 35px 35px 35px;'>
+                                        <a href='{callBackLinkPlaceholder}' style='background-color: #343a40; color: #ffffff; padding: 14px 28px; text-decoration: none; border-radius: 6px; font-weight: bold; font-size: 16px; display: inline-block; text-transform: uppercase; letter-spacing: 1px;'>Restablecer Contraseña</a>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style='padding: 0 35px 35px 35px; text-align: center; border-bottom: 1px solid #dee2e6;'>
+                                        <p style='margin: 0; color: #6c757d; font-size: 13px; line-height: 1.5;'>
+                                            Si no solicitaste este cambio, ignora este correo.
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align='center' style='padding: 35px 20px; background-color: #f8f9fa;'>
+                                        <p style='color: #6c757d; font-size: 12px; line-height: 1.6; margin: 0 0 15px 0;'>
+                                            <strong>LXF Deportes</strong><br>
+                                            Casa Central: 25 de Mayo 230, San Miguel de Tucumán.<br>
+                                            © 2026 Todos los derechos reservados.
+                                        </p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </body>
+            </html>";
+        }
+
         private ProvinciaGetViewModel ToGetViewModelProvincias(object? obj)
-        {       
+        {
             return _mapper.Map<ProvinciaGetViewModel>(obj);
         }
         #endregion

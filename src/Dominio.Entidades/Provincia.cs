@@ -8,7 +8,7 @@ namespace Dominio.Entidades
     [Table("Provincias")]
     public partial class Provincia : MasterEntityModel
     {
-        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
+        [Required]
         public string Nombre { get; set; }
 
         //propiedades de navegacion

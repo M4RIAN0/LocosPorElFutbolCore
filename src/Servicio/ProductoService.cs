@@ -4,6 +4,7 @@ using Dominio.Repositorio;
 using Dominio.Repositorio.Dtos;
 using IServicio;
 using Servicio.Base;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -12,11 +13,13 @@ namespace Servicio
     public class ProductoService : ServicioBase, IProductoService
     {
         private readonly IProductoRepository _repository;
+        private readonly IProductoVarianteRepository _productoVarianteRepository;
         private readonly IMapper _mapper;
 
-        public ProductoService(IProductoRepository repository, IMapper mapper)
+        public ProductoService(IProductoRepository repository, IProductoVarianteRepository productoVarianteRepository, IMapper mapper)
         {
             _repository = repository;
+            _productoVarianteRepository = productoVarianteRepository;
             _mapper = mapper;
         }
 
@@ -29,13 +32,19 @@ namespace Servicio
 
         public void SoftDelete(int id)
         {
+            _repository.BeginTransaction();
+
             _repository.SoftDelete(id);
+            DeleteProductosVariantes(id);
+
             _repository.Save();
+
+            _repository.Commit();
         }
 
         public IEnumerable<ProductoGetDto> GetAll()
         {
-            return [.. _repository.GetAll("Marca,Categoria").Select(x => ToGetDto(x))];
+            return [.. _repository.GetAll("Marca,Categoria,ProductosVariantes").Select(x => ToGetDto(x))];
         }
 
         public IEnumerable<ProductoGetDto> GetByFilter(string cadenaBuscar)
@@ -43,42 +52,129 @@ namespace Servicio
             var codigo = -1;
             int.TryParse(cadenaBuscar, out codigo);
 
-            return [.. _repository.GetByFilter(x => x.Descripcion.Contains(cadenaBuscar) || x.CodigoBarra == codigo).Select(x => ToGetDto(x))];
+            return [.. _repository.GetByFilter(x => x.Descripcion.Contains(cadenaBuscar)).Select(x => ToGetDto(x))];
         }
 
         public ProductoGetDto GetById(int id)
         {
-            var model = _repository.GetById(id, "Marca,Categoria");
-            return ToGetDto(model);
+            return ToGetDto(_repository.GetById(id, "Marca,Categoria,ProductosVariantes"));
         }
 
-        public Producto GetByIdModel(int id)
+        public ProductoVarianteGetDto GetByIdProductoVariante(int productoVarianteId)
         {
-            return _repository.GetById(id, "Marca,Categoria");
+            return ToGetDtoProductoVariante(_productoVarianteRepository.GetById(productoVarianteId,"Producto"));
+        }
+
+        public IEnumerable<ProductoGetDto> GetInStockProductos()
+        {
+            return[.. _repository.GetByFilter( p => p.ProductosVariantes.Any(v => v.Stock > 0),"Marca,Categoria,ProductosVariantes").Select(x => ToGetDto(x))];
+        }
+
+        public IEnumerable<ProductoGetDto> GetSimilProductos(int productoId, int categoriaId, int marcaId)
+        {
+            var enStock = GetInStockProductos();
+
+            return [.. enStock.Where(p => p.CategoriaId == categoriaId && p.Id != productoId).OrderByDescending(p => p.MarcaId == marcaId).ThenBy(p => Guid.NewGuid()).Take(30)];
+        }
+
+        public IEnumerable<ProductoGetDto> GetInterestingProductos(int productoId)
+        {
+            var enStock = GetInStockProductos();
+
+            return [.. enStock.Where(p => p.Id != productoId).OrderBy(p => Guid.NewGuid()).Take(30)];
+        }
+
+        public IEnumerable<ProductoGetDto> GetByFilterGenderProductos(string cadenaBuscar)
+        {
+            var enStock = GetInStockProductos();
+
+            var codigo = -1;
+            int.TryParse(cadenaBuscar, out codigo);
+
+            return [.. enStock.Where(x => x.Genero.Equals(cadenaBuscar)).Select(x => ToGetDto(x))];
         }
 
         public void Update(ProductoPutDto dto)
         {
             var model = ToPutEntity(dto);
+
+            _repository.BeginTransaction();
+
+            CheckProductosVariantes(model);
+            model.ProductosVariantes = null;
             _repository.Attach(model);
             _repository.Save();
+            
+            _repository.Commit();
+        }
+
+        public ProductoGetDto GetLast()
+        {
+            return ToGetDto (_repository.OrderByDescending(x => x.ID, "Marca,Categoria,ProductosVariantes").FirstOrDefault());
         }
 
         #region Private Methods
-        private ProductoGetDto ToGetDto(Producto model)
+
+        private void CheckProductosVariantes(Producto model)
         {
-            return _mapper.Map<ProductoGetDto>(model);
+            var tallesNew = model.ProductosVariantes ?? new List<ProductoVariante>();
+            var talleExist = ToEntity(GetById(model.ID)).ProductosVariantes.ToList();
+            var listTalleId = tallesNew.Where(x => x.ID > 0).Select(x => x.ID).ToList();
+            var tallesToDelete = talleExist.Where(x => !listTalleId.Contains(x.ID)).ToList();
+
+            foreach (var talle in tallesToDelete)
+            {
+                _productoVarianteRepository.Delete(talle.ID);
+            }
+
+            foreach (var item in talleExist.Where(x => listTalleId.Contains(x.ID)))
+            {
+                var newItem = tallesNew.FirstOrDefault(x => x.ID == item.ID);
+                if (newItem != null)
+                {
+                    item.Stock = newItem.Stock;
+                    _productoVarianteRepository.Attach(item);
+                }
+            }
+
+            _productoVarianteRepository.Save();
         }
 
-        private Producto ToPostEntity(ProductoDto dto)
+        private void DeleteProductosVariantes(int productoiId)
         {
-            return _mapper.Map<Producto>(dto);
+            var talleExist = GetById(productoiId).ProductosVariantes.ToList();
+            foreach (var talle in talleExist)
+            {
+                _productoVarianteRepository.SoftDelete(talle.Id);
+            }
+            _repository.Save();
         }
 
-        private Producto ToPutEntity(ProductoPutDto dto)
+        private ProductoGetDto ToGetDto(object? obj)
         {
-            return _mapper.Map<Producto>(dto);
+            return _mapper.Map<ProductoGetDto>(obj);
         }
+
+        private Producto ToPostEntity(object? obj)
+        {
+            return _mapper.Map<Producto>(obj);
+        }
+
+        private Producto ToPutEntity(object? obj)
+        {
+            return _mapper.Map<Producto>(obj);
+        }
+
+        private Producto ToEntity(object? obj)
+        {
+            return _mapper.Map<Producto>(obj);
+        }
+
+        private ProductoVarianteGetDto ToGetDtoProductoVariante(object? obj)
+        {
+            return _mapper.Map<ProductoVarianteGetDto>(obj);
+        }
+
         #endregion
     }
 }

@@ -1,20 +1,17 @@
 namespace Dominio.Entidades
 {
     using DominioBase;
-    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
     [Table("Localidades")]
     public partial class Localidad : MasterEntityModel
     {
-        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
+        [Required]
         public string Nombre { get; set; }
 
-        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
+        [Required]
         public int CP { get; set; }
-
-
 
 
         //propiedades de navegacion

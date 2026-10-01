@@ -1,4 +1,5 @@
-﻿using LXF.Web.Models.ViewModels;
+﻿using Azure;
+using LXF.Web.Models.ViewModels;
 using LXF.Web.Service.IService;
 using LXF.Web.ServiceApiClient.IServiceApiClient;
 
@@ -53,6 +54,14 @@ namespace LXF.Web.Service
             return await _serviceApiClient.SubtractItem(vm);
         }
 
+        public async Task<ResponseViewModel?> GetAnyWithProductId(int productId)
+        {
+            var response =  await _serviceApiClient.GetAnyWithProductId(productId);
 
+            if (response.IsSuccess)
+                response.Result = Desearilize<bool>(response);
+
+            return response;
+        }
     }
 }

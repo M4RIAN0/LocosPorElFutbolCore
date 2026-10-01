@@ -14,6 +14,8 @@ namespace IServicio.Dtos
 
         public string ProductoNombre { get; set; }
 
+        public string Talle { get; set; }
+
         public decimal Precio { get; set; }
 
         public int ProductoId { get; set; }
@@ -31,6 +33,7 @@ namespace IServicio.Dtos
         public int CodigoBarra { get; init; }
 
         public string ProductoNombre { get; init; }
+        public string Talle { get; set; }
 
         [Column(TypeName = "decimal(18,2)")]
         public decimal Precio { get; init; }

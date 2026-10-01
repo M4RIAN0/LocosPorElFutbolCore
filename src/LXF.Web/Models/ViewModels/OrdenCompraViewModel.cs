@@ -1,4 +1,6 @@
-﻿namespace LXF.Web.Models.ViewModels
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace LXF.Web.Models.ViewModels
 {
 
     public class OrdenCompraViewModel
@@ -6,12 +8,13 @@
         public string UserId { get; set; }
         public IEnumerable<DetalleOrdenCompraViewModel> DetalleOrdenCompras { get; set; }
         public decimal Total { get; set; }
-        public string ?Nombre { get; set; }
-        public string? Celular { get; set; }
-        public string? Email { get; set; }
-        public string? Fecha { get; set; }
-        public string? Status { get; set; }
+        public string? Nombre { get; set; }
+        public string Celular { get; set; }
+        public string Email { get; set; }
+        public string Fecha { get; set; }
+        public string Status { get; set; }
         public int PersonaClienteId { get; set; }
+        public int CarroId { get; set; }
 
         //Seccion Facturacion y Envio
         public FacturaViewModel Factura { get; set; }

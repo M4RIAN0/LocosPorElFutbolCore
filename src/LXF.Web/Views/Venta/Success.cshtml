@@ -1,49 +1,154 @@
 ﻿@using LXF.Web.Models.ViewModels
 @model OrdenCompraGetViewModel
+
 @{
-    ViewData["Title"] = "¡Pago Aprobado!";
+    var culturaArg = new System.Globalization.CultureInfo("es-AR");
+    ViewData["Title"] = "¡Compra Exitosa!";
 }
 
-<div class="container mt-4">
-    <div class="card border border-primary bg-dark text-light">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
 
-        <div class="card-header bg-dark text-light border-bottom border-secondary">
-            <h3 class="text-success text-center pt-2">
-                <i class="bi bi-check-circle-fill"></i> &nbsp; Confirmación de Compra
-            </h3>
-        </div>
+<style>
+    body { background-color: #212529; color: #ced4da; font-family: 'Roboto', sans-serif; }
+    
+    .checkout-container { padding-top: 60px; padding-bottom: 40px; }
+    
+    .checkout-card { position: relative; background-color: #2b3035; border: 1px solid #495057; border-radius: 12px; overflow: visible; box-shadow: 0 10px 30px rgba(0,0,0,0.4); }
+    
+    .floating-icon-wrapper { position: absolute; top: -40px; left: 50%; transform: translateX(-50%); width: 80px; height: 80px; background-color: #f8f9fa; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(0,0,0,0.3); border: 6px solid #212529; }
+    .floating-icon-wrapper.success { color: #198754; }
+    .floating-icon-wrapper i { font-size: 2.2rem; }
 
-        <div class="card-body">
-            <div class="row text-center">
+    .checkout-header { padding: 50px 20px 30px; text-align: center; border-bottom: 1px dashed #495057; }
+    
+    .success-title { font-size: 1.8rem; font-weight: 800; color: #fff; margin-bottom: 10px; }
+    .success-subtitle { font-size: 0.95rem; color: #adb5bd; }
 
-                <div class="col-12 p-5">
+    .details-section { padding: 30px; }
+    .info-box { background-color: #212529; border: 1px solid #343a40; border-radius: 8px; padding: 20px; margin-bottom: 25px; }
+    
+    .detail-row { display: flex; justify-content: space-between; align-items: center; font-size: 0.95rem; }
+    .detail-label { color: #adb5bd; text-transform: uppercase; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.5px; }
+    .detail-value { color: #f8f9fa; font-weight: 700; }
+    
+    .free-shipping { color: #20c997 !important; font-weight: 800; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 0.5px; }
+    .total-value { color: #fff; font-size: 1.5rem; font-weight: 900; }
 
-                    <h2 class="text-success mb-4">
-                        ¡La venta se realizó exitosamente!
-                    </h2>
+    .product-list-title { font-size: 0.85rem; font-weight: 800; text-transform: uppercase; margin-bottom: 15px; color: #6c757d; letter-spacing: 1px; }
+    
+    .prod-item { background-color: transparent; border: 1px solid #495057; border-radius: 8px; padding: 12px; display: flex; align-items: center; gap: 15px; margin-bottom: 10px; }
+    .prod-item.shipping-item { background-color: #262b30; border-style: dashed; }
+    
+    .prod-img-box { width: 60px; height: 60px; background-color: #212529; border-radius: 6px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+    .prod-img-box img { max-width: 90%; max-height: 90%; object-fit: contain; }
+    .prod-img-box i { font-size: 1.6rem; color: #adb5bd; }
+    
+    .prod-info { flex-grow: 1; }
+    .prod-name { font-size: 0.95rem; font-weight: 700; color: #f8f9fa; margin: 0; }
+    .prod-qty { font-size: 0.85rem; color: #adb5bd; margin: 0; }
+    .prod-price { font-size: 1rem; font-weight: 700; color: #fff; }
 
-                    <p class="text-warning" style="font-size: 1.2rem;">
-                        Tu número de referencia de compra es: <strong>#@ViewBag.ExternalReferenceId</strong>
-                    </p>
+    .btn-action-primary { background-color: #198754; color: #fff; border: none; font-weight: 700; padding: 14px 20px; border-radius: 8px; transition: 0.2s; text-decoration: none; display: block; text-align: center; }
+    .btn-action-primary:hover { background-color: #157347; color: #fff; }
+    
+    .btn-action-secondary { background-color: transparent; color: #f8f9fa; border: 1px solid #495057; font-weight: 700; padding: 14px 20px; border-radius: 8px; transition: 0.2s; text-decoration: none; display: block; text-align: center; }
+    .btn-action-secondary:hover { background-color: #343a40; color: #fff; border-color: #6c757d; }
+</style>
 
-                    <p class="text-light mt-3">
-                        Total Pagado: <strong class="text-success">@Model.Total.ToString("C")</strong>
-                    </p>
-                    <p class="text-light">
-                        Fecha: @Model.Fecha
-                    </p>
+<div class="container checkout-container">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-10 col-lg-7">
+            <div class="checkout-card">
+                
+                <div class="floating-icon-wrapper success">
+                    <i class="bi bi-bag-check-fill"></i>
+                </div>
 
-                    <p class="text-info mt-4" style="font-size: 1.1rem;">
-                        Los detalles completos de tu compra y el recibo de pago se enviaron al correo electrónico <strong>@Model.Factura.Email</strong>.
+                <div class="checkout-header">
+                    <h2 class="success-title">¡Tu compra ha sido exitosa!</h2>
+                    <p class="success-subtitle m-0">
+                        Enviamos el detalle y la factura de tu pedido a <strong class="text-light">@(Model.Factura?.Email ?? Model.Email)</strong>
                     </p>
                 </div>
-            </div>
-        </div>
 
-        <div class="card-footer bg-dark border-top border-secondary text-center">
-            <a asp-action="Index" asp-controller="Home" class="btn btn-primary form-control w-50">
-                Volver al inicio
-            </a>
+                <div class="details-section">
+                    
+                    <!-- Información General -->
+                    <div class="info-box py-3 mb-4">
+                        <div class="detail-row">
+                            <span class="detail-label">Fecha:</span>
+                            <span class="detail-value text-muted" style="font-size: 0.9rem;">@Model.Fecha</span>
+                        </div>
+                    </div>
+
+                    <!-- Lista de Productos y Envío -->
+                    <div class="product-list-title">Resumen del pedido</div>
+                    <div class="mb-4">
+                        @if (Model.DetalleOrdenCompras != null && Model.DetalleOrdenCompras.Any())
+                        {
+                            foreach (var item in Model.DetalleOrdenCompras)
+                            {
+                                <div class="prod-item">
+                                    <div class="prod-img-box">
+                                        <img src="@(item.ProductoVariante?.Producto.ImagenUrl ?? "https://placehold.co/100")" alt="Producto" />
+                                    </div>
+                                    <div class="prod-info">
+                                        <p class="prod-name">@(item.ProductoVariante?.Producto.Nombre ?? "Producto")</p>
+                                        <p class="prod-qty">Talle: @(item.ProductoVariante?.Talle ?? "-") | Cant: @item.Cantidad</p>
+                                    </div>
+                                    <div class="prod-price">
+                                        @item.SubTotal.ToString("N0", culturaArg)
+                                    </div>
+                                </div>
+                            }
+                        }
+
+                        @if (Model.Envio != null)
+                        {
+                            <div class="prod-item shipping-item mt-3">
+                                <div class="prod-img-box" style="background-color: #343a40;">
+                                    <i class="bi bi-truck"></i>
+                                </div>
+                                <div class="prod-info">
+                                    <p class="prod-name">Envío</p>
+                                    <p class="prod-qty">@(string.IsNullOrEmpty(Model.Envio.Direccion) ? "Entrega a domicilio" : Model.Envio.Direccion)</p>
+                                </div>
+                                <div class="prod-price">
+                                    @if (Model.Envio.Monto == 0)
+                                    {
+                                        <span class="free-shipping">Gratis</span>
+                                    }
+                                    else
+                                    {
+                                        @Model.Envio.Monto.ToString("N0", culturaArg)
+                                    }
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+                    <div class="info-box">
+                        <div class="detail-row">
+                            <span class="detail-label text-light fs-6">Total Abonado</span>
+                            <span class="detail-value total-value text-success">@Model.Total.ToString("N0", culturaArg)</span>
+                        </div>
+                    </div>
+
+                    <div class="row g-3 mt-1">
+                        <div class="col-12 col-sm-6">
+                            <a asp-controller="Compra" asp-action="MisCompras" class="btn-action-primary w-100">
+                                <i class="bi bi-box-seam me-2"></i>Ir a Mis Compras
+                            </a>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <a asp-controller="Producto" asp-action="Catalogo" class="btn-action-secondary w-100">
+                                Seguir Comprando
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
         </div>
     </div>
 </div>

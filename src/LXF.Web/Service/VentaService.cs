@@ -1,11 +1,7 @@
-﻿using AutoMapper;
-using Dominio.Entidades;
+﻿using IServicio.Dtos;
 using LXF.Web.Models.ViewModels;
 using LXF.Web.Service.IService;
 using LXF.Web.ServiceApiClient.IServiceApiClient;
-using QuestPDF.Fluent;
-using QuestPDF.Helpers;
-using QuestPDF.Infrastructure;
 
 namespace LXF.Web.Service
 {
@@ -46,6 +42,16 @@ namespace LXF.Web.Service
         public async Task<byte[]> GeneratePDF(ComprobanteGetViewModel comprobanteGetVM, string rutaLogoPath)
         { 
             return FacturaPDFGenerator.CreateFacturaPDF(comprobanteGetVM, rutaLogoPath);
+        }
+
+        public async Task<ResponseViewModel?> GetLastOrden()
+        {
+            var response = await _serviceApiClient.GetLastOrden();
+
+            if (response.IsSuccess)
+                response.Result = Desearilize<OrdenCompraGetViewModel>(response);
+
+            return response;
         }
     }
 }

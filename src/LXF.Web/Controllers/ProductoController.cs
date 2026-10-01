@@ -10,12 +10,14 @@ namespace LXF.Web.Controllers
     public class ProductoController : Controller
     {
         private readonly IProductoService _service;
+        private readonly ICarroComprasService _carroService;
         private readonly IMapper _mapper;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public ProductoController(IProductoService service, IMapper mapper, IWebHostEnvironment webHostEnvironment)
+        public ProductoController(IProductoService service, ICarroComprasService carroService, IMapper mapper, IWebHostEnvironment webHostEnvironment)
         {
             _service = service;
+            _carroService = carroService;
             _mapper = mapper;
             _webHostEnvironment = webHostEnvironment;
         }
@@ -34,23 +36,28 @@ namespace LXF.Web.Controllers
 
         public async Task<IActionResult> Create()
         {
-            return await HandleErrorOnCreateOrUpdate(null, true);
+            return await HandleErrorOnCreateOrUpdate(new ProductoViewModel(), true);
         }
 
         [HttpPost]
         public async Task<IActionResult> Create(ProductoViewModel vm, IFormFile? imagenArchivo)
         {
             if (imagenArchivo != null)
-                await AddImage(vm, imagenArchivo);
+                vm.ImagenUrl = await HandlerAddOrUpdateImagenUrl(vm, imagenArchivo);
 
             ResponseViewModel? response = await _service.Create(vm);
 
             if (response != null && response.IsSuccess)
             {
+                if (imagenArchivo != null)
+                    await HandlerCrudImage(vm, imagenArchivo);
+
                 TempData["success"] = "Producto Creado Correctamente";
                 return RedirectToAction(nameof(Index));
             }
-            else TempData["error"] = response?.Message;
+
+            TempData["error"] = response?.Message;
+            vm.ImagenUrl = null;
 
             return await HandleErrorOnCreateOrUpdate(vm, false);
         }
@@ -68,23 +75,39 @@ namespace LXF.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Update(ProductoPutViewModel vm)
+        public async Task<IActionResult> Update(ProductoPutViewModel vm, IFormFile? imagenArchivo)
         {
+            if (imagenArchivo != null)
+                vm.ImagenUrl = await HandlerAddOrUpdateImagenUrl(vm, imagenArchivo);
+
             ResponseViewModel? response = await _service.Update(vm);
 
             if (response != null && response.IsSuccess)
             {
+                if (imagenArchivo != null)
+                    await HandlerCrudImage(vm, imagenArchivo);
+
                 TempData["success"] = "Producto Modificado Correctamente";
                 return RedirectToAction(nameof(Index));
-
             }
-            else TempData["error"] = response?.Message;
+
+            TempData["error"] = response?.Message;
 
             return await HandleErrorOnCreateOrUpdate(vm, false);
         }
 
         public async Task<IActionResult> Delete(int id)
         {
+            var responseCart = await _carroService.GetAnyWithProductId(id);
+
+            var result = responseCart?.Result as bool?;
+
+            if (responseCart != null && responseCart.IsSuccess && result == true)
+            {
+                TempData["error"] = "No se Puede Eliminar el Producto Porque Está en Uno o Varios Carrito de Compras.";
+                return RedirectToAction(nameof(Index));
+            }
+
             ResponseViewModel? response = await _service.GetById(id);
 
             if (response != null && response.IsSuccess)
@@ -96,16 +119,31 @@ namespace LXF.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(ProductoGetViewModel vm)
         {
+
             ResponseViewModel? response = await _service.SoftDelete(vm.Id);
 
             if (response != null && response.IsSuccess)
             {
+                await HandlerCrudImage(vm, null);
+
                 TempData["success"] = "Producto Eliminado Correctamente";
                 return RedirectToAction(nameof(Index));
             }
             else TempData["error"] = response?.Message;
 
             return View(vm);
+        }
+
+        public async Task<IActionResult> Catalogo()
+        {
+            ResponseViewModel? response = await _service.GetInStockProductos();
+
+            if (!response.IsSuccess)
+                TempData["error"] = response?.Message;
+
+            var list = response.IsSuccess ? response.Result : new List<ProductoGetViewModel>();
+
+            return View(list);
         }
 
         #region Private Methods
@@ -127,9 +165,8 @@ namespace LXF.Web.Controllers
 
             ViewBag.Categorias = new SelectList(responseCategorias.Result as IEnumerable<CategoriaGetViewModel>, "Id", "Descripcion");
             ViewBag.Marcas = new SelectList(responseMarcas.Result as IEnumerable<MarcaGetViewModel>, "Id", "Descripcion");
-
-            // Carga estática de talles para poblar el dropdown
-            ViewBag.Talles = ObtenerListadoTalles();
+            ViewBag.Talles = GetListadoTalles();
+            ViewBag.Generos = GetListadoGeneros();
 
             if (vm != null)
                 return View(vm);
@@ -137,7 +174,17 @@ namespace LXF.Web.Controllers
             return View();
         }
 
-        private static List<object> ObtenerListadoTalles()
+        private static List<SelectListItem> GetListadoGeneros()
+        {
+            return new List<SelectListItem>
+    {
+        new SelectListItem { Value = "Hombre", Text = "Hombre" },
+        new SelectListItem { Value = "Mujer", Text = "Mujer" },
+        new SelectListItem { Value = "Unisex", Text = "Unisex" }
+    };
+        }
+
+        private static List<object> GetListadoTalles()
         {
             var talles = new List<string>
             {
@@ -153,25 +200,85 @@ namespace LXF.Web.Controllers
             }).ToList<object>();
         }
 
-        private async Task AddImage(ProductoViewModel vm, IFormFile? image)
+        private async Task HandlerCrudImage(object vm, IFormFile? image)
         {
-            string wwwRootPath = _webHostEnvironment.WebRootPath;
+            if ((image == null || image.Length == 0) && vm is not ProductoGetViewModel)
+                return;
 
+            string wwwRootPath = _webHostEnvironment.WebRootPath;
             string uploadsFolder = Path.Combine(wwwRootPath, @"images\Productos");
+
+            if (vm is ProductoGetViewModel productoGetVm)
+            {
+                var images = Directory.GetFiles(uploadsFolder, $"Prod-Name-{productoGetVm.Nombre}.*");
+                foreach (var oldImage in images)
+                {
+                    System.IO.File.Delete(oldImage);
+                }
+                return;
+            }
+
+            string extension = Path.GetExtension(image.FileName);
 
             if (!Directory.Exists(uploadsFolder))
                 Directory.CreateDirectory(uploadsFolder);
 
-            string extension = Path.GetExtension(image.FileName);
-            string fileName = $"prod-{Guid.NewGuid()}{extension}";
+            string fileName = string.Empty;
+
+            switch (vm)
+            {
+                case ProductoViewModel productoVm:
+
+                    fileName = $"Prod-Name-{productoVm.Nombre}{extension}";
+                    break;
+
+                case ProductoPutViewModel productoPutVm:
+
+                    var oldImages = Directory.GetFiles(uploadsFolder, $"Prod-Name-{productoPutVm.Nombre}.*");
+                    foreach (var oldImage in oldImages)
+                    {
+                        System.IO.File.Delete(oldImage);
+                    }
+
+                    fileName = $"Prod-Name-{productoPutVm.Nombre}{extension}";
+                    break;
+
+                default:
+                    return;
+            }
+
             string filePath = Path.Combine(uploadsFolder, fileName);
 
             using (var fileStream = new FileStream(filePath, FileMode.Create))
             {
                 await image.CopyToAsync(fileStream);
             }
+        }
 
-            vm.ImagenUrl = @"/images/Productos/" + fileName;
+        private async Task<string> HandlerAddOrUpdateImagenUrl(object vm, IFormFile? image)
+        {
+            if (image == null || image.Length == 0)
+                return "";
+
+            string extension = Path.GetExtension(image.FileName);
+
+            string fileName = string.Empty;
+
+            switch (vm)
+            {
+                case ProductoViewModel productoVm:
+
+                    fileName = $"Prod-Name-{productoVm.Nombre}{extension}";
+                    return $"/images/Productos/{fileName}";
+
+                case ProductoPutViewModel productoPutVm:
+
+                    fileName = $"Prod-Name-{productoPutVm.Nombre}{extension}";
+                    return $"/images/Productos/{fileName}";
+
+                default:
+                    return "";
+            }
         }
 
         private ProductoPutViewModel ToPutViewModel(object? vm)

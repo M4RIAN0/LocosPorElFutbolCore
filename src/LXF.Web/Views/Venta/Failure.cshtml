@@ -1,52 +1,56 @@
-﻿@using LXF.Web.Models.ViewModels
-@model OrdenCompraGetViewModel
-@{
-    ViewData["Title"] = "Pago Rechazado";
+﻿@{
+    ViewData["Title"] = "¡Pago Rechazado!";
 }
 
-<div class="container mt-4">
-    <div class="card border border-danger bg-dark text-light">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
 
-        <div class="card-header bg-dark text-light border-bottom border-secondary">
-            <h3 class="text-danger text-center pt-2">
-                <i class="bi bi-x-circle-fill"></i> &nbsp; Fallo de Transacción
-            </h3>
-        </div>
+<style>
+    body { background-color: #212529; color: #ced4da; font-family: 'Roboto', sans-serif; }
 
-        <div class="card-body">
-            <div class="row text-center">
+    .checkout-container { padding-top: 60px; padding-bottom: 40px; }
 
-                <div class="col-12 p-5">
+    .checkout-card { position: relative; background-color: #2b3035; border: 1px solid #495057; border-radius: 12px; overflow: visible; box-shadow: 0 10px 30px rgba(0,0,0,0.4); }
 
-                    <h2 class="text-danger mb-4">
-                        ¡Algo salió mal con tu pago!
-                    </h2>
+    .floating-icon-wrapper { position: absolute; top: -40px; left: 50%; transform: translateX(-50%); width: 80px; height: 80px; background-color: #f8f9fa; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(0,0,0,0.3); border: 6px solid #212529; }
+    
+    .floating-icon-wrapper.failure { color: #dc3545; }
+    .floating-icon-wrapper i { font-size: 2.5rem; }
 
-                    <p class="text-warning" style="font-size: 1.2rem;">
-                        @* Puedes usar ViewData["CausaFallo"] si el Controller lo establece *@
-                        La transacción ha sido rechazada. Por favor, verifica los datos de tu Tarjeta.
-                    </p>
+    .checkout-header { padding: 50px 20px 30px; text-align: center; border-bottom: 1px dashed #495057; }
 
-                    <div class="mt-4 border-top border-bottom border-secondary py-3">
-                        <p class="text-light m-0">
-                            Total a Pagar: <strong class="text-warning">@Model.Total.ToString("C")</strong>
-                        </p>
-                        <p class="text-muted m-0" style="font-size: 0.9rem;">
-                            Referencia de Compra: @ViewBag.ExternalReferenceId
-                        </p>
-                    </div>
+    .failure-title { font-size: 1.8rem; font-weight: 800; color: #fff; margin-bottom: 10px; }
+    .failure-subtitle { font-size: 0.95rem; color: #adb5bd; line-height: 1.5; }
 
-                    <p class="text-info mt-4" style="font-size: 1.1rem;">
-                        Haz clic abajo para regresar a la orden y reintentar el pago.
+    .details-section { padding: 40px 30px; text-align: center; }
+
+    .btn-action-danger { background-color: #dc3545; color: #fff; border: none; font-weight: 700; padding: 14px 30px; border-radius: 8px; transition: 0.2s; text-decoration: none; display: inline-block; }
+    .btn-action-danger:hover { background-color: #bb2d3b; color: #fff; }
+</style>
+
+<div class="container checkout-container">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-10 col-lg-7">
+            <div class="checkout-card">
+
+                <div class="floating-icon-wrapper failure">
+                    <i class="bi bi-x-circle-fill"></i>
+                </div>
+
+                <div class="checkout-header">
+                    <h2 class="failure-title">¡Algo salió mal con tu pago!</h2>
+                    <p class="failure-subtitle m-0">
+                        La transacción ha sido rechazada por tu medio de pago. Por favor, verifica los fondos o intenta con otra tarjeta.
                     </p>
                 </div>
-            </div>
-        </div>
 
-        <div class="card-footer bg-dark border-top border-secondary text-center">
-            <a asp-action="Checkout" class="btn btn-warning form-control w-50">
-                Volver a la orden
-            </a>
+                <div class="details-section">
+                    <!-- Botón único que llama al método puente -->
+                    <a asp-controller="Venta" asp-action="ReintentarCompra" class="btn-action-danger w-100 w-sm-auto">
+                        <i class="bi bi-arrow-clockwise me-2"></i>Volver a Realizar la Compra
+                    </a>
+                </div>
+                
+            </div>
         </div>
     </div>
 </div>

@@ -1,5 +1,4 @@
-﻿using Dominio.Entidades;
-using IServicio.Dtos;
+﻿using IServicio.Dtos;
 
 namespace IServicio
 {
@@ -12,5 +11,6 @@ namespace IServicio
         void Remove(int id);
         void Removeitem(int id);
         CarroCompraGetDto GetByUserId(string userid);
+        bool GetAnyWithProductId(int productId);
     }
 }

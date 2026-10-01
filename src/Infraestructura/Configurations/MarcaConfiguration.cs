@@ -27,29 +27,33 @@ namespace Infraestructura.Configurations
             new Marca
             {
                 ID = 3,
-                Descripcion = "Fila"
+                Descripcion = "Puma"
             },
             new Marca
             {
                 ID = 4,
-                Descripcion = "Topper"
-            },
-            new Marca
-            {
-                ID = 5,
                 Descripcion = "Reebok"
             },
             new Marca
             {
+                ID = 5,
+                Descripcion = "Dc"
+            },
+            new Marca
+            {
                 ID = 6,
-                Descripcion = "Umbro"
+                Descripcion = "Vans"
             },
             new Marca
             {
                 ID = 7,
-                Descripcion = "Puma"
+                Descripcion = "Adidas-Classic"
+            },
+            new Marca
+            {
+                ID = 8,
+                Descripcion = "Under-Armour"
             });
-
         }
     }
 }

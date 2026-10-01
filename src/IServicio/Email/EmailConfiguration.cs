@@ -2,7 +2,8 @@
 {
     public class EmailConfiguration
     {
-        public string From { get; set; }
+        public string FromEmail { get; set; }
+        public string FromName { get; set; }
         public string SmtpServer { get; set; } = null;
         public int Port { get; set; }
         public string UserName { get; set; } = null;

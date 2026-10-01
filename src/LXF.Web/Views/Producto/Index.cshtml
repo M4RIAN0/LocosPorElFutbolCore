@@ -2,6 +2,7 @@
 @model IEnumerable<ProductoGetViewModel>
 
 @{
+    var culturaArg = new System.Globalization.CultureInfo("es-AR");
     var categorias = Model.Select(m => m.Categoria).Where(c => !string.IsNullOrEmpty(c)).Distinct().OrderBy(c => c).ToList();
     var marcas = Model.Select(m => m.Marca).Where(m => !string.IsNullOrEmpty(m)).Distinct().OrderBy(m => m).ToList();
 }
@@ -11,6 +12,21 @@
         background-color: #212529;
         color: #f8f9fa;
     }
+
+    .badge-no-stock {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #ff5722;
+    color: #ffffff;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 4px 8px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    z-index: 10;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
 
     .filter-sidebar {
         border-right: 1px solid #495057;
@@ -197,17 +213,25 @@
             <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 g-4" id="productsGrid">
                 @foreach (var item in Model)
                 {
+                    bool sinStock = item.ProductosVariantes == null || !item.ProductosVariantes.Any(v => v.Stock > 0);
+
                     <div class="col product-item" data-nombre="@item.Nombre.ToLower()" data-categoria="@item.Categoria" data-marca="@item.Marca">
                         <div class="product-card">
 
-                            <div class="product-img-box">
+                            <div class="product-img-box position-relative'">
                                 <img src="@(string.IsNullOrEmpty(item.ImagenUrl) ? "https://placehold.co/400x400/1a1a1a/666666?text=Sin+Imagen" : item.ImagenUrl)" alt="@item.Nombre" />
+                                
+                                @if (sinStock)
+                                {
+                                    <div class="badge-no-stock">SIN STOCK</div>
+                                }
+
                             </div>
 
                             <div class="product-info">
                                 <div class="product-brand">@item.Marca</div>
                                 <div class="product-name" title="@item.Nombre">@item.Nombre</div>
-                                <div class="product-price">$@item.Precio.ToString("N0")</div>
+                                <div class="product-price">$@item.Precio.ToString("N0", culturaArg)</div>
                             </div>
 
                             <div class="product-actions">

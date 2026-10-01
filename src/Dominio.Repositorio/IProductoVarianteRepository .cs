@@ -3,7 +3,7 @@ using Infraestructura.RepositorioBase;
 
 namespace Dominio.Repositorio
 {
-    public interface IMovimientoRepository : IRepository<Movimiento>
+    public interface IProductoVarianteRepository : IRepository<ProductoVariante>
     {
 
     }

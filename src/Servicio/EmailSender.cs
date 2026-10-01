@@ -17,10 +17,11 @@ namespace Servicio
 
         public bool SendEmail(Message message)
         {
-            var emailMessage = new MailMessage(_emailConfig.From, message.To)
+            var emailMessage = new MailMessage(_emailConfig.FromEmail, message.To)
             {
                 Subject = message.Subject,
-                Body = message.Content
+                Body = message.Content,
+                IsBodyHtml = true
             };
 
             return Send(emailMessage);

@@ -7,33 +7,30 @@ namespace Dominio.Entidades
     [Table("DetalleComprobantes")]
     public partial class DetalleComprobante : MasterEntityModel
     {
-        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
-        [Range(1, 999)]
+        [Required]
         public int Cantidad { get; set; }
 
-        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
-        [Column(TypeName = "decimal(18,2)")]
+        [Required]
         public decimal SubTotal { get; set; }
 
-        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
+        [Required]
         public int CodigoBarra { get; set; }
 
-        [Required(AllowEmptyStrings = false, ErrorMessage = "El campo {0} es obligatorio.")]
+        [Required]
         public string ProductoNombre { get; set; }
+        
+        [Required]
+        public string Talle { get; set; }
 
-        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
-        [Column(TypeName = "decimal(18,2)")]
+        [Required]
         public decimal Precio { get; set; }
 
 
 
         //propiedades de navegacion
         public int ProductoId { get; set; }
-
         public int ComprobanteId { get; set; }
-
         public virtual Comprobante Comprobante { get; set; }
-
         public virtual Producto Producto { get; set; }
     }
 }

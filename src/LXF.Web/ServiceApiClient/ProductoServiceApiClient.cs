@@ -12,6 +12,7 @@ namespace LXF.Web.ServiceApiClient
         {
             _baseServiceApiClient = ServiceApiClientBase;
         }
+
         public async Task<ResponseViewModel?> Add(ProductoViewModel vm)
         {
             return await _baseServiceApiClient.SendAsync(new RequestViewModel
@@ -65,6 +66,60 @@ namespace LXF.Web.ServiceApiClient
                 ApiType = SD.ApiType.PUT,
                 Data = vm,
                 Url = $"{SD.LXFApiBase}/api/Producto/"
+            });
+        }
+
+        public async Task<ResponseViewModel?> GetByIdProductoVariante(int productoVarianteId)
+        {
+            return await _baseServiceApiClient.SendAsync(new RequestViewModel
+            {
+                ApiType = SD.ApiType.GET,
+                Url = $"{SD.LXFApiBase}/api/Producto/GetByIdProductoVariante/{productoVarianteId}"
+            });
+        }
+
+        public async Task<ResponseViewModel?> GetInStockProductos()
+        {
+            return await _baseServiceApiClient.SendAsync(new RequestViewModel
+            {
+                ApiType = SD.ApiType.GET,
+                Url = $"{SD.LXFApiBase}/api/Producto/GetInStockProductos"
+            });
+        }
+
+        public async Task<ResponseViewModel?> GetSimilProductos(int productoId, int categoriaId, int marcaId)
+        {
+            return await _baseServiceApiClient.SendAsync(new RequestViewModel
+            {
+                ApiType = SD.ApiType.GET,
+                Url = $"{SD.LXFApiBase}/api/Producto/GetSimilProductos/{productoId}/{categoriaId}/{marcaId}"
+            });
+        }
+
+        public async Task<ResponseViewModel?> GetInterestingProductos(int productoId)
+        {
+            return await _baseServiceApiClient.SendAsync(new RequestViewModel
+            {
+                ApiType = SD.ApiType.GET,
+                Url = $"{SD.LXFApiBase}/api/Producto/GetInterestingProductos/{productoId}"
+            });
+        }
+
+        public async Task<ResponseViewModel?> GetByFilterGenderProductos(string cadenaBuscar)
+        {
+            return await _baseServiceApiClient.SendAsync(new RequestViewModel
+            {
+                ApiType = SD.ApiType.GET,
+                Url = $"{SD.LXFApiBase}/api/Producto/GetByFilterGenderProductos/{cadenaBuscar}"
+            });
+        }
+
+        public async Task<ResponseViewModel?> GetLastProducto()
+        {
+            return await _baseServiceApiClient.SendAsync(new RequestViewModel
+            {
+                ApiType = SD.ApiType.GET,
+                Url = $"{SD.LXFApiBase}/api/Producto/GetLastProducto"
             });
         }
     }

@@ -11,5 +11,11 @@ namespace IServicio
         IEnumerable<ProductoGetDto> GetByFilter(string cadenaBuscar);
         IEnumerable<ProductoGetDto> GetAll();
         ProductoGetDto GetById(int id);
+        ProductoVarianteGetDto GetByIdProductoVariante(int productoVarianteId);
+        IEnumerable<ProductoGetDto> GetInStockProductos();
+        IEnumerable<ProductoGetDto> GetSimilProductos(int productoId, int categoriaId, int marcaId);
+        IEnumerable<ProductoGetDto> GetInterestingProductos(int productoId);
+        IEnumerable<ProductoGetDto> GetByFilterGenderProductos(string cadenaBuscar);
+        ProductoGetDto GetLast();
     }
 }

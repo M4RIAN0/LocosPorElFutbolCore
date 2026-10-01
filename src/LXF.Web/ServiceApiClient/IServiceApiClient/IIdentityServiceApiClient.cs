@@ -7,5 +7,8 @@ namespace LXF.Web.ServiceApiClient.IServiceApiClient
         Task<ResponseViewModel?> LoginAsync(LoginRequestViewModel vm);
         Task<ResponseViewModel?> RegsiterAsync(RegisterRequestViewModel vm);
         Task<ResponseViewModel?> AssignRoleAsync(RegisterRequestViewModel vm);
+        Task<ResponseViewModel?> ForgotPasswordAsync(ForgotPasswordViewModel vm);
+        Task<ResponseViewModel?> ResetPasswordAsync(ResetPasswordViewModel vm);
+
     }
 }

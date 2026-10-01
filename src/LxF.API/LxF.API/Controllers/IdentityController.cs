@@ -1,4 +1,5 @@
-﻿using IServicio.Email;
+﻿using IServicio.Dtos;
+using IServicio.Email;
 using IServicio.Identity;
 using IServicio.Identity.Dto;
 using Microsoft.AspNetCore.Mvc;
@@ -23,9 +24,9 @@ namespace LxF.API.Controllers
         [HttpPost("Register")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public async Task<IActionResult> Register([FromBody] RegisterDto model)
+        public async Task<IActionResult> Register([FromBody] RegisterDto requestRegister)
         {
-            _response.Result = await _identityServicio.Register(model);
+            _response.Result = await _identityServicio.Register(requestRegister);
             _response.Message = "Usuario creado correctamente.";
             return Ok(_response);
         }
@@ -49,15 +50,9 @@ namespace LxF.API.Controllers
         }
 
         [HttpPost("ForgotPassword")]
-        public async Task<IActionResult> ForgotPassword([Required] string email)
+        public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordDto request) 
         {
-            var tokenPassword = await _identityServicio.TokenPassword(email);
-
-            var callBackLink = $"{Request.Scheme}://{Request.Host}{Request.PathBase}/ForgotPassword/IdentityController?token={tokenPassword.Token}&email={email}";
-
-            var message = new Message() { To = email, Content = callBackLink!, Subject = "ForgotPasswordLink" };
-
-            var sendMail = _identityServicio.SendMail(tokenPassword, message);
+            var sendMail = await _identityServicio.SendMail(request.Message);
 
             if (!sendMail)
             {
@@ -65,8 +60,7 @@ namespace LxF.API.Controllers
                 return BadRequest(_response);
             }
 
-            // a la hs de implementar en el view eliminar la seccion donde se pasa el token en 'response.Message '
-            _response.Message = $"La solicitud de cambio de contraseña se envía por correo electrónico {tokenPassword.User} Abra su correo electrónico y haga clic en el link, token = {tokenPassword.Token}";
+            _response.Message = $"La solicitud de cambio de contraseña se envió por correo a {request.Email}";
             return Ok(_response);
         }
 
@@ -78,9 +72,11 @@ namespace LxF.API.Controllers
             if (result.Succeeded)
             {
                 _response.Message = $"La contraseña fue cambiada exitosamente.";
+                return Ok(_response);
             }
 
-            return Ok(_response);
+            _response.Message = "Error al restablecer la contraseña.";
+            return BadRequest(_response);
 
         }
     }

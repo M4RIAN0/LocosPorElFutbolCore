@@ -8,33 +8,21 @@ namespace Dominio.Entidades
     [Table("Personas")]
     public partial class Persona : MasterEntityModel
     {
-        [Required(AllowEmptyStrings = false, ErrorMessage = "El campo {0} es obligatorio.")]
-        [StringLength(100, ErrorMessage = "El campo {0} no debe superar los {1} caracteres.")]
-        public string Apellido { get; set; }
-
-        [Required(AllowEmptyStrings = false, ErrorMessage = "El campo {0} es obligatorio.")]
-        [StringLength(100, ErrorMessage = "El campo {0} no debe superar los {1} caracteres.")]
+        [Required]
         public string Nombre { get; set; }
-
-        [Required(AllowEmptyStrings = false, ErrorMessage = "El campo {0} es obligatorio.")]
-        [StringLength(8, ErrorMessage = "El campo {0} no debe superar los {1} caracteres.")]
+        [Required]
+        public string Apellido { get; set; }
+        [Required]
         public string Dni { get; set; }
-
-        [Required(AllowEmptyStrings = false, ErrorMessage = "El campo {0} es obligatorio.")]
-        public string Direccion { get; set; }
-
-        [Required(AllowEmptyStrings = false, ErrorMessage = "El campo {0} es obligatorio")]
-        public string Sexo { get; set; }
-
-        [Required(ErrorMessage = "El campo {0} es obligatorio")]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
+        [Required]
         public DateOnly FechaNacimiento { get; set; }
-
-        [Required(AllowEmptyStrings = false, ErrorMessage = "El campo {0} es obligatorio")]
-        [StringLength(10, ErrorMessage = "El campo {0} no debe superar los {1} caractere")]
+        [Required]
+        public string Sexo { get; set; }
+        [Required]
         public string Celular { get; set; }
-
-        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
+        [Required]
+        public string Direccion { get; set; }
+        [Required]
         public string Email { get; set; }
     }
 }

@@ -39,8 +39,6 @@ namespace IServicio.Dtos
 
         public string Email { get; init; }
 
-
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public string Fecha { get; init; }
 
         public string Estado { get; init; }

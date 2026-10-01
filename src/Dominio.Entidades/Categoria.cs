@@ -8,8 +8,7 @@ namespace Dominio.Entidades
     [Table("Categorias")]
     public partial class Categoria : MasterEntityModel
     {
-        [Required(AllowEmptyStrings = false, ErrorMessage = "El campo {0} es obligatorio.")]
-        [StringLength(200, ErrorMessage = "El campo {0} no debe superar los {1} caracteres.")]
+        [Required]
         public string Descripcion { get; set; }
 
         //propiedad de navegacion

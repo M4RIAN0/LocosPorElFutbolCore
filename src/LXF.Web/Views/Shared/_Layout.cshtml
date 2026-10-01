@@ -1,9 +1,33 @@
-﻿<!DOCTYPE html>
+﻿@using System.Security.Claims
+@inject LXF.Web.Service.IService.ICarroComprasService CarroService
+
+@{
+    bool tieneCarrito = false;
+    
+    // Verificamos si el usuario está logueado para buscar su carrito
+    if (ViewBag.OcultarCarrito != true && User.Identity != null && User.Identity.IsAuthenticated)
+    {
+        var userId = User.FindFirstValue("Sub") ?? User.FindFirstValue(ClaimTypes.NameIdentifier);
+        
+        if (!string.IsNullOrEmpty(userId))
+        {
+            var responseCarro = await CarroService.GetByUserId(userId);
+            
+            // Si la respuesta es exitosa y trae un carrito, activamos la variable
+            if (responseCarro != null && responseCarro.IsSuccess && responseCarro.Result != null)
+            {
+                tieneCarrito = true;
+            }
+        }
+    }
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - LXF.Web</title>
+    <title>@ViewData["Title"] - LXF</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css">
@@ -14,34 +38,45 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">LXF.Web</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">LXF</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                 aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
+                        
+                        @* SOLO VISIBLE PARA EL ROL "Admin" *@
+                        @if (User.IsInRole("Administrador"))
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Administrar
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <li><a class="dropdown-item" href="#">Usuarios</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" asp-controller="Producto" asp-action="Index">Productos</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Marca" asp-action="Index">Marcas</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Categoria" asp-action="Index">Categorias</a></li>
+                                </ul>
+                            </li>
+                        }
+
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Administrar
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#">Usuarios</a></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" asp-controller="Producto" asp-action="Index">Productos</a></li>
-                                <li><a class="dropdown-item" asp-controller="Marca" asp-action="Index">Marcas</a></li>
-                                <li><a class="dropdown-item" asp-controller="Categoria" asp-action="Index">Categorias</a></li>
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Carro" asp-action="Index">Carrito
-                                &nbsp; <i class="bi bi-cart"></i>&nbsp;
+                            <a class="nav-link" asp-area="" asp-controller="Carro" asp-action="Index">
+                                Carrito &nbsp; 
+                                <span class="position-relative" id="cart-icon-container">
+                                    <i class="bi bi-cart"></i>
+                                    @* PUNTO ROJO DEL CARRITO *@
+                                    @if (tieneCarrito)
+                                    {
+                                        <span class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-dark rounded-circle cart-dot">
+                                            <span class="visually-hidden">Items en carrito</span>
+                                        </span>
+                                    }
+                                </span>
+                                &nbsp;
                             </a>
                         </li>
                         <li class="nav-item">
@@ -49,10 +84,9 @@
                             {
                                 <a class="nav-link" asp-area="" asp-controller="Compra" asp-action="MisCompras">
                                     Mis Compras
-                                    &nbsp; <i class="bi bi-cart"></i>&nbsp;
+                                    &nbsp; <i class="bi bi-bag"></i>&nbsp;
                                 </a>
                             }
-                            
                         </li>
                     </ul>
                     <ul class="navbar-nav">
@@ -98,5 +132,56 @@
     <partial name="_Notifications" />
 
     @await RenderSectionAsync("Scripts", required: false)
+
+    <script>
+            $(document).ready(function () {
+                // ==========================================
+                // 1. BOTONES AJAX ORIGINALES DEL LAYOUT
+                // ==========================================
+        $(document).on('click', '.btn-add-cart-ajax', function (e) {
+            e.preventDefault(); // Evitamos que el botón haga su recarga habitual
+            
+            var btn = $(this);
+            var productId = btn.data('id');
+            
+            // Efecto visual de carga en el botón
+            var originalContent = btn.html();
+            btn.prop('disabled', true).html('<i class="bi bi-hourglass-split"></i>');
+
+            $.ajax({
+                url: '/Carro/AddItemAjax',
+                type: 'POST',
+                data: { id: productId },
+                success: function (response) {
+                    if (response.success) {
+                        // 1. Mostrar notificación de éxito
+                        toastr.success(response.message);
+                        
+                        // 2. Revisar si el punto rojo ya existe. Si no existe, lo creamos.
+                        var dotExists = $('#cart-icon-container').find('.cart-dot').length > 0;
+                        if (!dotExists) {
+                            $('#cart-icon-container').append('<span class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-dark rounded-circle cart-dot"><span class="visually-hidden">Items en carrito</span></span>');
+                        }
+                    } else {
+                        toastr.error(response.message);
+                    }
+                },
+                error: function (xhr) {
+                    // Si tira error 401, significa que no está logueado
+                    if (xhr.status === 401) {
+                        window.location.href = '/Identity/Login';
+                    } else {
+                        toastr.error("Ocurrió un error al procesar la solicitud.");
+                    }
+                },
+                complete: function () {
+                    // Devolvemos el botón a la normalidad
+                    btn.prop('disabled', false).html(originalContent);
+                }
+            });
+        });
+    });
+</script>
+
 </body>
 </html>

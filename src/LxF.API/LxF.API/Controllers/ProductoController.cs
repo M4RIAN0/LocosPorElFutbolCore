@@ -72,5 +72,57 @@ namespace LxF.API.Controllers
             var result = _service.GetByFilter(word);
             return Ok(result);
         }
+
+        [HttpGet("GetByIdProductoVariante/{productoVarianteId:int}")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        public IActionResult GetProductoByIdProductoVariante(int productoVarianteId)
+        {
+            var result = _service.GetByIdProductoVariante(productoVarianteId);
+            return Ok(result);
+        }
+
+        [HttpGet("GetInStockProductos")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        public IActionResult GetInStockProductos()
+        {
+            var result = _service.GetInStockProductos();
+            return Ok(result);
+        }
+
+        [HttpGet("GetSimilProductos/{id:int}/{categoriaId:int}/{marcaId:int}")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        public IActionResult GetSimilProductos(int id, int categoriaId, int marcaId)
+        {
+            var result = _service.GetSimilProductos(id, categoriaId, marcaId);
+            return Ok(result);
+        }
+
+        [HttpGet("GetInterestingProductos/{id:int}")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        public IActionResult GetInterestingProductos(int id)
+        {
+            var result = _service.GetInterestingProductos(id);
+            return Ok(result);
+        }
+
+        [HttpGet("GetByFilterGenderProductos/{word}")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        public IActionResult GetByFilterGenderProductos(string word)
+        {
+            var result = _service.GetByFilterGenderProductos(word);
+            return Ok(result);
+        }
+
+        [HttpGet("GetLastProducto")]
+        [ProducesResponseType((int)HttpStatusCode.OK)]
+        public IActionResult GetLastProducto()
+        {
+            var result = _service.GetLast();
+            return Ok(result);
+        }
+
     }
 }

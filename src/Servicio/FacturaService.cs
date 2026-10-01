@@ -14,9 +14,9 @@ namespace Servicio
         private readonly IFacturaRepository _facturaRepository;
         private readonly IMapper _mapper;
 
-        public FacturaService(IFacturaRepository facturaRepositorio, IMapper mapper)
+        public FacturaService(IFacturaRepository facturaRepository, IMapper mapper)
         {
-            _facturaRepository = facturaRepositorio;
+            _facturaRepository = facturaRepository;
             _mapper = mapper;
         }
 

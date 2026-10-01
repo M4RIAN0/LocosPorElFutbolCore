@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Dominio.Repositorio.Dtos;
-using IServicio.Dtos;
 using LXF.Web.Models.ViewModels;
 
 namespace LXF.Web
@@ -47,6 +46,13 @@ namespace LXF.Web
                 config.CreateMap<ProductoDto, ProductoGetDto>();
                 config.CreateMap<ProductoGetDto, ProductoViewModel>();
                 config.CreateMap<ProductoGetDto, ProductoGetViewModel>();
+
+                config.CreateMap<ProductoVarianteGetViewModel, ProductoVariantePutViewModel>();
+                config.CreateMap<ProductoVarianteGetViewModel, ProductoVarianteViewModel>();
+                config.CreateMap<ProductoVarianteViewModel, ProductoVarianteGetViewModel>();
+
+                config.CreateMap<ProductoResumenDto, ProductoResumenViewModel>();
+                config.CreateMap<ProductoResumenViewModel, ProductoResumenDto>();
 
                 config.CreateMap<FacturaViewModel, FacturaGetViewModel>();
 

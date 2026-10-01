@@ -16,46 +16,41 @@ namespace Infraestructura.Configurations
            new Categoria
            {
                ID = 1,
-               Descripcion = "Camisetas Futbol Masculinas"
+               Descripcion = "Camisetas Futbol"
            },
            new Categoria
            {
                ID = 2,
-               Descripcion = "Camisetas Futbol Femeninas"
-           },
-           new Categoria
-           {
-               ID = 3,
                Descripcion = "Remeras"
            },
            new Categoria
            {
-               ID = 4,
+               ID = 3,
                Descripcion = "Musculosas"
            },
            new Categoria
            {
-               ID = 5,
+               ID = 4,
                Descripcion = "Shorts"
            },
            new Categoria
            {
-               ID = 6,
+               ID = 5,
                Descripcion = "Medias"
            },
            new Categoria
            {
-               ID = 7,
+               ID = 6,
                Descripcion = "Pantalones"
            },
            new Categoria
            {
-               ID = 8,
+               ID = 7,
                Descripcion = "Camperas"
            },
            new Categoria
            {
-               ID = 9,
+               ID = 8,
                Descripcion = "Zapatillas"
            });
 

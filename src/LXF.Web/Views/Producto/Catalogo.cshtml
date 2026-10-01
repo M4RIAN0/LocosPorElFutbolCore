@@ -1,0 +1,566 @@
+﻿@using LXF.Web.Models.ViewModels
+@model IEnumerable<ProductoGetViewModel>
+
+@{
+     var culturaArg =  new System.Globalization.CultureInfo("es-AR");
+
+    // Filtramos para quedarnos SOLO con productos que tengan al menos una variante con stock
+    var productosEnStock = Model.Where(p => p.ProductosVariantes != null && p.ProductosVariantes.Any(v => v.Stock > 0)).ToList();
+
+    var categorias = productosEnStock.Select(m => m.Categoria).Where(c => !string.IsNullOrEmpty(c)).Distinct().OrderBy(c => c).ToList();
+    var marcas = productosEnStock.Select(m => m.Marca).Where(m => !string.IsNullOrEmpty(m)).Distinct().OrderBy(m => m).ToList();
+    var generos = productosEnStock.Select(m => m.Genero).Where(g => !string.IsNullOrEmpty(g)).Distinct().OrderBy(g => g).ToList();
+    
+    var tallesDisponibles = productosEnStock
+        .SelectMany(m => m.ProductosVariantes)
+        .Where(v => v.Stock > 0) // Oculta del filtro los talles globalmente agotados
+        .Select(v => v.Talle)
+        .Distinct()
+        .OrderBy(t => t)
+        .ToList();
+
+    // Redondeo exacto para que el slider llegue a los picos máximos sin trabarse
+    decimal minPrecio = productosEnStock.Any() ? Math.Floor(productosEnStock.Min(m => m.Precio)) : 0;
+    decimal maxPrecio = productosEnStock.Any() ? Math.Ceiling(productosEnStock.Max(m => m.Precio)) : 1000000;
+    
+    if (minPrecio == maxPrecio)
+    {
+        maxPrecio = minPrecio + 100;
+    }
+}
+
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+<style>
+    body {
+        background-color: #212529;
+        color: #f8f9fa;
+        font-family: 'Roboto', sans-serif;
+    }
+
+    .filter-sidebar {
+        border-right: 1px solid #495057;
+        padding-right: 20px;
+    }
+
+    .filter-title {
+        font-size: 0.85rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: #adb5bd;
+        margin-bottom: 10px;
+        letter-spacing: 1px;
+        cursor: pointer;
+        user-select: none;
+        padding: 10px 0;
+        border-bottom: 1px solid #343a40;
+    }
+
+    .filter-title:hover { color: #fff; }
+
+    .form-check-label {
+        font-size: 0.85rem;
+        color: #ced4da;
+        cursor: pointer;
+        text-transform: uppercase;
+    }
+
+    /* --- SLIDER DE PRECIOS --- */
+    .price-range-container { padding: 15px 5px; }
+    .price-input-group { display: flex; justify-content: space-between; margin-top: 15px; color: #adb5bd; font-size: 0.85rem; }
+    .price-slider { position: relative; width: 100%; height: 5px; background-color: #495057; border-radius: 5px; margin-top: 10px; }
+    .price-slider .progress { height: 100%; left: 0%; right: 0%; position: absolute; border-radius: 5px; background-color: #fd7e14; }
+    .range-input { position: relative; }
+    .range-input input {
+        position: absolute; width: 100%; height: 5px; top: -5px; background: none; pointer-events: none;
+        -webkit-appearance: none; -moz-appearance: none;
+    }
+    input[type="range"]::-webkit-slider-thumb { height: 15px; width: 15px; border-radius: 50%; background: #fd7e14; pointer-events: auto; -webkit-appearance: none; cursor: pointer; }
+    input[type="range"]::-moz-range-thumb { height: 15px; width: 15px; border: none; border-radius: 50%; background: #fd7e14; pointer-events: auto; -moz-appearance: none; cursor: pointer; }
+
+    /* --- TARJETAS Y TALLES --- */
+    .slider-card { 
+        background-color: #2b3035; border: 1px solid #495057; position: relative; 
+        border-radius: 6px; overflow: hidden; transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .slider-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5); border-color: #6c757d; }
+    
+    .slider-img-container { position: relative; background-color: transparent; border-bottom: 1px solid #495057; display: flex; align-items: center; justify-content: center; }
+    .slider-img-container img { width: 100%; height: 250px; object-fit: contain; padding: 15px; }
+
+    .slider-sizes-overlay {
+        position: absolute; bottom: -14px; left: 0; width: 100%; display: flex; 
+        flex-wrap: wrap; justify-content: center; gap: 4px; padding: 0 5px;       
+        opacity: 0; transition: opacity 0.2s ease, transform 0.2s ease; transform: translateY(5px); z-index: 10;
+    }
+    .slider-card:hover .slider-sizes-overlay { opacity: 1; transform: translateY(0); }
+    
+    .hover-size-box {
+        width: 32px; height: 32px; background-color: transparent; border: 1px solid #6c757d;
+        display: flex; align-items: center; justify-content: center;
+        font-size: 0.8rem; font-weight: 700; color: #f8f9fa;
+        border-radius: 6px; transition: all 0.2s;
+        cursor: pointer !important; /* Siempre forzamos la manito */
+        pointer-events: auto !important; /* Que capte el clic aunque esté deshabilitado */
+    }
+    .hover-size-box:hover:not(.disabled):not(.more-sizes), .hover-size-box.active { 
+        background-color: #f8f9fa; color: #212529; border-color: #f8f9fa; 
+    }
+    .hover-size-box.disabled { 
+        color: #6c757d; border-color: #495057; 
+        background: linear-gradient(to bottom right, transparent calc(50% - 1px), #6c757d calc(50%), transparent calc(50% + 1px)) !important; 
+    }
+    .hover-size-box.more-sizes {
+        border: 1px dashed #6c757d; color: #adb5bd; 
+    }
+
+    .slider-card-body { padding: 25px 15px 15px 15px; background-color: transparent; display: flex; flex-direction: column; flex-grow: 1; }
+    .slider-title { font-size: 0.85rem; text-transform: uppercase; margin-bottom: 5px; color: #ced4da; font-weight: 500; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .slider-price { font-size: 1.4rem; font-weight: 800; color: #fff; margin-bottom: 0px; }
+    .slider-tax { font-size: 0.75rem; color: #8c959f; margin-bottom: 0; }
+    
+    .slider-action-container { height: 42px; margin-top: 15px; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
+    .slider-card:hover .slider-action-container { opacity: 1; pointer-events: auto; }
+    
+    .btn-add-cart-slider {
+        background-color: #f8f9fa; color: #1a1d20; border: none; font-weight: 700; font-size: 0.85rem; height: 100%; width: 100%; border-radius: 4px; display: block;
+    }
+    .btn-add-cart-slider:hover { background-color: #e2e6ea; }
+
+    .sort-dropdown .btn { background-color: transparent; border: 1px solid #495057; color: #adb5bd; font-size: 0.85rem; }
+    .sort-dropdown .dropdown-menu { background-color: #2b3035; border: 1px solid #495057; }
+    .sort-dropdown .dropdown-item { color: #ced4da; font-size: 0.85rem; }
+    .sort-dropdown .dropdown-item:hover, .sort-dropdown .dropdown-item.active { background-color: #343a40; color: #fd7e14; }
+</style>
+
+<div class="container-fluid py-4">
+
+  <!-- ALINEACIÓN PERFECTA DEL CONTADOR Y BÚSQUEDA -->
+        <div class="row mx-0 mb-4 align-items-center">
+            <!-- Contador -->
+            <div class="col-12 col-lg-2 ps-0 mb-3 mb-lg-0">
+                <span class="text-secondary" style="font-size: 0.95rem;" id="productCountHeader">@productosEnStock.Count() productos</span>
+            </div>
+            
+            <!-- Buscador -->
+            <div class="col-12 col-lg-6 mb-3 mb-lg-0">
+                <div class="input-group">
+                    <span class="input-group-text bg-dark text-secondary border-secondary"><i class="bi bi-search"></i></span>
+                    <input type="text" id="searchInput" class="form-control bg-dark text-light border-secondary" placeholder="Buscar por nombre de producto..." autocomplete="off" />
+                </div>
+            </div>
+            
+            <!-- Ordenamiento -->
+            <div class="col-12 col-lg-4 pe-0 text-end">
+                <div class="dropdown sort-dropdown">
+                    <button class="btn dropdown-toggle px-3 py-1" type="button" id="dropdownOrder" data-bs-toggle="dropdown" aria-expanded="false">
+                        Ordenar por
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownOrder">
+                        <li><a class="dropdown-item sort-btn" href="#" data-sort="desc">Precio: mayor a menor</a></li>
+                        <li><a class="dropdown-item sort-btn" href="#" data-sort="asc">Precio: menor a mayor</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row mx-0">
+        <!-- BARRA LATERAL DE FILTROS -->
+        <div class="col-12 col-lg-2 filter-sidebar d-none d-lg-block ps-0">
+            
+            <div class="mb-2">
+                <div class="filter-title d-flex justify-content-between align-items-center" data-bs-toggle="collapse" data-bs-target="#collapseCategoria">
+                    Categoría <i class="bi bi-chevron-down toggle-icon"></i>
+                </div>
+                <div class="collapse" id="collapseCategoria">
+                    <div class="filter-options pt-2 pb-3">
+                        @foreach (var cat in categorias)
+                        {
+                            <div class="form-check mb-2">
+                                <input class="form-check-input filter-checkbox bg-dark border-secondary" type="checkbox" value="@cat" data-filter-type="categoria" id="cat-@cat">
+                                <label class="form-check-label" for="cat-@cat">@cat</label>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-2">
+                <div class="filter-title d-flex justify-content-between align-items-center" data-bs-toggle="collapse" data-bs-target="#collapseGenero">
+                    Género <i class="bi bi-chevron-down toggle-icon"></i>
+                </div>
+                <div class="collapse" id="collapseGenero">
+                    <div class="filter-options pt-2 pb-3">
+                        @foreach (var gen in generos)
+                        {
+                            <div class="form-check mb-2">
+                                <input class="form-check-input filter-checkbox bg-dark border-secondary" type="checkbox" value="@gen" data-filter-type="genero" id="gen-@gen">
+                                <label class="form-check-label" for="gen-@gen">@gen</label>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-2">
+                <div class="filter-title d-flex justify-content-between align-items-center" data-bs-toggle="collapse" data-bs-target="#collapseMarca">
+                    Marca <i class="bi bi-chevron-down toggle-icon"></i>
+                </div>
+                <div class="collapse" id="collapseMarca">
+                    <div class="filter-options pt-2 pb-3">
+                        @foreach (var marca in marcas)
+                        {
+                            <div class="form-check mb-2">
+                                <input class="form-check-input filter-checkbox bg-dark border-secondary" type="checkbox" value="@marca" data-filter-type="marca" id="marca-@marca">
+                                <label class="form-check-label" for="marca-@marca">@marca</label>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-2">
+                <div class="filter-title d-flex justify-content-between align-items-center" data-bs-toggle="collapse" data-bs-target="#collapseTalle">
+                    Talle <i class="bi bi-chevron-down toggle-icon"></i>
+                </div>
+                <div class="collapse" id="collapseTalle">
+                    <div class="filter-options pt-2 pb-3">
+                        @foreach (var talle in tallesDisponibles)
+                        {
+                            <div class="form-check mb-2">
+                                <input class="form-check-input filter-checkbox bg-dark border-secondary" type="checkbox" value="@talle" data-filter-type="talle" id="talle-@talle">
+                                <label class="form-check-label" for="talle-@talle">@talle</label>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-2">
+                <div class="filter-title d-flex justify-content-between align-items-center" data-bs-toggle="collapse" data-bs-target="#collapsePrecios" aria-expanded="true">
+                    Precios <i class="bi bi-chevron-up toggle-icon"></i>
+                </div>
+                <div class="collapse show" id="collapsePrecios">
+                    <div class="price-range-container">
+                        <div class="price-slider">
+                            <div class="progress"></div>
+                        </div>
+                        <div class="range-input">
+                            <input type="range" class="range-min" min="@minPrecio" max="@maxPrecio" value="@minPrecio" step="1">
+                            <input type="range" class="range-max" min="@minPrecio" max="@maxPrecio" value="@maxPrecio" step="1">
+                        </div>
+                        <div class="price-input-group">
+                            <span id="minPriceText">$ @minPrecio.ToString("N0", culturaArg)</span>
+                            <span id="maxPriceText">$ @maxPrecio.ToString("N0", culturaArg)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- GRILLA DE PRODUCTOS -->
+        <div class="col-12 col-lg-10 pe-0">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 g-4" id="productsGrid">
+                
+                @foreach (var item in productosEnStock)
+                {
+                    string tallesStr = item.ProductosVariantes != null 
+                                       ? string.Join(",", item.ProductosVariantes.Select(v => v.Talle)) : "";
+
+                  <div class="col product-item" 
+                         data-nombre="@item.Nombre.ToLower()" data-categoria="@item.Categoria" data-marca="@item.Marca" 
+                         data-talles="@tallesStr" data-precio="@item.Precio" data-genero="@item.Genero">
+                        
+                        <div class="slider-card w-100 h-100">
+                            <form asp-action="ProductoDetails" asp-controller="Home" method="post" class="d-flex flex-column h-100 m-0 cart-slider-form">
+                                
+                                <input type="hidden" name="Id" value="@item.Id" />
+                                <input type="hidden" name="Precio" value="@item.Precio" />
+                                <input type="hidden" name="ProductosVariantes[0].Id" class="selected-size-input" value="" />
+                                <input type="hidden" name="Cantidad" value="1" />
+                                
+                                <div class="slider-img-container">
+                                    <a asp-action="ProductoDetails" asp-controller="Home" asp-route-id="@item.Id" class="d-block detail-link">
+                                        <img src="@(string.IsNullOrEmpty(item.ImagenUrl) ? "https://placehold.co/400" : item.ImagenUrl)" alt="@item.Nombre">
+                                    </a>
+                                    
+                                    <div class="slider-sizes-overlay">
+                                        @{
+                                            var variantes = item.ProductosVariantes?.OrderBy(x => x.Talle).ToList() ?? new List<ProductoVarianteGetViewModel>();
+                                            int maxVisible = 4;
+                                            
+                                            for (int i = 0; i < variantes.Count; i++)
+                                            {
+                                                if (i < maxVisible)
+                                                {
+                                                    var v = variantes[i];
+                                                    string dClass = v.Stock <= 0 ? "disabled" : "";
+                                                    <button type="button" class="hover-size-box @dClass" data-variant-id="@v.Id">@v.Talle</button>
+                                                }
+                                                else if (i == maxVisible)
+                                                {
+                                                    int remaining = variantes.Count - maxVisible;
+                                                    <div class="hover-size-box more-sizes">+@remaining</div>
+                                                    break;
+                                                }
+                                            }
+                                        }
+                                    </div>
+                                </div>
+
+                                <div class="slider-card-body">
+                                    <a asp-action="ProductoDetails" asp-controller="Home" asp-route-id="@item.Id" class="text-decoration-none text-reset d-block">
+                                        <div class="mb-2">
+                                            <img src="~/images/Marcas-ico/@(item.Marca).svg" alt="@item.Marca" style="height: 40px; width: auto; object-fit: contain;" 
+                                                 onerror="this.onerror=null; this.outerHTML='<span style=\'font-size: 0.9rem; font-weight: 700; color: #ffffff; text-transform: uppercase;\'>@item.Marca</span>';" />
+                                        </div>
+                                        <div class="slider-title">@item.Nombre</div>
+                                        <div class="slider-price">$@item.Precio.ToString("N0", culturaArg)</div>
+                                        <div class="slider-tax">$@((item.Precio / 1.21m).ToString("N2", culturaArg)) precio sin impuestos nacionales</div>
+                                    </a>
+                                    
+                                    <div class="slider-action-container">
+                                        <button type="submit" class="btn-add-cart-slider">Agregar al carrito</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <div id="noResultsMsg" class="text-center py-5 d-none">
+                <i class="bi bi-search text-secondary" style="font-size: 3rem;"></i>
+                <h4 class="text-muted mt-3">No se encontraron productos</h4>
+                <p class="text-secondary small">Intenta ajustar tu búsqueda o limpiar los filtros.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+
+            $('.collapse').on('show.bs.collapse', function() {
+                $(this).prev('.filter-title').find('.toggle-icon').removeClass('bi-chevron-down').addClass('bi-chevron-up');
+            }).on('hide.bs.collapse', function() {
+                $(this).prev('.filter-title').find('.toggle-icon').removeClass('bi-chevron-up').addClass('bi-chevron-down');
+            });
+
+            // Talles Interacción
+            $('.hover-size-box').click(function(e) {
+                // MODIFICACIÓN: Si es un "+3", redirige a ProductoDetails
+                if($(this).hasClass('more-sizes')) {
+                    var detailUrl = $(this).closest('.slider-card').find('a.detail-link').attr('href');
+                    if(detailUrl) {
+                        window.location.href = detailUrl;
+                    }
+                    return;
+                }
+                
+                // Si está deshabilitado (tachado), ignora el clic y no hace nada
+                if($(this).hasClass('disabled')) {
+                    return;
+                }
+                
+                if(e.originalEvent) { e.preventDefault(); e.stopPropagation(); }
+                var container = $(this).closest('.slider-sizes-overlay');
+                container.find('.hover-size-box').removeClass('active');
+                $(this).addClass('active');
+
+                var selectedVariantId = $(this).data('variant-id');
+                $(this).closest('form').find('.selected-size-input').val(selectedVariantId);
+            });
+
+            $('.slider-card').each(function() {
+                $(this).find('.hover-size-box:not(.disabled):not(.more-sizes)').first().click();
+            });
+
+            $('.cart-slider-form').submit(function(e) {
+                var selectedSize = $(this).find('.selected-size-input').val();
+                if (!selectedSize) {
+                    e.preventDefault(); alert("Por favor, selecciona un talle antes de agregar al carrito.");
+                }
+            });
+
+            // --- LÓGICA DE PRECIOS OPTIMIZADA ---
+            const rangeInput = document.querySelectorAll(".range-input input");
+            const progress = document.querySelector(".price-slider .progress");
+            let priceGap = 100;
+
+            function updatePriceUI() {
+                let minVal = parseInt(rangeInput[0].value);
+                let maxVal = parseInt(rangeInput[1].value);
+                let boundMin = parseInt(rangeInput[0].min);
+                let boundMax = parseInt(rangeInput[0].max);
+
+                let rangeTotal = boundMax - boundMin;
+                if(rangeTotal <= 0) rangeTotal = 1; 
+
+                let leftPercent = ((minVal - boundMin) / rangeTotal) * 100;
+                let rightPercent = 100 - (((maxVal - boundMin) / rangeTotal) * 100);
+
+                progress.style.left = leftPercent + "%";
+                progress.style.right = rightPercent + "%";
+                
+                $('#minPriceText').text('$ ' + minVal.toLocaleString('es-AR'));
+                $('#maxPriceText').text('$ ' + maxVal.toLocaleString('es-AR'));
+            }
+
+            rangeInput.forEach(input => {
+                input.addEventListener("input", e => {
+                    let minVal = parseInt(rangeInput[0].value);
+                    let maxVal = parseInt(rangeInput[1].value);
+
+                    if((maxVal - minVal) < priceGap){
+                        if(e.target.className === "range-min"){
+                            rangeInput[0].value = maxVal - priceGap;
+                        } else {
+                            rangeInput[1].value = minVal + priceGap;
+                        }
+                    } 
+                    updatePriceUI();
+                    filterProducts(); 
+                });
+            });
+
+            if(rangeInput.length > 0) { updatePriceUI(); }
+
+        // --- FILTRADO COMBINADO ---
+            function filterProducts() {
+                var searchText = $('#searchInput').val().toLowerCase();
+                var selCat = $('input[data-filter-type="categoria"]:checked').map(function(){ return $(this).val(); }).get();
+                var selMar = $('input[data-filter-type="marca"]:checked').map(function(){ return $(this).val(); }).get();
+                var selTal = $('input[data-filter-type="talle"]:checked').map(function(){ return $(this).val(); }).get();
+                var selGen = $('input[data-filter-type="genero"]:checked').map(function(){ return $(this).val(); }).get();
+                
+                var minP = parseInt($('.range-min').val()) || 0;
+                var maxP = parseInt($('.range-max').val()) || 99999999;
+
+                var visibleCount = 0;
+
+                $('.product-item').each(function() {
+                    var $item = $(this);
+                    
+                    var itemNombre = $item.data('nombre');
+                    var itemCat = $item.data('categoria');
+                    var itemMar = $item.data('marca');
+                    var itemGen = $item.data('genero');
+                    var itemPrecio = parseFloat($item.data('precio'));
+                    
+                    var itemTallesStr = $item.data('talles').toString();
+                    var itemTallesArr = itemTallesStr ? itemTallesStr.split(',') : [];
+
+                    var matchSearch = searchText === '' || itemNombre.includes(searchText);
+                    var matchCat = selCat.length === 0 || selCat.includes(itemCat);
+                    var matchMar = selMar.length === 0 || selMar.includes(itemMar);
+                    var matchGen = selGen.length === 0 || selGen.includes(itemGen);
+                    var matchPrecio = itemPrecio >= minP && itemPrecio <= maxP;
+                    
+                    var matchTal = true;
+                    if(selTal.length > 0) {
+                        matchTal = selTal.some(t => itemTallesArr.includes(t));
+                    }
+
+                    if (matchSearch && matchCat && matchMar && matchGen && matchTal && matchPrecio) {
+                        $item.removeClass('d-none');
+                        visibleCount++;
+                    } else {
+                        $item.addClass('d-none');
+                    }
+                });
+
+                // Esta línea que ya tenías actualizará el número de productos al tipear
+                $('#productCountHeader').text(visibleCount + (visibleCount === 1 ? ' producto' : ' productos'));
+                
+                if (visibleCount === 0) {
+                    $('#noResultsMsg').removeClass('d-none');
+                } else {
+                    $('#noResultsMsg').addClass('d-none');
+                }
+            }
+
+            $('.filter-checkbox').on('change', filterProducts);
+            
+            // Evento para que filtre mientras escribes en el buscador
+            $('#searchInput').on('input', function() {
+                filterProducts();
+            });
+
+            // --- ORDENAMIENTO ---
+            $('.sort-btn').click(function(e) {
+                e.preventDefault();
+                
+                $('.sort-btn').removeClass('active');
+                $(this).addClass('active');
+                $('#dropdownOrder').text($(this).text());
+
+                var sortOrder = $(this).data('sort');
+                var $grid = $('#productsGrid');
+                var $items = $grid.children('.product-item').get();
+
+                $items.sort(function(a, b) {
+                    var valA = parseFloat($(a).data('precio'));
+                    var valB = parseFloat($(b).data('precio'));
+                    
+                    if (sortOrder === 'desc') {
+                        return (valA > valB) ? -1 : (valA < valB) ? 1 : 0;
+                    } else {
+                        return (valA < valB) ? -1 : (valA > valB) ? 1 : 0;
+                    }
+                });
+
+                $.each($items, function(index, item) {
+                    $grid.append(item); 
+                });
+            });
+
+            // ========================================================
+            // AJAX - AGREGAR AL CARRITO DESDE EL CATÁLOGO
+            // ========================================================
+            $('.cart-slider-form').submit(function(e) {
+                e.preventDefault(); // Evita que la página recargue
+
+                var form = $(this);
+                var selectedSize = form.find('.selected-size-input').val();
+                
+                if (!selectedSize) {
+                    toastr.warning("Por favor, selecciona un talle antes de agregar al carrito.");
+                    return false;
+                }
+
+                var btn = form.find('.btn-add-cart-slider');
+                btn.prop('disabled', true); // Bloqueo silencioso para evitar doble click
+
+                $.ajax({
+                    url: '/Home/AddToCartAjax', // ¡Se conecta perfecto a tu controlador!
+                    type: 'POST',
+                    data: form.serialize(), 
+                    success: function (response) {
+                        if (response.success) {
+                            toastr.success(response.message);
+                            var dotExists = $('#cart-icon-container').find('.cart-dot').length > 0;
+                            if (!dotExists) {
+                                $('#cart-icon-container').append('<span class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-dark rounded-circle cart-dot"><span class="visually-hidden">Items en carrito</span></span>');
+                            }
+                        } else {
+                            toastr.error(response.message);
+                        }
+                    },
+                    error: function (xhr) {
+                        if (xhr.status === 401) {
+                            window.location.href = '/Identity/Login';
+                        } else {
+                            toastr.error("Ocurrió un error al procesar la solicitud.");
+                        }
+                    },
+                    complete: function () {
+                        btn.prop('disabled', false);
+                    }
+                });
+            });
+
+        });
+    </script>
+}

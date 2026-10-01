@@ -1,8 +1,10 @@
 ﻿@using LXF.Web.Models.ViewModels
 @using LXF.Web.Utility
 @model ComprobanteGetViewModel
+    
 
 @{
+    var culturaArg = new System.Globalization.CultureInfo("es-AR");
     ViewData["Title"] = "Detalle de la compra";
     decimal subtotalProductos = Model.DetalleComprobantes.Sum(d => d.SubTotal);
 
@@ -83,8 +85,13 @@
 
             <!-- Paquete -->
             <div class="card card-custom mb-3">
-                <div class="card-header border-secondary bg-transparent py-3">
+                <div class="card-header border-secondary bg-transparent py-3 d-flex justify-content-between align-items-center">
                     <span class="fw-bold text-white">Paquete</span>
+                    <!-- Encabezados de precios -->
+                    <div class="text-secondary small d-flex justify-content-end" style="width: 250px;">
+                        <span style="width: 120px; text-align: right;">Precio unitario</span>
+                        <span style="width: 120px; text-align: right;">Total</span>
+                    </div>
                 </div>
                 <div class="card-body">
                     @foreach (var item in Model.DetalleComprobantes)
@@ -96,11 +103,13 @@
                             <div class="ms-3 flex-grow-1">
                                 <h6 class="mb-0 text-white fw-normal">@item.ProductoNombre</h6>
                                 <small class="text-secondary">
-                                    @item.Cantidad @(item.Cantidad > 1 ? "unidades" : "unidad")
+                                    Talle @item.Talle (@item.Cantidad @(item.Cantidad > 1 ? "unidades" : "unidad"))
                                 </small>
                             </div>
-                            <div class="text-end text-white">
-                                <span>$ @item.Precio.ToString("N2")</span>
+                            <!-- Valores de precios encolumnados -->
+                            <div class="d-flex justify-content-end align-items-center" style="width: 250px;">
+                                <span class="text-secondary" style="width: 120px; text-align: right;">$ @item.Precio.ToString("N0", culturaArg)</span>
+                                <span class="text-white fw-bold" style="width: 120px; text-align: right;">$ @((item.Precio * item.Cantidad).ToString("N0", culturaArg))</span>
                             </div>
                         </div>
                     }
@@ -156,19 +165,19 @@
 
                     <div class="d-flex justify-content-between mb-2">
                         <span class="text-secondary small">Productos (@Model.DetalleComprobantes.Sum(x => x.Cantidad))</span>
-                        <span class="text-white small">$ @subtotalProductos.ToString("N2")</span>
+                        <span class="text-white small">$ @subtotalProductos.ToString("N0", culturaArg)</span>
                     </div>
 
                     <div class="d-flex justify-content-between mb-2">
                         <span class="text-secondary small">Envío</span>
-                        <span style="color: #00a650;" class="small">$ @Model.Envio.Monto.ToString("N2")</span>
+                        <span style="color: #00a650;" class="small">$ @Model.Envio.Monto.ToString("N0", culturaArg)</span>
                     </div>
 
                     <hr class="border-secondary">
 
                     <div class="d-flex justify-content-between align-items-center mb-4">
                         <span class="fw-bold text-white">Total</span>
-                        <h4 class="mb-0 fw-bold text-white">$ @Model.Total.ToString("N2")</h4>
+                        <h4 class="mb-0 fw-bold text-white">$ @Model.Total.ToString("N0", culturaArg)</h4>
                     </div>
 
                     <div class="border-top border-secondary pt-3 mt-3">

@@ -1,7 +1,9 @@
 ﻿@using LXF.Web.Models.ViewModels
 @model CarroComprasGetViewModel
 @using Microsoft.AspNetCore.Mvc.Rendering
+
 @{
+    var culturaArg = new System.Globalization.CultureInfo("es-AR");
     string direccionRegistrada = ViewBag.Direccion as string ?? "Dirección no proporcionada en el registro.";
     string minWordsMessage = "Ingrese al menos dos palabras (Nombre y Apellido).";
     string orangeColor = "#ffc107"; 
@@ -10,22 +12,36 @@
 
 <form method="post" id="checkoutForm" asp-controller="Venta" asp-action="Pay">
 
-    @* Inputs vitales para que el ModelState no falle *@
+    @* Inputs vitales para la Orden de Compra *@
     <input asp-for="UserId" hidden />
     <input asp-for="Id" hidden />
-    <input asp-for="Total" hidden />
-    <input asp-for="@Model.Factura.Direccion" hidden />
-    <input asp-for="@Model.Envio.Direccion" hidden  />
+    <input type="hidden" name="PersonaClienteId" value="@ViewBag.PersonaClienteId" />
+    <input type="hidden" name="Fecha" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+    <input asp-for="Total" id="hiddenTotalOrden" hidden />
+    <input type="hidden" name="Nombre" id="hiddenNombreOrden" value="" />
+    <input type="hidden" name="Email" id="hiddenEmailOrden" value="" />
+    <input type="hidden" name="Celular" id="hiddenCelularOrden" value="" />
+    <input type="hidden" name="Status" value="Pagada" />
+    <input type="hidden" name="CarroId" value="@Model.Id" />
+
+    @* Inputs de Factura *@
+    <input asp-for="@Model.Factura.Direccion" id="Factura_Direccion" hidden />
+    <input type="hidden" name="Factura.Fecha" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+    <input type="hidden" name="Factura.Total" id="hiddenTotalFactura" value="@Model.Total" />
+    <input type="hidden" name="Factura.Estado" value="Pagada" />
+    <input type="hidden" name="Factura.TipoPago" value="Tarjeta" />
+
+    @* Inputs de Envío *@
+    <input asp-for="@Model.Envio.Direccion" id="Envio_Direccion" hidden />
     <input type="hidden" name="Envio.Estado" value="Compra confirmada" />
     <input type="hidden" id="Envio_Monto" name="Envio.Monto" value="0" />
-    <input type="hidden" name="PersonaClienteId" value="@ViewBag.PersonaClienteId" />
 
     @for (int i = 0; i < Model.DetalleCarroCompras.Count(); i++)
     {
         <input type="hidden" name="DetalleOrdenCompras[@i].Cantidad" value="@Model.DetalleCarroCompras.ElementAt(i).Cantidad" />
         <input type="hidden" name="DetalleOrdenCompras[@i].Precio" value="@Model.DetalleCarroCompras.ElementAt(i).Precio" />
         <input type="hidden" name="DetalleOrdenCompras[@i].SubTotal" value="@Model.DetalleCarroCompras.ElementAt(i).SubTotal" />
-        <input type="hidden" name="DetalleOrdenCompras[@i].ProductoId" value="@Model.DetalleCarroCompras.ElementAt(i).ProductoId" />
+        <input type="hidden" name="DetalleOrdenCompras[@i].ProductoVarianteId" value="@Model.DetalleCarroCompras.ElementAt(i).ProductoVarianteId" />
         <input type="hidden" name="DetalleOrdenCompras[@i].CarroComprasId" value="@Model.DetalleCarroCompras.ElementAt(i).CarroComprasId" />
     }
 
@@ -50,24 +66,24 @@
                     <div class="card-body">
                         <div class="row g-3">
                             <div class="col-12">
-                                <input asp-for="Factura.Nombre" placeholder="Nombre completo..." maxlength="100" class="form-control bg-dark text-light border-secondary"
-                                       data-val="true" data-val-required="El Nombre completo es obligatorio."
+                                <input asp-for="Factura.Nombre" placeholder="Nombre Completo..." maxlength="100" class="form-control bg-dark text-light border-secondary"
+                                       data-val="true" data-val-required="El Nombre Completo es Obligatorio."
                                        data-rule-minwords="2" data-msg-minwords="@minWordsMessage" />
                                 <span asp-validation-for="Factura.Nombre" class="text-danger small"></span>
                             </div>
                             <div class="col-md-6">
                                 <input asp-for="@Model.Factura.Dni" id="dniFacturacionInput" placeholder="DNI..." maxlength="8" inputmode="numeric" class="form-control bg-dark text-light border-secondary"
-                                       data-val="true" data-val-required="El DNI es obligatorio." />
+                                       data-val="true" data-val-required="El DNI es Obligatorio." />
                                 <span asp-validation-for="@Model.Factura.Dni" class="text-danger small"></span>
                             </div>
                             <div class="col-md-6">
                                 <input asp-for="@Model.Factura.Celular" id="celularFacturacionInput" class="form-control bg-dark text-light border-secondary" placeholder="Celular..." maxlength="10" inputmode="numeric"
-                                       data-val="true" data-val-required="El celular es obligatorio." />
+                                       data-val="true" data-val-required="El Celular es Obligatorio." />
                                 <span asp-validation-for="@Model.Factura.Celular" class="text-danger small"></span>
                             </div>
                             <div class="col-12">
                                 <input asp-for="@Model.Factura.Email" placeholder="Email..." maxlength="100" type="email" class="form-control bg-dark text-light border-secondary"
-                                       data-val="true" data-val-required="El email es obligatorio." data-val-email="Ingrese un correo válido." required />
+                                       data-val="true" data-val-required="El Email es Obligatorio." data-val-email="Ingrese un correo válido." required />
                                 <span asp-validation-for="@Model.Factura.Email" class="text-danger small"></span>
                             </div>
                         </div>
@@ -102,7 +118,7 @@
                                 </div>
                                 <div class="col-md-4">
                                     <input name="Numero" id="numeroCalleInput" type="text" class="form-control bg-dark text-light border-secondary" placeholder="Número..." inputmode="numeric" maxlength="5"
-                                           data-val="true" data-val-required="Obligatorio." />
+                                           data-val="true" data-val-required="Numero Obligatorio." />
                                     <span data-valmsg-for="Numero" class="text-danger small"></span>
                                 </div>
                                 <div class="col-6">
@@ -132,23 +148,23 @@
                         <div class="row g-3">
                             <div class="col-12">
                                 <input asp-for="@Model.Envio.Persona" placeholder="Nombre de quien recibe..." maxlength="100" class="form-control bg-dark text-light border-secondary"
-                                       data-val="true" data-val-required="El Nombre del receptor es obligatorio."
+                                       data-val="true" data-val-required="El Nombre del Receptor es Obligatorio."
                                        data-rule-minwords="2" data-msg-minwords="@minWordsMessage" />
                                 <span asp-validation-for="@Model.Envio.Persona" class="text-danger small"></span>
                             </div>
                             <div class="col-md-6">
                                 <input asp-for="@Model.Envio.Dni" id="dniEnvioInput" placeholder="DNI..." maxlength="8" inputmode="numeric" class="form-control bg-dark text-light border-secondary"
-                                       data-val="true" data-val-required="Obligatorio." />
+                                       data-val="true" data-val-required="El DNI es Obligatorio." />
                                 <span asp-validation-for="@Model.Envio.Dni" class="text-danger small"></span>
                             </div>
                             <div class="col-md-6">
                                 <input asp-for="@Model.Envio.Celular" id="celularEnvioInput" class="form-control bg-dark text-light border-secondary" placeholder="Celular..." maxlength="10" inputmode="numeric"
-                                       data-val="true" data-val-required="Obligatorio." />
+                                       data-val="true" data-val-required="El Celular es Obligatorio." />
                                 <span asp-validation-for="@Model.Envio.Celular" class="text-danger small"></span>
                             </div>
                             <div class="col-12">
                                 <input asp-for="@Model.Envio.Email" placeholder="Email de contacto..." maxlength="100" type="email" class="form-control bg-dark text-light border-secondary"
-                                       data-val="true" data-val-required="Obligatorio." data-val-email="Correo inválido." required />
+                                       data-val="true" data-val-required="El Email es Obligatorio." data-val-email="Correo inválido." required />
                                 <span asp-validation-for="@Model.Envio.Email" class="text-danger small"></span>
                             </div>
                         </div>
@@ -173,11 +189,11 @@
                         {
                             <div class="d-flex justify-content-between align-items-center mb-3">
                                 <div class="pe-3">
-                                    <span class="d-block text-light fw-semibold">@cartObj.Producto.Nombre</span>
-                                    <small class="text-secondary">@cartObj.Cantidad un. x $ @cartObj.Precio.ToString("N0")</small>
+                                    <span class="d-block text-light fw-semibold">@cartObj.ProductoVariante.Producto.Nombre</span>
+                                    <small class="text-secondary">Talle @cartObj.ProductoVariante.Talle | @cartObj.Cantidad un. x $ @cartObj.Precio.ToString("N0", culturaArg)</small>
                                 </div>
                                 <div class="text-end text-light fw-bold">
-                                    $ @cartObj.SubTotal.ToString("N0")
+                                    $ @cartObj.SubTotal.ToString("N0", culturaArg)
                                 </div>
                             </div>
                         }
@@ -206,7 +222,7 @@
                         <div class="d-flex justify-content-between align-items-center mt-3">
                             <span class="fs-5 text-light fw-bold">Total a Pagar:</span>
                             <span id="texto-total-pagar" class="fs-4 text-warning fw-bold" data-subtotal="@Model.Total">
-                                $ @Model.Total.ToString("N0")
+                                $ @Model.Total.ToString("N0", culturaArg)
                             </span>
                         </div>
                     </div>
@@ -280,8 +296,15 @@
                 // 1. Asignar el valor del costo al input hidden para que viaje en el POST
                 const montoCalculado = costo === null ? 0 : costo;
                 $('#Envio_Monto').val(montoCalculado);
+
+                // 2. Sincronizar el total final en los inputs ocultos
+                let totalFinal = subtotalBase;
+                if (costo !== null) {
+                    totalFinal += costo;
+                }
+                $('#hiddenTotalOrden, #hiddenTotalFactura').val(totalFinal);
             
-                // 2. Formato visual
+                // 3. Formato visual
                 if (costo === null) {
                     $('#texto-costo-envio').html('Seleccione provincia').css({ 'color': '#6c757d', 'font-weight': 'normal', 'font-size': '0.85rem' });
                     $('#texto-total-pagar').html(`$ ${subtotalBase.toLocaleString('es-AR')}`);
@@ -296,7 +319,7 @@
             
                 if (etiquetaDestino) {
                     $('#subtexto-destino').text(etiquetaDestino);
-                }
+                }                
             }
 
             function calcularEnvioDireccionPredeterminada() {
@@ -426,10 +449,13 @@
 
                     $('#Factura_Direccion').val(direccionFinal);
                     $('#Envio_Direccion').val(direccionFinal);
+                    $('#hiddenNombreOrden').val($('#Factura_Nombre').val().trim());
+                    $('#hiddenEmailOrden').val($('#Factura_Email').val().trim());
+                    $('#hiddenCelularOrden').val($('#celularFacturacionInput').val().trim());
                     
                     return true;
                 });
             }
         });
     </script>
-}}
+}

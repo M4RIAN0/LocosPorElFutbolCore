@@ -3,6 +3,7 @@ using Lxf.Support.BuildingBlocks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore; 
 
 namespace LxF.Support;
 public sealed class GlobalExceptionHandler(RequestDelegate next)
@@ -38,6 +39,34 @@ public sealed class GlobalExceptionHandler(RequestDelegate next)
             var problem = new ProblemDetails { Status = StatusCodes.Status404NotFound, Detail = exception.Message };
 
             await Results.NotFound(problem).ExecuteAsync(httpContext);
+        }
+        catch (DuplicateRecordException exception)
+        {
+            var problem = new ProblemDetails { Status = StatusCodes.Status409Conflict, Detail = exception.Message };
+
+            await Results.Conflict(problem).ExecuteAsync(httpContext);
+        }
+        catch (DbUpdateException exception)
+        {
+            if (exception.InnerException != null && (exception.InnerException.Message.Contains("UNIQUE KEY") || exception.InnerException.Message.Contains("IX_")))
+            {
+                var problem = new ProblemDetails
+                {
+                    Status = StatusCodes.Status409Conflict,
+                    Detail = "Uno o mas campos ya existen en uno o mas registros."
+                };
+                await Results.Conflict(problem).ExecuteAsync(httpContext);
+            }
+            else
+            {
+                // Si es otro error de base de datos no esperado
+                var problem = new ProblemDetails
+                {
+                    Status = StatusCodes.Status500InternalServerError,
+                    Detail = "Ocurrió un error inesperado al intentar guardar en la base de datos."
+                };
+                await Results.Problem(problem).ExecuteAsync(httpContext);
+            }
         }
 
     }   

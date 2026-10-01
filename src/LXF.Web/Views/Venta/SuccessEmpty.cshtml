@@ -1,0 +1,72 @@
+﻿@{
+    ViewData["Title"] = "¡Compra Exitosa!";
+}
+
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+<style>
+    body { background-color: #212529; color: #ced4da; font-family: 'Roboto', sans-serif; }
+    
+    .checkout-container { padding-top: 60px; padding-bottom: 40px; }
+    
+    .checkout-card { position: relative; background-color: #2b3035; border: 1px solid #495057; border-radius: 12px; overflow: visible; box-shadow: 0 10px 30px rgba(0,0,0,0.4); }
+    
+    .floating-icon-wrapper { position: absolute; top: -40px; left: 50%; transform: translateX(-50%); width: 80px; height: 80px; background-color: #f8f9fa; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(0,0,0,0.3); border: 6px solid #212529; }
+    .floating-icon-wrapper.success { color: #198754; }
+    .floating-icon-wrapper i { font-size: 2.2rem; }
+
+    .checkout-header { padding: 50px 20px 30px; text-align: center; border-bottom: 1px dashed #495057; }
+    
+    .success-title { font-size: 1.8rem; font-weight: 800; color: #fff; margin-bottom: 10px; }
+    .success-subtitle { font-size: 0.95rem; color: #adb5bd; }
+
+    .details-section { padding: 30px; }
+
+    .btn-action-primary { background-color: #198754; color: #fff; border: none; font-weight: 700; padding: 14px 20px; border-radius: 8px; transition: 0.2s; text-decoration: none; display: block; text-align: center; }
+    .btn-action-primary:hover { background-color: #157347; color: #fff; }
+    
+    .btn-action-secondary { background-color: transparent; color: #f8f9fa; border: 1px solid #495057; font-weight: 700; padding: 14px 20px; border-radius: 8px; transition: 0.2s; text-decoration: none; display: block; text-align: center; }
+    .btn-action-secondary:hover { background-color: #343a40; color: #fff; border-color: #6c757d; }
+</style>
+
+<div class="container checkout-container">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-10 col-lg-7">
+            <div class="checkout-card">
+                
+                <div class="floating-icon-wrapper success">
+                    <i class="bi bi-bag-check-fill"></i>
+                </div>
+
+                <div class="checkout-header">
+                    <h2 class="success-title">¡Tu compra ha sido exitosa!</h2>
+                    <p class="success-subtitle m-0">
+                        Enviamos el detalle y la factura de tu pedido al Email que proporcionaste.
+                    </p>
+                </div>
+
+                <div class="details-section">
+                    
+                    <div class="text-center mb-4">
+                        <p class="text-muted">Tu orden ya fue procesada. Puedes ver el detalle completo de tus productos y el estado del envío en tu panel de usuario.</p>
+                    </div>
+
+                    <!-- Botones de Acción -->
+                    <div class="row g-3 mt-1">
+                        <div class="col-12 col-sm-6">
+                            <a asp-controller="Compra" asp-action="MisCompras" class="btn-action-primary w-100">
+                                <i class="bi bi-box-seam me-2"></i>Ir a Mis Compras
+                            </a>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <a asp-controller="Producto" asp-action="Catalogo" class="btn-action-secondary w-100">
+                                Seguir Comprando
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
