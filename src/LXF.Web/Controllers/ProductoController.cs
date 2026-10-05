@@ -64,6 +64,16 @@ namespace LXF.Web.Controllers
 
         public async Task<IActionResult> Update(int id)
         {
+            var responseCart = await _carroService.GetAnyWithProductId(id);
+
+            var result = responseCart?.Result as bool?;
+
+            if (responseCart != null && responseCart.IsSuccess && result == true)
+            {
+                TempData["error"] = "No se Puede Editar el Producto Porque Está en Uno o Varios Carrito de Compras.";
+                return RedirectToAction(nameof(Index));
+            }
+
             ResponseViewModel? response = await _service.GetById(id);
 
             if (response != null && response.IsSuccess)

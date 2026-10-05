@@ -117,10 +117,10 @@ namespace Servicio
 
         private void CheckProductosVariantes(Producto model)
         {
-            var tallesNew = model.ProductosVariantes ?? new List<ProductoVariante>();
-            var talleExist = ToEntity(GetById(model.ID)).ProductosVariantes.ToList();
-            var listTalleId = tallesNew.Where(x => x.ID > 0).Select(x => x.ID).ToList();
-            var tallesToDelete = talleExist.Where(x => !listTalleId.Contains(x.ID)).ToList();
+            var tallesNewAndExisting = model.ProductosVariantes ?? new List<ProductoVariante>(); // talles existentes que se mantienen y nuevos que se agregan
+            var talleExist = ToEntity(GetById(model.ID)).ProductosVariantes.ToList(); // talles existentes
+            var listTalleId = tallesNewAndExisting.Where(x => x.ID > 0).Select(x => x.ID).ToList();// lista de IDS de solo talles existentes que se mantienen
+            var tallesToDelete = talleExist.Where(x => !listTalleId.Contains(x.ID)).ToList(); // talles existentes que se eliminan
 
             foreach (var talle in tallesToDelete)
             {
@@ -129,12 +129,21 @@ namespace Servicio
 
             foreach (var item in talleExist.Where(x => listTalleId.Contains(x.ID)))
             {
-                var newItem = tallesNew.FirstOrDefault(x => x.ID == item.ID);
-                if (newItem != null)
+                var talleToUpdate = tallesNewAndExisting.FirstOrDefault(x => x.ID == item.ID);
+
+                if (talleToUpdate != null)
                 {
-                    item.Stock = newItem.Stock;
+                    item.Stock = talleToUpdate.Stock;
                     _productoVarianteRepository.Attach(item);
                 }
+            }
+
+            var tallesToAdd = tallesNewAndExisting.Where(x => x.ID == 0).ToList();
+
+            foreach (var newTalle in tallesToAdd)
+            {
+                newTalle.ProductoId = model.ID;
+                _productoVarianteRepository.Add(newTalle);
             }
 
             _productoVarianteRepository.Save();

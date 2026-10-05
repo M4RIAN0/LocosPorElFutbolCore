@@ -56,9 +56,9 @@
 
                                     <!-- Imagen + Nombre + Descripción Completa -->
                                     <div class="col-md-6 col-12 d-flex align-items-start mb-3 mb-md-0">
-                                        <div class="bg-white rounded p-1 d-flex align-items-center justify-content-center me-3 flex-shrink-0" style="width: 70px; height: 70px; overflow: hidden;">
+                                        <a asp-controller="Home" asp-action="ProductoDetails" asp-route-id="@cartObj.ProductoVariante.ProductoId" class="bg-white rounded p-1 d-flex align-items-center justify-content-center me-3 flex-shrink-0" style="width: 70px; height: 70px; overflow: hidden;">
                                             <img src="@cartObj.ProductoVariante.Producto.ImagenUrl" class="img-fluid" alt="@cartObj.ProductoVariante.Producto.Nombre">
-                                        </div>
+                                        </a>
                                         <div>
                                             <h6 class="text-white fw-bold mb-1 fs-6">@cartObj.ProductoVariante.Producto.Nombre</h6>
                                             <div class="text-secondary micro-text pe-2" style="font-size: 0.78rem; line-height: 1.35;">
