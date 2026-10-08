@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infraestructura.Migrations
 {
     [DbContext(typeof(LxfContext))]
-    [Migration("20261001013507_Initial")]
+    [Migration("20261009233613_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -90,48 +90,27 @@ namespace Infraestructura.Migrations
                         new
                         {
                             ID = 2,
-                            Descripcion = "Remeras",
-                            IsDeleted = false,
-                            IsEnabled = false
-                        },
-                        new
-                        {
-                            ID = 3,
-                            Descripcion = "Musculosas",
-                            IsDeleted = false,
-                            IsEnabled = false
-                        },
-                        new
-                        {
-                            ID = 4,
                             Descripcion = "Shorts",
                             IsDeleted = false,
                             IsEnabled = false
                         },
                         new
                         {
-                            ID = 5,
-                            Descripcion = "Medias",
-                            IsDeleted = false,
-                            IsEnabled = false
-                        },
-                        new
-                        {
-                            ID = 6,
+                            ID = 3,
                             Descripcion = "Pantalones",
                             IsDeleted = false,
                             IsEnabled = false
                         },
                         new
                         {
-                            ID = 7,
+                            ID = 4,
                             Descripcion = "Camperas",
                             IsDeleted = false,
                             IsEnabled = false
                         },
                         new
                         {
-                            ID = 8,
+                            ID = 5,
                             Descripcion = "Zapatillas",
                             IsDeleted = false,
                             IsEnabled = false
@@ -1090,11 +1069,11 @@ namespace Infraestructura.Migrations
                             CategoriaId = 1,
                             Descripcion = "Un clásico renovado. La nueva colección de Nike destaca por su corte ergonómico y tecnología de punta, brindando un ajuste perfecto.",
                             Genero = "Hombre",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-camiseta-futbol-nike-inter-milan-titular.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 1,
-                            Nombre = "Camiseta Futbol Nike Tech Serie 1",
+                            Nombre = "Camiseta Futbol Nike Inter Milan Titular",
                             Precio = 98000m
                         },
                         new
@@ -1103,11 +1082,11 @@ namespace Infraestructura.Migrations
                             CategoriaId = 1,
                             Descripcion = "Increíble diseño en camiseta futbol Nike Ultra. Una elección perfecta para quienes buscan estilo y rendimiento. Fabricación de alta calidad pensada para mujer.",
                             Genero = "Mujer",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-camiseta-futbol-nike-barcelona-alternativa.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 1,
-                            Nombre = "Camiseta Futbol Nike Ultra Serie 2",
+                            Nombre = "Camiseta Futbol Nike Barcelona Alternativa",
                             Precio = 83000m
                         },
                         new
@@ -1116,11 +1095,11 @@ namespace Infraestructura.Migrations
                             CategoriaId = 1,
                             Descripcion = "Increíble diseño en camiseta futbol Nike Elite. Una elección perfecta para quienes buscan estilo y rendimiento. Fabricación de alta calidad pensada para unisex.",
                             Genero = "Unisex",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-camiseta-futbol-nike-barcelona-titular.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 1,
-                            Nombre = "Camiseta Futbol Nike Elite Serie 3",
+                            Nombre = "Camiseta Futbol Nike Barcelona Titular",
                             Precio = 16000m
                         },
                         new
@@ -1129,11 +1108,11 @@ namespace Infraestructura.Migrations
                             CategoriaId = 1,
                             Descripcion = "Supera tus límites con lo nuevo en camiseta futbol Adidas. Pensado especialmente para hombre, ofrece una durabilidad excepcional en cada uso gracias a su tecnología Tech.",
                             Genero = "Hombre",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-camiseta-futbol-adidas-river-plate-titular.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 2,
-                            Nombre = "Camiseta Futbol Adidas Tech Serie 1",
+                            Nombre = "Camiseta Futbol Adidas River Plate Titular",
                             Precio = 68000m
                         },
                         new
@@ -1142,11 +1121,11 @@ namespace Infraestructura.Migrations
                             CategoriaId = 1,
                             Descripcion = "Increíble diseño en camiseta futbol Adidas Sport. Una elección perfecta para quienes buscan estilo y rendimiento. Fabricación de alta calidad pensada para mujer.",
                             Genero = "Mujer",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-camiseta-futbol-adidas-river-plate-alternativa.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 2,
-                            Nombre = "Camiseta Futbol Adidas Sport Serie 2",
+                            Nombre = "Camiseta Futbol Adidas River Plate Alternativa",
                             Precio = 31000m
                         },
                         new
@@ -1155,11 +1134,11 @@ namespace Infraestructura.Migrations
                             CategoriaId = 1,
                             Descripcion = "Descubre el confort absoluto con este modelo de Adidas. Su diseño exclusivo aporta frescura y libertad de movimiento, ideal para el día a día.",
                             Genero = "Unisex",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-camiseta-futbol-adidas-boca-juniors-titular.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 2,
-                            Nombre = "Camiseta Futbol Adidas Essential Serie 3",
+                            Nombre = "Camiseta Futbol Adidas Boca Juniors Titular",
                             Precio = 86000m
                         },
                         new
@@ -1168,11 +1147,11 @@ namespace Infraestructura.Migrations
                             CategoriaId = 1,
                             Descripcion = "Increíble diseño en camiseta futbol Puma Tech. Una elección perfecta para quienes buscan estilo y rendimiento. Fabricación de alta calidad pensada para hombre.",
                             Genero = "Hombre",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-camiseta-futbol-puma-stade-rennais-titular.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 3,
-                            Nombre = "Camiseta Futbol Puma Tech Serie 1",
+                            Nombre = "Camiseta Futbol Puma Stade Rennais Titular",
                             Precio = 15000m
                         },
                         new
@@ -1181,11 +1160,11 @@ namespace Infraestructura.Migrations
                             CategoriaId = 1,
                             Descripcion = "Increíble diseño en camiseta futbol Puma Ultra. Una elección perfecta para quienes buscan estilo y rendimiento. Fabricación de alta calidad pensada para mujer.",
                             Genero = "Mujer",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-camiseta-futbol-puma-manchester-city-titular.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 3,
-                            Nombre = "Camiseta Futbol Puma Ultra Serie 2",
+                            Nombre = "Camiseta Futbol Puma Manchester City Titular",
                             Precio = 17000m
                         },
                         new
@@ -1194,11 +1173,11 @@ namespace Infraestructura.Migrations
                             CategoriaId = 1,
                             Descripcion = "Un clásico renovado. La nueva colección de Puma destaca por su corte ergonómico y tecnología de punta, brindando un ajuste perfecto.",
                             Genero = "Unisex",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-camiseta-futbol-puma-paraguay-titular.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 3,
-                            Nombre = "Camiseta Futbol Puma Max Serie 3",
+                            Nombre = "Camiseta Futbol Puma Paraguay Titular",
                             Precio = 79000m
                         },
                         new
@@ -1207,11 +1186,11 @@ namespace Infraestructura.Migrations
                             CategoriaId = 1,
                             Descripcion = "Increíble diseño en camiseta futbol Reebok Essential. Una elección perfecta para quienes buscan estilo y rendimiento. Fabricación de alta calidad pensada para hombre.",
                             Genero = "Hombre",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-camiseta-futbol-reebok-botafogo-titular.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 4,
-                            Nombre = "Camiseta Futbol Reebok Essential Serie 1",
+                            Nombre = "Camiseta Futbol Reebok Botafogo Titular",
                             Precio = 91000m
                         },
                         new
@@ -1220,11 +1199,11 @@ namespace Infraestructura.Migrations
                             CategoriaId = 1,
                             Descripcion = "Un clásico renovado. La nueva colección de Reebok destaca por su corte ergonómico y tecnología de punta, brindando un ajuste perfecto.",
                             Genero = "Mujer",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-camiseta-futbol-reebok-botafogo-suplente.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 4,
-                            Nombre = "Camiseta Futbol Reebok Retro Serie 2",
+                            Nombre = "Camiseta Futbol Reebok Botafogo Suplente",
                             Precio = 65000m
                         },
                         new
@@ -1233,7 +1212,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 1,
                             Descripcion = "Increíble diseño en camiseta futbol Reebok Essential. Una elección perfecta para quienes buscan estilo y rendimiento. Fabricación de alta calidad pensada para unisex.",
                             Genero = "Unisex",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-camiseta-futbol-reebok-essential-serie-3.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 4,
@@ -1246,7 +1225,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 1,
                             Descripcion = "Supera tus límites con lo nuevo en camiseta futbol Dc. Pensado especialmente para hombre, ofrece una durabilidad excepcional en cada uso gracias a su tecnología Classic.",
                             Genero = "Hombre",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-camiseta-futbol-dc-classic-serie-1.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 5,
@@ -1255,24 +1234,11 @@ namespace Infraestructura.Migrations
                         },
                         new
                         {
-                            ID = 14,
-                            CategoriaId = 1,
-                            Descripcion = "Lleva tu estilo urbano al siguiente nivel. Confección premium y detalles únicos hacen de este modelo de Tech una pieza indispensable en tu guardarropa.",
-                            Genero = "Mujer",
-                            ImagenUrl = "https://placehold.co/600x600",
-                            IsDeleted = false,
-                            IsEnabled = false,
-                            MarcaId = 5,
-                            Nombre = "Camiseta Futbol Dc Tech Serie 2",
-                            Precio = 82000m
-                        },
-                        new
-                        {
                             ID = 15,
                             CategoriaId = 1,
                             Descripcion = "Un clásico renovado. La nueva colección de Dc destaca por su corte ergonómico y tecnología de punta, brindando un ajuste perfecto.",
                             Genero = "Unisex",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-camiseta-futbol-dc-elite-serie-3.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 5,
@@ -1281,54 +1247,15 @@ namespace Infraestructura.Migrations
                         },
                         new
                         {
-                            ID = 16,
-                            CategoriaId = 1,
-                            Descripcion = "Descubre el confort absoluto con este modelo de Vans. Su diseño exclusivo aporta frescura y libertad de movimiento, ideal para el día a día.",
-                            Genero = "Hombre",
-                            ImagenUrl = "https://placehold.co/600x600",
-                            IsDeleted = false,
-                            IsEnabled = false,
-                            MarcaId = 6,
-                            Nombre = "Camiseta Futbol Vans Elite Serie 1",
-                            Precio = 24000m
-                        },
-                        new
-                        {
-                            ID = 17,
-                            CategoriaId = 1,
-                            Descripcion = "Un clásico renovado. La nueva colección de Vans destaca por su corte ergonómico y tecnología de punta, brindando un ajuste perfecto.",
-                            Genero = "Mujer",
-                            ImagenUrl = "https://placehold.co/600x600",
-                            IsDeleted = false,
-                            IsEnabled = false,
-                            MarcaId = 6,
-                            Nombre = "Camiseta Futbol Vans Sport Serie 2",
-                            Precio = 28000m
-                        },
-                        new
-                        {
-                            ID = 18,
-                            CategoriaId = 1,
-                            Descripcion = "Supera tus límites con lo nuevo en camiseta futbol Vans. Pensado especialmente para unisex, ofrece una durabilidad excepcional en cada uso gracias a su tecnología Pro.",
-                            Genero = "Unisex",
-                            ImagenUrl = "https://placehold.co/600x600",
-                            IsDeleted = false,
-                            IsEnabled = false,
-                            MarcaId = 6,
-                            Nombre = "Camiseta Futbol Vans Pro Serie 3",
-                            Precio = 28000m
-                        },
-                        new
-                        {
                             ID = 19,
                             CategoriaId = 1,
                             Descripcion = "Increíble diseño en camiseta futbol Adidas-Classic Tech. Una elección perfecta para quienes buscan estilo y rendimiento. Fabricación de alta calidad pensada para hombre.",
                             Genero = "Hombre",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-camiseta-futbol-adidas-classic-argentina-suplente.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 7,
-                            Nombre = "Camiseta Futbol Adidas-Classic Tech Serie 1",
+                            Nombre = "Camiseta Futbol Adidas Classic Argentina Suplente",
                             Precio = 84000m
                         },
                         new
@@ -1337,11 +1264,11 @@ namespace Infraestructura.Migrations
                             CategoriaId = 1,
                             Descripcion = "Increíble diseño en camiseta futbol Adidas-Classic Pro. Una elección perfecta para quienes buscan estilo y rendimiento. Fabricación de alta calidad pensada para mujer.",
                             Genero = "Mujer",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-camiseta-futbol-adidas-classic-españa-suplente.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 7,
-                            Nombre = "Camiseta Futbol Adidas-Classic Pro Serie 2",
+                            Nombre = "Camiseta Futbol Adidas Classic España Suplente",
                             Precio = 78000m
                         },
                         new
@@ -1350,7 +1277,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 1,
                             Descripcion = "Un clásico renovado. La nueva colección de Adidas-Classic destaca por su corte ergonómico y tecnología de punta, brindando un ajuste perfecto.",
                             Genero = "Unisex",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-camiseta-futbol-adidas-classic-elite-serie-3.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 7,
@@ -1363,11 +1290,11 @@ namespace Infraestructura.Migrations
                             CategoriaId = 1,
                             Descripcion = "Increíble diseño en camiseta futbol Under-Armour Pro. Una elección perfecta para quienes buscan estilo y rendimiento. Fabricación de alta calidad pensada para hombre.",
                             Genero = "Hombre",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-camiseta-futbol-under-armour-estudiantes-de-la-plata-titular.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 8,
-                            Nombre = "Camiseta Futbol Under-Armour Pro Serie 1",
+                            Nombre = "Camiseta Futbol Under Armour Estudiantes de la Plata Titular",
                             Precio = 19000m
                         },
                         new
@@ -1376,11 +1303,11 @@ namespace Infraestructura.Migrations
                             CategoriaId = 1,
                             Descripcion = "Lleva tu estilo urbano al siguiente nivel. Confección premium y detalles únicos hacen de este modelo de Elite una pieza indispensable en tu guardarropa.",
                             Genero = "Mujer",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-camiseta-futbol-under-armour-sydney-fc-titular.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 8,
-                            Nombre = "Camiseta Futbol Under-Armour Elite Serie 2",
+                            Nombre = "Camiseta Futbol Under Armour Sydney FC Titular",
                             Precio = 77000m
                         },
                         new
@@ -1389,7 +1316,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 1,
                             Descripcion = "Descubre el confort absoluto con este modelo de Under-Armour. Su diseño exclusivo aporta frescura y libertad de movimiento, ideal para el día a día.",
                             Genero = "Unisex",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-camiseta-futbol-under-armour-tech-serie-3.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 8,
@@ -1402,7 +1329,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 2,
                             Descripcion = "Increíble diseño en short Nike Classic. Una elección perfecta para quienes buscan estilo y rendimiento. Fabricación de alta calidad pensada para hombre.",
                             Genero = "Hombre",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-short-nike-classic-serie-1.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 1,
@@ -1415,7 +1342,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 2,
                             Descripcion = "Supera tus límites con lo nuevo en short Nike. Pensado especialmente para mujer, ofrece una durabilidad excepcional en cada uso gracias a su tecnología Essential.",
                             Genero = "Mujer",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-short-nike-essential-serie-2.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 1,
@@ -1428,7 +1355,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 2,
                             Descripcion = "Supera tus límites con lo nuevo en short Nike. Pensado especialmente para unisex, ofrece una durabilidad excepcional en cada uso gracias a su tecnología Max.",
                             Genero = "Unisex",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-short-nike-max-serie-3.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 1,
@@ -1441,7 +1368,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 2,
                             Descripcion = "Increíble diseño en short Adidas Ultra. Una elección perfecta para quienes buscan estilo y rendimiento. Fabricación de alta calidad pensada para hombre.",
                             Genero = "Hombre",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-short-adidas-ultra-serie-1.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 2,
@@ -1454,7 +1381,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 2,
                             Descripcion = "Lleva tu estilo urbano al siguiente nivel. Confección premium y detalles únicos hacen de este modelo de Sport una pieza indispensable en tu guardarropa.",
                             Genero = "Mujer",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-short-adidas-sport-serie-2.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 2,
@@ -1467,7 +1394,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 2,
                             Descripcion = "Un clásico renovado. La nueva colección de Adidas destaca por su corte ergonómico y tecnología de punta, brindando un ajuste perfecto.",
                             Genero = "Unisex",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-short-adidas-classic-serie-3.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 2,
@@ -1480,7 +1407,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 2,
                             Descripcion = "Increíble diseño en short Puma Elite. Una elección perfecta para quienes buscan estilo y rendimiento. Fabricación de alta calidad pensada para hombre.",
                             Genero = "Hombre",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-short-puma-elite-serie-1.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 3,
@@ -1493,7 +1420,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 2,
                             Descripcion = "Lleva tu estilo urbano al siguiente nivel. Confección premium y detalles únicos hacen de este modelo de Sport una pieza indispensable en tu guardarropa.",
                             Genero = "Mujer",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-short-puma-sport-serie-2.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 3,
@@ -1506,7 +1433,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 2,
                             Descripcion = "Increíble diseño en short Puma Sport. Una elección perfecta para quienes buscan estilo y rendimiento. Fabricación de alta calidad pensada para unisex.",
                             Genero = "Unisex",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-short-puma-sport-serie-3.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 3,
@@ -1519,7 +1446,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 2,
                             Descripcion = "Increíble diseño en short Reebok Urban. Una elección perfecta para quienes buscan estilo y rendimiento. Fabricación de alta calidad pensada para hombre.",
                             Genero = "Hombre",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-short-reebok-urban-serie-1.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 4,
@@ -1532,7 +1459,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 2,
                             Descripcion = "Supera tus límites con lo nuevo en short Reebok. Pensado especialmente para mujer, ofrece una durabilidad excepcional en cada uso gracias a su tecnología Elite.",
                             Genero = "Mujer",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-short-reebok-elite-serie-2.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 4,
@@ -1545,7 +1472,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 2,
                             Descripcion = "Lleva tu estilo urbano al siguiente nivel. Confección premium y detalles únicos hacen de este modelo de Urban una pieza indispensable en tu guardarropa.",
                             Genero = "Unisex",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-short-reebok-urban-serie-3.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 4,
@@ -1558,7 +1485,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 2,
                             Descripcion = "Supera tus límites con lo nuevo en short Dc. Pensado especialmente para hombre, ofrece una durabilidad excepcional en cada uso gracias a su tecnología Essential.",
                             Genero = "Hombre",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-short-dc-essential-serie-1.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 5,
@@ -1571,7 +1498,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 2,
                             Descripcion = "Supera tus límites con lo nuevo en short Dc. Pensado especialmente para mujer, ofrece una durabilidad excepcional en cada uso gracias a su tecnología Sport.",
                             Genero = "Mujer",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-short-dc-sport-serie-2.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 5,
@@ -1584,7 +1511,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 2,
                             Descripcion = "Descubre el confort absoluto con este modelo de Dc. Su diseño exclusivo aporta frescura y libertad de movimiento, ideal para el día a día.",
                             Genero = "Unisex",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-short-dc-pro-serie-3.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 5,
@@ -1597,7 +1524,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 2,
                             Descripcion = "Supera tus límites con lo nuevo en short Vans. Pensado especialmente para hombre, ofrece una durabilidad excepcional en cada uso gracias a su tecnología Max.",
                             Genero = "Hombre",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-short-vans-max-serie-1.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 6,
@@ -1606,24 +1533,11 @@ namespace Infraestructura.Migrations
                         },
                         new
                         {
-                            ID = 41,
-                            CategoriaId = 2,
-                            Descripcion = "Lleva tu estilo urbano al siguiente nivel. Confección premium y detalles únicos hacen de este modelo de Essential una pieza indispensable en tu guardarropa.",
-                            Genero = "Mujer",
-                            ImagenUrl = "https://placehold.co/600x600",
-                            IsDeleted = false,
-                            IsEnabled = false,
-                            MarcaId = 6,
-                            Nombre = "Short Vans Essential Serie 2",
-                            Precio = 33000m
-                        },
-                        new
-                        {
                             ID = 42,
                             CategoriaId = 2,
                             Descripcion = "Un clásico renovado. La nueva colección de Vans destaca por su corte ergonómico y tecnología de punta, brindando un ajuste perfecto.",
                             Genero = "Unisex",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-short-vans-pro-serie-3.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 6,
@@ -1636,7 +1550,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 2,
                             Descripcion = "Un clásico renovado. La nueva colección de Adidas-Classic destaca por su corte ergonómico y tecnología de punta, brindando un ajuste perfecto.",
                             Genero = "Hombre",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-short-adidas-classic-essential-serie-1.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 7,
@@ -1649,7 +1563,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 2,
                             Descripcion = "Increíble diseño en short Adidas-Classic Pro. Una elección perfecta para quienes buscan estilo y rendimiento. Fabricación de alta calidad pensada para mujer.",
                             Genero = "Mujer",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-short-adidas-classic-pro-serie-2.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 7,
@@ -1662,7 +1576,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 2,
                             Descripcion = "Descubre el confort absoluto con este modelo de Adidas-Classic. Su diseño exclusivo aporta frescura y libertad de movimiento, ideal para el día a día.",
                             Genero = "Unisex",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-short-adidas-classic-essential-serie-3.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 7,
@@ -1675,7 +1589,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 2,
                             Descripcion = "Supera tus límites con lo nuevo en short Under-Armour. Pensado especialmente para hombre, ofrece una durabilidad excepcional en cada uso gracias a su tecnología Ultra.",
                             Genero = "Hombre",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-short-under-armour-ultra-serie-1.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 8,
@@ -1688,7 +1602,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 2,
                             Descripcion = "Increíble diseño en short Under-Armour Elite. Una elección perfecta para quienes buscan estilo y rendimiento. Fabricación de alta calidad pensada para mujer.",
                             Genero = "Mujer",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-short-under-armour-elite-serie-2.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 8,
@@ -1701,7 +1615,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 2,
                             Descripcion = "Un clásico renovado. La nueva colección de Under-Armour destaca por su corte ergonómico y tecnología de punta, brindando un ajuste perfecto.",
                             Genero = "Unisex",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-short-under-armour-max-serie-3.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 8,
@@ -1714,7 +1628,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 3,
                             Descripcion = "Un clásico renovado. La nueva colección de Nike destaca por su corte ergonómico y tecnología de punta, brindando un ajuste perfecto.",
                             Genero = "Hombre",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-pantalon-nike-sport-serie-1.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 1,
@@ -1727,7 +1641,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 3,
                             Descripcion = "Descubre el confort absoluto con este modelo de Nike. Su diseño exclusivo aporta frescura y libertad de movimiento, ideal para el día a día.",
                             Genero = "Mujer",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-pantalon-nike-max-serie-2.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 1,
@@ -1740,7 +1654,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 3,
                             Descripcion = "Lleva tu estilo urbano al siguiente nivel. Confección premium y detalles únicos hacen de este modelo de Max una pieza indispensable en tu guardarropa.",
                             Genero = "Unisex",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-pantalon-nike-max-serie-3.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 1,
@@ -1753,7 +1667,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 3,
                             Descripcion = "Lleva tu estilo urbano al siguiente nivel. Confección premium y detalles únicos hacen de este modelo de Sport una pieza indispensable en tu guardarropa.",
                             Genero = "Hombre",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-pantalon-adidas-sport-serie-1.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 2,
@@ -1766,7 +1680,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 3,
                             Descripcion = "Increíble diseño en pantalon Adidas Classic. Una elección perfecta para quienes buscan estilo y rendimiento. Fabricación de alta calidad pensada para mujer.",
                             Genero = "Mujer",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-pantalon-adidas-classic-serie-2.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 2,
@@ -1779,7 +1693,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 3,
                             Descripcion = "Un clásico renovado. La nueva colección de Adidas destaca por su corte ergonómico y tecnología de punta, brindando un ajuste perfecto.",
                             Genero = "Unisex",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-pantalon-adidas-elite-serie-3.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 2,
@@ -1792,7 +1706,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 3,
                             Descripcion = "Supera tus límites con lo nuevo en pantalon Puma. Pensado especialmente para hombre, ofrece una durabilidad excepcional en cada uso gracias a su tecnología Urban.",
                             Genero = "Hombre",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-pantalon-puma-urban-serie-1.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 3,
@@ -1805,7 +1719,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 3,
                             Descripcion = "Lleva tu estilo urbano al siguiente nivel. Confección premium y detalles únicos hacen de este modelo de Elite una pieza indispensable en tu guardarropa.",
                             Genero = "Mujer",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-pantalon-puma-elite-serie-2.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 3,
@@ -1818,7 +1732,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 3,
                             Descripcion = "Descubre el confort absoluto con este modelo de Puma. Su diseño exclusivo aporta frescura y libertad de movimiento, ideal para el día a día.",
                             Genero = "Unisex",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-pantalon-puma-classic-serie-3.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 3,
@@ -1831,7 +1745,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 3,
                             Descripcion = "Supera tus límites con lo nuevo en pantalon Reebok. Pensado especialmente para hombre, ofrece una durabilidad excepcional en cada uso gracias a su tecnología Pro.",
                             Genero = "Hombre",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-pantalon-reebok-pro-serie-1.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 4,
@@ -1844,7 +1758,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 3,
                             Descripcion = "Lleva tu estilo urbano al siguiente nivel. Confección premium y detalles únicos hacen de este modelo de Elite una pieza indispensable en tu guardarropa.",
                             Genero = "Mujer",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-pantalon-reebok-elite-serie-2.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 4,
@@ -1857,7 +1771,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 3,
                             Descripcion = "Supera tus límites con lo nuevo en pantalon Reebok. Pensado especialmente para unisex, ofrece una durabilidad excepcional en cada uso gracias a su tecnología Pro.",
                             Genero = "Unisex",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-pantalon-reebok-pro-serie-3.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 4,
@@ -1870,7 +1784,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 3,
                             Descripcion = "Lleva tu estilo urbano al siguiente nivel. Confección premium y detalles únicos hacen de este modelo de Sport una pieza indispensable en tu guardarropa.",
                             Genero = "Hombre",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-pantalon-dc-sport-serie-1.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 5,
@@ -1883,7 +1797,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 3,
                             Descripcion = "Descubre el confort absoluto con este modelo de Dc. Su diseño exclusivo aporta frescura y libertad de movimiento, ideal para el día a día.",
                             Genero = "Mujer",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-pantalon-dc-ultra-serie-2.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 5,
@@ -1896,7 +1810,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 3,
                             Descripcion = "Increíble diseño en pantalon Dc Retro. Una elección perfecta para quienes buscan estilo y rendimiento. Fabricación de alta calidad pensada para unisex.",
                             Genero = "Unisex",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-pantalon-dc-retro-serie-3.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 5,
@@ -1909,7 +1823,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 3,
                             Descripcion = "Supera tus límites con lo nuevo en pantalon Vans. Pensado especialmente para hombre, ofrece una durabilidad excepcional en cada uso gracias a su tecnología Elite.",
                             Genero = "Hombre",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-pantalon-vans-elite-serie-1.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 6,
@@ -1922,7 +1836,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 3,
                             Descripcion = "Lleva tu estilo urbano al siguiente nivel. Confección premium y detalles únicos hacen de este modelo de Max una pieza indispensable en tu guardarropa.",
                             Genero = "Mujer",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-pantalon-vans-max-serie-2.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 6,
@@ -1935,7 +1849,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 3,
                             Descripcion = "Descubre el confort absoluto con este modelo de Vans. Su diseño exclusivo aporta frescura y libertad de movimiento, ideal para el día a día.",
                             Genero = "Unisex",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-pantalon-vans-pro-serie-3.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 6,
@@ -1948,7 +1862,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 3,
                             Descripcion = "Descubre el confort absoluto con este modelo de Adidas-Classic. Su diseño exclusivo aporta frescura y libertad de movimiento, ideal para el día a día.",
                             Genero = "Hombre",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-pantalon-adidas-classic-retro-serie-1.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 7,
@@ -1961,7 +1875,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 3,
                             Descripcion = "Descubre el confort absoluto con este modelo de Adidas-Classic. Su diseño exclusivo aporta frescura y libertad de movimiento, ideal para el día a día.",
                             Genero = "Mujer",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-pantalon-adidas-classic-essential-serie-2.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 7,
@@ -1974,7 +1888,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 3,
                             Descripcion = "Supera tus límites con lo nuevo en pantalon Adidas-Classic. Pensado especialmente para unisex, ofrece una durabilidad excepcional en cada uso gracias a su tecnología Max.",
                             Genero = "Unisex",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-pantalon-adidas-classic-max-serie-3.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 7,
@@ -1987,7 +1901,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 3,
                             Descripcion = "Descubre el confort absoluto con este modelo de Under-Armour. Su diseño exclusivo aporta frescura y libertad de movimiento, ideal para el día a día.",
                             Genero = "Hombre",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-pantalon-under-armour-elite-serie-1.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 8,
@@ -2000,7 +1914,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 3,
                             Descripcion = "Descubre el confort absoluto con este modelo de Under-Armour. Su diseño exclusivo aporta frescura y libertad de movimiento, ideal para el día a día.",
                             Genero = "Mujer",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-pantalon-under-armour-pro-serie-2.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 8,
@@ -2013,7 +1927,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 3,
                             Descripcion = "Un clásico renovado. La nueva colección de Under-Armour destaca por su corte ergonómico y tecnología de punta, brindando un ajuste perfecto.",
                             Genero = "Unisex",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-pantalon-under-armour-ultra-serie-3.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 8,
@@ -2026,7 +1940,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 4,
                             Descripcion = "Supera tus límites con lo nuevo en campera Nike. Pensado especialmente para hombre, ofrece una durabilidad excepcional en cada uso gracias a su tecnología Max.",
                             Genero = "Hombre",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-campera-nike-max-serie-1.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 1,
@@ -2039,7 +1953,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 4,
                             Descripcion = "Descubre el confort absoluto con este modelo de Nike. Su diseño exclusivo aporta frescura y libertad de movimiento, ideal para el día a día.",
                             Genero = "Mujer",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-campera-nike-pro-serie-2.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 1,
@@ -2052,7 +1966,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 4,
                             Descripcion = "Increíble diseño en campera Nike Ultra. Una elección perfecta para quienes buscan estilo y rendimiento. Fabricación de alta calidad pensada para unisex.",
                             Genero = "Unisex",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-campera-nike-ultra-serie-3.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 1,
@@ -2065,7 +1979,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 4,
                             Descripcion = "Descubre el confort absoluto con este modelo de Adidas. Su diseño exclusivo aporta frescura y libertad de movimiento, ideal para el día a día.",
                             Genero = "Hombre",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-campera-adidas-sport-serie-1.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 2,
@@ -2078,7 +1992,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 4,
                             Descripcion = "Increíble diseño en campera Adidas Pro. Una elección perfecta para quienes buscan estilo y rendimiento. Fabricación de alta calidad pensada para mujer.",
                             Genero = "Mujer",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-campera-adidas-pro-serie-2.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 2,
@@ -2091,7 +2005,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 4,
                             Descripcion = "Increíble diseño en campera Adidas Pro. Una elección perfecta para quienes buscan estilo y rendimiento. Fabricación de alta calidad pensada para unisex.",
                             Genero = "Unisex",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-campera-adidas-pro-serie-3.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 2,
@@ -2104,7 +2018,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 4,
                             Descripcion = "Lleva tu estilo urbano al siguiente nivel. Confección premium y detalles únicos hacen de este modelo de Urban una pieza indispensable en tu guardarropa.",
                             Genero = "Hombre",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-campera-puma-urban-serie-1.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 3,
@@ -2117,7 +2031,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 4,
                             Descripcion = "Increíble diseño en campera Puma Urban. Una elección perfecta para quienes buscan estilo y rendimiento. Fabricación de alta calidad pensada para mujer.",
                             Genero = "Mujer",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-campera-puma-urban-serie-2.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 3,
@@ -2130,7 +2044,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 4,
                             Descripcion = "Un clásico renovado. La nueva colección de Puma destaca por su corte ergonómico y tecnología de punta, brindando un ajuste perfecto.",
                             Genero = "Unisex",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-campera-puma-tech-serie-3.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 3,
@@ -2143,7 +2057,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 4,
                             Descripcion = "Increíble diseño en campera Reebok Sport. Una elección perfecta para quienes buscan estilo y rendimiento. Fabricación de alta calidad pensada para hombre.",
                             Genero = "Hombre",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-campera-reebok-sport-serie-1.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 4,
@@ -2156,7 +2070,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 4,
                             Descripcion = "Lleva tu estilo urbano al siguiente nivel. Confección premium y detalles únicos hacen de este modelo de Retro una pieza indispensable en tu guardarropa.",
                             Genero = "Mujer",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-campera-reebok-retro-serie-2.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 4,
@@ -2169,7 +2083,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 4,
                             Descripcion = "Descubre el confort absoluto con este modelo de Reebok. Su diseño exclusivo aporta frescura y libertad de movimiento, ideal para el día a día.",
                             Genero = "Unisex",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-campera-reebok-sport-serie-3.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 4,
@@ -2182,7 +2096,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 4,
                             Descripcion = "Un clásico renovado. La nueva colección de Dc destaca por su corte ergonómico y tecnología de punta, brindando un ajuste perfecto.",
                             Genero = "Hombre",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-campera-dc-tech-serie-1.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 5,
@@ -2195,7 +2109,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 4,
                             Descripcion = "Lleva tu estilo urbano al siguiente nivel. Confección premium y detalles únicos hacen de este modelo de Retro una pieza indispensable en tu guardarropa.",
                             Genero = "Mujer",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-campera-dc-retro-serie-2.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 5,
@@ -2208,7 +2122,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 4,
                             Descripcion = "Increíble diseño en campera Dc Urban. Una elección perfecta para quienes buscan estilo y rendimiento. Fabricación de alta calidad pensada para unisex.",
                             Genero = "Unisex",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-campera-dc-urban-serie-3.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 5,
@@ -2221,7 +2135,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 4,
                             Descripcion = "Increíble diseño en campera Vans Ultra. Una elección perfecta para quienes buscan estilo y rendimiento. Fabricación de alta calidad pensada para hombre.",
                             Genero = "Hombre",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-campera-vans-ultra-serie-1.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 6,
@@ -2234,7 +2148,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 4,
                             Descripcion = "Increíble diseño en campera Vans Sport. Una elección perfecta para quienes buscan estilo y rendimiento. Fabricación de alta calidad pensada para mujer.",
                             Genero = "Mujer",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-campera-vans-sport-serie-2.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 6,
@@ -2247,7 +2161,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 4,
                             Descripcion = "Descubre el confort absoluto con este modelo de Vans. Su diseño exclusivo aporta frescura y libertad de movimiento, ideal para el día a día.",
                             Genero = "Unisex",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-campera-vans-classic-serie-3.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 6,
@@ -2260,7 +2174,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 4,
                             Descripcion = "Descubre el confort absoluto con este modelo de Adidas-Classic. Su diseño exclusivo aporta frescura y libertad de movimiento, ideal para el día a día.",
                             Genero = "Hombre",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-campera-adidas-classic-urban-serie-1.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 7,
@@ -2273,7 +2187,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 4,
                             Descripcion = "Increíble diseño en campera Adidas-Classic Sport. Una elección perfecta para quienes buscan estilo y rendimiento. Fabricación de alta calidad pensada para mujer.",
                             Genero = "Mujer",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-campera-adidas-classic-sport-serie-2.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 7,
@@ -2286,7 +2200,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 4,
                             Descripcion = "Descubre el confort absoluto con este modelo de Adidas-Classic. Su diseño exclusivo aporta frescura y libertad de movimiento, ideal para el día a día.",
                             Genero = "Unisex",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-campera-adidas-classic-elite-serie-3.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 7,
@@ -2299,7 +2213,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 4,
                             Descripcion = "Supera tus límites con lo nuevo en campera Under-Armour. Pensado especialmente para hombre, ofrece una durabilidad excepcional en cada uso gracias a su tecnología Essential.",
                             Genero = "Hombre",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-campera-under-armour-essential-serie-1.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 8,
@@ -2312,7 +2226,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 4,
                             Descripcion = "Un clásico renovado. La nueva colección de Under-Armour destaca por su corte ergonómico y tecnología de punta, brindando un ajuste perfecto.",
                             Genero = "Mujer",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-campera-under-armour-classic-serie-2.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 8,
@@ -2325,7 +2239,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 4,
                             Descripcion = "Increíble diseño en campera Under-Armour Ultra. Una elección perfecta para quienes buscan estilo y rendimiento. Fabricación de alta calidad pensada para unisex.",
                             Genero = "Unisex",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-campera-under-armour-ultra-serie-3.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 8,
@@ -2338,7 +2252,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 5,
                             Descripcion = "Supera tus límites con lo nuevo en zapatilla Nike. Pensado especialmente para hombre, ofrece una durabilidad excepcional en cada uso gracias a su tecnología Classic.",
                             Genero = "Hombre",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-zapatilla-nike-classic-serie-1.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 1,
@@ -2351,7 +2265,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 5,
                             Descripcion = "Lleva tu estilo urbano al siguiente nivel. Confección premium y detalles únicos hacen de este modelo de Elite una pieza indispensable en tu guardarropa.",
                             Genero = "Mujer",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-zapatilla-nike-elite-serie-2.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 1,
@@ -2364,7 +2278,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 5,
                             Descripcion = "Increíble diseño en zapatilla Nike Essential. Una elección perfecta para quienes buscan estilo y rendimiento. Fabricación de alta calidad pensada para unisex.",
                             Genero = "Unisex",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-zapatilla-nike-essential-serie-3.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 1,
@@ -2377,7 +2291,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 5,
                             Descripcion = "Lleva tu estilo urbano al siguiente nivel. Confección premium y detalles únicos hacen de este modelo de Max una pieza indispensable en tu guardarropa.",
                             Genero = "Hombre",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-zapatilla-adidas-max-serie-1.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 2,
@@ -2390,7 +2304,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 5,
                             Descripcion = "Supera tus límites con lo nuevo en zapatilla Adidas. Pensado especialmente para mujer, ofrece una durabilidad excepcional en cada uso gracias a su tecnología Elite.",
                             Genero = "Mujer",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-zapatilla-adidas-elite-serie-2.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 2,
@@ -2403,7 +2317,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 5,
                             Descripcion = "Increíble diseño en zapatilla Adidas Essential. Una elección perfecta para quienes buscan estilo y rendimiento. Fabricación de alta calidad pensada para unisex.",
                             Genero = "Unisex",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-zapatilla-adidas-essential-serie-3.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 2,
@@ -2416,7 +2330,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 5,
                             Descripcion = "Supera tus límites con lo nuevo en zapatilla Puma. Pensado especialmente para hombre, ofrece una durabilidad excepcional en cada uso gracias a su tecnología Urban.",
                             Genero = "Hombre",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-zapatilla-puma-urban-serie-1.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 3,
@@ -2429,7 +2343,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 5,
                             Descripcion = "Un clásico renovado. La nueva colección de Puma destaca por su corte ergonómico y tecnología de punta, brindando un ajuste perfecto.",
                             Genero = "Mujer",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-zapatilla-puma-essential-serie-2.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 3,
@@ -2442,7 +2356,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 5,
                             Descripcion = "Lleva tu estilo urbano al siguiente nivel. Confección premium y detalles únicos hacen de este modelo de Sport una pieza indispensable en tu guardarropa.",
                             Genero = "Unisex",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-zapatilla-puma-sport-serie-3.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 3,
@@ -2455,7 +2369,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 5,
                             Descripcion = "Supera tus límites con lo nuevo en zapatilla Reebok. Pensado especialmente para hombre, ofrece una durabilidad excepcional en cada uso gracias a su tecnología Ultra.",
                             Genero = "Hombre",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-zapatilla-reebok-ultra-serie-1.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 4,
@@ -2468,7 +2382,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 5,
                             Descripcion = "Un clásico renovado. La nueva colección de Reebok destaca por su corte ergonómico y tecnología de punta, brindando un ajuste perfecto.",
                             Genero = "Mujer",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-zapatilla-reebok-urban-serie-2.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 4,
@@ -2481,7 +2395,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 5,
                             Descripcion = "Increíble diseño en zapatilla Reebok Ultra. Una elección perfecta para quienes buscan estilo y rendimiento. Fabricación de alta calidad pensada para unisex.",
                             Genero = "Unisex",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-zapatilla-reebok-ultra-serie-3.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 4,
@@ -2494,7 +2408,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 5,
                             Descripcion = "Descubre el confort absoluto con este modelo de Dc. Su diseño exclusivo aporta frescura y libertad de movimiento, ideal para el día a día.",
                             Genero = "Hombre",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-zapatilla-dc-max-serie-1.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 5,
@@ -2507,7 +2421,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 5,
                             Descripcion = "Lleva tu estilo urbano al siguiente nivel. Confección premium y detalles únicos hacen de este modelo de Sport una pieza indispensable en tu guardarropa.",
                             Genero = "Mujer",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-zapatilla-dc-sport-serie-2.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 5,
@@ -2520,7 +2434,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 5,
                             Descripcion = "Supera tus límites con lo nuevo en zapatilla Dc. Pensado especialmente para unisex, ofrece una durabilidad excepcional en cada uso gracias a su tecnología Ultra.",
                             Genero = "Unisex",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-zapatilla-dc-ultra-serie-3.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 5,
@@ -2533,7 +2447,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 5,
                             Descripcion = "Descubre el confort absoluto con este modelo de Vans. Su diseño exclusivo aporta frescura y libertad de movimiento, ideal para el día a día.",
                             Genero = "Hombre",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-zapatilla-vans-ultra-serie-1.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 6,
@@ -2546,7 +2460,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 5,
                             Descripcion = "Un clásico renovado. La nueva colección de Vans destaca por su corte ergonómico y tecnología de punta, brindando un ajuste perfecto.",
                             Genero = "Mujer",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-zapatilla-vans-retro-serie-2.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 6,
@@ -2559,7 +2473,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 5,
                             Descripcion = "Supera tus límites con lo nuevo en zapatilla Vans. Pensado especialmente para unisex, ofrece una durabilidad excepcional en cada uso gracias a su tecnología Max.",
                             Genero = "Unisex",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-zapatilla-vans-max-serie-3.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 6,
@@ -2572,7 +2486,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 5,
                             Descripcion = "Un clásico renovado. La nueva colección de Adidas-Classic destaca por su corte ergonómico y tecnología de punta, brindando un ajuste perfecto.",
                             Genero = "Hombre",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-zapatilla-adidas-classic-max-serie-1.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 7,
@@ -2585,7 +2499,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 5,
                             Descripcion = "Un clásico renovado. La nueva colección de Adidas-Classic destaca por su corte ergonómico y tecnología de punta, brindando un ajuste perfecto.",
                             Genero = "Mujer",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-zapatilla-adidas-classic-essential-serie-2.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 7,
@@ -2598,7 +2512,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 5,
                             Descripcion = "Un clásico renovado. La nueva colección de Adidas-Classic destaca por su corte ergonómico y tecnología de punta, brindando un ajuste perfecto.",
                             Genero = "Unisex",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-zapatilla-adidas-classic-urban-serie-3.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 7,
@@ -2611,7 +2525,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 5,
                             Descripcion = "Descubre el confort absoluto con este modelo de Under-Armour. Su diseño exclusivo aporta frescura y libertad de movimiento, ideal para el día a día.",
                             Genero = "Hombre",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-zapatilla-under-armour-urban-serie-1.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 8,
@@ -2624,7 +2538,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 5,
                             Descripcion = "Supera tus límites con lo nuevo en zapatilla Under-Armour. Pensado especialmente para mujer, ofrece una durabilidad excepcional en cada uso gracias a su tecnología Elite.",
                             Genero = "Mujer",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-zapatilla-under-armour-elite-serie-2.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 8,
@@ -2637,7 +2551,7 @@ namespace Infraestructura.Migrations
                             CategoriaId = 5,
                             Descripcion = "Lleva tu estilo urbano al siguiente nivel. Confección premium y detalles únicos hacen de este modelo de Ultra una pieza indispensable en tu guardarropa.",
                             Genero = "Unisex",
-                            ImagenUrl = "https://placehold.co/600x600",
+                            ImagenUrl = "/images/Productos/Prod-Name-zapatilla-under-armour-ultra-serie-3.jpg",
                             IsDeleted = false,
                             IsEnabled = false,
                             MarcaId = 8,
@@ -2975,7 +2889,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100029",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 14,
+                            ProductoId = 15,
                             Stock = 28,
                             Talle = "L"
                         },
@@ -2985,7 +2899,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100030",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 14,
+                            ProductoId = 15,
                             Stock = 24,
                             Talle = "S"
                         },
@@ -2995,7 +2909,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100031",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 15,
+                            ProductoId = 19,
                             Stock = 0,
                             Talle = "L"
                         },
@@ -3005,7 +2919,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100032",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 15,
+                            ProductoId = 19,
                             Stock = 21,
                             Talle = "S"
                         },
@@ -3015,7 +2929,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100033",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 16,
+                            ProductoId = 20,
                             Stock = 26,
                             Talle = "S"
                         },
@@ -3025,7 +2939,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100034",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 17,
+                            ProductoId = 21,
                             Stock = 27,
                             Talle = "XS"
                         },
@@ -3035,7 +2949,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100035",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 18,
+                            ProductoId = 22,
                             Stock = 3,
                             Talle = "XL"
                         },
@@ -3045,7 +2959,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100036",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 18,
+                            ProductoId = 22,
                             Stock = 7,
                             Talle = "M"
                         },
@@ -3055,7 +2969,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100037",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 19,
+                            ProductoId = 23,
                             Stock = 0,
                             Talle = "XL"
                         },
@@ -3065,7 +2979,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100038",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 20,
+                            ProductoId = 24,
                             Stock = 40,
                             Talle = "M"
                         },
@@ -3075,7 +2989,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100039",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 21,
+                            ProductoId = 25,
                             Stock = 25,
                             Talle = "M"
                         },
@@ -3085,7 +2999,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100040",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 21,
+                            ProductoId = 25,
                             Stock = 0,
                             Talle = "L"
                         },
@@ -3095,7 +3009,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100041",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 21,
+                            ProductoId = 25,
                             Stock = 12,
                             Talle = "XS"
                         },
@@ -3105,7 +3019,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100042",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 22,
+                            ProductoId = 26,
                             Stock = 0,
                             Talle = "XL"
                         },
@@ -3115,7 +3029,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100043",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 22,
+                            ProductoId = 26,
                             Stock = 32,
                             Talle = "M"
                         },
@@ -3125,7 +3039,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100044",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 23,
+                            ProductoId = 27,
                             Stock = 32,
                             Talle = "XS"
                         },
@@ -3135,7 +3049,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100045",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 24,
+                            ProductoId = 28,
                             Stock = 29,
                             Talle = "XS"
                         },
@@ -3145,7 +3059,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100046",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 24,
+                            ProductoId = 28,
                             Stock = 1,
                             Talle = "XL"
                         },
@@ -3155,7 +3069,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100047",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 24,
+                            ProductoId = 28,
                             Stock = 26,
                             Talle = "S"
                         },
@@ -3165,7 +3079,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100048",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 25,
+                            ProductoId = 29,
                             Stock = 22,
                             Talle = "L"
                         },
@@ -3175,7 +3089,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100049",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 25,
+                            ProductoId = 29,
                             Stock = 1,
                             Talle = "S"
                         },
@@ -3185,7 +3099,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100050",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 26,
+                            ProductoId = 30,
                             Stock = 42,
                             Talle = "M"
                         },
@@ -3195,7 +3109,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100051",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 27,
+                            ProductoId = 31,
                             Stock = 0,
                             Talle = "M"
                         },
@@ -3205,7 +3119,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100052",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 27,
+                            ProductoId = 31,
                             Stock = 25,
                             Talle = "L"
                         },
@@ -3215,7 +3129,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100053",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 28,
+                            ProductoId = 32,
                             Stock = 9,
                             Talle = "M"
                         },
@@ -3225,7 +3139,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100054",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 29,
+                            ProductoId = 33,
                             Stock = 12,
                             Talle = "S"
                         },
@@ -3235,7 +3149,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100055",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 29,
+                            ProductoId = 33,
                             Stock = 9,
                             Talle = "M"
                         },
@@ -3245,7 +3159,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100056",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 30,
+                            ProductoId = 34,
                             Stock = 21,
                             Talle = "L"
                         },
@@ -3255,7 +3169,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100057",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 31,
+                            ProductoId = 35,
                             Stock = 13,
                             Talle = "M"
                         },
@@ -3265,7 +3179,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100058",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 32,
+                            ProductoId = 36,
                             Stock = 0,
                             Talle = "L"
                         },
@@ -3275,7 +3189,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100059",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 32,
+                            ProductoId = 36,
                             Stock = 0,
                             Talle = "XL"
                         },
@@ -3285,7 +3199,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100060",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 33,
+                            ProductoId = 37,
                             Stock = 0,
                             Talle = "XS"
                         },
@@ -3295,7 +3209,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100061",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 34,
+                            ProductoId = 38,
                             Stock = 21,
                             Talle = "XS"
                         },
@@ -3305,7 +3219,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100062",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 34,
+                            ProductoId = 38,
                             Stock = 2,
                             Talle = "S"
                         },
@@ -3315,7 +3229,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100063",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 34,
+                            ProductoId = 38,
                             Stock = 12,
                             Talle = "M"
                         },
@@ -3325,7 +3239,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100064",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 35,
+                            ProductoId = 39,
                             Stock = 49,
                             Talle = "S"
                         },
@@ -3335,7 +3249,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100065",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 35,
+                            ProductoId = 39,
                             Stock = 20,
                             Talle = "M"
                         },
@@ -3345,7 +3259,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100066",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 36,
+                            ProductoId = 40,
                             Stock = 0,
                             Talle = "XS"
                         },
@@ -3355,7 +3269,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100067",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 36,
+                            ProductoId = 40,
                             Stock = 35,
                             Talle = "S"
                         },
@@ -3365,7 +3279,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100068",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 36,
+                            ProductoId = 40,
                             Stock = 42,
                             Talle = "M"
                         },
@@ -3375,7 +3289,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100069",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 37,
+                            ProductoId = 42,
                             Stock = 13,
                             Talle = "XS"
                         },
@@ -3385,7 +3299,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100070",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 37,
+                            ProductoId = 42,
                             Stock = 4,
                             Talle = "L"
                         },
@@ -3395,7 +3309,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100071",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 38,
+                            ProductoId = 43,
                             Stock = 38,
                             Talle = "XL"
                         },
@@ -3405,7 +3319,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100072",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 38,
+                            ProductoId = 43,
                             Stock = 20,
                             Talle = "L"
                         },
@@ -3415,7 +3329,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100073",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 38,
+                            ProductoId = 43,
                             Stock = 0,
                             Talle = "XS"
                         },
@@ -3425,7 +3339,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100074",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 39,
+                            ProductoId = 44,
                             Stock = 1,
                             Talle = "XS"
                         },
@@ -3435,7 +3349,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100075",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 39,
+                            ProductoId = 44,
                             Stock = 0,
                             Talle = "S"
                         },
@@ -3445,7 +3359,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100076",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 40,
+                            ProductoId = 45,
                             Stock = 18,
                             Talle = "S"
                         },
@@ -3455,7 +3369,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100077",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 40,
+                            ProductoId = 45,
                             Stock = 0,
                             Talle = "XL"
                         },
@@ -3465,7 +3379,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100078",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 41,
+                            ProductoId = 46,
                             Stock = 12,
                             Talle = "XL"
                         },
@@ -3475,7 +3389,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100079",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 42,
+                            ProductoId = 47,
                             Stock = 0,
                             Talle = "XS"
                         },
@@ -3485,7 +3399,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100080",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 42,
+                            ProductoId = 47,
                             Stock = 6,
                             Talle = "S"
                         },
@@ -3495,7 +3409,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100081",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 42,
+                            ProductoId = 47,
                             Stock = 0,
                             Talle = "XL"
                         },
@@ -3505,7 +3419,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100082",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 43,
+                            ProductoId = 48,
                             Stock = 0,
                             Talle = "S"
                         },
@@ -3515,7 +3429,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100083",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 44,
+                            ProductoId = 49,
                             Stock = 22,
                             Talle = "XL"
                         },
@@ -3525,7 +3439,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100084",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 44,
+                            ProductoId = 49,
                             Stock = 23,
                             Talle = "S"
                         },
@@ -3535,7 +3449,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100085",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 45,
+                            ProductoId = 50,
                             Stock = 46,
                             Talle = "M"
                         },
@@ -3545,7 +3459,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100086",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 46,
+                            ProductoId = 51,
                             Stock = 38,
                             Talle = "L"
                         },
@@ -3555,7 +3469,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100087",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 46,
+                            ProductoId = 51,
                             Stock = 0,
                             Talle = "S"
                         },
@@ -3565,7 +3479,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100088",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 47,
+                            ProductoId = 52,
                             Stock = 0,
                             Talle = "S"
                         },
@@ -3575,7 +3489,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100089",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 48,
+                            ProductoId = 53,
                             Stock = 48,
                             Talle = "XL"
                         },
@@ -3585,7 +3499,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100090",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 48,
+                            ProductoId = 53,
                             Stock = 38,
                             Talle = "S"
                         },
@@ -3595,7 +3509,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100091",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 48,
+                            ProductoId = 53,
                             Stock = 6,
                             Talle = "XS"
                         },
@@ -3605,7 +3519,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100092",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 49,
+                            ProductoId = 54,
                             Stock = 18,
                             Talle = "XS"
                         },
@@ -3615,7 +3529,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100093",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 49,
+                            ProductoId = 54,
                             Stock = 35,
                             Talle = "XL"
                         },
@@ -3625,7 +3539,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100094",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 49,
+                            ProductoId = 54,
                             Stock = 20,
                             Talle = "M"
                         },
@@ -3635,7 +3549,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100095",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 50,
+                            ProductoId = 55,
                             Stock = 45,
                             Talle = "L"
                         },
@@ -3645,7 +3559,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100096",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 50,
+                            ProductoId = 55,
                             Stock = 0,
                             Talle = "M"
                         },
@@ -3655,7 +3569,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100097",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 50,
+                            ProductoId = 55,
                             Stock = 0,
                             Talle = "XL"
                         },
@@ -3665,7 +3579,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100098",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 51,
+                            ProductoId = 56,
                             Stock = 44,
                             Talle = "XS"
                         },
@@ -3675,7 +3589,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100099",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 51,
+                            ProductoId = 56,
                             Stock = 0,
                             Talle = "XL"
                         },
@@ -3685,7 +3599,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100100",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 52,
+                            ProductoId = 57,
                             Stock = 15,
                             Talle = "XS"
                         },
@@ -3695,7 +3609,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100101",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 52,
+                            ProductoId = 57,
                             Stock = 46,
                             Talle = "L"
                         },
@@ -3705,7 +3619,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100102",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 53,
+                            ProductoId = 58,
                             Stock = 5,
                             Talle = "S"
                         },
@@ -3715,7 +3629,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100103",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 54,
+                            ProductoId = 59,
                             Stock = 32,
                             Talle = "XL"
                         },
@@ -3725,7 +3639,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100104",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 54,
+                            ProductoId = 59,
                             Stock = 33,
                             Talle = "M"
                         },
@@ -3735,7 +3649,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100105",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 54,
+                            ProductoId = 59,
                             Stock = 0,
                             Talle = "S"
                         },
@@ -3745,7 +3659,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100106",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 55,
+                            ProductoId = 60,
                             Stock = 3,
                             Talle = "XS"
                         },
@@ -3755,7 +3669,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100107",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 56,
+                            ProductoId = 61,
                             Stock = 45,
                             Talle = "XL"
                         },
@@ -3765,7 +3679,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100108",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 57,
+                            ProductoId = 62,
                             Stock = 40,
                             Talle = "S"
                         },
@@ -3775,7 +3689,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100109",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 58,
+                            ProductoId = 63,
                             Stock = 5,
                             Talle = "XL"
                         },
@@ -3785,7 +3699,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100110",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 59,
+                            ProductoId = 64,
                             Stock = 39,
                             Talle = "XS"
                         },
@@ -3795,7 +3709,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100111",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 60,
+                            ProductoId = 65,
                             Stock = 8,
                             Talle = "XL"
                         },
@@ -3805,7 +3719,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100112",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 60,
+                            ProductoId = 65,
                             Stock = 0,
                             Talle = "M"
                         },
@@ -3815,7 +3729,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100113",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 61,
+                            ProductoId = 66,
                             Stock = 41,
                             Talle = "S"
                         },
@@ -3825,7 +3739,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100114",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 62,
+                            ProductoId = 67,
                             Stock = 0,
                             Talle = "XS"
                         },
@@ -3835,7 +3749,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100115",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 62,
+                            ProductoId = 67,
                             Stock = 40,
                             Talle = "L"
                         },
@@ -3845,7 +3759,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100116",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 62,
+                            ProductoId = 67,
                             Stock = 7,
                             Talle = "XL"
                         },
@@ -3855,7 +3769,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100117",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 63,
+                            ProductoId = 68,
                             Stock = 0,
                             Talle = "L"
                         },
@@ -3865,7 +3779,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100118",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 63,
+                            ProductoId = 68,
                             Stock = 4,
                             Talle = "XS"
                         },
@@ -3875,7 +3789,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100119",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 63,
+                            ProductoId = 68,
                             Stock = 0,
                             Talle = "XL"
                         },
@@ -3885,7 +3799,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100120",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 64,
+                            ProductoId = 69,
                             Stock = 9,
                             Talle = "M"
                         },
@@ -3895,7 +3809,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100121",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 64,
+                            ProductoId = 69,
                             Stock = 10,
                             Talle = "L"
                         },
@@ -3905,7 +3819,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100122",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 64,
+                            ProductoId = 69,
                             Stock = 49,
                             Talle = "XS"
                         },
@@ -3915,7 +3829,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100123",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 65,
+                            ProductoId = 70,
                             Stock = 42,
                             Talle = "XL"
                         },
@@ -3925,7 +3839,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100124",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 66,
+                            ProductoId = 71,
                             Stock = 40,
                             Talle = "XS"
                         },
@@ -3935,7 +3849,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100125",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 66,
+                            ProductoId = 71,
                             Stock = 0,
                             Talle = "L"
                         },
@@ -3945,7 +3859,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100126",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 66,
+                            ProductoId = 71,
                             Stock = 0,
                             Talle = "S"
                         },
@@ -3955,7 +3869,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100127",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 67,
+                            ProductoId = 72,
                             Stock = 0,
                             Talle = "L"
                         },
@@ -3965,7 +3879,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100128",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 67,
+                            ProductoId = 72,
                             Stock = 13,
                             Talle = "S"
                         },
@@ -3975,7 +3889,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100129",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 67,
+                            ProductoId = 72,
                             Stock = 0,
                             Talle = "M"
                         },
@@ -3985,7 +3899,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100130",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 68,
+                            ProductoId = 73,
                             Stock = 0,
                             Talle = "S"
                         },
@@ -3995,7 +3909,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100131",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 68,
+                            ProductoId = 73,
                             Stock = 0,
                             Talle = "XS"
                         },
@@ -4005,7 +3919,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100132",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 69,
+                            ProductoId = 74,
                             Stock = 45,
                             Talle = "L"
                         },
@@ -4015,7 +3929,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100133",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 69,
+                            ProductoId = 74,
                             Stock = 1,
                             Talle = "XL"
                         },
@@ -4025,7 +3939,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100134",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 70,
+                            ProductoId = 75,
                             Stock = 41,
                             Talle = "XS"
                         },
@@ -4035,7 +3949,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100135",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 70,
+                            ProductoId = 75,
                             Stock = 12,
                             Talle = "XL"
                         },
@@ -4045,7 +3959,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100136",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 71,
+                            ProductoId = 76,
                             Stock = 0,
                             Talle = "L"
                         },
@@ -4055,7 +3969,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100137",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 72,
+                            ProductoId = 77,
                             Stock = 15,
                             Talle = "S"
                         },
@@ -4065,7 +3979,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100138",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 72,
+                            ProductoId = 77,
                             Stock = 25,
                             Talle = "M"
                         },
@@ -4075,7 +3989,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100139",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 73,
+                            ProductoId = 78,
                             Stock = 0,
                             Talle = "S"
                         },
@@ -4085,7 +3999,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100140",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 73,
+                            ProductoId = 78,
                             Stock = 6,
                             Talle = "XL"
                         },
@@ -4095,7 +4009,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100141",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 73,
+                            ProductoId = 78,
                             Stock = 46,
                             Talle = "L"
                         },
@@ -4105,7 +4019,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100142",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 74,
+                            ProductoId = 79,
                             Stock = 6,
                             Talle = "XS"
                         },
@@ -4115,7 +4029,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100143",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 75,
+                            ProductoId = 80,
                             Stock = 31,
                             Talle = "XL"
                         },
@@ -4125,7 +4039,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100144",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 75,
+                            ProductoId = 80,
                             Stock = 39,
                             Talle = "XS"
                         },
@@ -4135,7 +4049,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100145",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 76,
+                            ProductoId = 81,
                             Stock = 0,
                             Talle = "L"
                         },
@@ -4145,7 +4059,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100146",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 76,
+                            ProductoId = 81,
                             Stock = 35,
                             Talle = "S"
                         },
@@ -4155,7 +4069,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100147",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 77,
+                            ProductoId = 82,
                             Stock = 14,
                             Talle = "S"
                         },
@@ -4165,7 +4079,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100148",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 78,
+                            ProductoId = 83,
                             Stock = 0,
                             Talle = "XS"
                         },
@@ -4175,7 +4089,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100149",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 78,
+                            ProductoId = 83,
                             Stock = 0,
                             Talle = "XL"
                         },
@@ -4185,7 +4099,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100150",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 79,
+                            ProductoId = 84,
                             Stock = 24,
                             Talle = "M"
                         },
@@ -4195,7 +4109,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100151",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 79,
+                            ProductoId = 84,
                             Stock = 37,
                             Talle = "XL"
                         },
@@ -4205,7 +4119,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100152",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 79,
+                            ProductoId = 84,
                             Stock = 28,
                             Talle = "XS"
                         },
@@ -4215,7 +4129,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100153",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 80,
+                            ProductoId = 85,
                             Stock = 42,
                             Talle = "S"
                         },
@@ -4225,7 +4139,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100154",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 80,
+                            ProductoId = 85,
                             Stock = 0,
                             Talle = "XL"
                         },
@@ -4235,7 +4149,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100155",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 80,
+                            ProductoId = 85,
                             Stock = 1,
                             Talle = "L"
                         },
@@ -4245,7 +4159,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100156",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 81,
+                            ProductoId = 86,
                             Stock = 24,
                             Talle = "L"
                         },
@@ -4255,7 +4169,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100157",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 81,
+                            ProductoId = 86,
                             Stock = 10,
                             Talle = "S"
                         },
@@ -4265,7 +4179,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100158",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 81,
+                            ProductoId = 86,
                             Stock = 0,
                             Talle = "M"
                         },
@@ -4275,7 +4189,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100159",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 82,
+                            ProductoId = 87,
                             Stock = 35,
                             Talle = "XL"
                         },
@@ -4285,7 +4199,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100160",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 82,
+                            ProductoId = 87,
                             Stock = 9,
                             Talle = "S"
                         },
@@ -4295,7 +4209,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100161",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 83,
+                            ProductoId = 88,
                             Stock = 35,
                             Talle = "M"
                         },
@@ -4305,7 +4219,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100162",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 84,
+                            ProductoId = 89,
                             Stock = 18,
                             Talle = "XS"
                         },
@@ -4315,7 +4229,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100163",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 84,
+                            ProductoId = 89,
                             Stock = 10,
                             Talle = "M"
                         },
@@ -4325,7 +4239,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100164",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 84,
+                            ProductoId = 89,
                             Stock = 33,
                             Talle = "L"
                         },
@@ -4335,7 +4249,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100165",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 85,
+                            ProductoId = 90,
                             Stock = 0,
                             Talle = "L"
                         },
@@ -4345,7 +4259,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100166",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 86,
+                            ProductoId = 91,
                             Stock = 41,
                             Talle = "M"
                         },
@@ -4355,7 +4269,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100167",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 86,
+                            ProductoId = 91,
                             Stock = 3,
                             Talle = "XS"
                         },
@@ -4365,7 +4279,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100168",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 87,
+                            ProductoId = 92,
                             Stock = 11,
                             Talle = "XS"
                         },
@@ -4375,7 +4289,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100169",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 87,
+                            ProductoId = 92,
                             Stock = 10,
                             Talle = "XL"
                         },
@@ -4385,7 +4299,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100170",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 88,
+                            ProductoId = 93,
                             Stock = 0,
                             Talle = "XL"
                         },
@@ -4395,7 +4309,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100171",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 88,
+                            ProductoId = 93,
                             Stock = 47,
                             Talle = "XS"
                         },
@@ -4405,7 +4319,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100172",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 89,
+                            ProductoId = 94,
                             Stock = 49,
                             Talle = "S"
                         },
@@ -4415,7 +4329,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100173",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 89,
+                            ProductoId = 94,
                             Stock = 24,
                             Talle = "L"
                         },
@@ -4425,7 +4339,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100174",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 90,
+                            ProductoId = 95,
                             Stock = 0,
                             Talle = "XL"
                         },
@@ -4435,7 +4349,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100175",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 90,
+                            ProductoId = 95,
                             Stock = 10,
                             Talle = "S"
                         },
@@ -4445,7 +4359,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100176",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 90,
+                            ProductoId = 95,
                             Stock = 43,
                             Talle = "L"
                         },
@@ -4455,7 +4369,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100177",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 91,
+                            ProductoId = 96,
                             Stock = 15,
                             Talle = "S"
                         },
@@ -4465,7 +4379,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100178",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 91,
+                            ProductoId = 96,
                             Stock = 19,
                             Talle = "XL"
                         },
@@ -4475,9 +4389,9 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100179",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 92,
-                            Stock = 21,
-                            Talle = "L"
+                            ProductoId = 97,
+                            Stock = 11,
+                            Talle = "43"
                         },
                         new
                         {
@@ -4485,9 +4399,9 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100180",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 92,
-                            Stock = 19,
-                            Talle = "XL"
+                            ProductoId = 97,
+                            Stock = 11,
+                            Talle = "37"
                         },
                         new
                         {
@@ -4495,9 +4409,9 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100181",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 93,
-                            Stock = 11,
-                            Talle = "XL"
+                            ProductoId = 97,
+                            Stock = 21,
+                            Talle = "42"
                         },
                         new
                         {
@@ -4505,9 +4419,9 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100182",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 94,
-                            Stock = 15,
-                            Talle = "XL"
+                            ProductoId = 97,
+                            Stock = 0,
+                            Talle = "40"
                         },
                         new
                         {
@@ -4515,9 +4429,9 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100183",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 95,
-                            Stock = 6,
-                            Talle = "XS"
+                            ProductoId = 97,
+                            Stock = 21,
+                            Talle = "38"
                         },
                         new
                         {
@@ -4525,9 +4439,9 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100184",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 95,
+                            ProductoId = 98,
                             Stock = 1,
-                            Talle = "S"
+                            Talle = "45"
                         },
                         new
                         {
@@ -4535,9 +4449,9 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100185",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 95,
-                            Stock = 44,
-                            Talle = "M"
+                            ProductoId = 98,
+                            Stock = 21,
+                            Talle = "43"
                         },
                         new
                         {
@@ -4545,9 +4459,9 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100186",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 96,
-                            Stock = 44,
-                            Talle = "XL"
+                            ProductoId = 98,
+                            Stock = 29,
+                            Talle = "46"
                         },
                         new
                         {
@@ -4555,9 +4469,9 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100187",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 97,
-                            Stock = 4,
-                            Talle = "XS"
+                            ProductoId = 99,
+                            Stock = 34,
+                            Talle = "43"
                         },
                         new
                         {
@@ -4565,9 +4479,9 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100188",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 97,
+                            ProductoId = 99,
                             Stock = 0,
-                            Talle = "M"
+                            Talle = "44"
                         },
                         new
                         {
@@ -4575,9 +4489,9 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100189",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 97,
-                            Stock = 26,
-                            Talle = "XL"
+                            ProductoId = 99,
+                            Stock = 17,
+                            Talle = "37"
                         },
                         new
                         {
@@ -4585,9 +4499,9 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100190",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 98,
-                            Stock = 0,
-                            Talle = "S"
+                            ProductoId = 100,
+                            Stock = 16,
+                            Talle = "34"
                         },
                         new
                         {
@@ -4595,9 +4509,9 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100191",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 98,
-                            Stock = 27,
-                            Talle = "L"
+                            ProductoId = 100,
+                            Stock = 49,
+                            Talle = "43"
                         },
                         new
                         {
@@ -4605,9 +4519,9 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100192",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 98,
+                            ProductoId = 100,
                             Stock = 32,
-                            Talle = "M"
+                            Talle = "40"
                         },
                         new
                         {
@@ -4615,9 +4529,9 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100193",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 99,
-                            Stock = 32,
-                            Talle = "L"
+                            ProductoId = 100,
+                            Stock = 48,
+                            Talle = "39"
                         },
                         new
                         {
@@ -4626,8 +4540,8 @@ namespace Infraestructura.Migrations
                             IsDeleted = false,
                             IsEnabled = false,
                             ProductoId = 100,
-                            Stock = 48,
-                            Talle = "XS"
+                            Stock = 5,
+                            Talle = "36"
                         },
                         new
                         {
@@ -4636,8 +4550,8 @@ namespace Infraestructura.Migrations
                             IsDeleted = false,
                             IsEnabled = false,
                             ProductoId = 100,
-                            Stock = 5,
-                            Talle = "S"
+                            Stock = 36,
+                            Talle = "44"
                         },
                         new
                         {
@@ -4645,9 +4559,9 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100196",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 101,
-                            Stock = 0,
-                            Talle = "M"
+                            ProductoId = 100,
+                            Stock = 5,
+                            Talle = "46"
                         },
                         new
                         {
@@ -4656,8 +4570,8 @@ namespace Infraestructura.Migrations
                             IsDeleted = false,
                             IsEnabled = false,
                             ProductoId = 101,
-                            Stock = 0,
-                            Talle = "XL"
+                            Stock = 31,
+                            Talle = "36"
                         },
                         new
                         {
@@ -4666,8 +4580,8 @@ namespace Infraestructura.Migrations
                             IsDeleted = false,
                             IsEnabled = false,
                             ProductoId = 101,
-                            Stock = 0,
-                            Talle = "L"
+                            Stock = 18,
+                            Talle = "44"
                         },
                         new
                         {
@@ -4675,9 +4589,9 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100199",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 102,
+                            ProductoId = 101,
                             Stock = 0,
-                            Talle = "XL"
+                            Talle = "38"
                         },
                         new
                         {
@@ -4685,9 +4599,9 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100200",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 103,
-                            Stock = 0,
-                            Talle = "XS"
+                            ProductoId = 101,
+                            Stock = 6,
+                            Talle = "43"
                         },
                         new
                         {
@@ -4695,9 +4609,9 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100201",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 103,
-                            Stock = 6,
-                            Talle = "L"
+                            ProductoId = 101,
+                            Stock = 0,
+                            Talle = "42"
                         },
                         new
                         {
@@ -4705,9 +4619,9 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100202",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 103,
-                            Stock = 0,
-                            Talle = "XL"
+                            ProductoId = 102,
+                            Stock = 10,
+                            Talle = "42"
                         },
                         new
                         {
@@ -4715,9 +4629,9 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100203",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 104,
-                            Stock = 0,
-                            Talle = "S"
+                            ProductoId = 102,
+                            Stock = 45,
+                            Talle = "39"
                         },
                         new
                         {
@@ -4725,9 +4639,9 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100204",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 104,
-                            Stock = 42,
-                            Talle = "L"
+                            ProductoId = 102,
+                            Stock = 0,
+                            Talle = "44"
                         },
                         new
                         {
@@ -4735,9 +4649,9 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100205",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 105,
-                            Stock = 0,
-                            Talle = "S"
+                            ProductoId = 102,
+                            Stock = 46,
+                            Talle = "35"
                         },
                         new
                         {
@@ -4745,9 +4659,9 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100206",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 106,
-                            Stock = 17,
-                            Talle = "35"
+                            ProductoId = 103,
+                            Stock = 30,
+                            Talle = "46"
                         },
                         new
                         {
@@ -4755,9 +4669,9 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100207",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 106,
-                            Stock = 14,
-                            Talle = "44"
+                            ProductoId = 103,
+                            Stock = 0,
+                            Talle = "45"
                         },
                         new
                         {
@@ -4765,9 +4679,9 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100208",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 106,
-                            Stock = 0,
-                            Talle = "46"
+                            ProductoId = 103,
+                            Stock = 33,
+                            Talle = "39"
                         },
                         new
                         {
@@ -4775,14 +4689,174 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100209",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 106,
-                            Stock = 30,
-                            Talle = "38"
+                            ProductoId = 103,
+                            Stock = 0,
+                            Talle = "41"
                         },
                         new
                         {
                             ID = 210,
                             CodigoBarra = "100210",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 104,
+                            Stock = 40,
+                            Talle = "39"
+                        },
+                        new
+                        {
+                            ID = 211,
+                            CodigoBarra = "100211",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 104,
+                            Stock = 10,
+                            Talle = "41"
+                        },
+                        new
+                        {
+                            ID = 212,
+                            CodigoBarra = "100212",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 104,
+                            Stock = 0,
+                            Talle = "43"
+                        },
+                        new
+                        {
+                            ID = 213,
+                            CodigoBarra = "100213",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 104,
+                            Stock = 45,
+                            Talle = "45"
+                        },
+                        new
+                        {
+                            ID = 214,
+                            CodigoBarra = "100214",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 104,
+                            Stock = 25,
+                            Talle = "34"
+                        },
+                        new
+                        {
+                            ID = 215,
+                            CodigoBarra = "100215",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 104,
+                            Stock = 19,
+                            Talle = "46"
+                        },
+                        new
+                        {
+                            ID = 216,
+                            CodigoBarra = "100216",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 105,
+                            Stock = 20,
+                            Talle = "43"
+                        },
+                        new
+                        {
+                            ID = 217,
+                            CodigoBarra = "100217",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 105,
+                            Stock = 28,
+                            Talle = "45"
+                        },
+                        new
+                        {
+                            ID = 218,
+                            CodigoBarra = "100218",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 105,
+                            Stock = 24,
+                            Talle = "42"
+                        },
+                        new
+                        {
+                            ID = 219,
+                            CodigoBarra = "100219",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 105,
+                            Stock = 37,
+                            Talle = "38"
+                        },
+                        new
+                        {
+                            ID = 220,
+                            CodigoBarra = "100220",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 106,
+                            Stock = 32,
+                            Talle = "37"
+                        },
+                        new
+                        {
+                            ID = 221,
+                            CodigoBarra = "100221",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 106,
+                            Stock = 33,
+                            Talle = "46"
+                        },
+                        new
+                        {
+                            ID = 222,
+                            CodigoBarra = "100222",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 106,
+                            Stock = 9,
+                            Talle = "34"
+                        },
+                        new
+                        {
+                            ID = 223,
+                            CodigoBarra = "100223",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 106,
+                            Stock = 4,
+                            Talle = "39"
+                        },
+                        new
+                        {
+                            ID = 224,
+                            CodigoBarra = "100224",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 106,
+                            Stock = 44,
+                            Talle = "40"
+                        },
+                        new
+                        {
+                            ID = 225,
+                            CodigoBarra = "100225",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 106,
+                            Stock = 11,
+                            Talle = "45"
+                        },
+                        new
+                        {
+                            ID = 226,
+                            CodigoBarra = "100226",
                             IsDeleted = false,
                             IsEnabled = false,
                             ProductoId = 106,
@@ -4791,173 +4865,13 @@ namespace Infraestructura.Migrations
                         },
                         new
                         {
-                            ID = 211,
-                            CodigoBarra = "100211",
-                            IsDeleted = false,
-                            IsEnabled = false,
-                            ProductoId = 107,
-                            Stock = 12,
-                            Talle = "42"
-                        },
-                        new
-                        {
-                            ID = 212,
-                            CodigoBarra = "100212",
-                            IsDeleted = false,
-                            IsEnabled = false,
-                            ProductoId = 107,
-                            Stock = 49,
-                            Talle = "44"
-                        },
-                        new
-                        {
-                            ID = 213,
-                            CodigoBarra = "100213",
-                            IsDeleted = false,
-                            IsEnabled = false,
-                            ProductoId = 107,
-                            Stock = 43,
-                            Talle = "46"
-                        },
-                        new
-                        {
-                            ID = 214,
-                            CodigoBarra = "100214",
-                            IsDeleted = false,
-                            IsEnabled = false,
-                            ProductoId = 107,
-                            Stock = 0,
-                            Talle = "35"
-                        },
-                        new
-                        {
-                            ID = 215,
-                            CodigoBarra = "100215",
-                            IsDeleted = false,
-                            IsEnabled = false,
-                            ProductoId = 107,
-                            Stock = 0,
-                            Talle = "37"
-                        },
-                        new
-                        {
-                            ID = 216,
-                            CodigoBarra = "100216",
-                            IsDeleted = false,
-                            IsEnabled = false,
-                            ProductoId = 108,
-                            Stock = 11,
-                            Talle = "44"
-                        },
-                        new
-                        {
-                            ID = 217,
-                            CodigoBarra = "100217",
-                            IsDeleted = false,
-                            IsEnabled = false,
-                            ProductoId = 108,
-                            Stock = 0,
-                            Talle = "42"
-                        },
-                        new
-                        {
-                            ID = 218,
-                            CodigoBarra = "100218",
-                            IsDeleted = false,
-                            IsEnabled = false,
-                            ProductoId = 108,
-                            Stock = 10,
-                            Talle = "39"
-                        },
-                        new
-                        {
-                            ID = 219,
-                            CodigoBarra = "100219",
-                            IsDeleted = false,
-                            IsEnabled = false,
-                            ProductoId = 108,
-                            Stock = 45,
-                            Talle = "45"
-                        },
-                        new
-                        {
-                            ID = 220,
-                            CodigoBarra = "100220",
-                            IsDeleted = false,
-                            IsEnabled = false,
-                            ProductoId = 108,
-                            Stock = 21,
-                            Talle = "46"
-                        },
-                        new
-                        {
-                            ID = 221,
-                            CodigoBarra = "100221",
-                            IsDeleted = false,
-                            IsEnabled = false,
-                            ProductoId = 109,
-                            Stock = 28,
-                            Talle = "42"
-                        },
-                        new
-                        {
-                            ID = 222,
-                            CodigoBarra = "100222",
-                            IsDeleted = false,
-                            IsEnabled = false,
-                            ProductoId = 109,
-                            Stock = 22,
-                            Talle = "39"
-                        },
-                        new
-                        {
-                            ID = 223,
-                            CodigoBarra = "100223",
-                            IsDeleted = false,
-                            IsEnabled = false,
-                            ProductoId = 109,
-                            Stock = 0,
-                            Talle = "44"
-                        },
-                        new
-                        {
-                            ID = 224,
-                            CodigoBarra = "100224",
-                            IsDeleted = false,
-                            IsEnabled = false,
-                            ProductoId = 109,
-                            Stock = 32,
-                            Talle = "45"
-                        },
-                        new
-                        {
-                            ID = 225,
-                            CodigoBarra = "100225",
-                            IsDeleted = false,
-                            IsEnabled = false,
-                            ProductoId = 109,
-                            Stock = 33,
-                            Talle = "34"
-                        },
-                        new
-                        {
-                            ID = 226,
-                            CodigoBarra = "100226",
-                            IsDeleted = false,
-                            IsEnabled = false,
-                            ProductoId = 110,
-                            Stock = 26,
-                            Talle = "36"
-                        },
-                        new
-                        {
                             ID = 227,
                             CodigoBarra = "100227",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 110,
-                            Stock = 13,
-                            Talle = "45"
+                            ProductoId = 107,
+                            Stock = 21,
+                            Talle = "36"
                         },
                         new
                         {
@@ -4965,9 +4879,9 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100228",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 110,
-                            Stock = 43,
-                            Talle = "41"
+                            ProductoId = 107,
+                            Stock = 17,
+                            Talle = "44"
                         },
                         new
                         {
@@ -4975,9 +4889,9 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100229",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 110,
+                            ProductoId = 107,
                             Stock = 0,
-                            Talle = "42"
+                            Talle = "46"
                         },
                         new
                         {
@@ -4985,9 +4899,9 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100230",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 110,
-                            Stock = 11,
-                            Talle = "34"
+                            ProductoId = 108,
+                            Stock = 1,
+                            Talle = "37"
                         },
                         new
                         {
@@ -4995,9 +4909,9 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100231",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 110,
-                            Stock = 21,
-                            Talle = "40"
+                            ProductoId = 108,
+                            Stock = 22,
+                            Talle = "45"
                         },
                         new
                         {
@@ -5005,9 +4919,9 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100232",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 110,
-                            Stock = 17,
-                            Talle = "44"
+                            ProductoId = 108,
+                            Stock = 31,
+                            Talle = "41"
                         },
                         new
                         {
@@ -5015,9 +4929,9 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100233",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 111,
-                            Stock = 23,
-                            Talle = "38"
+                            ProductoId = 108,
+                            Stock = 46,
+                            Talle = "43"
                         },
                         new
                         {
@@ -5025,9 +4939,9 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100234",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 111,
-                            Stock = 0,
-                            Talle = "46"
+                            ProductoId = 108,
+                            Stock = 21,
+                            Talle = "40"
                         },
                         new
                         {
@@ -5035,9 +4949,9 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100235",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 111,
-                            Stock = 22,
-                            Talle = "42"
+                            ProductoId = 109,
+                            Stock = 15,
+                            Talle = "36"
                         },
                         new
                         {
@@ -5045,9 +4959,9 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100236",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 111,
-                            Stock = 31,
-                            Talle = "44"
+                            ProductoId = 109,
+                            Stock = 47,
+                            Talle = "38"
                         },
                         new
                         {
@@ -5055,9 +4969,9 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100237",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 112,
-                            Stock = 17,
-                            Talle = "40"
+                            ProductoId = 109,
+                            Stock = 27,
+                            Talle = "44"
                         },
                         new
                         {
@@ -5065,9 +4979,9 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100238",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 112,
-                            Stock = 34,
-                            Talle = "37"
+                            ProductoId = 110,
+                            Stock = 16,
+                            Talle = "45"
                         },
                         new
                         {
@@ -5075,9 +4989,9 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100239",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 112,
-                            Stock = 15,
-                            Talle = "42"
+                            ProductoId = 110,
+                            Stock = 30,
+                            Talle = "38"
                         },
                         new
                         {
@@ -5085,8 +4999,8 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100240",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 112,
-                            Stock = 47,
+                            ProductoId = 110,
+                            Stock = 44,
                             Talle = "46"
                         },
                         new
@@ -5095,9 +5009,9 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100241",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 113,
-                            Stock = 0,
-                            Talle = "35"
+                            ProductoId = 111,
+                            Stock = 17,
+                            Talle = "41"
                         },
                         new
                         {
@@ -5105,9 +5019,9 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100242",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 113,
-                            Stock = 35,
-                            Talle = "40"
+                            ProductoId = 111,
+                            Stock = 7,
+                            Talle = "46"
                         },
                         new
                         {
@@ -5115,9 +5029,9 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100243",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 113,
-                            Stock = 15,
-                            Talle = "39"
+                            ProductoId = 111,
+                            Stock = 37,
+                            Talle = "38"
                         },
                         new
                         {
@@ -5125,9 +5039,9 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100244",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 113,
+                            ProductoId = 111,
                             Stock = 33,
-                            Talle = "38"
+                            Talle = "37"
                         },
                         new
                         {
@@ -5135,9 +5049,9 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100245",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 114,
-                            Stock = 0,
-                            Talle = "42"
+                            ProductoId = 112,
+                            Stock = 6,
+                            Talle = "40"
                         },
                         new
                         {
@@ -5145,9 +5059,9 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100246",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 114,
-                            Stock = 17,
-                            Talle = "39"
+                            ProductoId = 112,
+                            Stock = 0,
+                            Talle = "36"
                         },
                         new
                         {
@@ -5155,8 +5069,8 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100247",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 114,
-                            Stock = 7,
+                            ProductoId = 112,
+                            Stock = 0,
                             Talle = "38"
                         },
                         new
@@ -5165,9 +5079,9 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100248",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 114,
-                            Stock = 37,
-                            Talle = "41"
+                            ProductoId = 112,
+                            Stock = 12,
+                            Talle = "37"
                         },
                         new
                         {
@@ -5175,9 +5089,9 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100249",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 114,
-                            Stock = 33,
-                            Talle = "36"
+                            ProductoId = 112,
+                            Stock = 13,
+                            Talle = "45"
                         },
                         new
                         {
@@ -5185,9 +5099,9 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100250",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 114,
-                            Stock = 41,
-                            Talle = "34"
+                            ProductoId = 112,
+                            Stock = 21,
+                            Talle = "43"
                         },
                         new
                         {
@@ -5195,9 +5109,9 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100251",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 114,
-                            Stock = 3,
-                            Talle = "44"
+                            ProductoId = 112,
+                            Stock = 0,
+                            Talle = "46"
                         },
                         new
                         {
@@ -5205,9 +5119,9 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100252",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 115,
-                            Stock = 12,
-                            Talle = "36"
+                            ProductoId = 113,
+                            Stock = 11,
+                            Talle = "40"
                         },
                         new
                         {
@@ -5215,9 +5129,9 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100253",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 115,
-                            Stock = 13,
-                            Talle = "34"
+                            ProductoId = 113,
+                            Stock = 0,
+                            Talle = "44"
                         },
                         new
                         {
@@ -5225,9 +5139,9 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100254",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 115,
-                            Stock = 21,
-                            Talle = "44"
+                            ProductoId = 113,
+                            Stock = 32,
+                            Talle = "45"
                         },
                         new
                         {
@@ -5235,9 +5149,9 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100255",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 115,
+                            ProductoId = 114,
                             Stock = 0,
-                            Talle = "45"
+                            Talle = "36"
                         },
                         new
                         {
@@ -5245,9 +5159,9 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100256",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 116,
-                            Stock = 11,
-                            Talle = "40"
+                            ProductoId = 114,
+                            Stock = 0,
+                            Talle = "34"
                         },
                         new
                         {
@@ -5255,9 +5169,9 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100257",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 116,
+                            ProductoId = 114,
                             Stock = 0,
-                            Talle = "44"
+                            Talle = "46"
                         },
                         new
                         {
@@ -5265,9 +5179,9 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100258",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 116,
-                            Stock = 32,
-                            Talle = "45"
+                            ProductoId = 115,
+                            Stock = 42,
+                            Talle = "42"
                         },
                         new
                         {
@@ -5275,9 +5189,9 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100259",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 117,
-                            Stock = 0,
-                            Talle = "36"
+                            ProductoId = 115,
+                            Stock = 13,
+                            Talle = "46"
                         },
                         new
                         {
@@ -5285,9 +5199,9 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100260",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 117,
-                            Stock = 0,
-                            Talle = "34"
+                            ProductoId = 115,
+                            Stock = 7,
+                            Talle = "43"
                         },
                         new
                         {
@@ -5295,9 +5209,9 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100261",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 117,
-                            Stock = 0,
-                            Talle = "46"
+                            ProductoId = 115,
+                            Stock = 26,
+                            Talle = "41"
                         },
                         new
                         {
@@ -5305,9 +5219,9 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100262",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 118,
-                            Stock = 42,
-                            Talle = "42"
+                            ProductoId = 115,
+                            Stock = 9,
+                            Talle = "45"
                         },
                         new
                         {
@@ -5315,9 +5229,9 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100263",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 118,
-                            Stock = 13,
-                            Talle = "46"
+                            ProductoId = 115,
+                            Stock = 37,
+                            Talle = "44"
                         },
                         new
                         {
@@ -5325,9 +5239,9 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100264",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 118,
-                            Stock = 7,
-                            Talle = "43"
+                            ProductoId = 116,
+                            Stock = 0,
+                            Talle = "36"
                         },
                         new
                         {
@@ -5335,9 +5249,9 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100265",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 118,
-                            Stock = 26,
-                            Talle = "41"
+                            ProductoId = 116,
+                            Stock = 39,
+                            Talle = "38"
                         },
                         new
                         {
@@ -5345,9 +5259,9 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100266",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 118,
-                            Stock = 9,
-                            Talle = "45"
+                            ProductoId = 116,
+                            Stock = 47,
+                            Talle = "35"
                         },
                         new
                         {
@@ -5355,9 +5269,9 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100267",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 118,
-                            Stock = 37,
-                            Talle = "44"
+                            ProductoId = 116,
+                            Stock = 5,
+                            Talle = "40"
                         },
                         new
                         {
@@ -5365,9 +5279,9 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100268",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 119,
-                            Stock = 0,
-                            Talle = "36"
+                            ProductoId = 116,
+                            Stock = 47,
+                            Talle = "42"
                         },
                         new
                         {
@@ -5375,9 +5289,9 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100269",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 119,
-                            Stock = 39,
-                            Talle = "38"
+                            ProductoId = 117,
+                            Stock = 0,
+                            Talle = "40"
                         },
                         new
                         {
@@ -5385,9 +5299,9 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100270",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 119,
-                            Stock = 47,
-                            Talle = "35"
+                            ProductoId = 117,
+                            Stock = 0,
+                            Talle = "37"
                         },
                         new
                         {
@@ -5395,9 +5309,9 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100271",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 119,
-                            Stock = 5,
-                            Talle = "40"
+                            ProductoId = 117,
+                            Stock = 29,
+                            Talle = "39"
                         },
                         new
                         {
@@ -5405,9 +5319,9 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100272",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 119,
-                            Stock = 47,
-                            Talle = "42"
+                            ProductoId = 117,
+                            Stock = 23,
+                            Talle = "36"
                         },
                         new
                         {
@@ -5415,9 +5329,9 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100273",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 120,
-                            Stock = 0,
-                            Talle = "40"
+                            ProductoId = 117,
+                            Stock = 14,
+                            Talle = "38"
                         },
                         new
                         {
@@ -5425,9 +5339,9 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100274",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 120,
-                            Stock = 0,
-                            Talle = "37"
+                            ProductoId = 117,
+                            Stock = 23,
+                            Talle = "46"
                         },
                         new
                         {
@@ -5435,8 +5349,8 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100275",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 120,
-                            Stock = 29,
+                            ProductoId = 118,
+                            Stock = 43,
                             Talle = "39"
                         },
                         new
@@ -5445,9 +5359,9 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100276",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 120,
-                            Stock = 23,
-                            Talle = "36"
+                            ProductoId = 118,
+                            Stock = 19,
+                            Talle = "45"
                         },
                         new
                         {
@@ -5455,7 +5369,7 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100277",
                             IsDeleted = false,
                             IsEnabled = false,
-                            ProductoId = 120,
+                            ProductoId = 118,
                             Stock = 14,
                             Talle = "38"
                         },
@@ -5465,8 +5379,78 @@ namespace Infraestructura.Migrations
                             CodigoBarra = "100278",
                             IsDeleted = false,
                             IsEnabled = false,
+                            ProductoId = 119,
+                            Stock = 9,
+                            Talle = "39"
+                        },
+                        new
+                        {
+                            ID = 279,
+                            CodigoBarra = "100279",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 119,
+                            Stock = 0,
+                            Talle = "42"
+                        },
+                        new
+                        {
+                            ID = 280,
+                            CodigoBarra = "100280",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 119,
+                            Stock = 11,
+                            Talle = "41"
+                        },
+                        new
+                        {
+                            ID = 281,
+                            CodigoBarra = "100281",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 120,
+                            Stock = 14,
+                            Talle = "40"
+                        },
+                        new
+                        {
+                            ID = 282,
+                            CodigoBarra = "100282",
+                            IsDeleted = false,
+                            IsEnabled = false,
                             ProductoId = 120,
                             Stock = 23,
+                            Talle = "45"
+                        },
+                        new
+                        {
+                            ID = 283,
+                            CodigoBarra = "100283",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 120,
+                            Stock = 1,
+                            Talle = "38"
+                        },
+                        new
+                        {
+                            ID = 284,
+                            CodigoBarra = "100284",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 120,
+                            Stock = 0,
+                            Talle = "36"
+                        },
+                        new
+                        {
+                            ID = 285,
+                            CodigoBarra = "100285",
+                            IsDeleted = false,
+                            IsEnabled = false,
+                            ProductoId = 120,
+                            Stock = 0,
                             Talle = "46"
                         });
                 });
@@ -5780,13 +5764,13 @@ namespace Infraestructura.Migrations
                         {
                             Id = "33333333-3333-3333-3333-333333333333",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a3b51f8d-2fb3-47c1-bef0-faebf40532fe",
+                            ConcurrencyStamp = "b0d22dd7-e175-4e4e-9aff-962655f217a5",
                             Email = "admin@gmail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@GMAIL.COM",
                             NormalizedUserName = "ADMIN@GMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEOraojZ9Z1Gbt+sMs7aEkX7sVPPu+MMIuB9u5WwrTkVmqa8bTyHe/sSiNOFtaHl4MA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAENLTQNpXtk+oOnSADC5d3rxJoHNSPZ+DUaf27e6NwDA6LAKk7Xwziu7+75pXE5mChw==",
                             PhoneNumber = "3814498305",
                             PhoneNumberConfirmed = true,
                             SecurityStamp = "33333333-3333-3333-3333-333333333333",

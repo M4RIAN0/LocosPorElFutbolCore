@@ -58,11 +58,75 @@ namespace Infraestructura.Configurations
 
                     foreach (var genero in generos)
                     {
+                        if (cat.Key == 1)
+                        {
+                            if (mar.Key == 6 || (mar.Key == 5 && genero == "Mujer"))
+                            {
+                                idActual++;     
+                                serieIndex++;   
+
+                                random.Next(15, 100);
+                                random.Next(modelosAdjetivos.Length);
+                                random.Next(plantillasDescripcion.Length);
+
+                                continue;  
+                            }
+                        }
+
+                        if (cat.Key == 2)
+                        {
+                            if (mar.Key == 6 && genero == "Mujer")
+                            {
+                                idActual++;
+                                serieIndex++;
+
+                                random.Next(15, 100);
+                                random.Next(modelosAdjetivos.Length);
+                                random.Next(plantillasDescripcion.Length);
+
+                                continue; 
+                            }
+                        }
+
                         decimal precio = random.Next(15, 100) * 1000m;
 
                         string adjetivo = modelosAdjetivos[random.Next(modelosAdjetivos.Length)];
 
-                        string nombreProducto = $"{cat.Value.Singular} {mar.Value} {adjetivo} Serie {serieIndex}";
+                        string nombreProducto;
+
+                        if (cat.Key == 1)
+                        {
+                            if (mar.Key == 1) // Nike
+                                nombreProducto = genero == "Hombre" ? "Camiseta Futbol Nike Inter Milan Titular" :
+                                                 genero == "Mujer" ? "Camiseta Futbol Nike Barcelona Alternativa" :
+                                                 "Camiseta Futbol Nike Barcelona Titular";
+                            else if (mar.Key == 2) // Adidas
+                                nombreProducto = genero == "Hombre" ? "Camiseta Futbol Adidas River Plate Titular" :
+                                                 genero == "Mujer" ? "Camiseta Futbol Adidas River Plate Alternativa" :
+                                                 "Camiseta Futbol Adidas Boca Juniors Titular";
+                            else if (mar.Key == 3) // Puma
+                                nombreProducto = genero == "Hombre" ? "Camiseta Futbol Puma Stade Rennais Titular" :
+                                                 genero == "Mujer" ? "Camiseta Futbol Puma Manchester City Titular" :
+                                                 "Camiseta Futbol Puma Paraguay Titular";
+                            else if (mar.Key == 4 && genero == "Hombre") // Reebok
+                                nombreProducto = "Camiseta Futbol Reebok Botafogo Titular";
+                            else if (mar.Key == 4 && genero == "Mujer") // Reebok
+                                nombreProducto = "Camiseta Futbol Reebok Botafogo Suplente";
+                            else if (mar.Key == 7 && genero == "Hombre") // Adidas-Classic
+                                nombreProducto = "Camiseta Futbol Adidas Classic Argentina Suplente";
+                            else if (mar.Key == 7 && genero == "Mujer") // Adidas-Classic
+                                nombreProducto = "Camiseta Futbol Adidas Classic España Suplente";
+                            else if (mar.Key == 8 && genero == "Hombre") // Under-Armour
+                                nombreProducto = "Camiseta Futbol Under Armour Estudiantes de la Plata Titular";
+                            else if (mar.Key == 8 && genero == "Mujer") // Under-Armour
+                                nombreProducto = "Camiseta Futbol Under Armour Sydney FC Titular";
+                            else
+                                nombreProducto = $"{cat.Value.Singular} {mar.Value} {adjetivo} Serie {serieIndex}";
+                        }
+                        else
+                        {
+                            nombreProducto = $"{cat.Value.Singular} {mar.Value} {adjetivo} Serie {serieIndex}";
+                        }
 
                         string plantillaElegida = plantillasDescripcion[random.Next(plantillasDescripcion.Length)];
                         string descripcionDinamica = string.Format(plantillaElegida, cat.Value.Singular.ToLower(), mar.Value, genero.ToLower(), adjetivo);
@@ -76,7 +140,7 @@ namespace Infraestructura.Configurations
                             MarcaId = mar.Key,
                             CategoriaId = cat.Key,
                             Genero = genero,
-                            ImagenUrl = "https://placehold.co/600x600"
+                            ImagenUrl = $@"/images/Productos/Prod-Name-{CLeanName(nombreProducto)}.jpg"
                         });
 
                         serieIndex++;
@@ -85,6 +149,14 @@ namespace Infraestructura.Configurations
             }
 
             return productos;
+        }
+
+        private static string CLeanName(string nombre)
+        {
+            if (string.IsNullOrWhiteSpace(nombre))
+                return "producto-sin-nombre";
+
+            return nombre.Replace(" ", "-").ToLower();
         }
     }
 }
