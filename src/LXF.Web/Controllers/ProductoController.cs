@@ -210,6 +210,14 @@ namespace LXF.Web.Controllers
             }).ToList<object>();
         }
 
+        private string CLeanName(string nombre)
+        {
+            if (string.IsNullOrWhiteSpace(nombre))
+                return "producto-sin-nombre";
+
+            return nombre.Replace(" ", "-").ToLower();
+        }
+
         private async Task HandlerCrudImage(object vm, IFormFile? image)
         {
             if ((image == null || image.Length == 0) && vm is not ProductoGetViewModel)
@@ -220,7 +228,8 @@ namespace LXF.Web.Controllers
 
             if (vm is ProductoGetViewModel productoGetVm)
             {
-                var images = Directory.GetFiles(uploadsFolder, $"Prod-Name-{productoGetVm.Nombre}.*");
+                var images = Directory.GetFiles(uploadsFolder, $"Prod-Name-{CLeanName(productoGetVm.Nombre)}.*");
+
                 foreach (var oldImage in images)
                 {
                     System.IO.File.Delete(oldImage);
@@ -239,18 +248,18 @@ namespace LXF.Web.Controllers
             {
                 case ProductoViewModel productoVm:
 
-                    fileName = $"Prod-Name-{productoVm.Nombre}{extension}";
+                    fileName = $"Prod-Name-{CLeanName(productoVm.Nombre)}{extension}";
                     break;
 
                 case ProductoPutViewModel productoPutVm:
 
-                    var oldImages = Directory.GetFiles(uploadsFolder, $"Prod-Name-{productoPutVm.Nombre}.*");
+                    var oldImages = Directory.GetFiles(uploadsFolder, $"Prod-Name-{CLeanName(productoPutVm.Nombre)}.*");
                     foreach (var oldImage in oldImages)
                     {
                         System.IO.File.Delete(oldImage);
                     }
 
-                    fileName = $"Prod-Name-{productoPutVm.Nombre}{extension}";
+                    fileName = $"Prod-Name-{CLeanName(productoPutVm.Nombre)}{extension}";
                     break;
 
                 default:
@@ -278,12 +287,12 @@ namespace LXF.Web.Controllers
             {
                 case ProductoViewModel productoVm:
 
-                    fileName = $"Prod-Name-{productoVm.Nombre}{extension}";
+                    fileName = $"Prod-Name-{CLeanName(productoVm.Nombre)}{extension}";
                     return $"/images/Productos/{fileName}";
 
                 case ProductoPutViewModel productoPutVm:
 
-                    fileName = $"Prod-Name-{productoPutVm.Nombre}{extension}";
+                    fileName = $"Prod-Name-{CLeanName(productoPutVm.Nombre)}{extension}";
                     return $"/images/Productos/{fileName}";
 
                 default:

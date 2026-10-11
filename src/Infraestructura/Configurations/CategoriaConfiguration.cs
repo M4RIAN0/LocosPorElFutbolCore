@@ -21,36 +21,21 @@ namespace Infraestructura.Configurations
            new Categoria
            {
                ID = 2,
-               Descripcion = "Remeras"
-           },
-           new Categoria
-           {
-               ID = 3,
-               Descripcion = "Musculosas"
-           },
-           new Categoria
-           {
-               ID = 4,
                Descripcion = "Shorts"
            },
            new Categoria
            {
-               ID = 5,
-               Descripcion = "Medias"
-           },
-           new Categoria
-           {
-               ID = 6,
+               ID = 3,
                Descripcion = "Pantalones"
            },
            new Categoria
            {
-               ID = 7,
+               ID = 4,
                Descripcion = "Camperas"
            },
            new Categoria
            {
-               ID = 8,
+               ID = 5,
                Descripcion = "Zapatillas"
            });
 

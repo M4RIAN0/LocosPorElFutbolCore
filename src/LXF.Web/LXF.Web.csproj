@@ -20,8 +20,4 @@
     <None Include="Controllers\CompraController.cs" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="wwwroot\images\Productos\" />
-  </ItemGroup>
-
 </Project>
