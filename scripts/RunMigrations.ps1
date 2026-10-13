@@ -10,12 +10,6 @@ if (-Not (Test-Path $ConfigFilePath)) {
 # Cargar configuraciones desde el archivo JSON
 $Config = Get-Content -Raw -Path $ConfigFilePath | ConvertFrom-Json
 
-# Verificar si las configuraciones necesarias están presentes
-if (-Not $Config.ProjectPath) {
-    Write-Error "The project path is not defined in the configuration file."
-    exit 1
-}
-
 if (-Not $Config.ConnectionStrings.DefaultConnection) {
     Write-Error "The connection string is not defined in the configuration file."
     exit 1
@@ -23,7 +17,11 @@ if (-Not $Config.ConnectionStrings.DefaultConnection) {
 
 # Obtener la cadena de conexión y la ruta del proyecto desde el archivo de configuración
 $ConnectionString = $Config.ConnectionStrings.DefaultConnection
-$ProjectPath = $Config.ProjectPath
+#$ProjectPath = $Config.ProjectPath
+
+# Calcular dinámicamente la ruta del proyecto basándose en la ubicación de este script
+# $PSScriptRoot es la carpeta 'scripts'. Subimos un nivel (..) y bajamos a src/Infraestructura
+$ProjectPath = Resolve-Path "$PSScriptRoot\..\src\Infraestructura\Infraestructura.csproj"
 
 Write-Host "Sring conexión: $ConnectionString"
 Write-Host "Project path: $ProjectPath"
