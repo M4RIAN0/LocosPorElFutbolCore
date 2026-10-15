@@ -58,30 +58,22 @@ namespace Infraestructura.DbContextFactory
             return configuration;
         }
 
-        // Obtener la ruta de la carpeta 'scripts' dinámicamente
         private string GetScriptsDirectory()
         {
-            // Obtener la ruta del directorio que contiene el archivo ejecutable (o bin/Debug/net8.0)
-            var binDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            var currentDir = AppDomain.CurrentDomain.BaseDirectory;
 
-            // Subir hasta la raíz del proyecto (5 directorios hacia arriba, ajustado según la estructura)
-            var rootDirectory = Directory.GetParent(binDirectory)?.Parent?.Parent?.Parent?.Parent?.Parent?.FullName;
-
-            if (string.IsNullOrEmpty(rootDirectory))
+            // Sube de nivel carpeta por carpeta hasta encontrar la que contenga "scripts"
+            while (!string.IsNullOrEmpty(currentDir))
             {
-                throw new InvalidOperationException("No se pudo obtener la ruta raíz del proyecto.");
+                var potentialScriptDir = Path.Combine(currentDir, "scripts");
+                if (Directory.Exists(potentialScriptDir))
+                {
+                    return potentialScriptDir;
+                }
+                currentDir = Directory.GetParent(currentDir)?.FullName;
             }
 
-            // Ruta completa a la carpeta 'scripts' desde la raíz del proyecto
-            var scriptsDirectory = Path.Combine(rootDirectory, "scripts");
-
-            // Verificar si la carpeta 'scripts' existe
-            if (!Directory.Exists(scriptsDirectory))
-            {
-                throw new DirectoryNotFoundException($"La carpeta 'scripts' no se encuentra en la ruta esperada: {scriptsDirectory}");
-            }
-
-            return scriptsDirectory;
+            throw new DirectoryNotFoundException("No se encontró la carpeta 'scripts' en el árbol de directorios hacia arriba.");
         }
 
         // Obtener la cadena de conexión desde la configuración
